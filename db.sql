@@ -1,3 +1,6 @@
+CREATE DATABASE `electro_service_db`;
+USE electro_service_db;
+
 CREATE TABLE `ciente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipodoc` int(11) DEFAULT NULL,
