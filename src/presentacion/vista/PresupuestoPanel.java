@@ -130,7 +130,7 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 
 		String[] nombreColumnas = { "Nombre", "Cantidad" };
 
-		tablaComponentes = new JTable(controlador.cargarInformacionTabla(), nombreColumnas);
+		tablaComponentes = new JTable(cargarInformacionTabla(), nombreColumnas);
 		tablaComponentes.setBounds(138, 146, 605, 111);
 
 		tabla_scrollPane = new JScrollPane();
@@ -228,6 +228,12 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 
 	public JTable getTablaComponentes() {
 		return tablaComponentes;
+	}
+
+	public Object[][] cargarInformacionTabla() {
+		// Hardcodeo, cambiar por datos de la BD
+		Object[][] informacionTabla = { { "Placa", new Integer(5) }, { "Boton", new Integer(3) } };
+		return informacionTabla;
 	}
 
 }

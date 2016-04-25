@@ -7,6 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import presentacion.controlador.ControladorOrdenDeTrabajoPanel;
+
 public class OrdenDeTrabajoPanel extends JPanel {
 
 	/**
@@ -29,11 +31,15 @@ public class OrdenDeTrabajoPanel extends JPanel {
 	private javax.swing.JLabel tipoProducto_lbl;
 	private JTextField nroCliente_txf;
 	private JTextField producto_txf;
+	private ControladorOrdenDeTrabajoPanel controlador;
 
 	/**
 	 * Create the panel.
 	 */
-	public OrdenDeTrabajoPanel() {
+	public OrdenDeTrabajoPanel(ControladorOrdenDeTrabajoPanel controlador) {
+
+		this.controlador = controlador;
+
 		ordenDeTrabajo_lbl = new javax.swing.JLabel();
 		ordenDeTrabajo_lbl.setBounds(219, 17, 415, 28);
 		id_OrdenDeTrabajo_lbl = new javax.swing.JLabel();

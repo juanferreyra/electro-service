@@ -7,10 +7,9 @@ import presentacion.vista.OrdenDeTrabajoPanel;
 
 public class ControladorOrdenDeTrabajoPanel implements ActionListener {
 
-	private OrdenDeTrabajoPanel ordenDeTrabajoPanel;
+	private OrdenDeTrabajoPanel ordenDeTrabajoPanel = new OrdenDeTrabajoPanel(this);
 
-	public ControladorOrdenDeTrabajoPanel(OrdenDeTrabajoPanel ordenDeTrabajoPanel) {
-		this.ordenDeTrabajoPanel = ordenDeTrabajoPanel;
+	public ControladorOrdenDeTrabajoPanel() {
 		this.ordenDeTrabajoPanel.getGenerarDocumentos_Btn().addActionListener(this);
 	}
 
