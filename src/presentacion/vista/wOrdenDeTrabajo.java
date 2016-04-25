@@ -36,20 +36,21 @@ public class wOrdenDeTrabajo extends JFrame {
 	 */
 	public wOrdenDeTrabajo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 915, 812);
+		setBounds(100, 100, 905, 812);
 		panelPrincipal = new JPanel();
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelPrincipal);
 		panelPrincipal.setLayout(null);
 
+		setLocationRelativeTo(null);
+
 		JSplitPane splitPane = new JSplitPane();
-		splitPane.setBounds(0, 0, 899, 774);
+		splitPane.setBounds(0, 0, 897, 774);
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		panelPrincipal.add(splitPane);
 
 		splitPane.setDividerLocation(400);
 		splitPane.setDividerSize(5);
-
 
 		JPanel subPanel_ordenDeTrabajo = new OrdenDeTrabajoPanel();
 		subPanel_ordenDeTrabajo.setBounds(10, 423, 879, 340);

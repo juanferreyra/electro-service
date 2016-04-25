@@ -3,6 +3,7 @@ package presentacion.vista;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class OrdenDeTrabajoPanel extends JPanel {
 	
@@ -24,38 +25,40 @@ public class OrdenDeTrabajoPanel extends JPanel {
 	    private javax.swing.JLabel producto_lbl;
 	    private javax.swing.JComboBox<String> tipoProducto_jCBox;
 	    private javax.swing.JLabel tipoProducto_lbl;
+	    private JTextField nroCliente_txf;
+	    private JTextField producto_txf;
 	/**
 	 * Create the panel.
 	 */
 	public OrdenDeTrabajoPanel() {
 		ordenDeTrabajo_lbl = new javax.swing.JLabel();
-		ordenDeTrabajo_lbl.setBounds(150, 17, 508, 28);
+		ordenDeTrabajo_lbl.setBounds(219, 17, 415, 28);
         id_OrdenDeTrabajo_lbl = new javax.swing.JLabel();
-        id_OrdenDeTrabajo_lbl.setBounds(731, 11, 17, 14);
+        id_OrdenDeTrabajo_lbl.setBounds(668, 11, 53, 14);
         fecha_OrdenDeTrabajo_lbl = new javax.swing.JLabel();
-        fecha_OrdenDeTrabajo_lbl.setBounds(731, 31, 29, 14);
+        fecha_OrdenDeTrabajo_lbl.setBounds(668, 27, 53, 14);
         fecha_OrdenDeTrabajo_txf = new javax.swing.JTextField();
-        fecha_OrdenDeTrabajo_txf.setBounds(802, 31, 83, 14);
+        fecha_OrdenDeTrabajo_txf.setBounds(741, 27, 83, 14);
         id_OrdenDeTrabajo_txf = new javax.swing.JTextField();
-        id_OrdenDeTrabajo_txf.setBounds(802, 11, 83, 14);
+        id_OrdenDeTrabajo_txf.setBounds(731, 11, 83, 14);
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator1.setBounds(10, 56, 873, 11);
         nroCliente_lbl = new javax.swing.JLabel();
-        nroCliente_lbl.setBounds(142, 73, 53, 14);
+        nroCliente_lbl.setBounds(142, 73, 76, 14);
         producto_lbl = new javax.swing.JLabel();
-        producto_lbl.setBounds(142, 96, 53, 14);
+        producto_lbl.setBounds(142, 99, 76, 14);
         marca_lbl = new javax.swing.JLabel();
-        marca_lbl.setBounds(142, 124, 53, 14);
+        marca_lbl.setBounds(142, 127, 53, 14);
         marca_jCBox = new javax.swing.JComboBox<>();
-        marca_jCBox.setBounds(199, 121, 163, 20);
+        marca_jCBox.setBounds(269, 124, 163, 20);
         tipoProducto_lbl = new javax.swing.JLabel();
-        tipoProducto_lbl.setBounds(397, 124, 76, 14);
+        tipoProducto_lbl.setBounds(442, 127, 113, 14);
         tipoProducto_jCBox = new javax.swing.JComboBox<>();
-        tipoProducto_jCBox.setBounds(491, 121, 183, 20);
+        tipoProducto_jCBox.setBounds(565, 124, 183, 20);
         descripcionFalla_jScrollPane = new javax.swing.JScrollPane();
         descripcionFalla_jScrollPane.setBounds(142, 163, 606, 181);
         generarDocumentos_Btn = new javax.swing.JButton();
-        generarDocumentos_Btn.setBounds(325, 355, 161, 33);
+        generarDocumentos_Btn.setBounds(325, 355, 205, 33);
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -115,5 +118,15 @@ public class OrdenDeTrabajoPanel extends JPanel {
         descripcionFalla_jScrollPane.setViewportView(textArea);
         add(jSeparator1);
         add(generarDocumentos_Btn);
+        
+        nroCliente_txf = new JTextField();
+        nroCliente_txf.setBounds(269, 70, 163, 20);
+        add(nroCliente_txf);
+        nroCliente_txf.setColumns(10);
+        
+        producto_txf = new JTextField();
+        producto_txf.setBounds(269, 96, 163, 20);
+        add(producto_txf);
+        producto_txf.setColumns(10);
 	}
 }
