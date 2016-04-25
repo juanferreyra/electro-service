@@ -1,40 +1,23 @@
 package presentacion.vista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import presentacion.controlador.Controlador_wOrdenDeTrabajo;
+
 import javax.swing.JSplitPane;
 
 public class wOrdenDeTrabajo extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel panelPrincipal;
+	private Controlador_wOrdenDeTrabajo controlador = new Controlador_wOrdenDeTrabajo(this);
+	private JPanel subPanel_ordenDeTrabajo;
+	private JPanel subPanel_presupuesto;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					wOrdenDeTrabajo frame = new wOrdenDeTrabajo();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public wOrdenDeTrabajo() {
+		this.setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 905, 812);
 		panelPrincipal = new JPanel();
@@ -52,14 +35,30 @@ public class wOrdenDeTrabajo extends JFrame {
 		splitPane.setDividerLocation(400);
 		splitPane.setDividerSize(5);
 
-		JPanel subPanel_ordenDeTrabajo = new OrdenDeTrabajoPanel();
+		subPanel_ordenDeTrabajo = new OrdenDeTrabajoPanel();
 		subPanel_ordenDeTrabajo.setBounds(10, 423, 879, 340);
 
-		JPanel subPanel_presupuesto = new PresupuestoPanel();
+		subPanel_presupuesto = new PresupuestoPanel(controlador);
 		subPanel_presupuesto.setBounds(10, 423, 879, 340);
 
 		splitPane.setTopComponent(subPanel_ordenDeTrabajo);
 		splitPane.setBottomComponent(subPanel_presupuesto);
 
+	}
+
+	public JPanel getSubPanel_ordenDeTrabajo() {
+		return subPanel_ordenDeTrabajo;
+	}
+
+	public void setSubPanel_ordenDeTrabajo(JPanel subPanel_ordenDeTrabajo) {
+		this.subPanel_ordenDeTrabajo = subPanel_ordenDeTrabajo;
+	}
+
+	public JPanel getSubPanel_presupuesto() {
+		return subPanel_presupuesto;
+	}
+
+	public void setSubPanel_presupuesto(JPanel subPanel_presupuesto) {
+		this.subPanel_presupuesto = subPanel_presupuesto;
 	}
 }

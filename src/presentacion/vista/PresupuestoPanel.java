@@ -1,16 +1,52 @@
 
 package presentacion.vista;
+
+import java.awt.Color;
 import java.awt.SystemColor;
+
+import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
+
+import presentacion.controlador.Controlador_wOrdenDeTrabajo;
 
 public class PresupuestoPanel extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private javax.swing.JLabel cantidad_lbl;
+	private javax.swing.JComboBox<String> componentes_jComboBox;
+	private javax.swing.JLabel componentes_lbl;
+	private javax.swing.JScrollPane descripcionBreve_jScrollPane;
+	private javax.swing.JTextArea descripcionBreve_jTextArea;
+	private javax.swing.JLabel descripcionBreve_lbl;
+	private javax.swing.JScrollPane descripcionTecnica_jScrollPane;
+	private javax.swing.JTextArea descripcionTecnica_jTextArea;
+	private javax.swing.JLabel descripcionTecnica_lbl;
+	private javax.swing.JLabel fecha_Presupuesto_lbl;
+	private javax.swing.JTextField fecha_Presupuesto_txf;
+	private javax.swing.JLabel horasTrabajo_lbl;
+	private javax.swing.JTextField horasTrabajo_txf;
+	private javax.swing.JLabel iconIngresar_lbl;
+	private javax.swing.JLabel iconMas_lbl;
+	private javax.swing.JLabel iconMenos_lbl;
+	private javax.swing.JSeparator jSeparator1;
+	private javax.swing.JTextField valorPresupuestado_txf;
+	private javax.swing.JLabel nroTecnico_lbl;
+	private javax.swing.JTextField nroTecnico_txf;
+	private javax.swing.JLabel presupuesto_lbl;
+	private javax.swing.JLabel valorPresupuestado_lbl;
+	private JTable tablaComponentes;
+	private JScrollPane tabla_scrollPane;
+	private Controlador_wOrdenDeTrabajo controlador;
 
-	public PresupuestoPanel() {
+	public PresupuestoPanel(Controlador_wOrdenDeTrabajo controlador) {
+		this.controlador = controlador;
 		initComponents();
+
 	}
 
-	@SuppressWarnings("serial")
 	private void initComponents() {
 
 		presupuesto_lbl = new javax.swing.JLabel();
@@ -30,7 +66,7 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		horasTrabajo_txf = new javax.swing.JTextField();
 		horasTrabajo_txf.setBounds(266, 90, 152, 20);
 		componentes_lbl = new javax.swing.JLabel();
-		componentes_lbl.setBounds(139, 121, 83, 14);
+		componentes_lbl.setBounds(138, 121, 83, 14);
 		componentes_jComboBox = new javax.swing.JComboBox<>();
 		componentes_jComboBox.setBounds(266, 118, 152, 20);
 		cantidad_lbl = new javax.swing.JLabel();
@@ -52,9 +88,9 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		descripcionBreve_jTextArea = new javax.swing.JTextArea();
 		valorPresupuestado_lbl = new javax.swing.JLabel();
 		valorPresupuestado_lbl.setBounds(139, 349, 127, 14);
-		jTextField1 = new javax.swing.JTextField();
-		jTextField1.setBackground(SystemColor.text);
-		jTextField1.setBounds(266, 348, 479, 16);
+		valorPresupuestado_txf = new javax.swing.JTextField();
+		valorPresupuestado_txf.setBackground(SystemColor.text);
+		valorPresupuestado_txf.setBounds(266, 348, 479, 16);
 
 		setBackground(new java.awt.Color(255, 255, 255));
 
@@ -92,6 +128,17 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		iconIngresar_lbl.setIcon(new javax.swing.ImageIcon(
 				"C:\\Users\\pc\\Documents\\NetBeansProjects\\electro-service\\DesarrolloExtra-ElectroService\\src\\desarrolloextra\\icons\\tick-outline.png")); // NOI18N
 
+		String[] nombreColumnas = { "Nombre", "Cantidad" };
+
+		tablaComponentes = new JTable(controlador.cargarInformacionTabla(), nombreColumnas);
+		tablaComponentes.setBounds(138, 146, 605, 111);
+
+		tabla_scrollPane = new JScrollPane();
+		tabla_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		tabla_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		tabla_scrollPane.setBounds(138, 159, 605, 100);
+		tabla_scrollPane.setViewportView(tablaComponentes);
+
 		descripcionBreve_lbl.setText("Descripci\u00F3n Breve ");
 
 		descripcionTecnica_lbl.setText("Descripci\u00F3n T\u00E9cnica");
@@ -102,32 +149,15 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 
 		valorPresupuestado_lbl.setText("<html><b>Valor Presupuestado</b></html>");
 
-		jTextField1.setEditable(false);
-		jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-		jTextField1.setOpaque(false);
-		listaComponentesSeleccionados_jList = new javax.swing.JList<>();
-		listaComponentesSeleccionados_jList.setBounds(139, 151, 606, 109);
-		
-				listaComponentesSeleccionados_jList
-						.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 255)));
-				listaComponentesSeleccionados_jList.setModel(new javax.swing.AbstractListModel<String>() {
-					String[] strings = { "Nombre Cantidad", "item3 item4", "item5 item6" };
-
-					public int getSize() {
-						return strings.length;
-					}
-
-					public String getElementAt(int i) {
-						return strings[i];
-					}
-				});
+		valorPresupuestado_txf.setEditable(false);
+		valorPresupuestado_txf.setBorder(new LineBorder(new Color(0, 0, 205)));
+		valorPresupuestado_txf.setOpaque(false);
 		descripcionTecnica_jTextArea = new javax.swing.JTextArea();
 		descripcionTecnica_jScrollPane.setViewportView(descripcionTecnica_jTextArea);
-		
-				descripcionTecnica_jTextArea.setColumns(20);
-				descripcionTecnica_jTextArea.setRows(5);
+
+		descripcionTecnica_jTextArea.setColumns(20);
+		descripcionTecnica_jTextArea.setRows(5);
 		setLayout(null);
-		add(listaComponentesSeleccionados_jList);
 		add(presupuesto_lbl);
 		add(fecha_Presupuesto_lbl);
 		add(fecha_Presupuesto_txf);
@@ -142,35 +172,62 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		add(cantidad_lbl);
 		add(iconMenos_lbl);
 		add(iconIngresar_lbl);
+		add(tabla_scrollPane);
 		add(valorPresupuestado_lbl);
-		add(jTextField1);
+		add(valorPresupuestado_txf);
 		add(descripcionBreve_jScrollPane);
 		add(descripcionBreve_lbl);
 		add(descripcionTecnica_lbl);
 		add(descripcionTecnica_jScrollPane);
+
 	}
 
-	private javax.swing.JLabel cantidad_lbl;
-	private javax.swing.JComboBox<String> componentes_jComboBox;
-	private javax.swing.JLabel componentes_lbl;
-	private javax.swing.JScrollPane descripcionBreve_jScrollPane;
-	private javax.swing.JTextArea descripcionBreve_jTextArea;
-	private javax.swing.JLabel descripcionBreve_lbl;
-	private javax.swing.JScrollPane descripcionTecnica_jScrollPane;
-	private javax.swing.JTextArea descripcionTecnica_jTextArea;
-	private javax.swing.JLabel descripcionTecnica_lbl;
-	private javax.swing.JLabel fecha_Presupuesto_lbl;
-	private javax.swing.JTextField fecha_Presupuesto_txf;
-	private javax.swing.JLabel horasTrabajo_lbl;
-	private javax.swing.JTextField horasTrabajo_txf;
-	private javax.swing.JLabel iconIngresar_lbl;
-	private javax.swing.JLabel iconMas_lbl;
-	private javax.swing.JLabel iconMenos_lbl;
-	private javax.swing.JSeparator jSeparator1;
-	private javax.swing.JTextField jTextField1;
-	private javax.swing.JList<String> listaComponentesSeleccionados_jList;
-	private javax.swing.JLabel nroTecnico_lbl;
-	private javax.swing.JTextField nroTecnico_txf;
-	private javax.swing.JLabel presupuesto_lbl;
-	private javax.swing.JLabel valorPresupuestado_lbl;
+	public JComboBox<String> getComponentes_jComboBox() {
+		return componentes_jComboBox;
+	}
+
+	public String getDescripcionBreve_jTextArea() {
+		return descripcionBreve_jTextArea.getText();
+	}
+
+	public String getDescripcionTecnica_jTextArea() {
+		return descripcionTecnica_jTextArea.getText();
+	}
+
+	public String getFecha_Presupuesto_txf() {
+		return fecha_Presupuesto_txf.getText();
+	}
+
+	public void setFecha_Presupuesto_txf(String fecha_Presupuesto) {
+		this.fecha_Presupuesto_txf.setText(fecha_Presupuesto);
+	}
+
+	public String getHorasTrabajo_txf() {
+		return horasTrabajo_txf.getText();
+	}
+
+	public void setHorasTrabajo_txf(String horasTrabajo) {
+		this.horasTrabajo_txf.setText(horasTrabajo);
+	}
+
+	public String getValorPresupuestado_txf() {
+		return valorPresupuestado_txf.getText();
+	}
+
+	public void setValorPresupuestado_txf(String valorPresupuestado) {
+		this.valorPresupuestado_txf.setText(valorPresupuestado);
+	}
+
+	public String getNroTecnico_txf() {
+		return nroTecnico_txf.getText();
+	}
+
+	public void setNroTecnico_txf(String nroTecnico) {
+		this.nroTecnico_txf.setText(nroTecnico);
+	}
+
+	public JTable getTablaComponentes() {
+		return tablaComponentes;
+	}
+
 }
