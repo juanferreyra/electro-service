@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import presentacion.controlador.Controlador_wOrdenDeTrabajo;
+import presentacion.controlador.ControladorPresupuestoPanel;
 
 import javax.swing.JSplitPane;
 
@@ -12,9 +12,9 @@ public class wOrdenDeTrabajo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panelPrincipal;
-	private Controlador_wOrdenDeTrabajo controlador = new Controlador_wOrdenDeTrabajo(this);
 	private JPanel subPanel_ordenDeTrabajo;
 	private JPanel subPanel_presupuesto;
+	private ControladorPresupuestoPanel controladorPresupuestoPanel;
 
 	public wOrdenDeTrabajo() {
 		this.setVisible(true);
@@ -38,7 +38,7 @@ public class wOrdenDeTrabajo extends JFrame {
 		subPanel_ordenDeTrabajo = new OrdenDeTrabajoPanel();
 		subPanel_ordenDeTrabajo.setBounds(10, 423, 879, 340);
 
-		subPanel_presupuesto = new PresupuestoPanel(controlador);
+		subPanel_presupuesto = new PresupuestoPanel(controladorPresupuestoPanel);
 		subPanel_presupuesto.setBounds(10, 423, 879, 340);
 
 		splitPane.setTopComponent(subPanel_ordenDeTrabajo);

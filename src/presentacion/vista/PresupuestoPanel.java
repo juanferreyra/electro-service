@@ -10,7 +10,7 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 
-import presentacion.controlador.Controlador_wOrdenDeTrabajo;
+import presentacion.controlador.ControladorPresupuestoPanel;
 
 public class PresupuestoPanel extends javax.swing.JPanel {
 
@@ -39,9 +39,9 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel valorPresupuestado_lbl;
 	private JTable tablaComponentes;
 	private JScrollPane tabla_scrollPane;
-	private Controlador_wOrdenDeTrabajo controlador;
+	private ControladorPresupuestoPanel controlador;
 
-	public PresupuestoPanel(Controlador_wOrdenDeTrabajo controlador) {
+	public PresupuestoPanel(ControladorPresupuestoPanel controlador) {
 		this.controlador = controlador;
 		initComponents();
 
