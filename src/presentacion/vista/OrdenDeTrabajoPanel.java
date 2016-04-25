@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 
-public class OrdenDeTrabajo extends JPanel {
+public class OrdenDeTrabajoPanel extends JPanel {
 	
 	 /**
 	 * 
@@ -27,7 +27,7 @@ public class OrdenDeTrabajo extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public OrdenDeTrabajo() {
+	public OrdenDeTrabajoPanel() {
 		ordenDeTrabajo_lbl = new javax.swing.JLabel();
 		ordenDeTrabajo_lbl.setBounds(150, 17, 508, 28);
         id_OrdenDeTrabajo_lbl = new javax.swing.JLabel();
@@ -41,27 +41,27 @@ public class OrdenDeTrabajo extends JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator1.setBounds(10, 56, 873, 11);
         nroCliente_lbl = new javax.swing.JLabel();
-        nroCliente_lbl.setBounds(173, 78, 53, 14);
+        nroCliente_lbl.setBounds(142, 73, 53, 14);
         producto_lbl = new javax.swing.JLabel();
-        producto_lbl.setBounds(173, 98, 53, 14);
+        producto_lbl.setBounds(142, 96, 53, 14);
         marca_lbl = new javax.swing.JLabel();
-        marca_lbl.setBounds(173, 121, 53, 14);
+        marca_lbl.setBounds(142, 124, 53, 14);
         marca_jCBox = new javax.swing.JComboBox<>();
-        marca_jCBox.setBounds(230, 118, 163, 20);
+        marca_jCBox.setBounds(199, 121, 163, 20);
         tipoProducto_lbl = new javax.swing.JLabel();
-        tipoProducto_lbl.setBounds(428, 121, 76, 14);
+        tipoProducto_lbl.setBounds(397, 124, 76, 14);
         tipoProducto_jCBox = new javax.swing.JComboBox<>();
-        tipoProducto_jCBox.setBounds(522, 118, 183, 20);
+        tipoProducto_jCBox.setBounds(491, 121, 183, 20);
         descripcionFalla_jScrollPane = new javax.swing.JScrollPane();
-        descripcionFalla_jScrollPane.setBounds(173, 156, 532, 181);
+        descripcionFalla_jScrollPane.setBounds(142, 163, 606, 181);
         generarDocumentos_Btn = new javax.swing.JButton();
-        generarDocumentos_Btn.setBounds(367, 355, 161, 33);
+        generarDocumentos_Btn.setBounds(325, 355, 161, 33);
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         ordenDeTrabajo_lbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         ordenDeTrabajo_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ordenDeTrabajo_lbl.setText("Orden de Trabajo");
+        ordenDeTrabajo_lbl.setText("ORDEN DE TRABAJO");
 
         id_OrdenDeTrabajo_lbl.setText("Nro");
 
