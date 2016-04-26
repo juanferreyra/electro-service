@@ -7,13 +7,10 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import presentacion.controlador.ControladorOrdenDeTrabajoPanel;
+import javax.swing.SwingConstants;
 
 public class OrdenDeTrabajoPanel extends JPanel {
 
-	/**
-	* 
-	*/
 	private static final long serialVersionUID = 1L;
 	private javax.swing.JScrollPane descripcionFalla_jScrollPane;
 	private javax.swing.JLabel fecha_OrdenDeTrabajo_lbl;
@@ -31,14 +28,11 @@ public class OrdenDeTrabajoPanel extends JPanel {
 	private javax.swing.JLabel tipoProducto_lbl;
 	private JTextField nroCliente_txf;
 	private JTextField producto_txf;
-	private ControladorOrdenDeTrabajoPanel controlador;
 
 	/**
 	 * Create the panel.
 	 */
-	public OrdenDeTrabajoPanel(ControladorOrdenDeTrabajoPanel controlador) {
-
-		this.controlador = controlador;
+	public OrdenDeTrabajoPanel() {
 
 		ordenDeTrabajo_lbl = new javax.swing.JLabel();
 		ordenDeTrabajo_lbl.setBounds(219, 17, 415, 28);
@@ -48,8 +42,11 @@ public class OrdenDeTrabajoPanel extends JPanel {
 		fecha_OrdenDeTrabajo_lbl.setBounds(668, 27, 53, 14);
 		fecha_OrdenDeTrabajo_txf = new javax.swing.JTextField();
 		fecha_OrdenDeTrabajo_txf.setBounds(741, 27, 83, 14);
+
 		id_OrdenDeTrabajo_txf = new javax.swing.JTextField();
+		id_OrdenDeTrabajo_txf.setHorizontalAlignment(SwingConstants.CENTER);
 		id_OrdenDeTrabajo_txf.setBounds(731, 11, 83, 14);
+
 		jSeparator1 = new javax.swing.JSeparator();
 		jSeparator1.setBounds(10, 56, 873, 11);
 		nroCliente_lbl = new javax.swing.JLabel();
@@ -162,8 +159,8 @@ public class OrdenDeTrabajoPanel extends JPanel {
 		return id_OrdenDeTrabajo_txf.getText();
 	}
 
-	public void setId_OrdenDeTrabajo_txf(String id_OrdenDeTrabajo) {
-		this.id_OrdenDeTrabajo_txf.setText(id_OrdenDeTrabajo);
+	public void setId_OrdenDeTrabajo_txf(int id_OrdenDeTrabajo) {
+		this.id_OrdenDeTrabajo_txf.setText(id_OrdenDeTrabajo + "");
 	}
 
 	public JComboBox<String> getMarca_jCBox() {
@@ -197,4 +194,5 @@ public class OrdenDeTrabajoPanel extends JPanel {
 	public void setProducto_txf(String producto) {
 		this.producto_txf.setText(producto);
 	}
+
 }

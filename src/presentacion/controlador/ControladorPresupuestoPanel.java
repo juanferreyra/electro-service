@@ -7,9 +7,10 @@ import presentacion.vista.PresupuestoPanel;
 
 public class ControladorPresupuestoPanel implements ActionListener {
 
-	private PresupuestoPanel presupuestoPanel = new PresupuestoPanel(this);
+	private PresupuestoPanel presupuestoPanel;
 
-	public ControladorPresupuestoPanel() {
+	public ControladorPresupuestoPanel(PresupuestoPanel presupuestoPanel) {
+		this.presupuestoPanel = presupuestoPanel;
 		// this.presupuestoPanel.getValorPresupuestado_txf().addActionListener(this);
 	}
 
@@ -25,5 +26,15 @@ public class ControladorPresupuestoPanel implements ActionListener {
 		// if (e.getSource() == (this.presupuestoPanel.)) {
 		// }
 	}
+
+	public PresupuestoPanel getPresupuestoPanel() {
+		return presupuestoPanel;
+	}
+
+	public void setPresupuestoPanel(PresupuestoPanel presupuestoPanel) {
+		this.presupuestoPanel = presupuestoPanel;
+	}
+	
+	
 
 }

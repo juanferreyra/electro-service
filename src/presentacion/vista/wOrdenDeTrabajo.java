@@ -1,6 +1,5 @@
 package presentacion.vista;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,26 +17,7 @@ public class wOrdenDeTrabajo extends JFrame {
 	private JPanel subPanel_ordenDeTrabajo;
 	private JPanel subPanel_presupuesto;
 
-	/**
-	 * PARA MODO DEBUG, LUEGO BORRAR
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
 
-					ControladorPresupuestoPanel controladorPresupuestoPanel = new ControladorPresupuestoPanel();
-					ControladorOrdenDeTrabajoPanel controladorOrdenDeTrabajoPanel = new ControladorOrdenDeTrabajoPanel();
-
-					wOrdenDeTrabajo frame = new wOrdenDeTrabajo(controladorPresupuestoPanel,
-							controladorOrdenDeTrabajoPanel);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public wOrdenDeTrabajo(ControladorPresupuestoPanel controladorPresupuestoPanel,
 			ControladorOrdenDeTrabajoPanel controladorOrdenDeTrabajoPanel) {
@@ -59,10 +39,10 @@ public class wOrdenDeTrabajo extends JFrame {
 		splitPane.setDividerLocation(400);
 		splitPane.setDividerSize(5);
 
-		subPanel_ordenDeTrabajo = new OrdenDeTrabajoPanel(controladorOrdenDeTrabajoPanel);
+		subPanel_ordenDeTrabajo = controladorOrdenDeTrabajoPanel.getOrdenDeTrabajoPanel();
 		subPanel_ordenDeTrabajo.setBounds(10, 423, 879, 340);
 
-		subPanel_presupuesto = new PresupuestoPanel(controladorPresupuestoPanel);
+		subPanel_presupuesto = controladorPresupuestoPanel.getPresupuestoPanel();
 		subPanel_presupuesto.setBounds(10, 423, 879, 340);
 
 		splitPane.setTopComponent(subPanel_ordenDeTrabajo);
