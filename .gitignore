@@ -3,8 +3,6 @@ trunk/electro-service/manifest.mf
 trunk/electro-service/nbproject/*
 
 .git/*
-.settings/*
 bin/*
 /.classpath
-/.project
 /bin/
