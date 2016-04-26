@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class PresupuestoPanel extends javax.swing.JPanel {
 
@@ -26,9 +28,6 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 	private javax.swing.JTextField fecha_Presupuesto_txf;
 	private javax.swing.JLabel horasTrabajo_lbl;
 	private javax.swing.JTextField horasTrabajo_txf;
-	private javax.swing.JLabel iconIngresar_lbl;
-	private javax.swing.JLabel iconMas_lbl;
-	private javax.swing.JLabel iconMenos_lbl;
 	private javax.swing.JSeparator jSeparator1;
 	private javax.swing.JTextField valorPresupuestado_txf;
 	private javax.swing.JLabel nroTecnico_lbl;
@@ -37,6 +36,9 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 	private javax.swing.JLabel valorPresupuestado_lbl;
 	private JTable tablaComponentes;
 	private JScrollPane tabla_scrollPane;
+	private JButton iconMas_btn;
+	private JButton iconMenos_btn;
+	private JButton iconIngreso_btn;
 
 	public PresupuestoPanel() {
 		initComponents();
@@ -64,15 +66,9 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		componentes_lbl = new javax.swing.JLabel();
 		componentes_lbl.setBounds(138, 121, 83, 14);
 		componentes_jComboBox = new javax.swing.JComboBox<>();
-		componentes_jComboBox.setBounds(266, 118, 152, 20);
+		componentes_jComboBox.setBounds(266, 118, 152, 27);
 		cantidad_lbl = new javax.swing.JLabel();
-		cantidad_lbl.setBounds(464, 121, 26, 24);
-		iconMas_lbl = new javax.swing.JLabel();
-		iconMas_lbl.setBounds(430, 121, 24, 24);
-		iconMenos_lbl = new javax.swing.JLabel();
-		iconMenos_lbl.setBounds(496, 121, 24, 24);
-		iconIngresar_lbl = new javax.swing.JLabel();
-		iconIngresar_lbl.setBounds(530, 121, 24, 24);
+		cantidad_lbl.setBounds(473, 121, 26, 24);
 		descripcionBreve_lbl = new javax.swing.JLabel();
 		descripcionBreve_lbl.setBounds(139, 266, 289, 14);
 		descripcionTecnica_lbl = new javax.swing.JLabel();
@@ -112,21 +108,12 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 				new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
 		cantidad_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		cantidad_lbl.setText("0");
+
 		cantidad_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255)));
 
-		iconMas_lbl.setIcon(new javax.swing.ImageIcon(
-				"C:\\Users\\pc\\Documents\\NetBeansProjects\\electro-service\\DesarrolloExtra-ElectroService\\src\\desarrolloextra\\icons\\plus-outline.png")); // NOI18N
-
-		iconMenos_lbl.setIcon(new javax.swing.ImageIcon(
-				"C:\\Users\\pc\\Documents\\NetBeansProjects\\electro-service\\DesarrolloExtra-ElectroService\\src\\desarrolloextra\\icons\\minus-outline.png")); // NOI18N
-
-		iconIngresar_lbl.setIcon(new javax.swing.ImageIcon(
-				"C:\\Users\\pc\\Documents\\NetBeansProjects\\electro-service\\DesarrolloExtra-ElectroService\\src\\desarrolloextra\\icons\\tick-outline.png")); // NOI18N
-
 		String[] nombreColumnas = { "Nombre", "Cantidad" };
-
-		tablaComponentes = new JTable(cargarInformacionTabla(), nombreColumnas);
+		Object[][] informacionTabla = {};
+		tablaComponentes = new JTable(informacionTabla, nombreColumnas);
 		tablaComponentes.setBounds(138, 146, 605, 111);
 
 		tabla_scrollPane = new JScrollPane();
@@ -164,10 +151,7 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		add(nroTecnico_txf);
 		add(horasTrabajo_txf);
 		add(componentes_jComboBox);
-		add(iconMas_lbl);
 		add(cantidad_lbl);
-		add(iconMenos_lbl);
-		add(iconIngresar_lbl);
 		add(tabla_scrollPane);
 		add(valorPresupuestado_lbl);
 		add(valorPresupuestado_txf);
@@ -175,6 +159,24 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		add(descripcionBreve_lbl);
 		add(descripcionTecnica_lbl);
 		add(descripcionTecnica_jScrollPane);
+
+		iconMas_btn = new JButton("");
+		iconMas_btn.setIcon(
+				new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\plus-outline.png"));
+		iconMas_btn.setBounds(428, 118, 37, 27);
+		add(iconMas_btn);
+
+		iconMenos_btn = new JButton("");
+		iconMenos_btn.setIcon(
+				new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\minus-outline.png"));
+		iconMenos_btn.setBounds(509, 118, 37, 27);
+		add(iconMenos_btn);
+
+		iconIngreso_btn = new JButton("");
+		iconIngreso_btn.setIcon(
+				new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\tick-outline.png"));
+		iconIngreso_btn.setBounds(556, 118, 37, 27);
+		add(iconIngreso_btn);
 
 	}
 
@@ -226,10 +228,19 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		return tablaComponentes;
 	}
 
-	public Object[][] cargarInformacionTabla() {
-		// Hardcodeo, cambiar por datos de la BD
-		Object[][] informacionTabla = { { "Placa", new Integer(5) }, { "Boton", new Integer(3) } };
-		return informacionTabla;
+	public void setCantidad_lbl(int cantidad) {
+		this.cantidad_lbl.setText(cantidad + "");
 	}
 
+	public JButton getIconIngreso_btn() {
+		return iconIngreso_btn;
+	}
+
+	public JButton getIconMas_btn() {
+		return iconMas_btn;
+	}
+
+	public JButton getIconMenos_btn() {
+		return iconMenos_btn;
+	}
 }
