@@ -15,8 +15,6 @@ CREATE TABLE `ciente` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-
-
 CREATE TABLE `marca_producto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `detalle` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
@@ -26,8 +24,6 @@ CREATE TABLE `marca_producto` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
-
-
 CREATE TABLE `tipo_producto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `detalle` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
@@ -36,3 +32,16 @@ CREATE TABLE `tipo_producto` (
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+CREATE TABLE `presupuesto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `idcliente` INT NULL,
+  `descripcion_breve` LONGTEXT NULL,
+  `descripcion_tecnica` LONGTEXT NULL,
+  `fecha_creacion` DATETIME NULL,
+  `habilitado` TINYINT(1) NULL,
+  `idusuario` INT NULL,
+  PRIMARY KEY (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  
+  
