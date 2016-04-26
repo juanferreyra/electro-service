@@ -42,6 +42,7 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 	private JButton iconMenos_btn;
 	private JButton iconIngreso_btn;
 	private JTextField fechaVencimiento_txf;
+	private JTextField valorManoDeObra_txf;
 
 	public PresupuestoPanel() {
 		initComponents();
@@ -189,6 +190,15 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 		fechaVencimiento_txf = new JTextField();
 		fechaVencimiento_txf.setBounds(589, 64, 152, 20);
 		add(fechaVencimiento_txf);
+		
+		JLabel ValorManoDeObra_lbl = new JLabel();
+		ValorManoDeObra_lbl.setText("Valor Mano de Obra");
+		ValorManoDeObra_lbl.setBounds(462, 93, 117, 14);
+		add(ValorManoDeObra_lbl);
+		
+		valorManoDeObra_txf = new JTextField();
+		valorManoDeObra_txf.setBounds(589, 90, 152, 20);
+		add(valorManoDeObra_txf);
 
 	}
 

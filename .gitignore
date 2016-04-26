@@ -1,8 +1,1 @@
-trunk/electro-service/build.xml
-trunk/electro-service/manifest.mf
-trunk/electro-service/nbproject/*
-
 .git/*
-bin/*
-/.classpath
-/bin/
