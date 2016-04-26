@@ -11,6 +11,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class PresupuestoPanel extends javax.swing.JPanel {
 
@@ -39,6 +41,7 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 	private JButton iconMas_btn;
 	private JButton iconMenos_btn;
 	private JButton iconIngreso_btn;
+	private JTextField fechaVencimiento_txf;
 
 	public PresupuestoPanel() {
 		initComponents();
@@ -177,6 +180,15 @@ public class PresupuestoPanel extends javax.swing.JPanel {
 				new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\tick-outline.png"));
 		iconIngreso_btn.setBounds(556, 118, 37, 27);
 		add(iconIngreso_btn);
+		
+		JLabel FechaVencimiento_lbl = new JLabel();
+		FechaVencimiento_lbl.setText("Fecha Vencimiento");
+		FechaVencimiento_lbl.setBounds(462, 69, 117, 14);
+		add(FechaVencimiento_lbl);
+		
+		fechaVencimiento_txf = new JTextField();
+		fechaVencimiento_txf.setBounds(589, 64, 152, 20);
+		add(fechaVencimiento_txf);
 
 	}
 
