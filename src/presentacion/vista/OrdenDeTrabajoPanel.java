@@ -28,6 +28,7 @@ public class OrdenDeTrabajoPanel extends JPanel {
 	private javax.swing.JLabel tipoProducto_lbl;
 	private JTextField nroCliente_txf;
 	private JTextField producto_txf;
+	private JTextArea descripcionFalla_txtArea;
 
 	/**
 	 * Create the panel.
@@ -125,10 +126,10 @@ public class OrdenDeTrabajoPanel extends JPanel {
 		add(tipoProducto_jCBox);
 		add(descripcionFalla_jScrollPane);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setRows(5);
-		textArea.setColumns(20);
-		descripcionFalla_jScrollPane.setViewportView(textArea);
+		descripcionFalla_txtArea = new JTextArea();
+		descripcionFalla_txtArea.setRows(5);
+		descripcionFalla_txtArea.setColumns(20);
+		descripcionFalla_jScrollPane.setViewportView(descripcionFalla_txtArea);
 		add(jSeparator1);
 		add(generarDocumentos_Btn);
 
@@ -141,6 +142,10 @@ public class OrdenDeTrabajoPanel extends JPanel {
 		producto_txf.setBounds(269, 96, 163, 20);
 		add(producto_txf);
 		producto_txf.setColumns(10);
+	}
+
+	public String getDescripcionFalla() {
+		return descripcionFalla_txtArea.getText();
 	}
 
 	public String getFecha_OrdenDeTrabajo() {

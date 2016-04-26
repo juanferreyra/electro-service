@@ -31,10 +31,4 @@ public class ControladorPresupuestoPanel implements ActionListener {
 		return presupuestoPanel;
 	}
 
-	public void setPresupuestoPanel(PresupuestoPanel presupuestoPanel) {
-		this.presupuestoPanel = presupuestoPanel;
-	}
-	
-	
-
 }
