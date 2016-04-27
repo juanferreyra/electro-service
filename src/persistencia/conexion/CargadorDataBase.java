@@ -12,7 +12,7 @@ import com.ibatis.common.jdbc.ScriptRunner;
 
 public class CargadorDataBase
 {
-	private String path_SQLscript = "scriptAgenda.sql";
+	private String path_SQLscript = "db.sql";
 	private String host;
 	//private String port;
 	private String schema;

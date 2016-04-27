@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class ConfigDataBase extends javax.swing.JFrame
+public class VentanaConfigDataBase extends javax.swing.JFrame
 {
 
     private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class ConfigDataBase extends javax.swing.JFrame
     /**
      * Creates new form ConfigDataBase
      */
-    public ConfigDataBase()
+    public VentanaConfigDataBase()
     {
         super();
         setTitle("Configuracion de Base de Datos");
