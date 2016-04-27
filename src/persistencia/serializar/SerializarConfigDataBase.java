@@ -18,7 +18,7 @@ public class SerializarConfigDataBase {
 		try 
 		
 		{
-			FileOutputStream fos = new FileOutputStream("config.bin");
+			FileOutputStream fos = new FileOutputStream("config.txt");
 			ObjectOutputStream out = new ObjectOutputStream(fos);
 			out.writeObject(configuracion);
 			out.close();
@@ -35,7 +35,7 @@ public class SerializarConfigDataBase {
 		ConfigDataBaseDTO nueva = null;
 		try
 		{
-			FileInputStream fis = new FileInputStream("config.bin");
+			FileInputStream fis = new FileInputStream("config.txt");
 			ObjectInputStream in = new ObjectInputStream(fis);
 			nueva = (ConfigDataBaseDTO) in.readObject();
 			in.close();

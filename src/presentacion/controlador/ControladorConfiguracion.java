@@ -9,16 +9,16 @@ import dto.ConfigDataBaseDTO;
 //import modelo.Presupuesto;
 import persistencia.conexion.Conexion;
 import persistencia.serializar.SerializarConfigDataBase;
-import presentacion.vista.ConfigDataBase;
+import presentacion.vista.VentanaConfigDataBase;
 
 public class ControladorConfiguracion implements ActionListener
 {
 
-	private ConfigDataBase ventanaConfiguracion;
+	private VentanaConfigDataBase ventanaConfiguracion;
 	private SerializarConfigDataBase serializar;
 	private ConfigDataBaseDTO configuracion;
 	
-	public ControladorConfiguracion(ConfigDataBase ventanaConfiguracion)
+	public ControladorConfiguracion(VentanaConfigDataBase ventanaConfiguracion)
 	{
 		this.ventanaConfiguracion = ventanaConfiguracion;
 		this.ventanaConfiguracion.getBtnTest().addActionListener(this);
