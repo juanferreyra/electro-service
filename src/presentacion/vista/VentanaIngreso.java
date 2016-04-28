@@ -56,7 +56,7 @@ public class VentanaIngreso extends JFrame {
 		separator.setBounds(10, 34, 664, 7);
 		contentPane.add(separator);
 
-		JLabel numeroCliente_lbl = new JLabel("N\u00FAmero Cliente");
+		JLabel numeroCliente_lbl = new JLabel("N\u00FAmero Cliente:");
 		numeroCliente_lbl.setBounds(10, 52, 120, 14);
 		contentPane.add(numeroCliente_lbl);
 
@@ -98,7 +98,7 @@ public class VentanaIngreso extends JFrame {
 
 		contentPane.add(panelTablaDatosCliente);
 
-		JLabel nombreProducto_lbl = new JLabel("Nombre Producto");
+		JLabel nombreProducto_lbl = new JLabel("Nombre Producto:");
 		nombreProducto_lbl.setBounds(10, 154, 120, 14);
 		contentPane.add(nombreProducto_lbl);
 
@@ -107,7 +107,7 @@ public class VentanaIngreso extends JFrame {
 		nombreProducto_txf.setBounds(140, 151, 293, 20);
 		contentPane.add(nombreProducto_txf);
 
-		JLabel marca_lbl = new JLabel("Marca");
+		JLabel marca_lbl = new JLabel("Marca:");
 		marca_lbl.setBounds(10, 191, 120, 14);
 		contentPane.add(marca_lbl);
 
@@ -115,7 +115,7 @@ public class VentanaIngreso extends JFrame {
 		marca_ComboBox.setBounds(140, 188, 120, 20);
 		contentPane.add(marca_ComboBox);
 
-		JLabel tipo_lbl = new JLabel("Tipo");
+		JLabel tipo_lbl = new JLabel("Tipo:");
 		tipo_lbl.setBounds(270, 191, 120, 14);
 		contentPane.add(tipo_lbl);
 
@@ -126,7 +126,7 @@ public class VentanaIngreso extends JFrame {
 		JScrollPane descripcionFalla_jScrollPane = new javax.swing.JScrollPane();
 		descripcionFalla_jScrollPane.setBounds(10, 220, 664, 63);
 		descripcionFalla_jScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
-				"Descripción de Falla", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				"Descripción de falla:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 				javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 0, 0)));
 		descripcionFalla_jScrollPane
 				.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -166,7 +166,7 @@ public class VentanaIngreso extends JFrame {
 		direccionDefecto_checkBox.setBounds(132, 351, 21, 14);
 		contentPane.add(direccionDefecto_checkBox);
 		
-		JLabel direccinAlternativa_lbl = new JLabel("Direcci\u00F3n alternativa");
+		JLabel direccinAlternativa_lbl = new JLabel("Direcci\u00F3n alternativa:");
 		direccinAlternativa_lbl.setBounds(10, 376, 120, 14);
 		contentPane.add(direccinAlternativa_lbl);
 		
