@@ -123,11 +123,13 @@ public class VentanaIngreso extends JFrame {
 		tipo_ComboBox.setBounds(313, 188, 120, 20);
 		contentPane.add(tipo_ComboBox);
 
+		JLabel descripcionFalla_lbl = new JLabel("Descripción falla:");
+		descripcionFalla_lbl.setBounds(10, 227, 146, 14);
+		contentPane.add(descripcionFalla_lbl);
+
 		JScrollPane descripcionFalla_jScrollPane = new javax.swing.JScrollPane();
-		descripcionFalla_jScrollPane.setBounds(10, 220, 664, 63);
-		descripcionFalla_jScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
-				"Descripción de falla:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-				javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(0, 0, 0)));
+		descripcionFalla_jScrollPane.setBounds(10, 252, 664, 63);
+		descripcionFalla_jScrollPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		descripcionFalla_jScrollPane
 				.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionFalla_jScrollPane
