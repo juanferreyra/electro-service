@@ -9,17 +9,11 @@ import persistencia.serializar.SerializarConfigDataBase;
  */
 import presentacion.controlador.ControladorConfiguracion;
 import presentacion.controlador.ControladorListaIngresos;
-import presentacion.controlador.ControladorOrdenDeTrabajoPanel;
-import presentacion.controlador.ControladorPresupuestoPanel;
-
 /*
  * VISTAS
  */
-import presentacion.vista.OrdenDeTrabajoPanel;
-import presentacion.vista.PresupuestoPanel;
 import presentacion.vista.VentanaConfigDataBase;
 import presentacion.vista.VentanaListaIngresos;
-import presentacion.vista.wOrdenDeTrabajo;
 
 public class Main{
 
@@ -52,15 +46,6 @@ public class Main{
 				ControladorListaIngresos controlador = new ControladorListaIngresos(vista);
 				controlador.inicializar();
 				
-				// SOLO PARA DEBUG
-				OrdenDeTrabajoPanel ordenDeTrabajoPanel = new OrdenDeTrabajoPanel();
-				PresupuestoPanel presupuestoPanel = new PresupuestoPanel();
-
-				ControladorPresupuestoPanel controladorPresupuestoPanel = new ControladorPresupuestoPanel(presupuestoPanel);
-				ControladorOrdenDeTrabajoPanel controladorOrdenDeTrabajoPanel = new ControladorOrdenDeTrabajoPanel(
-						ordenDeTrabajoPanel);
-
-				wOrdenDeTrabajo frame = new wOrdenDeTrabajo(controladorPresupuestoPanel, controladorOrdenDeTrabajoPanel);
 			}
 		}
 
