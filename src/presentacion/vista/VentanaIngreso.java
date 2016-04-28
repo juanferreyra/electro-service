@@ -152,15 +152,10 @@ public class VentanaIngreso extends JFrame {
 		envioAdomicilio_lbl.setBounds(10, 326, 181, 14);
 		contentPane.add(envioAdomicilio_lbl);
 		
-		JCheckBox si_checkBox = new JCheckBox("SI");
-		si_checkBox.setBackground(Color.WHITE);
-		si_checkBox.setBounds(90, 326, 40, 14);
-		contentPane.add(si_checkBox);
-		
-		JCheckBox no_checkBox = new JCheckBox("NO");
-		no_checkBox.setBackground(Color.WHITE);
-		no_checkBox.setBounds(132, 326, 40, 14);
-		contentPane.add(no_checkBox);
+		JCheckBox envioDomicilio_checkBox = new JCheckBox("");
+		envioDomicilio_checkBox.setBackground(Color.WHITE);
+		envioDomicilio_checkBox.setBounds(132, 326, 21, 14);
+		contentPane.add(envioDomicilio_checkBox);
 		
 		JLabel direccionDefecto_lbl = new JLabel("Usar direcci\u00F3n del cliente ");
 		direccionDefecto_lbl.setBounds(10, 351, 163, 14);
@@ -171,7 +166,7 @@ public class VentanaIngreso extends JFrame {
 		direccionDefecto_checkBox.setBounds(132, 351, 21, 14);
 		contentPane.add(direccionDefecto_checkBox);
 		
-		JLabel direccinAlternativa_lbl = new JLabel("Direcci\u00F3n Alternativa");
+		JLabel direccinAlternativa_lbl = new JLabel("Direcci\u00F3n alternativa");
 		direccinAlternativa_lbl.setBounds(10, 376, 120, 14);
 		contentPane.add(direccinAlternativa_lbl);
 		
