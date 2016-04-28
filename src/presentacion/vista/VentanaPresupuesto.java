@@ -42,7 +42,7 @@ public class VentanaPresupuesto extends JFrame {
 
 	public VentanaPresupuesto() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 602);
+		setBounds(100, 100, 700, 628);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -66,7 +66,7 @@ public class VentanaPresupuesto extends JFrame {
 		separator.setForeground(Color.BLUE);
 		contentPane.add(separator);
 
-		JLabel nombreProducto_lbl = new JLabel("Nombre Producto:");
+		JLabel nombreProducto_lbl = new JLabel("<html><i>Nombre Producto:</i></html>");
 		nombreProducto_lbl.setBounds(10, 52, 116, 14);
 		contentPane.add(nombreProducto_lbl);
 
@@ -74,7 +74,7 @@ public class VentanaPresupuesto extends JFrame {
 		nombreProductoTexto_lbl.setBounds(136, 52, 445, 14);
 		contentPane.add(nombreProductoTexto_lbl);
 
-		JLabel marca_lbl = new JLabel("Marca:");
+		JLabel marca_lbl = new JLabel("<html><i>Marca:</i></html>");
 		marca_lbl.setBounds(10, 78, 116, 14);
 		contentPane.add(marca_lbl);
 
@@ -82,7 +82,7 @@ public class VentanaPresupuesto extends JFrame {
 		marcaTexto_lbl.setBounds(71, 78, 184, 14);
 		contentPane.add(marcaTexto_lbl);
 
-		JLabel tipo_lbl = new JLabel("Tipo:");
+		JLabel tipo_lbl = new JLabel("<html><i>Tipo:</i></html>");
 		tipo_lbl.setBounds(303, 78, 116, 14);
 		contentPane.add(tipo_lbl);
 
@@ -90,7 +90,7 @@ public class VentanaPresupuesto extends JFrame {
 		tipoTexto_lbl.setBounds(362, 78, 184, 14);
 		contentPane.add(tipoTexto_lbl);
 
-		JLabel descripcionFalla_lbl = new JLabel("Descripción falla:");
+		JLabel descripcionFalla_lbl = new JLabel("<html><i>Descripci\u00F3n falla:</i></html>");
 		descripcionFalla_lbl.setBounds(10, 103, 146, 14);
 		contentPane.add(descripcionFalla_lbl);
 
@@ -236,12 +236,14 @@ public class VentanaPresupuesto extends JFrame {
 		descripcionBreve_lbl.setBounds(10, 416, 289, 14);
 		contentPane.add(descripcionBreve_lbl);
 		JScrollPane descripcionBreve_jScrollPane = new JScrollPane();
+		descripcionBreve_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		descripcionBreve_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionBreve_jScrollPane.setBounds(new Rectangle(10, 10, 30, 30));
 		descripcionBreve_jScrollPane.setBounds(10, 441, 305, 52);
 		JTextArea descripcionBreve_jTextArea = new JTextArea();
 		descripcionBreve_jTextArea.setBounds(new Rectangle(0, 0, 305, 52));
 		descripcionBreve_jScrollPane.add(descripcionBreve_jTextArea);
-
+		descripcionBreve_jScrollPane.setViewportView(descripcionBreve_jTextArea);
 		contentPane.add(descripcionBreve_jScrollPane);
 
 		JLabel descripcionTecnica_lbl = new JLabel();
@@ -249,20 +251,42 @@ public class VentanaPresupuesto extends JFrame {
 		descripcionTecnica_lbl.setBounds(369, 416, 291, 14);
 		contentPane.add(descripcionTecnica_lbl);
 		JScrollPane descripcionTecnica_jScrollPane = new JScrollPane();
+		descripcionTecnica_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		descripcionTecnica_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		descripcionTecnica_jScrollPane.setBounds(369, 441, 305, 52);
 		JTextArea descripcionTecnica_jTextArea = new JTextArea();
 		descripcionTecnica_jTextArea.setBounds(new Rectangle(0, 0, 305, 52));
 		descripcionTecnica_jScrollPane.add(descripcionTecnica_jTextArea);
+		descripcionTecnica_jScrollPane.setViewportView(descripcionTecnica_jTextArea);
 		contentPane.add(descripcionTecnica_jScrollPane);
 
 		JLabel valorPresupuestado_lbl = new JLabel();
+		valorPresupuestado_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		valorPresupuestado_lbl.setText("Valor Presupuestado:");
-		valorPresupuestado_lbl.setBounds(10, 524, 127, 14);
+		valorPresupuestado_lbl.setBounds(10, 522, 196, 14);
 		contentPane.add(valorPresupuestado_lbl);
 		JTextField valorPresupuestado_txf = new JTextField();
 		valorPresupuestado_txf.setBackground(SystemColor.text);
 		valorPresupuestado_txf.setBounds(168, 523, 506, 16);
 		contentPane.add(valorPresupuestado_txf);
+		
+		JButton verPresupuesto_btn = new JButton("Ver presupuesto");
+		verPresupuesto_btn.setIcon(new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\document-text.png"));
+		verPresupuesto_btn.setBounds(10, 556, 146, 23);
+		contentPane.add(verPresupuesto_btn);
+		
+		JButton enviarPresupuesto_btn = new JButton("Enviar presupuesto");
+		enviarPresupuesto_btn.setIcon(new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\mail.png"));
+		enviarPresupuesto_btn.setBounds(162, 556, 153, 23);
+		contentPane.add(enviarPresupuesto_btn);
+		
+		JButton cancelar_btn = new JButton("Cancelar");
+		cancelar_btn.setBounds(585, 556, 89, 23);
+		contentPane.add(cancelar_btn);
+		
+		JButton guardar_btn = new JButton("Guardar");
+		guardar_btn.setBounds(484, 556, 89, 23);
+		contentPane.add(guardar_btn);
 
 	}
 }
