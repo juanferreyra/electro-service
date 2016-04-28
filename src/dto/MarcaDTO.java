@@ -1,10 +1,10 @@
 package dto;
 
-public class TipoProductoDTO {
-	int id;
-	String detalle;
+public class MarcaDTO {
+	private int id;
+	private String detalle;
 	
-	public TipoProductoDTO(int id, String detalle){
+	public MarcaDTO(int id, String detalle) {
 		this.id = id;
 		this.detalle = detalle;
 	}
@@ -24,5 +24,4 @@ public class TipoProductoDTO {
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	
 }
