@@ -17,7 +17,6 @@ public class ControladorListaIngresos  implements ActionListener{
 		this.listaIngresos.setVisible(true);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
