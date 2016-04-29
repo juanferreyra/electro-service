@@ -46,6 +46,7 @@ public class Main{
 				VentanaLogin login = new VentanaLogin();
 				ControladorVentanaLogin controlLogin = new ControladorVentanaLogin(login);
 				login.setVisible(true);
+				controlLogin.iniciar();
 				
 				
 				//VentanaListaIngresos vista = new VentanaListaIngresos();

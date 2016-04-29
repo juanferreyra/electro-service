@@ -2,7 +2,7 @@ package presentacion.vista;
 
 import javax.swing.JFrame;
 
-public class VentanaListaIngresos {
+public class VentanaListaIngresos extends JFrame{
 
 	private JFrame frame;
 
@@ -22,9 +22,9 @@ public class VentanaListaIngresos {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void setVisible(boolean b) {
+	//public void setVisible(boolean b) {
 		// TODO Auto-generated method stub
 		
-	}
+	//}
 
 }
