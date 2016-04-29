@@ -8,7 +8,7 @@ import persistencia.serializar.SerializarConfigDataBase;
  * CONTROLADORES
  */
 import presentacion.controlador.ControladorConfiguracion;
-import presentacion.controlador.ControladorListaIngresos;
+import presentacion.controlador.ControladorVentanaPrincipal;
 import presentacion.controlador.ControladorVentanaLogin;
 /*
  * VISTAS

@@ -9,8 +9,12 @@ public class UsuarioDTO {
 	private PerfilDTO perfil;
 	
 	
-	public UsuarioDTO(PerfilDTO perfil){
+	public UsuarioDTO(int id, String nombre, String apellido, String password, PerfilDTO perfil){
 		
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.password = password;
 		this.perfil = perfil;
 		
 	}

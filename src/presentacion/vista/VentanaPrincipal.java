@@ -15,14 +15,18 @@ import java.awt.Rectangle;
 import javax.swing.table.DefaultTableModel;
 
 import dto.UsuarioDTO;
+import modelo.Usuario;
 public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable ordenesDeTrabajo_table;
+	private UsuarioDTO user;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal(UsuarioDTO user) {
+		this.user = user;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1044, 500);
 		contentPane = new JPanel();
@@ -45,7 +49,7 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{3,"Botón","Fulanito",true,new JButton(),new JButton() , new JButton(), false, false, false, new JButton(), new JButton(),"Presupuestado"},
+				{3,"Botï¿½n","Fulanito",true,new JButton(),new JButton() , new JButton(), false, false, false, new JButton(), new JButton(),"Presupuestado"},
 			},
 			new String[] {
 				"N\u00FAmero ", "Producto", "Cliente", "Flete", "Constancia", "Comprobante", "Presupuesto", "Avisado", "Aceptado", "Reparado", "Informar", "Retirar", "Estado"
@@ -70,4 +74,11 @@ public class VentanaPrincipal extends JFrame {
 
 		 contentPane.add(ordenesDeTrabajo_scrollPane);
 	}
+
+	public UsuarioDTO getUser() {
+		return user;
+	}
+	
+	
+	
 }

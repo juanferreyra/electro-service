@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import dto.PerfilDTO;
 import dto.UsuarioDTO;
+import modelo.Usuario;
 import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaListaIngresos;
 import presentacion.vista.VentanaLogin;
@@ -16,6 +17,7 @@ public class ControladorVentanaLogin implements ActionListener{
 	
 	private VentanaLogin login;
 	private VentanaPrincipal ventanaPrincipal;
+	private ControladorVentanaPrincipal controlVentanaPrincipal;
 	
 	
 	public ControladorVentanaLogin(VentanaLogin login) {
@@ -35,34 +37,44 @@ public class ControladorVentanaLogin implements ActionListener{
 		if (e.getSource() == this.login.getLogin_btn()){
 
 			if (this.login.getUsuario_txf().getText().equals("admin")
-					& (this.login.getContrasena_txf().getText().equals("admin"))){
+					& (this.login.getContrasena_txf().getText().equals("1234"))){
 				
 				this.login.setVisible(false);
 				
-				PerfilDTO admin = new PerfilDTO("admin");
-				UsuarioDTO usuarioAdmin =new UsuarioDTO(admin);		
-				ventanaPrincipal = new VentanaPrincipal(usuarioAdmin);
+				PerfilDTO perf1 = new PerfilDTO("ADMINISTRATIVO");
+				UsuarioDTO user = new UsuarioDTO(1,"ROBERTO","CARLOS","1234",perf1);
+				
+				ventanaPrincipal = new VentanaPrincipal(user);
+				
 				ventanaPrincipal.setVisible(true);
 				
 								
 			}else if (this.login.getUsuario_txf().getText().equals("tecnico")
-					& (this.login.getContrasena_txf().getText().equals("tecnico"))){
+					& (this.login.getContrasena_txf().getText().equals("1212"))){
 
 				this.login.setVisible(false);
 				
-				PerfilDTO tecnico = new PerfilDTO("tecnico");
-				UsuarioDTO usuarioTecnico =new UsuarioDTO(tecnico);		
-				ventanaPrincipal = new VentanaPrincipal(usuarioTecnico);
+				PerfilDTO perf2 = new PerfilDTO("TECNICO");
+				UsuarioDTO user2 = new UsuarioDTO(2,"OSCAR","PINTOS","1212",perf2);
+				
+				ventanaPrincipal = new VentanaPrincipal(user2);
+				ventanaPrincipal.setVisible(true);
+				
+				
 		
 
 			}else if (this.login.getUsuario_txf().getText().equals("jefe")
-					& (this.login.getContrasena_txf().getText().equals("jefe"))){
+					& (this.login.getContrasena_txf().getText().equals("0000"))){
 
 				this.login.setVisible(false);
 				
-				PerfilDTO jefe = new PerfilDTO("jefe");
-				UsuarioDTO usuarioJefe =new UsuarioDTO(jefe);		
-				ventanaPrincipal = new VentanaPrincipal(usuarioJefe);
+				PerfilDTO perf3 = new PerfilDTO("JEFE");
+				UsuarioDTO user3 = new UsuarioDTO(3,"JOAQUIN","TELECHEA","0000",perf3);
+				
+				ventanaPrincipal = new VentanaPrincipal(user3);
+				ventanaPrincipal.setVisible(true);
+				
+				
 
 
 			}else{
