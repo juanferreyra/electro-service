@@ -9,11 +9,13 @@ import persistencia.serializar.SerializarConfigDataBase;
  */
 import presentacion.controlador.ControladorConfiguracion;
 import presentacion.controlador.ControladorListaIngresos;
+import presentacion.controlador.ControladorVentanaLogin;
 /*
  * VISTAS
  */
 import presentacion.vista.VentanaConfigDataBase;
 import presentacion.vista.VentanaListaIngresos;
+import presentacion.vista.VentanaLogin;
 
 public class Main{
 
@@ -41,10 +43,14 @@ public class Main{
 				
 			} else {
 				
-				VentanaListaIngresos vista = new VentanaListaIngresos();
-
-				ControladorListaIngresos controlador = new ControladorListaIngresos(vista);
-				controlador.inicializar();
+				VentanaLogin login = new VentanaLogin();
+				ControladorVentanaLogin controlLogin = new ControladorVentanaLogin(login);
+				login.setVisible(true);
+				
+				
+				//VentanaListaIngresos vista = new VentanaListaIngresos();
+				//ControladorListaIngresos controlador = new ControladorListaIngresos(vista);
+				//controlador.inicializar();
 				
 			}
 		}
