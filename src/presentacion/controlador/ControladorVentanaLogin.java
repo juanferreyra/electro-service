@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import dto.PerfilDTO;
+import dto.UsuarioDTO;
 import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaListaIngresos;
 import presentacion.vista.VentanaLogin;
@@ -34,20 +36,33 @@ public class ControladorVentanaLogin implements ActionListener{
 
 			if (this.login.getUsuario_txf().getText().equals("admin")
 					& (this.login.getContrasena_txf().getText().equals("admin"))){
-
+				
 				this.login.setVisible(false);
+				
+				PerfilDTO admin = new PerfilDTO("admin");
+				UsuarioDTO usuarioAdmin =new UsuarioDTO(admin);		
+				ventanaPrincipal = new VentanaPrincipal(usuarioAdmin);
+				ventanaPrincipal.setVisible(true);
 				
 								
 			}else if (this.login.getUsuario_txf().getText().equals("tecnico")
 					& (this.login.getContrasena_txf().getText().equals("tecnico"))){
 
 				this.login.setVisible(false);
+				
+				PerfilDTO tecnico = new PerfilDTO("tecnico");
+				UsuarioDTO usuarioTecnico =new UsuarioDTO(tecnico);		
+				ventanaPrincipal = new VentanaPrincipal(usuarioTecnico);
 		
 
 			}else if (this.login.getUsuario_txf().getText().equals("jefe")
 					& (this.login.getContrasena_txf().getText().equals("jefe"))){
 
 				this.login.setVisible(false);
+				
+				PerfilDTO jefe = new PerfilDTO("jefe");
+				UsuarioDTO usuarioJefe =new UsuarioDTO(jefe);		
+				ventanaPrincipal = new VentanaPrincipal(usuarioJefe);
 
 
 			}else{
