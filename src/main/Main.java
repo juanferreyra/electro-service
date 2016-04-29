@@ -49,10 +49,6 @@ public class Main{
 				controlLogin.iniciar();
 				
 				
-				//VentanaListaIngresos vista = new VentanaListaIngresos();
-				//ControladorListaIngresos controlador = new ControladorListaIngresos(vista);
-				//controlador.inicializar();
-				
 			}
 		}
 
