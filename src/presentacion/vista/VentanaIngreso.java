@@ -29,6 +29,9 @@ public class VentanaIngreso extends JFrame {
 	private JTable table;
 	private JTextField nombreProducto_txf;
 	private JTextField direccionAlternativa_txf;
+	private JButton buscarCliente_btn;
+	private JComboBox<String> marca_ComboBox;
+	private JComboBox<String> tipo_ComboBox ;
 
 	public VentanaIngreso() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,7 +68,7 @@ public class VentanaIngreso extends JFrame {
 		contentPane.add(numeroCliente_txf);
 		numeroCliente_txf.setColumns(10);
 
-		JButton buscarCliente_btn = new JButton("");
+		buscarCliente_btn = new JButton("");
 		buscarCliente_btn
 				.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/search.png")));
 		buscarCliente_btn.setBounds(270, 48, 33, 23);
@@ -111,7 +114,7 @@ public class VentanaIngreso extends JFrame {
 		marca_lbl.setBounds(10, 191, 120, 14);
 		contentPane.add(marca_lbl);
 
-		JComboBox marca_ComboBox = new JComboBox();
+		marca_ComboBox = new JComboBox<String>();
 		marca_ComboBox.setBounds(140, 188, 120, 20);
 		contentPane.add(marca_ComboBox);
 
@@ -119,7 +122,7 @@ public class VentanaIngreso extends JFrame {
 		tipo_lbl.setBounds(270, 191, 120, 14);
 		contentPane.add(tipo_lbl);
 
-		JComboBox tipo_ComboBox = new JComboBox();
+		tipo_ComboBox = new JComboBox<String>();
 		tipo_ComboBox.setBounds(313, 188, 120, 20);
 		contentPane.add(tipo_ComboBox);
 
@@ -177,5 +180,17 @@ public class VentanaIngreso extends JFrame {
 		contentPane.add(direccionAlternativa_txf);
 		direccionAlternativa_txf.setColumns(10);
 
+	}
+
+	public JButton getBtnBuscarCliente() {
+		return buscarCliente_btn;
+	}
+
+	public JComboBox<String> getComboMarcas() {
+		return marca_ComboBox;
+	}
+
+	public JComboBox<String> getComboTiposProductos() {
+		return tipo_ComboBox;
 	}
 }

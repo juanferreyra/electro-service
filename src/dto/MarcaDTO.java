@@ -1,12 +1,15 @@
 package dto;
 
 public class MarcaDTO {
+	
 	private int id;
 	private String detalle;
+	private int idusuario;
 	
-	public MarcaDTO(int id, String detalle) {
+	public MarcaDTO(int id, String detalle,int idusuario) {
 		this.id = id;
 		this.detalle = detalle;
+		this.idusuario = idusuario;
 	}
 
 	public int getId() {
@@ -23,5 +26,13 @@ public class MarcaDTO {
 
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
+	}
+	
+	public int getIdusuario() {
+		return idusuario;
+	}
+
+	public void setIdusuario(int idusuario) {
+		this.idusuario = idusuario;
 	}
 }

@@ -1,3 +1,4 @@
+
 package persistencia.dao;
 
 import java.sql.PreparedStatement;
@@ -7,27 +8,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import persistencia.conexion.Conexion;
-import dto.TipoProductoDTO;
+import dto.MarcaDTO;
 
-public class TipoProductoDAO
+public class MarcaDAO
 {
 		
-		private static final String insert = "INSERT INTO tipo_producto ("
+		private static final String insert = "INSERT INTO marca_producto ("
 				+ "`detalle`, `fecha_creacion`, `idusuario`, `habilitado`)"
 				+ " VALUES (?, now(), ?, true); ";
-		private static final String delete = "UPDATE tipo_producto SET habilitado='0' WHERE id = ?";
-		private static final String readall = "SELECT * FROM tipo_producto WHERE habilitado = true;";
-		private static final String update = "UPDATE tipo_producto SET detalle = ?  WHERE id = ? ;";
+		private static final String delete = "UPDATE marca_producto SET habilitado='0' WHERE id = ?";
+		private static final String readall = "SELECT * FROM marca_producto WHERE habilitado = true;";
+		private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
 		private static final Conexion conexion = Conexion.getConexion();
 		
-		public boolean insert(TipoProductoDTO tipo_producto)
+		public boolean insert(MarcaDTO marca)
 		{
 			PreparedStatement statement;
 			try 
 			{
 				statement = conexion.getSQLConexion().prepareStatement(insert);
-				statement.setString(1, tipo_producto.getDetalle());
-				statement.setInt(2, tipo_producto.getIdUsuario());
+				statement.setString(1, marca.getDetalle());
+				statement.setInt(2, marca.getIdusuario());
 				
 				if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
 					return true;
@@ -43,14 +44,14 @@ public class TipoProductoDAO
 			return false;
 		}
 		
-		public boolean delete(TipoProductoDTO tipoprodu_a_eliminar)
+		public boolean delete(MarcaDTO marca_a_eliminar)
 		{
 			PreparedStatement statement;
 			int chequeoUpdate=0;
 			try 
 			{
 				statement = conexion.getSQLConexion().prepareStatement(delete);
-				statement.setString(1, Integer.toString(tipoprodu_a_eliminar.getId()));
+				statement.setString(1, Integer.toString(marca_a_eliminar.getId()));
 				chequeoUpdate = statement.executeUpdate();
 				if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
 					return true;
@@ -66,11 +67,11 @@ public class TipoProductoDAO
 			return false;
 		}
 		
-		public List<TipoProductoDTO> readAll()
+		public List<MarcaDTO> readAll()
 		{
 			PreparedStatement statement;
 			ResultSet resultSet; //Guarda el resultado de la query
-			ArrayList<TipoProductoDTO> localidades = new ArrayList<TipoProductoDTO>();
+			ArrayList<MarcaDTO> marcas = new ArrayList<MarcaDTO>();
 			try 
 			{
 				statement = conexion.getSQLConexion().prepareStatement(readall);
@@ -78,7 +79,7 @@ public class TipoProductoDAO
 				
 				while(resultSet.next())
 				{
-					localidades.add(new TipoProductoDTO(resultSet.getInt("id"), resultSet.getString("detalle"),resultSet.getInt("idusuario")));
+					marcas.add(new MarcaDTO(resultSet.getInt("id"), resultSet.getString("detalle"),resultSet.getInt("idusuario")));
 				}
 			} 
 			catch (SQLException e) 
@@ -90,10 +91,10 @@ public class TipoProductoDAO
 				conexion.cerrarConexion();
 			}
 			
-			return localidades;
+			return marcas;
 		}
 		
-		public boolean update (TipoProductoDTO tipoprodu_a_modificar)
+		public boolean update (MarcaDTO marca_a_modificar)
 
 		{
 			PreparedStatement statement;
@@ -101,8 +102,8 @@ public class TipoProductoDAO
 			{
 				statement = conexion.getSQLConexion().prepareStatement(update);
 
-				statement.setString(1, tipoprodu_a_modificar.getDetalle());
-				statement.setInt(2, tipoprodu_a_modificar.getId());
+				statement.setString(1, marca_a_modificar.getDetalle());
+				statement.setInt(2, marca_a_modificar.getId());
 
 				if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
 					return true;
