@@ -27,6 +27,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton presupuestar_btn;
 	private JButton asignarOrden_btn;
 	private JButton reparacion_btn;
+	private JMenuBar menuBar;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal(UsuarioDTO user) {
@@ -40,7 +41,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 1028, 21);
 		contentPane.add(menuBar);
 
@@ -111,5 +112,9 @@ public class VentanaPrincipal extends JFrame {
 
 	public JButton getReparacion_btn() {
 		return this.reparacion_btn;
+	}
+
+	public JMenuBar getMenu() {
+		return this.menuBar;
 	}
 }

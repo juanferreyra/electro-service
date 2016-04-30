@@ -3,6 +3,9 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import modelo.Ingreso;
+import presentacion.vista.VentanaIngreso;
+import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaPrincipal;
 
 public class ControladorVentanaPrincipal implements ActionListener {
@@ -71,15 +74,27 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		}
 	}
 
+	public void limpiarTabla() {
+
+	}
+
+	@SuppressWarnings("unused")
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.principal.getIngresarProducto_btn()) {
-			// crear producto en BD y llamar a la ventana correspondiente.
+			ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(new VentanaIngreso(),
+					new Ingreso());
 		} else if (e.getSource() == this.principal.getPresupuestar_btn()) {
-
+			// this.controladorVentanaPresupuesto = new
+			// ControladorPresupuesto(new VentanaPresupuesto(), new Ingreso());
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
-
+			// this.controladorVentanaReparacion = new
+			// ControladorVentanaReparacion(new VentanaReparacion(), new
+			// Ingreso());
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
 
+			// conseguir nroOrden y tecnico
+			// this.cargarAsignacionTecnico_tablaOrdenesTrabajo(nroOrden,
+			// tecnico);
 		}
 	}
 }
