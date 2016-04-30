@@ -48,10 +48,6 @@ public class Main{
 				login.setVisible(true);
 				
 				
-				//VentanaListaIngresos vista = new VentanaListaIngresos();
-				//ControladorListaIngresos controlador = new ControladorListaIngresos(vista);
-				//controlador.inicializar();
-				
 			}
 		}
 
