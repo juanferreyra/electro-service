@@ -15,7 +15,7 @@ import java.awt.Rectangle;
 import javax.swing.table.DefaultTableModel;
 
 import dto.UsuarioDTO;
-import modelo.Usuario;
+import javax.swing.ImageIcon;
 public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,7 @@ public class VentanaPrincipal extends JFrame {
 		this.user = user;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1044, 500);
+		setBounds(100, 100, 1044, 518);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -39,7 +39,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(menuBar);
 
 		JLabel ordenesDeTrabajo_lbl = new JLabel("<html><b>\u00D3rdenes de Trabajo</b></html>");
-		ordenesDeTrabajo_lbl.setBounds(10, 43, 992, 14);
+		ordenesDeTrabajo_lbl.setBounds(10, 43, 1005, 36);
 		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(ordenesDeTrabajo_lbl);
@@ -49,17 +49,29 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{3,"Bot�n","Fulanito",true,new JButton(),new JButton() , new JButton(), false, false, false, new JButton(), new JButton(),"Presupuestado"},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"N\u00FAmero ", "Producto", "Cliente", "Flete", "Constancia", "Comprobante", "Presupuesto", "Avisado", "Aceptado", "Reparado", "Informar", "Retirar", "Estado"
+				"Nro.", "Fecha", "Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico", "Estado"
 			}
 		) {
-			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, String.class, Boolean.class, JButton.class, JButton.class, JButton.class, Boolean.class, Boolean.class, Boolean.class, JButton.class, JButton.class, String.class
+				Integer.class, Object.class, String.class, String.class, Boolean.class, Object.class, Object.class, String.class
 			};
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -68,17 +80,35 @@ public class VentanaPrincipal extends JFrame {
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		ordenesDeTrabajo_scrollPane.setBounds(10, 82, 1005, 301);
+		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
 		ordenesDeTrabajo_scrollPane.add(ordenesDeTrabajo_table);
 		ordenesDeTrabajo_scrollPane.setViewportView(ordenesDeTrabajo_table);
 
 		 contentPane.add(ordenesDeTrabajo_scrollPane);
+		 
+		 JButton ingresarProducto_btn = new JButton("Ingresar Producto");
+		 ingresarProducto_btn.setBounds(126, 446, 137, 23);
+		 contentPane.add(ingresarProducto_btn);
+		 
+		 JButton presupuestar_btn = new JButton("Presupuestar");
+		 presupuestar_btn.setBounds(426, 446, 137, 23);
+		 contentPane.add(presupuestar_btn);
+		 
+		 JButton asignarOrden_btn = new JButton("Asignar Orden");
+		 asignarOrden_btn.setBounds(573, 446, 137, 23);
+		 contentPane.add(asignarOrden_btn);
+		 
+		 JButton reparacion_btn = new JButton("Reparaci\u00F3n");
+		 reparacion_btn.setBounds(720, 446, 137, 23);
+		 contentPane.add(reparacion_btn);
+		 
+		 JLabel label = new JLabel("");
+		 label.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
+		 label.setBounds(10, 11, 240, 140);
+		 contentPane.add(label);
 	}
 
 	public UsuarioDTO getUser() {
 		return user;
 	}
-	
-	
-	
 }
