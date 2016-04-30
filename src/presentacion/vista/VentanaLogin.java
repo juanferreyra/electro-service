@@ -29,6 +29,7 @@ public class VentanaLogin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		String path = "/logo.png";
 		URL url = this.getClass().getResource(path);

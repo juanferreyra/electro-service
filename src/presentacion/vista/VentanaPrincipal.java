@@ -16,23 +16,29 @@ import javax.swing.table.DefaultTableModel;
 
 import dto.UsuarioDTO;
 import javax.swing.ImageIcon;
+
 public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable ordenesDeTrabajo_table;
 	private UsuarioDTO user;
+	private JButton ingresarProducto_btn;
+	private JButton presupuestar_btn;
+	private JButton asignarOrden_btn;
+	private JButton reparacion_btn;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal(UsuarioDTO user) {
 		this.user = user;
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1044, 518);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 1028, 21);
@@ -47,31 +53,11 @@ public class VentanaPrincipal extends JFrame {
 		// TABLA PRINCIPAL DEL SISTEMA
 
 		ordenesDeTrabajo_table = new JTable();
-		ordenesDeTrabajo_table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Nro.", "Fecha", "Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico", "Estado"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				Integer.class, Object.class, String.class, String.class, Boolean.class, Object.class, Object.class, String.class
-			};
+		ordenesDeTrabajo_table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "Nro.", "Fecha",
+				"Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico Asignado", "Estado" }) {
+			Class[] columnTypes = new Class[] { JButton.class, Integer.class, String.class, String.class, String.class,
+					Boolean.class, JButton.class, String.class, String.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -84,31 +70,46 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_scrollPane.add(ordenesDeTrabajo_table);
 		ordenesDeTrabajo_scrollPane.setViewportView(ordenesDeTrabajo_table);
 
-		 contentPane.add(ordenesDeTrabajo_scrollPane);
-		 
-		 JButton ingresarProducto_btn = new JButton("Ingresar Producto");
-		 ingresarProducto_btn.setBounds(126, 446, 137, 23);
-		 contentPane.add(ingresarProducto_btn);
-		 
-		 JButton presupuestar_btn = new JButton("Presupuestar");
-		 presupuestar_btn.setBounds(426, 446, 137, 23);
-		 contentPane.add(presupuestar_btn);
-		 
-		 JButton asignarOrden_btn = new JButton("Asignar Orden");
-		 asignarOrden_btn.setBounds(573, 446, 137, 23);
-		 contentPane.add(asignarOrden_btn);
-		 
-		 JButton reparacion_btn = new JButton("Reparaci\u00F3n");
-		 reparacion_btn.setBounds(720, 446, 137, 23);
-		 contentPane.add(reparacion_btn);
-		 
-		 JLabel label = new JLabel("");
-		 label.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
-		 label.setBounds(10, 11, 240, 140);
-		 contentPane.add(label);
+		contentPane.add(ordenesDeTrabajo_scrollPane);
+
+		ingresarProducto_btn = new JButton("Ingresar Producto");
+		ingresarProducto_btn.setBounds(126, 446, 137, 23);
+		contentPane.add(ingresarProducto_btn);
+
+		presupuestar_btn = new JButton("Presupuestar");
+		presupuestar_btn.setBounds(426, 446, 137, 23);
+		contentPane.add(presupuestar_btn);
+
+		asignarOrden_btn = new JButton("Asignar Orden");
+		asignarOrden_btn.setBounds(573, 446, 137, 23);
+		contentPane.add(asignarOrden_btn);
+		reparacion_btn = new JButton("Reparaci\u00F3n");
+		reparacion_btn.setBounds(720, 446, 137, 23);
+		contentPane.add(reparacion_btn);
+
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
+		label.setBounds(10, 11, 240, 140);
+		contentPane.add(label);
 	}
 
 	public UsuarioDTO getUser() {
 		return user;
+	}
+
+	public JButton getIngresarProducto_btn() {
+		return this.ingresarProducto_btn;
+	}
+
+	public JButton getPresupuestar_btn() {
+		return this.presupuestar_btn;
+	}
+
+	public JButton getAsignarOrden_btn() {
+		return this.asignarOrden_btn;
+	}
+
+	public JButton getReparacion_btn() {
+		return this.reparacion_btn;
 	}
 }

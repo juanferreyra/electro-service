@@ -3,49 +3,83 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import presentacion.vista.VentanaListaIngresos;
 import presentacion.vista.VentanaPrincipal;
 
-public class ControladorVentanaPrincipal  implements ActionListener{
-	
+public class ControladorVentanaPrincipal implements ActionListener {
+
 	private VentanaPrincipal principal;
 	private String perfil;
-	
+
 	public ControladorVentanaPrincipal(VentanaPrincipal principal) {
-		
+
 		this.principal = principal;
-		// this.principal.get aca los botones text etc. addActionlistener(this);
-		// asi con cada elemento a setear de la pantalla
+		this.principal.getIngresarProducto_btn().addActionListener(this);
+		this.perfil = this.principal.getUser().getPerfilDTO().getPerfil();
+
 	}
-	
-	public void iniciar(){
-		
-		this.perfil = principal.getUser().getPerfilDTO().getPerfil();
+
+	public void iniciar() {
+
 		this.adecuarVentanaPrincipal();
-		
+
 	}
-	
-	private void adecuarVentanaPrincipal(){
-		
-		if (this.perfil.equals("ADMINISTRATIVO")){
-			System.out.println(this.perfil);
-			// aca lo que se quiere mostrar de administrativo
-			
-		}else if(this.perfil.equals("TECNICO")){
-			System.out.println(this.perfil);
-			
-			// aca lo que se quiere mostrar de tecnico
-		}else{
-			System.out.println(this.perfil);
-			
-			// aca lo que se quiere mostrar de jefe
+
+	public void cargarOrden_tablaOrdenesTrabajo(String fecha, String producto, String cliente, Boolean envio) {
+		/**
+		 * Estructura de la tabla ordenes de trabajo:
+		 * ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/
+		 * tecnico_asignado/estado
+		 **/
+
+	}
+
+	public void cargarAsignacionTecnico_tablaOrdenesTrabajo(int nroOrden, String tecnico) {
+		/**
+		 * Estructura de la tabla ordenes de trabajo:
+		 * ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/
+		 * tecnico_asignado/estado
+		 **/
+
+	}
+
+	public void cargarEstado_tablaOrdenesTrabajo(int nroOrden, String estado) {
+		/**
+		 * Estructura de la tabla ordenes de trabajo:
+		 * ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/
+		 * tecnico_asignado/estado
+		 **/
+
+	}
+
+	private void adecuarVentanaPrincipal() {
+
+		if (this.perfil.equals("ADMINISTRATIVO")) {
+			// Visualizacion modo administrativo
+			this.principal.getPresupuestar_btn().setVisible(false);
+			this.principal.getAsignarOrden_btn().setVisible(false);
+			this.principal.getReparacion_btn().setVisible(false);
+			this.principal.setVisible(true);
+
+		} else if (this.perfil.equals("TECNICO")) {
+			// Visualizacion modo tecnico
+			this.principal.getIngresarProducto_btn().setVisible(false);
+			this.principal.setVisible(true);
+
+		} else {
+			// Visualizacion modo jefe
+			this.principal.setVisible(true);
 		}
 	}
-	
-	
 
-	public void actionPerformed(ActionEvent arg0) {
-		
-		
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == this.principal.getIngresarProducto_btn()) {
+			// crear producto en BD y llamar a la ventana correspondiente.
+		} else if (e.getSource() == this.principal.getPresupuestar_btn()) {
+
+		} else if (e.getSource() == this.principal.getReparacion_btn()) {
+
+		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
+
+		}
 	}
 }
