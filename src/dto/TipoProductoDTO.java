@@ -35,5 +35,4 @@ public class TipoProductoDTO {
 	public int getIdUsuario(){
 		return this.idusuario;
 	}
-	
 }

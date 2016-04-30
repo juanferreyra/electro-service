@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -15,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
@@ -34,6 +32,9 @@ public class VentanaIngreso extends JFrame {
 	private JComboBox<String> tipo_ComboBox ;
 
 	public VentanaIngreso() {
+		
+		super();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();

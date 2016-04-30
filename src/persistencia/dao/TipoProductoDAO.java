@@ -16,7 +16,7 @@ public class TipoProductoDAO
 				+ "`detalle`, `fecha_creacion`, `idusuario`, `habilitado`)"
 				+ " VALUES (?, now(), ?, true); ";
 		private static final String delete = "UPDATE tipo_producto SET habilitado='0' WHERE id = ?";
-		private static final String readall = "SELECT * FROM tipo_producto WHERE habilitado = true;";
+		private static final String readall = "SELECT id, detalle, idusuario FROM tipo_producto WHERE habilitado = true;";
 		private static final String update = "UPDATE tipo_producto SET detalle = ?  WHERE id = ? ;";
 		private static final Conexion conexion = Conexion.getConexion();
 		

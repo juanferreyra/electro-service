@@ -1,6 +1,7 @@
 package main;
 
 import dto.ConfigDataBaseDTO;
+import modelo.Ingreso;
 import persistencia.conexion.Conexion;
 import persistencia.serializar.SerializarConfigDataBase;
 
@@ -8,12 +9,14 @@ import persistencia.serializar.SerializarConfigDataBase;
  * CONTROLADORES
  */
 import presentacion.controlador.ControladorConfiguracion;
+import presentacion.controlador.ControladorVentanaIngreso;
 import presentacion.controlador.ControladorVentanaPrincipal;
 import presentacion.controlador.ControladorVentanaLogin;
 /*
  * VISTAS
  */
 import presentacion.vista.VentanaConfigDataBase;
+import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaListaIngresos;
 import presentacion.vista.VentanaLogin;
 
@@ -42,10 +45,20 @@ public class Main{
 				controladorConfig.iniciar();
 				
 			} else {
-				
+				/*
 				VentanaLogin login = new VentanaLogin();
 				ControladorVentanaLogin controlLogin = new ControladorVentanaLogin(login);
 				login.setVisible(true);
+				*/
+				
+				//para probar la ventana de ingreso
+				VentanaIngreso vent  = new  VentanaIngreso();
+				Ingreso ing = new Ingreso();
+				ControladorVentanaIngreso contr = new ControladorVentanaIngreso(vent, ing);
+				
+				contr.inicializar();
+				
+				
 				
 				
 			}

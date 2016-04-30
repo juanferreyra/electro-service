@@ -46,6 +46,7 @@ public class ControladorVentanaIngreso implements ActionListener{
 		lista_marcas = this.ingreso.obtenerMarcas();
 		for (int i = 0; i < lista_marcas.size(); i++)
 		{
+			System.out.println(lista_marcas.get(i).getDetalle());
 			this.ventana_ingreso.getComboMarcas().addItem(lista_marcas.get(i).getDetalle());
 		}
 	}

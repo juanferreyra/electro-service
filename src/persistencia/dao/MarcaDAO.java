@@ -17,7 +17,7 @@ public class MarcaDAO
 				+ "`detalle`, `fecha_creacion`, `idusuario`, `habilitado`)"
 				+ " VALUES (?, now(), ?, true); ";
 		private static final String delete = "UPDATE marca_producto SET habilitado='0' WHERE id = ?";
-		private static final String readall = "SELECT * FROM marca_producto WHERE habilitado = true;";
+		private static final String readall = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true;";
 		private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
 		private static final Conexion conexion = Conexion.getConexion();
 		
@@ -72,7 +72,7 @@ public class MarcaDAO
 			PreparedStatement statement;
 			ResultSet resultSet; //Guarda el resultado de la query
 			ArrayList<MarcaDTO> marcas = new ArrayList<MarcaDTO>();
-			try 
+			try
 			{
 				statement = conexion.getSQLConexion().prepareStatement(readall);
 				resultSet = statement.executeQuery();
@@ -81,9 +81,10 @@ public class MarcaDAO
 				{
 					marcas.add(new MarcaDTO(resultSet.getInt("id"), resultSet.getString("detalle"),resultSet.getInt("idusuario")));
 				}
-			} 
+			}
 			catch (SQLException e) 
 			{
+				System.out.println("hubo un error");
 				e.printStackTrace();
 			}
 			finally //Se ejecuta siempre
@@ -117,5 +118,16 @@ public class MarcaDAO
 				conexion.cerrarConexion();
 			}
 			return false;
+		}
+		
+		public static void main(String[] args) {
+			MarcaDAO marcaDAO = new MarcaDAO();
+			
+			List<MarcaDTO> marcas = marcaDAO.readAll();
+			
+			for (int i = 0; i < marcas.size(); i++) {
+				System.out.println(marcas.get(i).getDetalle().toString());
+			}
+			
 		}
 }
