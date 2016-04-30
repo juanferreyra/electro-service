@@ -67,13 +67,13 @@ public class VentanaIngreso extends JFrame {
 
 		JButton buscarCliente_btn = new JButton("");
 		buscarCliente_btn
-				.setIcon(new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\search.png"));
+				.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/search.png")));
 		buscarCliente_btn.setBounds(270, 48, 33, 23);
 		contentPane.add(buscarCliente_btn);
 
 		JButton crearCliente_btn = new JButton("");
 		crearCliente_btn
-				.setIcon(new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\user-add.png"));
+				.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/user-add.png")));
 		crearCliente_btn.setBounds(313, 48, 33, 23);
 		contentPane.add(crearCliente_btn);
 
