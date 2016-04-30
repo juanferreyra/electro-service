@@ -1,8 +1,9 @@
 package dto;
 
 public class TipoProductoDTO {
-	int id;
-	String detalle;
+	
+	private int id;
+	private String detalle;
 	
 	public TipoProductoDTO(int id, String detalle){
 		this.id = id;

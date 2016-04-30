@@ -1,14 +1,12 @@
-package dto;
+package modelo;
 
+public class Usuario {
 
-public class PerfilDTO {
-	
 	private String perfil;
 	
-	public PerfilDTO(String perfil){
+	public Usuario(String perfil){
 		
 		this.perfil = perfil;
-		
 	}
 
 	public String getPerfil() {
@@ -17,6 +15,3 @@ public class PerfilDTO {
 	
 	
 }
-
-
-
