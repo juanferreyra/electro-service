@@ -9,6 +9,7 @@ import presentacion.vista.VentanaPrincipal;
 public class ControladorVentanaPrincipal  implements ActionListener{
 	
 	private VentanaPrincipal principal;
+	private String perfil;
 	
 	public ControladorVentanaPrincipal(VentanaPrincipal principal) {
 		
@@ -17,26 +18,35 @@ public class ControladorVentanaPrincipal  implements ActionListener{
 		// asi con cada elemento a setear de la pantalla
 	}
 	
-	private  String perfil() {
-		return principal.getUser().getPerfil().getPerfil();
+	public void iniciar(){
+		
+		this.perfil = principal.getUser().getPerfilDTO().getPerfil();
+		this.adecuarVentanaPrincipal();
 		
 	}
 	
-
-	public void actionPerformed(ActionEvent arg0) {
+	private void adecuarVentanaPrincipal(){
 		
-		if (this.perfil().equals("ADMINISTRATIVO")){
+		if (this.perfil.equals("ADMINISTRATIVO")){
+			System.out.println(this.perfil);
 			// aca lo que se quiere mostrar de administrativo
 			
-		}else if(this.perfil().equals("TECNICO")){
+		}else if(this.perfil.equals("TECNICO")){
+			System.out.println(this.perfil);
 			
 			// aca lo que se quiere mostrar de tecnico
 		}else{
+			System.out.println(this.perfil);
 			
 			// aca lo que se quiere mostrar de jefe
 		}
 		
 		
+	}
+	
+	
+
+	public void actionPerformed(ActionEvent arg0) {
 		
 		
 	}

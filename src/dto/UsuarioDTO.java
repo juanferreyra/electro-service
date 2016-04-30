@@ -40,7 +40,7 @@ public class UsuarioDTO {
 	}
 
 
-	public PerfilDTO getPerfil() {
+	public PerfilDTO getPerfilDTO() {
 		return perfil;
 	}
 	

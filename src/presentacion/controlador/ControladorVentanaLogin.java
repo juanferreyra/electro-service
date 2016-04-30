@@ -42,11 +42,13 @@ public class ControladorVentanaLogin implements ActionListener{
 				this.login.setVisible(false);
 				
 				PerfilDTO perf1 = new PerfilDTO("ADMINISTRATIVO");
-				UsuarioDTO user = new UsuarioDTO(1,"ROBERTO","CARLOS","1234",perf1);
+				UsuarioDTO user1 = new UsuarioDTO(1,"ROBERTO","CARLOS","1234",perf1);
 				
-				ventanaPrincipal = new VentanaPrincipal(user);
-				
+				ventanaPrincipal = new VentanaPrincipal(user1);
 				ventanaPrincipal.setVisible(true);
+				
+				controlVentanaPrincipal = new ControladorVentanaPrincipal(ventanaPrincipal);
+				controlVentanaPrincipal.iniciar();
 				
 								
 			}else if (this.login.getUsuario_txf().getText().equals("tecnico")
@@ -60,6 +62,8 @@ public class ControladorVentanaLogin implements ActionListener{
 				ventanaPrincipal = new VentanaPrincipal(user2);
 				ventanaPrincipal.setVisible(true);
 				
+				controlVentanaPrincipal = new ControladorVentanaPrincipal(ventanaPrincipal);
+				controlVentanaPrincipal.iniciar();
 				
 		
 
@@ -74,6 +78,9 @@ public class ControladorVentanaLogin implements ActionListener{
 				ventanaPrincipal = new VentanaPrincipal(user3);
 				ventanaPrincipal.setVisible(true);
 				
+				controlVentanaPrincipal = new ControladorVentanaPrincipal(ventanaPrincipal);
+				controlVentanaPrincipal.iniciar();
+				
 				
 
 
@@ -83,7 +90,7 @@ public class ControladorVentanaLogin implements ActionListener{
 						JOptionPane.INFORMATION_MESSAGE);
 				
 				this.login.getUsuario_txf().setText("");
-				this.login.getContrasena_txf().setText("");
+				//this.login.getContrasena_txf().setText("");
 				
 			}
 
