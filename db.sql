@@ -28,13 +28,14 @@ CREATE TABLE `ciente` (
   `nrodoc` int(11) DEFAULT NULL,
   `nombre` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `apellido` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
+  `localidad` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `direccion` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `telefono` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `mail` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   `idusuario` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +44,7 @@ CREATE TABLE `ciente` (
 
 LOCK TABLES `ciente` WRITE;
 /*!40000 ALTER TABLE `ciente` DISABLE KEYS */;
+INSERT INTO `ciente` VALUES (1,1,37360567,'Raul','Aveldaño','Malvinas Argentinas','Londres 312','153214211','ara@gmail.com','2016-04-29 23:45:10',0),(2,1,2,'Graciela','Solapa','Tigre','Tacuari 342','152315213','gsr@gmail.com','2016-04-29 23:54:42',0);
 /*!40000 ALTER TABLE `ciente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,10 +87,12 @@ CREATE TABLE `ingreso` (
   `idmarca` int(11) DEFAULT NULL,
   `idtipo_producto` int(11) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
-  `estado` tinyint(1) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
   `idusuario` int(11) DEFAULT NULL,
+  `envio` tinyint(1) DEFAULT NULL,
+  `envio_default` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +101,7 @@ CREATE TABLE `ingreso` (
 
 LOCK TABLES `ingreso` WRITE;
 /*!40000 ALTER TABLE `ingreso` DISABLE KEYS */;
+INSERT INTO `ingreso` VALUES (1,1,'GALAXY S3 MINI',2,1,'2016-04-30 00:01:52',1,0,1,1);
 /*!40000 ALTER TABLE `ingreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +120,7 @@ CREATE TABLE `ingreso_log` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +129,7 @@ CREATE TABLE `ingreso_log` (
 
 LOCK TABLES `ingreso_log` WRITE;
 /*!40000 ALTER TABLE `ingreso_log` DISABLE KEYS */;
+INSERT INTO `ingreso_log` VALUES (1,1,1,'2016-04-30 00:03:11',0,1);
 /*!40000 ALTER TABLE `ingreso_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +147,7 @@ CREATE TABLE `marca_producto` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +156,83 @@ CREATE TABLE `marca_producto` (
 
 LOCK TABLES `marca_producto` WRITE;
 /*!40000 ALTER TABLE `marca_producto` DISABLE KEYS */;
+INSERT INTO `marca_producto` VALUES (1,'SANYO','2016-04-29 23:58:10',0,1),(2,'SAMSUNG','2016-04-29 23:58:10',0,1),(3,'EXO','2016-04-29 23:58:10',0,1);
 /*!40000 ALTER TABLE `marca_producto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `perfil`
+--
+
+DROP TABLE IF EXISTS `perfil`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `perfil` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `detalle` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `perfil`
+--
+
+LOCK TABLES `perfil` WRITE;
+/*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
+INSERT INTO `perfil` VALUES (1,'ADMINISTRADOR'),(2,'ADMINISTRATIVO'),(3,'TECNICO');
+/*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `perfil_permiso`
+--
+
+DROP TABLE IF EXISTS `perfil_permiso`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `perfil_permiso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idperfil` int(11) DEFAULT NULL,
+  `idpermiso` int(11) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `perfil_permiso`
+--
+
+LOCK TABLES `perfil_permiso` WRITE;
+/*!40000 ALTER TABLE `perfil_permiso` DISABLE KEYS */;
+INSERT INTO `perfil_permiso` VALUES (1,1,1,'2016-04-29 23:43:41'),(2,1,2,'2016-04-29 23:43:41'),(3,2,1,'2016-04-29 23:43:41'),(4,3,2,'2016-04-29 23:43:41');
+/*!40000 ALTER TABLE `perfil_permiso` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `permiso`
+--
+
+DROP TABLE IF EXISTS `permiso`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `permiso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `detalle_corto` varchar(45) DEFAULT NULL,
+  `descripcion` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permiso`
+--
+
+LOCK TABLES `permiso` WRITE;
+/*!40000 ALTER TABLE `permiso` DISABLE KEYS */;
+INSERT INTO `permiso` VALUES (1,'INGRESAR_PRODUCTO','Puede ingresar una orden de trabajo'),(2,'PRESUPUESTAR','Puede crear un presupuesto');
+/*!40000 ALTER TABLE `permiso` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -226,7 +308,7 @@ CREATE TABLE `repuesto` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,6 +317,7 @@ CREATE TABLE `repuesto` (
 
 LOCK TABLES `repuesto` WRITE;
 /*!40000 ALTER TABLE `repuesto` DISABLE KEYS */;
+INSERT INTO `repuesto` VALUES (1,'Botonera Galaxy S3',1350,5,'2016-04-30 00:05:20',0,1),(2,'Modulo Pantalla',32143,4,'2016-04-30 00:05:20',0,1);
 /*!40000 ALTER TABLE `repuesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,7 +335,7 @@ CREATE TABLE `tipo_producto` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,7 +344,37 @@ CREATE TABLE `tipo_producto` (
 
 LOCK TABLES `tipo_producto` WRITE;
 /*!40000 ALTER TABLE `tipo_producto` DISABLE KEYS */;
+INSERT INTO `tipo_producto` VALUES (1,'CELULAR','2016-04-30 00:00:23',0,1),(2,'TELEVISOR','2016-04-30 00:00:23',0,1),(3,'AIRE ACONDICIONADO','2016-04-30 00:00:23',0,1);
 /*!40000 ALTER TABLE `tipo_producto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  `apellido` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
+  `idperfil` int(11) DEFAULT NULL,
+  `habilitado` tinyint(4) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'ADMINISTRADOR','ADM','ADMINISTRADOR',0,1,'2016-04-29 23:35:33');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -273,4 +386,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-27 19:27:42
+-- Dump completed on 2016-04-30  0:06:20
