@@ -30,12 +30,12 @@ public class VentanaLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		String path = "/home/oscar/git/electro-service/recursos/logo.png";
+		String path = "/logo.png";
 		URL url = this.getClass().getResource(path);
-		//ImageIcon icon = new ImageIcon(url);
+		ImageIcon icon = new ImageIcon(url);
 
 		JLabel logo_lbl = new JLabel("");
-		logo_lbl.setIcon(new ImageIcon("/home/oscar/git/electro-service/recursos/logo.png"));
+		logo_lbl.setIcon(new ImageIcon("/logo.png"));
 		logo_lbl.setBounds(22, 56, 243, 145);
 		contentPane.add(logo_lbl);
 

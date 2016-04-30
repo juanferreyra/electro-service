@@ -40,8 +40,6 @@ public class ControladorVentanaPrincipal  implements ActionListener{
 			
 			// aca lo que se quiere mostrar de jefe
 		}
-		
-		
 	}
 	
 	
