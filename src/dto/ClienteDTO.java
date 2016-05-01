@@ -1,7 +1,9 @@
 package dto;
 
+import java.util.Date;
+
 public class ClienteDTO {
-	private int tipoDoc;
+	private int id;
 	private int nroDoc;
 	private String nombre;
 	private String apellido;
@@ -9,11 +11,12 @@ public class ClienteDTO {
 	private String direccion;
 	private String telefono;
 	private String mail;
+	private Date fecha_creacion;
 	private int idusuario;
 	
-	public ClienteDTO(int tipoDoc, int nroDoc, String nombre, String apellido, String localidad, String direccion, String telefono, String mail, int idusuario)
+	public ClienteDTO(int id, int nroDoc, String nombre, String apellido, String localidad, String direccion, String telefono, String mail, Date fecha_creacion, int idusuario)
 	{
-		this.tipoDoc = tipoDoc;
+		this.id = id;
 		this.nroDoc = nroDoc;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -21,15 +24,24 @@ public class ClienteDTO {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.mail = mail;
+		this.fecha_creacion = fecha_creacion;
 		this.idusuario = idusuario;
 	}
 
-	public int getTipoDoc() {
-		return tipoDoc;
+	public int getId() {
+		return id;
 	}
 
-	public void setTipoDoc(int tipoDoc) {
-		this.tipoDoc = tipoDoc;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Date getFecha_creacion() {
+		return fecha_creacion;
+	}
+
+	public void setFecha_creacion(Date fecha_creacion) {
+		this.fecha_creacion = fecha_creacion;
 	}
 
 	public int getNroDoc() {

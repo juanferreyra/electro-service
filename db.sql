@@ -16,15 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `ciente`
+-- Table structure for table `cliente`
 --
 
-DROP TABLE IF EXISTS `ciente`;
+DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ciente` (
+CREATE TABLE `cliente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tipodoc` int(11) DEFAULT NULL,
   `nrodoc` int(11) DEFAULT NULL,
   `nombre` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `apellido` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
@@ -34,18 +33,19 @@ CREATE TABLE `ciente` (
   `mail` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   `idusuario` int(11) DEFAULT NULL,
+  `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ciente`
+-- Dumping data for table `cliente`
 --
 
-LOCK TABLES `ciente` WRITE;
-/*!40000 ALTER TABLE `ciente` DISABLE KEYS */;
-INSERT INTO `ciente` VALUES (1,1,37360567,'Raul','Aveldaño','Malvinas Argentinas','Londres 312','153214211','ara@gmail.com','2016-04-29 23:45:10',0),(2,1,2,'Graciela','Solapa','Tigre','Tacuari 342','152315213','gsr@gmail.com','2016-04-29 23:54:42',0);
-/*!40000 ALTER TABLE `ciente` ENABLE KEYS */;
+LOCK TABLES `cliente` WRITE;
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES (1,37360567,'Raul','Aveldaño','Malvinas Argentinas','Londres 312','153214211','ara@gmail.com','2016-04-29 23:45:10',0,1),(2,2,'Graciela','Solapa','Tigre','Tacuari 342','152315213','gsr@gmail.com','2016-04-29 23:54:42',0,1);
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -387,4 +387,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-01 19:17:29
+-- Dump completed on 2016-05-01 20:15:09
