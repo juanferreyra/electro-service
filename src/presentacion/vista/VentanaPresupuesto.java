@@ -11,20 +11,16 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import com.toedter.calendar.JDateChooser;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import javax.swing.JToolBar;
-import javax.swing.JMenuBar;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
@@ -39,6 +35,22 @@ public class VentanaPresupuesto extends JFrame {
 	private JTextField nroTecnico_txf;
 	private JTextField horasDeTrabajo_txf;
 	private JTextField manoDeObra_txf;
+	private JButton buscarTecnico_btn;
+	private JTable datosClientes_table;
+	private JDateChooser vencimiento_Calendario;
+	private JComboBox<String> componente_ComboBox; 
+	private JButton incrementoCantComponente_btn;
+	private JButton decrementoCantComponente_btn;
+	private JButton agregarComponente_btn;
+	private JButton eliminarComponente_btn;
+	private JTextArea descripcionBreve_jTextArea;
+	private JTextArea descripcionTecnica_jTextArea;
+	private JTextField valorPresupuestado_txf;
+	private JButton verPresupuesto_btn;
+	private JButton enviarPresupuesto_btn;
+	private JButton cancelar_btn;
+	private JButton guardar_btn; 
+	
 
 	public VentanaPresupuesto() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,16 +136,16 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(nroTecnico_txf);
 		nroTecnico_txf.setColumns(10);
 
-		JButton buscarTecnico_btn = new JButton("");
+		buscarTecnico_btn = new JButton("");
 		buscarTecnico_btn.setBounds(243, 194, 33, 23);
 		buscarTecnico_btn
-				.setIcon(new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\search.png"));
+				.setIcon(new ImageIcon("/search.png"));
 		contentPane.add(buscarTecnico_btn);
 
 		String[] datosClientes_nombreColumnas = { "Nombre", "Apellido" };
 		Object[][] datosClientes_informacionTabla = {};
 
-		JTable datosClientes_table = new JTable(datosClientes_informacionTabla, datosClientes_nombreColumnas);
+		datosClientes_table = new JTable(datosClientes_informacionTabla, datosClientes_nombreColumnas);
 		datosClientes_table.setEnabled(false);
 		datosClientes_table.setRowSelectionAllowed(false);
 		datosClientes_table.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -173,7 +185,7 @@ public class VentanaPresupuesto extends JFrame {
 		vencimiento_lbl.setBounds(399, 480, 146, 14);
 		contentPane.add(vencimiento_lbl);
 
-		JDateChooser vencimiento_Calendario = new JDateChooser();
+		vencimiento_Calendario = new JDateChooser();
 		vencimiento_Calendario.setBounds(470, 477, 129, 20);
 		contentPane.add(vencimiento_Calendario);
 
@@ -181,20 +193,20 @@ public class VentanaPresupuesto extends JFrame {
 		componentesAUtilizar_lbl.setBounds(10, 278, 129, 14);
 		contentPane.add(componentesAUtilizar_lbl);
 
-		JComboBox componente_ComboBox = new JComboBox();
+		componente_ComboBox = new JComboBox<String>();
 		componente_ComboBox.setBounds(136, 275, 146, 20);
 		contentPane.add(componente_ComboBox);
 
-		JButton incrementoCantComponente_btn = new JButton("");
+		incrementoCantComponente_btn = new JButton("");
 		incrementoCantComponente_btn.setBounds(303, 274, 33, 23);
 		incrementoCantComponente_btn.setIcon(
-				new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\plus-outline.png"));
+				new ImageIcon("/plus-outline.png"));
 		contentPane.add(incrementoCantComponente_btn);
 
-		JButton decrementoCantComponente_btn = new JButton("");
+		decrementoCantComponente_btn = new JButton("");
 		decrementoCantComponente_btn.setBounds(386, 274, 33, 23);
 		decrementoCantComponente_btn.setIcon(
-				new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\minus-outline.png"));
+				new ImageIcon("/minus-outline.png"));
 		contentPane.add(decrementoCantComponente_btn);
 
 		JLabel cantidad_lbl = new JLabel("0");
@@ -204,19 +216,19 @@ public class VentanaPresupuesto extends JFrame {
 		cantidad_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255)));
 		contentPane.add(cantidad_lbl);
 
-		JButton agregarComponente_btn = new JButton("");
+		agregarComponente_btn = new JButton("");
 		agregarComponente_btn.setBounds(429, 274, 33, 23);
 		agregarComponente_btn.setIcon(
-				new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\tick-outline.png"));
+				new ImageIcon("C:/tick-outline.png"));
 		contentPane.add(agregarComponente_btn);
 
-		JButton eliminarComponente_btn = new JButton("");
+		eliminarComponente_btn = new JButton("");
 		eliminarComponente_btn.setBounds(470, 274, 33, 23);
 		eliminarComponente_btn.setIcon(
-				new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\times-outline.png"));
+				new ImageIcon("/times-outline.png"));
 		contentPane.add(eliminarComponente_btn);
 
-		String[] componentes_nombreColumnas = { "Nombre", "Descripción", "Cantidad", "Precio Unitario",
+		String[] componentes_nombreColumnas = { "Nombre", "Descripcion", "Cantidad", "Precio Unitario",
 				"Precio Total" };
 		Object[][] componentes_informacionTabla = {};
 
@@ -232,7 +244,7 @@ public class VentanaPresupuesto extends JFrame {
 		componentes_table.setEnabled(false);
 		componentes_scrollPane.setViewportView(componentes_table);
 
-		JLabel descripcionBreve_lbl = new JLabel("Descripción breve:");
+		JLabel descripcionBreve_lbl = new JLabel("Descripciï¿½n breve:");
 		descripcionBreve_lbl.setBounds(10, 392, 289, 14);
 		contentPane.add(descripcionBreve_lbl);
 		JScrollPane descripcionBreve_jScrollPane = new JScrollPane();
@@ -240,7 +252,7 @@ public class VentanaPresupuesto extends JFrame {
 		descripcionBreve_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionBreve_jScrollPane.setBounds(new Rectangle(10, 10, 30, 30));
 		descripcionBreve_jScrollPane.setBounds(10, 417, 305, 52);
-		JTextArea descripcionBreve_jTextArea = new JTextArea();
+		descripcionBreve_jTextArea = new JTextArea();
 		descripcionBreve_jTextArea.setBounds(new Rectangle(0, 0, 305, 52));
 		descripcionBreve_jScrollPane.add(descripcionBreve_jTextArea);
 		descripcionBreve_jScrollPane.setViewportView(descripcionBreve_jTextArea);
@@ -254,7 +266,7 @@ public class VentanaPresupuesto extends JFrame {
 		descripcionTecnica_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionTecnica_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		descripcionTecnica_jScrollPane.setBounds(369, 417, 305, 52);
-		JTextArea descripcionTecnica_jTextArea = new JTextArea();
+		descripcionTecnica_jTextArea = new JTextArea();
 		descripcionTecnica_jTextArea.setBounds(new Rectangle(0, 0, 305, 52));
 		descripcionTecnica_jScrollPane.add(descripcionTecnica_jTextArea);
 		descripcionTecnica_jScrollPane.setViewportView(descripcionTecnica_jTextArea);
@@ -265,28 +277,120 @@ public class VentanaPresupuesto extends JFrame {
 		valorPresupuestado_lbl.setText("Valor Presupuestado:");
 		valorPresupuestado_lbl.setBounds(148, 520, 196, 20);
 		contentPane.add(valorPresupuestado_lbl);
-		JTextField valorPresupuestado_txf = new JTextField();
+		valorPresupuestado_txf = new JTextField();
 		valorPresupuestado_txf.setBackground(SystemColor.text);
 		valorPresupuestado_txf.setBounds(313, 517, 146, 23);
 		contentPane.add(valorPresupuestado_txf);
 		
-		JButton verPresupuesto_btn = new JButton("Imprimir");
-		verPresupuesto_btn.setIcon(new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\printer.png"));
+		verPresupuesto_btn = new JButton("Imprimir");
+		verPresupuesto_btn.setIcon(new ImageIcon("/printer.png"));
 		verPresupuesto_btn.setBounds(10, 556, 146, 23);
 		contentPane.add(verPresupuesto_btn);
 		
-		JButton enviarPresupuesto_btn = new JButton("Enviar presupuesto");
-		enviarPresupuesto_btn.setIcon(new ImageIcon("C:\\workspaceLaboratorioCS\\electro-service\\recursos\\icons\\mail.png"));
+		enviarPresupuesto_btn = new JButton("Enviar presupuesto");
+		enviarPresupuesto_btn.setIcon(new ImageIcon("/mail.png"));
 		enviarPresupuesto_btn.setBounds(162, 556, 153, 23);
 		contentPane.add(enviarPresupuesto_btn);
 		
-		JButton cancelar_btn = new JButton("Cancelar");
+		cancelar_btn = new JButton("Cancelar");
 		cancelar_btn.setBounds(585, 556, 89, 23);
 		contentPane.add(cancelar_btn);
 		
-		JButton guardar_btn = new JButton("Guardar");
+		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(484, 556, 89, 23);
 		contentPane.add(guardar_btn);
 
 	}
+
+
+	public JTextField getNroTecnico_txf() {
+		return nroTecnico_txf;
+	}
+
+
+	public JTextField getHorasDeTrabajo_txf() {
+		return horasDeTrabajo_txf;
+	}
+
+
+	public JTextField getManoDeObra_txf() {
+		return manoDeObra_txf;
+	}
+
+
+	public JButton getBuscarTecnico_btn() {
+		return buscarTecnico_btn;
+	}
+
+
+	public JTable getDatosClientes_table() {
+		return datosClientes_table;
+	}
+
+
+	public JDateChooser getVencimiento_Calendario() {
+		return vencimiento_Calendario;
+	}
+
+
+	public JComboBox<String> getComponente_ComboBox() {
+		return componente_ComboBox;
+	}
+
+
+	public JButton getIncrementoCantComponente_btn() {
+		return incrementoCantComponente_btn;
+	}
+
+
+	public JButton getDecrementoCantComponente_btn() {
+		return decrementoCantComponente_btn;
+	}
+
+
+	public JButton getAgregarComponente_btn() {
+		return agregarComponente_btn;
+	}
+
+
+	public JButton getEliminarComponente_btn() {
+		return eliminarComponente_btn;
+	}
+
+
+	public JTextArea getDescripcionBreve_jTextArea() {
+		return descripcionBreve_jTextArea;
+	}
+
+
+	public JTextArea getDescripcionTecnica_jTextArea() {
+		return descripcionTecnica_jTextArea;
+	}
+
+
+	public JTextField getValorPresupuestado_txf() {
+		return valorPresupuestado_txf;
+	}
+
+
+	public JButton getVerPresupuesto_btn() {
+		return verPresupuesto_btn;
+	}
+
+
+	public JButton getEnviarPresupuesto_btn() {
+		return enviarPresupuesto_btn;
+	}
+
+
+	public JButton getCancelar_btn() {
+		return cancelar_btn;
+	}
+
+
+	public JButton getGuardar_btn() {
+		return guardar_btn;
+	}
+	
+	
 }

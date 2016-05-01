@@ -20,6 +20,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		this.principal = principal;
 		this.principal.getIngresarProducto_btn().addActionListener(this);
+		this.principal.getPresupuestar_btn().addActionListener(this);
 		this.perfil = this.principal.getUser().getPerfilDTO().getPerfil();
 
 	}
@@ -119,14 +120,22 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		// });
 	}
 
-	@SuppressWarnings("unused")
+	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if (e.getSource() == this.principal.getIngresarProducto_btn()) {
 			ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(new VentanaIngreso(),
 					new Ingreso());
+			
+			controladorVentanaIngreso.inicializar();
+			
 		} else if (e.getSource() == this.principal.getPresupuestar_btn()) {
-			// this.controladorVentanaPresupuesto = new
-			// ControladorPresupuesto(new VentanaPresupuesto(), new Ingreso());
+			
+			ControladorPresupuesto ControladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+					new Ingreso());
+			
+			ControladorPresupuesto.inicializar();
+			
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
 			// this.controladorVentanaReparacion = new
 			// ControladorVentanaReparacion(new VentanaReparacion(), new
