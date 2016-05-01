@@ -7,46 +7,41 @@ import java.io.ObjectOutputStream;
 
 import dto.ConfigDataBaseDTO;
 
-public class SerializarConfigDataBase {
-	
-	public SerializarConfigDataBase(){
-		
+public class SerializadorBD {
+
+	public SerializadorBD() {
+
 	}
 
-	public void Serializar(ConfigDataBaseDTO configuracion){
+	public static void Serializar(ConfigDataBaseDTO configuracion) {
 
-		try 
-		
+		try
+
 		{
 			FileOutputStream fos = new FileOutputStream("config.txt");
 			ObjectOutputStream out = new ObjectOutputStream(fos);
 			out.writeObject(configuracion);
 			out.close();
-		}
-		catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
 	}
-	
-	public ConfigDataBaseDTO DeSerializar(){
-		
+
+	public static ConfigDataBaseDTO DeSerializar() {
+
 		ConfigDataBaseDTO nueva = null;
-		try
-		{
+		try {
 			FileInputStream fis = new FileInputStream("config.txt");
 			ObjectInputStream in = new ObjectInputStream(fis);
 			nueva = (ConfigDataBaseDTO) in.readObject();
 			in.close();
-		}
-		catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		return nueva;
-		
+
 	}
 
 }
