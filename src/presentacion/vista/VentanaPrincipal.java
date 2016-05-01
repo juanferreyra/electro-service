@@ -55,7 +55,7 @@ public class VentanaPrincipal extends JFrame {
 
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "Nro.", "Fecha",
-				"Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico Asignado", "Estado" }) {
+				"Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico", "Asignado", "Estado" }) {
 			Class[] columnTypes = new Class[] { JButton.class, Integer.class, String.class, String.class, String.class,
 					Boolean.class, JButton.class, String.class, String.class };
 
@@ -116,5 +116,9 @@ public class VentanaPrincipal extends JFrame {
 
 	public JMenuBar getMenu() {
 		return this.menuBar;
+	}
+
+	public JTable getOrdenesDeTrabajo_table() {
+		return this.ordenesDeTrabajo_table;
 	}
 }

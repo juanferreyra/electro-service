@@ -3,6 +3,9 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
+
 import modelo.Ingreso;
 import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaPresupuesto;
@@ -24,10 +27,11 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	public void iniciar() {
 
 		this.adecuarVentanaPrincipal();
+		this.cargar_tablaOrdenesTrabajo();
 
 	}
 
-	public void cargarOrden_tablaOrdenesTrabajo(String fecha, String producto, String cliente, Boolean envio) {
+	public void cargarOrden_tablaOrdenesTrabajo(Ingreso ingreso) {
 		/**
 		 * Estructura de la tabla ordenes de trabajo:
 		 * ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/
@@ -74,8 +78,45 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		}
 	}
 
-	public void limpiarTabla() {
+	public void limpiar_tablaOrdenesTrabajo() {
+		DefaultTableModel modelo = (DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel();
+		int largo = modelo.getRowCount();
+		for (int i = largo - 1; i >= 0; i--) {
+			this.eliminarDatosAsociados(i);
+			modelo.removeRow(i);
+		}
 
+	}
+
+	public void eliminarFilaSeleccionada_tablaOrdenesTrabajo() {
+		int fila = this.principal.getOrdenesDeTrabajo_table().getSelectedRow();
+
+		this.eliminarDatosAsociados(fila);
+
+		DefaultTableModel modelo = (DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel();
+		modelo.removeRow(fila);
+	}
+
+	private void eliminarDatosAsociados(int fila) {
+		// Eliminar ingreso,presupuesto.
+	}
+
+	private void cargar_tablaOrdenesTrabajo() {
+		// conseguir todos los ingresos y cargar tabla
+		// this.principal.getOrdenesDeTrabajo_table()
+		// .setModel(new DefaultTableModel(new Object[][] {}, new String[] { "",
+		// "Nro.", "Fecha", "Producto",
+		// "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico", "Asignado",
+		// "Estado" }) {
+		// Class[] columnTypes = new Class[] { JButton.class, Integer.class,
+		// String.class, String.class,
+		// String.class, Boolean.class, JButton.class, String.class,
+		// String.class };
+		//
+		// public Class getColumnClass(int columnIndex) {
+		// return columnTypes[columnIndex];
+		// }
+		// });
 	}
 
 	@SuppressWarnings("unused")
