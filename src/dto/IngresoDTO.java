@@ -9,15 +9,19 @@ public class IngresoDTO {
 	private int idmarca;
 	private int idtipo_producto;
 	private Date fecha_creacion;
-	
-	public IngresoDTO(int id, String descripcion, int idcliente,int idmarca,int idtipo_producto, Date fecha_creacion,int idusuario)
-	{
+	private int estado;
+	private int idusuario;
+
+	public IngresoDTO(int id, int idcliente, String descripcion, int idmarca, int idtipo_producto, Date fecha_creacion,
+			int estado, int idusuario) {
 		this.id = id;
-		this.descripcion = descripcion;
 		this.idcliente = idcliente;
+		this.descripcion = descripcion;
 		this.idmarca = idmarca;
 		this.idtipo_producto = idtipo_producto;
 		this.fecha_creacion = fecha_creacion;
+		this.setEstado(estado);
+		this.setIdusuario(idusuario);
 	}
 
 	public int getId() {
@@ -66,5 +70,21 @@ public class IngresoDTO {
 
 	public void setFecha_creacion(Date fecha_creacion) {
 		this.fecha_creacion = fecha_creacion;
+	}
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public int getIdusuario() {
+		return idusuario;
+	}
+
+	public void setIdusuario(int idusuario) {
+		this.idusuario = idusuario;
 	}
 }
