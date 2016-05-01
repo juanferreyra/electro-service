@@ -119,15 +119,4 @@ public class MarcaDAO
 			}
 			return false;
 		}
-		
-		public static void main(String[] args) {
-			MarcaDAO marcaDAO = new MarcaDAO();
-			
-			List<MarcaDTO> marcas = marcaDAO.readAll();
-			
-			for (int i = 0; i < marcas.size(); i++) {
-				System.out.println(marcas.get(i).getDetalle().toString());
-			}
-			
-		}
 }

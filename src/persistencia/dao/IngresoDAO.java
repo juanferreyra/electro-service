@@ -11,11 +11,10 @@ import persistencia.conexion.Conexion;
 
 public class IngresoDAO {
 
-	private static final String insert = "INSERT INTO ingreso(id, idcliente,descripcion_producto,idmarca,"
-			+ "idtipo_producto,fecha_creacion,estado,idusuario) VALUES (?,?,?,?,?,?,?,?)";
-	
-	private static final String delete = "DELETE FROM ingreso WHERE id = ?";
-	private static final String readall = "SELECT * FROM ingreso";
+	private static final String insert = "INSERT INTO ingreso(idcliente,descripcion_producto,idmarca,"
+			+ "idtipo_producto,fecha_creacion,estado,idusuario) VALUES (?,?,?,?,?,?,?)";
+	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
+	private static final String readall = "SELECT * FROM ingreso WHERE habilitado=true";
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<IngresoDTO> readAll() {
@@ -70,14 +69,13 @@ public class IngresoDAO {
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 			
-			statement.setString(1, Integer.toString(ingreso.getId()));
-			statement.setString(2, Integer.toString(ingreso.getIdcliente()));
-			statement.setString(3, ingreso.getDescripcion());
-			statement.setString(4, Integer.toString(ingreso.getIdmarca()));
-			statement.setString(5, Integer.toString(ingreso.getIdtipo_producto()));
-			statement.setDate(6, (Date) ingreso.getFecha_creacion());
-			statement.setInt(7, Integer.toString(ingreso.getEstado()));
-			statement.setString(8, Integer.toString(ingreso.getIdusuario()));
+			statement.setInt(1, ingreso.getIdcliente());
+			statement.setString(2, ingreso.getDescripcion());
+			statement.setInt(3, ingreso.getIdmarca());
+			statement.setInt(4, ingreso.getIdtipo_producto());
+			statement.setDate(5, (Date) ingreso.getFecha_creacion());
+			statement.setInt(6,ingreso.getEstado());
+			statement.setInt(7, ingreso.getIdusuario());
 
 			if (statement.executeUpdate() > 0)
 				return true;

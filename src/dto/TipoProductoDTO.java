@@ -6,6 +6,7 @@ public class TipoProductoDTO {
 	private String detalle;
 	private int idusuario;
 	
+	
 	public TipoProductoDTO(int id, String detalle, int idusuario){
 		this.id = id;
 		this.detalle = detalle;

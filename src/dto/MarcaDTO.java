@@ -6,6 +6,7 @@ public class MarcaDTO {
 	private String detalle;
 	private int idusuario;
 	
+	
 	public MarcaDTO(int id, String detalle,int idusuario) {
 		this.id = id;
 		this.detalle = detalle;
