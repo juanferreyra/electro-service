@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -11,6 +13,7 @@ import dto.ComponenteDTO;
 import modelo.Componente;
 import modelo.Ingreso;
 import presentacion.vista.VentanaPresupuesto;
+import sun.util.calendar.BaseCalendar.Date;
 
 public class ControladorPresupuesto implements ActionListener{
 	
@@ -34,7 +37,13 @@ public class ControladorPresupuesto implements ActionListener{
 	
 	public void inicializar(){
 		
+		Calendar hoy = new GregorianCalendar();
+		
+		this.ventanaPresupuesto.getFechaIngreso_lbl().setText("Fecha: " + hoy.get(Calendar.DAY_OF_MONTH) +" / "
+		+ hoy.get(Calendar.MONTH) +" / "+ hoy.get(Calendar.YEAR));
+	
 		this.ventanaPresupuesto.setVisible(true);
+		
 		this.componente = new Componente();
 		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
 		cargarComboComponentes();
@@ -120,10 +129,10 @@ public class ControladorPresupuesto implements ActionListener{
 	}
 	public static void main(String[] args) {
 		
-		//ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-				//new Ingreso());
+		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+				new Ingreso());
 		
-		//controladorPresupuesto.inicializar();
+		controladorPresupuesto.inicializar();
 		
 	}
 

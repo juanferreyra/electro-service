@@ -53,25 +53,26 @@ public class VentanaPresupuesto extends JFrame {
 	private JButton guardar_btn; 
 	private JLabel cantidad_lbl;
 	private JTable componentes_table;
+	private JLabel fechaIngreso_lbl;
 	private String[] componentes_nombreColumnas = { "Nombre", "Descripcion", "Cantidad", "Precio Unitario",
 	"Precio Total" };
 	
 
 	public VentanaPresupuesto() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 628);
+		setBounds(100, 100, 698, 660);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel fechaIngreso_lbl = new JLabel("Fecha");
-		fechaIngreso_lbl.setBounds(515, 11, 66, 14);
+		fechaIngreso_lbl = new JLabel("Fecha");
+		fechaIngreso_lbl.setBounds(495, 11, 166, 14);
 		contentPane.add(fechaIngreso_lbl);
 
 		JLabel fechaIngresoText_lbl = new JLabel("");
-		fechaIngresoText_lbl.setBounds(599, 11, 75, 14);
+		fechaIngresoText_lbl.setBounds(572, 11, 102, 14);
 		contentPane.add(fechaIngresoText_lbl);
 
 		JLabel titulo_lbl = new JLabel("<html><b>PRESUPUESTO</b></html>");
@@ -84,7 +85,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(separator);
 
 		JLabel nombreProducto_lbl = new JLabel("<html><i>Nombre Producto:</i></html>");
-		nombreProducto_lbl.setBounds(10, 52, 116, 14);
+		nombreProducto_lbl.setBounds(10, 37, 116, 29);
 		contentPane.add(nombreProducto_lbl);
 
 		JLabel nombreProductoTexto_lbl = new JLabel("");
@@ -137,14 +138,14 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(lblNroTcnico);
 
 		nroTecnico_txf = new JTextField();
-		nroTecnico_txf.setBounds(87, 194, 146, 20);
+		nroTecnico_txf.setBounds(123, 195, 146, 20);
 		contentPane.add(nroTecnico_txf);
 		nroTecnico_txf.setColumns(10);
 
 		buscarTecnico_btn = new JButton("");
-		buscarTecnico_btn.setBounds(243, 194, 33, 23);
+		buscarTecnico_btn.setBounds(281, 188, 33, 23);
 		buscarTecnico_btn
-				.setIcon(new ImageIcon("/search.png"));
+				.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/search.png")));
 		contentPane.add(buscarTecnico_btn);
 
 		String[] datosClientes_nombreColumnas = { "Nombre", "Apellido" };
@@ -205,13 +206,13 @@ public class VentanaPresupuesto extends JFrame {
 		incrementoCantComponente_btn = new JButton("");
 		incrementoCantComponente_btn.setBounds(303, 274, 33, 23);
 		incrementoCantComponente_btn.setIcon(
-				new ImageIcon("/plus-outline.png"));
+				new ImageIcon(VentanaPresupuesto.class.getResource("/plus-outline.png")));
 		contentPane.add(incrementoCantComponente_btn);
 
 		decrementoCantComponente_btn = new JButton("");
 		decrementoCantComponente_btn.setBounds(386, 274, 33, 23);
 		decrementoCantComponente_btn.setIcon(
-				new ImageIcon("/minus-outline.png"));
+				new ImageIcon(VentanaPresupuesto.class.getResource("/minus-outline.png")));
 		contentPane.add(decrementoCantComponente_btn);
 
 		cantidad_lbl = new JLabel("0");
@@ -224,13 +225,13 @@ public class VentanaPresupuesto extends JFrame {
 		agregarComponente_btn = new JButton("");
 		agregarComponente_btn.setBounds(429, 274, 33, 23);
 		agregarComponente_btn.setIcon(
-				new ImageIcon("C:/tick-outline.png"));
+				new ImageIcon(VentanaPresupuesto.class.getResource("/tick-outline.png")));
 		contentPane.add(agregarComponente_btn);
 
 		eliminarComponente_btn = new JButton("");
 		eliminarComponente_btn.setBounds(470, 274, 33, 23);
 		eliminarComponente_btn.setIcon(
-				new ImageIcon("/times-outline.png"));
+				new ImageIcon(VentanaPresupuesto.class.getResource("/times-outline.png")));
 		contentPane.add(eliminarComponente_btn);
 
 		
@@ -292,7 +293,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(verPresupuesto_btn);
 		
 		enviarPresupuesto_btn = new JButton("Enviar presupuesto");
-		enviarPresupuesto_btn.setIcon(new ImageIcon("/mail.png"));
+		enviarPresupuesto_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/mail.png")));
 		enviarPresupuesto_btn.setBounds(162, 556, 153, 23);
 		contentPane.add(enviarPresupuesto_btn);
 		
@@ -410,6 +411,12 @@ public class VentanaPresupuesto extends JFrame {
 	public String[] getComponentes_nombreColumnas() {
 		return componentes_nombreColumnas;
 	}
+
+
+	public JLabel getFechaIngreso_lbl() {
+		return fechaIngreso_lbl;
+	}
+	
 	
 	
 	
