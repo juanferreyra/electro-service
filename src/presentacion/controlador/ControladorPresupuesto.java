@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.ComponenteDTO;
@@ -18,7 +19,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private List<ComponenteDTO> listaDeComponetes; 
 	private Componente componente;
 	private Integer cantidad = 0;
-	DefaultTableModel modelo = new DefaultTableModel();
+	private DefaultTableModel modelo = new DefaultTableModel();
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso) {
 		
@@ -27,6 +28,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
+		 this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
 		
 	}
 	
@@ -34,6 +36,7 @@ public class ControladorPresupuesto implements ActionListener{
 		
 		this.ventanaPresupuesto.setVisible(true);
 		this.componente = new Componente();
+		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
 		cargarComboComponentes();
 		
 	}
@@ -74,6 +77,8 @@ public class ControladorPresupuesto implements ActionListener{
 
 			// elimina componete de la tabla
 		}else if(e.getSource() == this.ventanaPresupuesto.getEliminarComponente_btn()){
+			
+			eliminarComponenteDeTabla();
 
 
 			// modifca precio de la tabla	
@@ -83,11 +88,19 @@ public class ControladorPresupuesto implements ActionListener{
 		}
 	}
 
+	private void eliminarComponenteDeTabla() {
+		
+		if (this.ventanaPresupuesto.getComponentes_table().getSelectedRow() != -1){
+
+			modelo.removeRow(this.ventanaPresupuesto.getComponentes_table().getSelectedRow());
+		}else{
+			
+			JOptionPane.showMessageDialog(this.ventanaPresupuesto, "debe seleccionar fila para eliminar ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
 	private void llenarTablaComponentes() {
-		
-		
-		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
-		
 		
 		modelo.setColumnIdentifiers(this.ventanaPresupuesto.getComponentes_nombreColumnas());
 
@@ -107,10 +120,10 @@ public class ControladorPresupuesto implements ActionListener{
 	}
 	public static void main(String[] args) {
 		
-		ControladorPresupuesto ControladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-				new Ingreso());
+		//ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+				//new Ingreso());
 		
-		ControladorPresupuesto.inicializar();
+		//controladorPresupuesto.inicializar();
 		
 	}
 
