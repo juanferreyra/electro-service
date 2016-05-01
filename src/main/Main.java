@@ -2,7 +2,7 @@ package main;
 
 import dto.ConfigDataBaseDTO;
 import persistencia.conexion.Conexion;
-import persistencia.serializar.SerializarConfigDataBase;
+import persistencia.serializar.SerializadorBD;
 
 /*
  * CONTROLADORES
@@ -17,9 +17,8 @@ import presentacion.vista.VentanaConfigDataBase;
 public class Main {
 
 	public static void main(String[] args) {
-		SerializarConfigDataBase serializarConf = new SerializarConfigDataBase();
 
-		ConfigDataBaseDTO configuracionInicial = serializarConf.DeSerializar();
+		ConfigDataBaseDTO configuracionInicial = SerializadorBD.DeSerializar();
 
 		if (configuracionInicial == null) {
 			VentanaConfigDataBase configuracion = new VentanaConfigDataBase();
@@ -28,8 +27,8 @@ public class Main {
 			controladorConfig.iniciar();
 		} else {
 
-			ConfigDataBaseDTO otra = serializarConf.DeSerializar();
-			Conexion.setConection(otra);
+			ConfigDataBaseDTO otra = SerializadorBD.DeSerializar();
+			// Conexion.setConection(otra);
 
 			if (Conexion.isFallo()) {// si falla la conexion le vuelvo a pedir
 										// los datos de conexion a la base
