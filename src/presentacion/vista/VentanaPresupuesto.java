@@ -238,7 +238,8 @@ public class VentanaPresupuesto extends JFrame {
 		Object[][] componentes_informacionTabla = {};
 
 		JScrollPane componentes_scrollPane = new JScrollPane();
-		componentes_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		componentes_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		componentes_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		componentes_scrollPane.setEnabled(false);
 		componentes_scrollPane.setSize(664, 78);
 		componentes_scrollPane.setLocation(10, 303);
@@ -416,8 +417,4 @@ public class VentanaPresupuesto extends JFrame {
 	public JLabel getFechaIngreso_lbl() {
 		return fechaIngreso_lbl;
 	}
-	
-	
-	
-	
 }
