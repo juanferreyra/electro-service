@@ -15,8 +15,9 @@ public class ComponenteDAO {
 			+ "`nombre`, `detalle`, `precio`, `stock_minimo`,`fecha_creacion`,`idusuario`,`habilitado`)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
 	private static final String delete = "UPDATE repuesto SET habilitado='0' WHERE id = ?";
-	private static final String readall = "SELECT id, nombre, detalle, precio, stock_minimo, fecha_creacion,"
-			+ "idusuario, habili FROM presupuesto WHERE id = ? ;";
+	
+	private static final String readall = "SELECT * FROM electro_service_db.repuesto;";
+	
 	private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
 	
 	private static final Conexion conexion = Conexion.getConexion();
@@ -77,6 +78,7 @@ public class ComponenteDAO {
 		{
 			statement = conexion.getSQLConexion().prepareStatement(readall);
 			resultSet = statement.executeQuery();
+
 			
 			while(resultSet.next())
 			{
