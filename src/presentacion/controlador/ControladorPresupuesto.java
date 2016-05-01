@@ -2,9 +2,9 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
 
 import dto.ComponenteDTO;
 import modelo.Componente;
@@ -18,7 +18,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private List<ComponenteDTO> listaDeComponetes; 
 	private Componente componente;
 	private Integer cantidad = 0;
-	
+	DefaultTableModel modelo = new DefaultTableModel();
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso) {
 		
@@ -26,6 +26,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ingreso = ingreso;
 		 this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
+		 this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
 		
 	}
 	
@@ -84,16 +85,32 @@ public class ControladorPresupuesto implements ActionListener{
 
 	private void llenarTablaComponentes() {
 		
-	
-	    
+		
+		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
+		
+		
+		modelo.setColumnIdentifiers(this.ventanaPresupuesto.getComponentes_nombreColumnas());
+
+		this.listaDeComponetes = componente.buscarComponentes((String) this.ventanaPresupuesto.getComponente_ComboBox().getSelectedItem());
+
 		for (int i = 0; i < this.listaDeComponetes.size(); i ++)
 		{
-			
+
 			Object[] fila = {this.listaDeComponetes.get(i).getNombre(), this.listaDeComponetes.get(i).getDetalle(),
+					this.ventanaPresupuesto.getCantidad_lbl().getText(), "$ "+this.listaDeComponetes.get(i).getPrecioUnitario(),
+					 "$ "+Float.parseFloat(this.ventanaPresupuesto.getCantidad_lbl().getText()) *
 					this.listaDeComponetes.get(i).getPrecioUnitario()};
 			
-			this.ventanaPresupuesto.getModelComponentes().addRow(fila);
+				modelo.insertRow(0, fila);
 		}
+
+	}
+	public static void main(String[] args) {
+		
+		ControladorPresupuesto ControladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+				new Ingreso());
+		
+		ControladorPresupuesto.inicializar();
 		
 	}
 

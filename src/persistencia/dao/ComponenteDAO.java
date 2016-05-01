@@ -20,6 +20,8 @@ public class ComponenteDAO {
 	
 	private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
 	
+	private static final String search = "SELECT * FROM electro_service_db.repuesto WHERE nombre = ? ;";
+	
 	private static final Conexion conexion = Conexion.getConexion();
 	
 	public boolean insert(ComponenteDTO componente)
@@ -124,6 +126,39 @@ public class ComponenteDAO {
 			conexion.cerrarConexion();
 		}
 		return false;
+	}
+	
+	public List<ComponenteDTO> search(String aBuscar)
+	{
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<ComponenteDTO> componentes = new ArrayList<ComponenteDTO>();
+		try
+		{
+			statement = conexion.getSQLConexion().prepareStatement(search);
+			statement.setString(1, aBuscar);
+			resultSet = statement.executeQuery();
+
+			
+			while(resultSet.next())
+			{
+				componentes.add(new ComponenteDTO(resultSet.getInt("id"),resultSet.getString("nombre"),
+						resultSet.getString("detalle"),resultSet.getFloat("precio"),
+						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario"),resultSet.getInt("habilitado")));
+			}
+		}
+		catch (SQLException e) 
+		{
+			System.out.println("hubo un error");
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			conexion.cerrarConexion();
+		}
+		
+		return componentes;
 	}
 
 }

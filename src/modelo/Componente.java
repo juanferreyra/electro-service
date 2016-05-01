@@ -30,5 +30,7 @@ public class Componente {
 		componente.update(componente_a_modificar);
 		
 	}
-
+	public List<ComponenteDTO> buscarComponentes(String aBuscar) {
+		return componente.search(aBuscar);
+	}
 }

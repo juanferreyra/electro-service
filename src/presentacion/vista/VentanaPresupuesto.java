@@ -11,6 +11,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import com.toedter.calendar.JDateChooser;
@@ -50,6 +51,10 @@ public class VentanaPresupuesto extends JFrame {
 	private JButton enviarPresupuesto_btn;
 	private JButton cancelar_btn;
 	private JButton guardar_btn; 
+	private JLabel cantidad_lbl;
+	private JTable componentes_table;
+	private String[] componentes_nombreColumnas = { "Nombre", "Descripcion", "Cantidad", "Precio Unitario",
+	"Precio Total" };
 	
 
 	public VentanaPresupuesto() {
@@ -168,7 +173,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(horasDeTrabajo_lbl);
 
 		horasDeTrabajo_txf = new JTextField();
-		horasDeTrabajo_txf.setBounds(120, 477, 86, 20);
+		horasDeTrabajo_txf.setBounds(122, 478, 86, 20);
 		contentPane.add(horasDeTrabajo_txf);
 		horasDeTrabajo_txf.setColumns(10);
 
@@ -209,7 +214,7 @@ public class VentanaPresupuesto extends JFrame {
 				new ImageIcon("/minus-outline.png"));
 		contentPane.add(decrementoCantComponente_btn);
 
-		JLabel cantidad_lbl = new JLabel("0");
+		cantidad_lbl = new JLabel("0");
 		cantidad_lbl.setBounds(345, 275, 33, 20);
 		cantidad_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		cantidad_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -228,8 +233,7 @@ public class VentanaPresupuesto extends JFrame {
 				new ImageIcon("/times-outline.png"));
 		contentPane.add(eliminarComponente_btn);
 
-		String[] componentes_nombreColumnas = { "Nombre", "Descripcion", "Cantidad", "Precio Unitario",
-				"Precio Total" };
+		
 		Object[][] componentes_informacionTabla = {};
 
 		JScrollPane componentes_scrollPane = new JScrollPane();
@@ -239,9 +243,9 @@ public class VentanaPresupuesto extends JFrame {
 		componentes_scrollPane.setLocation(10, 303);
 		componentes_scrollPane.setBackground(Color.WHITE);
 		contentPane.add(componentes_scrollPane);
-
-		JTable componentes_table = new JTable(componentes_informacionTabla, componentes_nombreColumnas);
-		componentes_table.setEnabled(false);
+		
+		componentes_table = new JTable(componentes_informacionTabla, componentes_nombreColumnas);
+		//componentes_table.setEnabled(false);
 		componentes_scrollPane.setViewportView(componentes_table);
 
 		JLabel descripcionBreve_lbl = new JLabel("Descripci�n breve:");
@@ -300,6 +304,11 @@ public class VentanaPresupuesto extends JFrame {
 		guardar_btn.setBounds(484, 556, 89, 23);
 		contentPane.add(guardar_btn);
 
+	}
+
+
+	public JLabel getCantidad_lbl() {
+		return cantidad_lbl;
 	}
 
 
@@ -391,6 +400,17 @@ public class VentanaPresupuesto extends JFrame {
 	public JButton getGuardar_btn() {
 		return guardar_btn;
 	}
+
+
+	public JTable getComponentes_table() {
+		return componentes_table;
+	}
+
+
+	public String[] getComponentes_nombreColumnas() {
+		return componentes_nombreColumnas;
+	}
+	
 	
 	
 }
