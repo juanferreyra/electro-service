@@ -86,11 +86,12 @@ CREATE TABLE `ingreso` (
   `descripcion_producto` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `idmarca` int(11) DEFAULT NULL,
   `idtipo_producto` int(11) DEFAULT NULL,
-  `fecha_creacion` datetime DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
-  `idusuario` int(11) DEFAULT NULL,
   `envio` tinyint(1) DEFAULT NULL,
   `envio_default` tinyint(1) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  `idusuario` int(11) DEFAULT NULL,
+  `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -101,7 +102,7 @@ CREATE TABLE `ingreso` (
 
 LOCK TABLES `ingreso` WRITE;
 /*!40000 ALTER TABLE `ingreso` DISABLE KEYS */;
-INSERT INTO `ingreso` VALUES (1,1,'GALAXY S3 MINI',2,1,'2016-04-30 00:01:52',1,0,1,1);
+INSERT INTO `ingreso` VALUES (1,1,'GALAXY S3 MINI',2,1,1,1,1,'2016-04-30 00:01:52',0,1);
 /*!40000 ALTER TABLE `ingreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,4 +387,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-01 17:12:54
+-- Dump completed on 2016-05-01 19:17:29
