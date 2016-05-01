@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
-import dto.IngresoDTO;
+import dto.PresupuestoDTO;
 import modelo.Ingreso;
-import persistencia.dao.IngresoDAO;
+import persistencia.dao.PresupuestoDAO;
 import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaPrincipal;
@@ -18,7 +18,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	private VentanaPrincipal principal;
 	private String perfil;
-	private IngresoDAO ingresoDAO;
+	private PresupuestoDAO presupuestoDAO;
 
 	public ControladorVentanaPrincipal(VentanaPrincipal principal) {
 
@@ -30,7 +30,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	}
 
 	public void iniciar() {
-
+		presupuestoDAO = new PresupuestoDAO();
 		this.adecuarVentanaPrincipal();
 		this.cargar_tablaOrdenesTrabajo();
 
@@ -78,7 +78,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			this.principal.setVisible(true);
 
 		} else {
-			// Visualizacion modo jefe
+			// Visualizacion modo jefe/admin
 			this.principal.setVisible(true);
 		}
 	}
@@ -103,14 +103,15 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	}
 
 	private void eliminarDatosAsociados(int fila) {
-		// Eliminar ingreso,presupuesto.
+		// Eliminar ingreso,presupuesto. Es decir, cambiar el estado habilitado.
 	}
 
 	@SuppressWarnings("serial")
 	private void cargar_tablaOrdenesTrabajo() {
-		// Consigo todos los ingresos y ordeno los datos
-		ArrayList<IngresoDTO> ingresos = ingresoDAO.readAll();
-		Object[][] datos = ordenarDatos(ingresos);
+		// Consigo todos los presupuestos y ordeno los datos
+		ArrayList<PresupuestoDTO> presupuestos = presupuestoDAO.readAll();
+
+		Object[][] datos = ordenarDatos(presupuestos);
 		// Seteo a la tabla un nuevo modelo con los datos de los
 		// ingresos(ordenes de trabajo)
 		this.principal.getOrdenesDeTrabajo_table().setModel(new DefaultTableModel(datos, new String[] { "", "Nro.",
@@ -126,10 +127,10 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		});
 	}
 
-	private Object[][] ordenarDatos(ArrayList<IngresoDTO> ingresos) {
-		// A partir de los ingresos (id=nroOrden) se debe obtener los demas
-		// datos
-		// para setear en formato=
+	private Object[][] ordenarDatos(ArrayList<PresupuestoDTO> presupuestos) {
+		// A partir de los presupuestos obtener los ingresos
+		// correspondientes(idingreso) se debe obtener todos los datos para
+		// setear en formato=
 		// ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/tecnico_asignado/estado
 
 		return null;
@@ -157,7 +158,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			// Ingreso());
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
 
-			// conseguir nroOrden y tecnico
+			// conseguir nroOrden y tecnico(mediante el user actual del tecnico)
 			// this.cargarAsignacionTecnico_tablaOrdenesTrabajo(nroOrden,
 			// tecnico);
 		}
