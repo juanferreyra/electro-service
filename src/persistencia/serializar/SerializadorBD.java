@@ -23,7 +23,6 @@ public class SerializadorBD {
 			out.writeObject(configuracion);
 			out.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
 
 	}
@@ -37,7 +36,6 @@ public class SerializadorBD {
 			nueva = (ConfigDataBaseDTO) in.readObject();
 			in.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
 
 		return nueva;

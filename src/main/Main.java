@@ -28,7 +28,7 @@ public class Main {
 		} else {
 
 			ConfigDataBaseDTO otra = SerializadorBD.DeSerializar();
-			// Conexion.setConection(otra);
+			
 
 			if (Conexion.isFallo()) {// si falla la conexion le vuelvo a pedir
 										// los datos de conexion a la base
