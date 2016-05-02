@@ -31,6 +31,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
+		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
 		
 	}
 	
@@ -102,7 +103,22 @@ public class ControladorPresupuesto implements ActionListener{
 		}else if(e.getSource() == this.ventanaPresupuesto.getComponentes_table().getCellEditor()){
 
 
+		}else if(e.getSource() == this.ventanaPresupuesto.getGuardar_btn()){
+			
+			guardarRepuestos(guardarPresupuesto());
+			
 		}
+	}
+
+	private void guardarRepuestos(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private int  guardarPresupuesto() {
+		
+		return 0;
+		
 	}
 
 	private void eliminarComponenteDeTabla() {
