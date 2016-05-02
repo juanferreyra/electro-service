@@ -1,15 +1,17 @@
 package persistencia.dao;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import dto.PresupuestoDTO;
+
+import dto.PresupuestoRepuestoDTO;
 import persistencia.conexion.Conexion;
 
-public class PresupuestoDAO {
-
-	private static final String insert = "INSERT INTO presupuesto (id,idingreso,descripcion_breve,"
-			+ "descripcion_tecnica,importe_mano_obra,fecha_creacion,fecha_vencimiento,idusuario,habilitado) VALUES (?,?,?,?,?,now(),?,?,true)";
+public class PresupuestoRepuestoDAO {
+	
+	private static final String insert = "INSERT INTO presupuesto_repuestos (id,idpresupuesto,idrepuesto,"
+			+ "cantidad,fecha_creacion,habilitado) VALUES (?,?,?,?,now(),true)";
 	
 	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
 	
@@ -19,18 +21,18 @@ public class PresupuestoDAO {
 	
 	private Conexion conexion = Conexion.getConexion();
 
-	public ArrayList<PresupuestoDTO> readAll() {
+	public ArrayList<PresupuestoRepuestoDTO> readAll() {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
-		ArrayList<PresupuestoDTO> localidades = new ArrayList<PresupuestoDTO>();
+		ArrayList<PresupuestoRepuestoDTO> presupuestoRepuesto = new ArrayList<PresupuestoRepuestoDTO>();
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(readall);
 			resultSet = statement.executeQuery();
 
 			/*while (resultSet.next()) {
-				localidades.add(new PresupuestoDTO(resultSet.getInt("id"),
+				localidades.add(new PresupuestoRepuestoDTO(resultSet.getInt("id"),
 						resultSet.getInt("idingreso"),
 						resultSet.getString("descripcion_producto"),
 						resultSet.getInt("idmarca"),
@@ -47,10 +49,10 @@ public class PresupuestoDAO {
 		} finally {
 			conexion.cerrarConexion();
 		}
-		return localidades;
+		return presupuestoRepuesto;
 	}
 
-	public boolean delete(PresupuestoDTO ingreso_a_eliminar) {
+	public boolean delete(PresupuestoRepuestoDTO ingreso_a_eliminar) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		int chequeoUpdate = 0;
@@ -68,19 +70,16 @@ public class PresupuestoDAO {
 		return false;
 	}
 
-	public boolean insert(PresupuestoDTO presupuesto) {
+	public boolean insert(PresupuestoRepuestoDTO presupuestoRepuesto) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 			
-			statement.setInt(1, presupuesto.getId());
-			statement.setInt(2, presupuesto.getIdIngreso());
-			statement.setString(3, presupuesto.getDescripcionBreve());
-			statement.setString(4, presupuesto.getDescripcionTecnica());
-			statement.setString(5, presupuesto.getImporteManoObra());
-			statement.setDate(6, (java.sql.Date) presupuesto.getFechavencimiento());
-			statement.setInt(7,presupuesto.getIdUsuario());
+			statement.setInt(1, presupuestoRepuesto.getId());
+			statement.setInt(2, presupuestoRepuesto.getIdPresupuesto());
+			statement.setInt(3, presupuestoRepuesto.getIdComponente());
+			statement.setInt(4, presupuestoRepuesto.getCantidad());
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -92,11 +91,11 @@ public class PresupuestoDAO {
 		return false;
 	}
 
-	public PresupuestoDTO find(int id) {
+	public PresupuestoRepuestoDTO find(int id) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
-		PresupuestoDTO ingreso = null;
+		PresupuestoRepuestoDTO ingreso = null;
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(find);
@@ -104,7 +103,7 @@ public class PresupuestoDAO {
 			resultSet = statement.executeQuery();
 
 			/*while (resultSet.next()) {
-				ingreso = new PresupuestoDTO(resultSet.getInt("id"),
+				ingreso = new PresupuestoRepuestoDTO(resultSet.getInt("id"),
 						resultSet.getInt("idcliente"),
 						resultSet.getString("descripcion_producto"),
 						resultSet.getInt("idmarca"),
@@ -123,4 +122,6 @@ public class PresupuestoDAO {
 		}
 		return ingreso;
 	}
+	
+
 }
