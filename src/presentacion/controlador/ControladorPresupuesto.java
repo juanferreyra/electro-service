@@ -46,9 +46,18 @@ public class ControladorPresupuesto implements ActionListener{
 		this.componente = new Componente();
 		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
 		cargarComboComponentes();
+		cargarIngreso();
 		
 	}
 	
+	private void cargarIngreso() {
+		
+		this.ventanaPresupuesto.getNombreProductoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
+		this.ventanaPresupuesto.getMarcaTexto_lbl().setText(ingreso.getMarca().getDetalle());;
+		this.ventanaPresupuesto.getDescripcionFalla_txtArea().setText(ingreso.getIngreso().getDescripcion_falla());
+		this.ventanaPresupuesto.getTipoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
+	}
+
 	private void cargarComboComponentes() {
 		
 		listaDeComponetes = this.componente.obtenercomponentes();
@@ -117,7 +126,7 @@ public class ControladorPresupuesto implements ActionListener{
 		for (int i = 0; i < this.listaDeComponetes.size(); i ++)
 		{
 
-			Object[] fila = {this.listaDeComponetes.get(i).getDetalle(),
+			Object[] fila = {this.listaDeComponetes.get(i).getId(),this.listaDeComponetes.get(i).getDetalle(),
 					this.ventanaPresupuesto.getCantidad_lbl().getText(), "$ "+this.listaDeComponetes.get(i).getPrecioUnitario(),
 					 "$ "+Float.parseFloat(this.ventanaPresupuesto.getCantidad_lbl().getText()) *
 					this.listaDeComponetes.get(i).getPrecioUnitario()};
@@ -128,11 +137,15 @@ public class ControladorPresupuesto implements ActionListener{
 	}
 	public static void main(String[] args) {
 		
-		/*ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-				new Ingreso());
+		Ingreso ing = new Ingreso();
+		ing.setId(1);
+		ing.cargarModeloCompleto();
+		
+		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+				ing);
 		
 		controladorPresupuesto.inicializar();
-		*/
+		
 	}
 
 }

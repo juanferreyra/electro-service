@@ -54,7 +54,11 @@ public class VentanaPresupuesto extends JFrame {
 	private JLabel cantidad_lbl;
 	private JTable componentes_table;
 	private JLabel fechaIngreso_lbl;
-	private String[] componentes_nombreColumnas = { "Nombre", "Descripcion", "Cantidad", "Precio Unitario",
+	private JLabel nombreProductoTexto_lbl;
+	private JLabel tipoTexto_lbl;
+	private JLabel marcaTexto_lbl;
+	private JTextArea descripcionFalla_txtArea;
+	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario",
 	"Precio Total" };
 	
 
@@ -75,7 +79,7 @@ public class VentanaPresupuesto extends JFrame {
 		fechaIngresoText_lbl.setBounds(572, 11, 102, 14);
 		contentPane.add(fechaIngresoText_lbl);
 
-		JLabel titulo_lbl = new JLabel("<html><b>PRESUPUESTO</b></html>");
+		JLabel titulo_lbl = new JLabel("<html><b>PRESUPUESTOJ</b></html>");
 		titulo_lbl.setBounds(10, 11, 495, 14);
 		contentPane.add(titulo_lbl);
 
@@ -88,7 +92,7 @@ public class VentanaPresupuesto extends JFrame {
 		nombreProducto_lbl.setBounds(10, 37, 116, 29);
 		contentPane.add(nombreProducto_lbl);
 
-		JLabel nombreProductoTexto_lbl = new JLabel("");
+		nombreProductoTexto_lbl = new JLabel("");
 		nombreProductoTexto_lbl.setBounds(136, 52, 445, 14);
 		contentPane.add(nombreProductoTexto_lbl);
 
@@ -96,7 +100,7 @@ public class VentanaPresupuesto extends JFrame {
 		marca_lbl.setBounds(10, 78, 116, 14);
 		contentPane.add(marca_lbl);
 
-		JLabel marcaTexto_lbl = new JLabel("");
+		marcaTexto_lbl = new JLabel("");
 		marcaTexto_lbl.setBounds(71, 78, 184, 14);
 		contentPane.add(marcaTexto_lbl);
 
@@ -104,7 +108,7 @@ public class VentanaPresupuesto extends JFrame {
 		tipo_lbl.setBounds(303, 78, 116, 14);
 		contentPane.add(tipo_lbl);
 
-		JLabel tipoTexto_lbl = new JLabel("");
+		tipoTexto_lbl = new JLabel("");
 		tipoTexto_lbl.setBounds(362, 78, 184, 14);
 		contentPane.add(tipoTexto_lbl);
 
@@ -120,7 +124,7 @@ public class VentanaPresupuesto extends JFrame {
 		descripcionFalla_jScrollPane
 				.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-		JTextArea descripcionFalla_txtArea = new JTextArea();
+		descripcionFalla_txtArea = new JTextArea();
 		descripcionFalla_txtArea.setEditable(false);
 		descripcionFalla_txtArea.setRows(5);
 		descripcionFalla_txtArea.setColumns(20);
@@ -417,4 +421,30 @@ public class VentanaPresupuesto extends JFrame {
 	public JLabel getFechaIngreso_lbl() {
 		return fechaIngreso_lbl;
 	}
+
+
+	public JLabel getNombreProductoTexto_lbl() {
+		return nombreProductoTexto_lbl;
+	}
+
+
+	public JLabel getTipoTexto_lbl() {
+		return tipoTexto_lbl;
+	}
+
+
+	public JLabel getMarcaTexto_lbl() {
+		return marcaTexto_lbl;
+	}
+
+
+	public JTextArea getDescripcionFalla_txtArea() {
+		return descripcionFalla_txtArea;
+	}
+	
+	
+	
+	
+	
+	
 }
