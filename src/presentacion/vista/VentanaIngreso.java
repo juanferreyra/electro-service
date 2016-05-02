@@ -30,6 +30,7 @@ public class VentanaIngreso extends JFrame {
 	private JButton buscarCliente_btn;
 	private JComboBox<String> marca_ComboBox;
 	private JComboBox<String> tipo_ComboBox ;
+	private Object[][] informacionTabla;
 
 	public VentanaIngreso() {
 		
@@ -82,7 +83,7 @@ public class VentanaIngreso extends JFrame {
 		contentPane.add(crearCliente_btn);
 
 		String[] nombreColumnas = { "Nombre", "Apellido", "Dirección", "Email", "Teléfono" };
-		Object[][] informacionTabla = {};
+		informacionTabla = null;
 
 		table = new JTable(informacionTabla, nombreColumnas);
 		table.setEnabled(false);
@@ -193,5 +194,9 @@ public class VentanaIngreso extends JFrame {
 
 	public JComboBox<String> getComboTiposProductos() {
 		return tipo_ComboBox;
+	}
+	
+	public void setInformacionTabla(Object[][] datos) {
+		this.informacionTabla = datos;
 	}
 }

@@ -18,7 +18,8 @@ public class TipoProductoDAO
 		private static final String delete = "UPDATE tipo_producto SET habilitado='0' WHERE id = ?";
 		private static final String readall = "SELECT id, detalle, idusuario FROM tipo_producto WHERE habilitado = true;";
 		private static final String update = "UPDATE tipo_producto SET detalle = ?  WHERE id = ? ;";
-		private static final Conexion conexion = Conexion.getConexion();
+		private static final String find = "SELECT id, detalle, idusuario FROM tipo_producto WHERE habilitado = true AND id = ? ;";
+		private static Conexion conexion = Conexion.getConexion();
 		
 		public boolean insert(TipoProductoDTO tipo_producto)
 		{
@@ -70,7 +71,7 @@ public class TipoProductoDAO
 		{
 			PreparedStatement statement;
 			ResultSet resultSet; //Guarda el resultado de la query
-			ArrayList<TipoProductoDTO> localidades = new ArrayList<TipoProductoDTO>();
+			ArrayList<TipoProductoDTO> tipos_productos = new ArrayList<TipoProductoDTO>();
 			try 
 			{
 				statement = conexion.getSQLConexion().prepareStatement(readall);
@@ -78,7 +79,7 @@ public class TipoProductoDAO
 				
 				while(resultSet.next())
 				{
-					localidades.add(new TipoProductoDTO(resultSet.getInt("id"), resultSet.getString("detalle"),resultSet.getInt("idusuario")));
+					tipos_productos.add(new TipoProductoDTO(resultSet.getInt("id"), resultSet.getString("detalle"),resultSet.getInt("idusuario")));
 				}
 			} 
 			catch (SQLException e) 
@@ -90,7 +91,7 @@ public class TipoProductoDAO
 				conexion.cerrarConexion();
 			}
 			
-			return localidades;
+			return tipos_productos;
 		}
 		
 		public boolean update (TipoProductoDTO tipoprodu_a_modificar)
@@ -116,5 +117,30 @@ public class TipoProductoDAO
 				conexion.cerrarConexion();
 			}
 			return false;
+		}
+
+		public TipoProductoDTO find(int idtipo_producto) {
+
+			conexion = Conexion.getConexion();
+			PreparedStatement statement;
+			ResultSet resultSet;
+			TipoProductoDTO tipo_producto = null;
+
+			try {
+				statement = conexion.getSQLConexion().prepareStatement(find);
+				statement.setInt(1, idtipo_producto);
+				resultSet = statement.executeQuery();
+
+				while (resultSet.next()) {
+					tipo_producto = new TipoProductoDTO(resultSet.getInt("id"),
+							resultSet.getString("detalle"),
+							resultSet.getInt("idusuario"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				conexion.cerrarConexion();
+			}
+			return tipo_producto;
 		}
 }

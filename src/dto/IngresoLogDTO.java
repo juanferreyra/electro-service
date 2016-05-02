@@ -56,6 +56,4 @@ public class IngresoLogDTO {
 	public void setIdusuario(int idusuario) {
 		this.idusuario = idusuario;
 	}
-	
-	
 }

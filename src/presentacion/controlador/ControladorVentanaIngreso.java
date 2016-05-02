@@ -24,6 +24,10 @@ public class ControladorVentanaIngreso implements ActionListener{
 	
 	public void inicializar()
 	{
+		if(ingreso.getId()!=-1)
+		{
+			ingreso.cargarModeloCompleto();
+		}
 		this.llenarComboMarcas();
 		this.llenarComboTiposProductos();
 		
@@ -32,6 +36,7 @@ public class ControladorVentanaIngreso implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		
 		
 	}
 	
@@ -46,7 +51,6 @@ public class ControladorVentanaIngreso implements ActionListener{
 		lista_marcas = this.ingreso.obtenerMarcas();
 		for (int i = 0; i < lista_marcas.size(); i++)
 		{
-			System.out.println(lista_marcas.get(i).getDetalle());
 			this.ventana_ingreso.getComboMarcas().addItem(lista_marcas.get(i).getDetalle());
 		}
 	}

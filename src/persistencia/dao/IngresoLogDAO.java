@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.IngresoEstadoDTO;
 import dto.IngresoLogDTO;
 import persistencia.conexion.Conexion;
 
@@ -16,6 +17,8 @@ public class IngresoLogDAO {
 			+ "VALUES (?,?, now(), ?, true);";
 	private static final String delete = "UPDATE ingreso_log SET habilitado='0' WHERE id = ?";
 	private static final String readall = "SELECT * FROM ingreso_log WHERE habilitado = true;";
+	private static final String find = "SELECT il.id, e.detalle, il.fecha_creacion, il.idusuario FROM "
+			+ "ingreso_log il LEFT JOIN estado e ON(il.idestado = e.id) WHERE il.idingreso = ? AND il.habilitado=true;";
 	private static final Conexion conexion = Conexion.getConexion();
 	
 	public boolean insert(IngresoLogDTO ingreso_log)
@@ -91,6 +94,34 @@ public class IngresoLogDAO {
 		}
 		
 		return marcas;
+	}
+
+	public ArrayList<IngresoEstadoDTO> find(int idIngreso) {
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<IngresoEstadoDTO> ingreso_log = new ArrayList<IngresoEstadoDTO>();
+		try
+		{
+			statement = conexion.getSQLConexion().prepareStatement(find);
+			statement.setInt(1, idIngreso);
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next())
+			{
+				ingreso_log.add(new IngresoEstadoDTO(resultSet.getInt("id"),resultSet.getString("detalle"),resultSet.getDate("fecha_creacion"),resultSet.getInt("idusuario")));
+			}
+		}
+		catch (SQLException e) 
+		{
+			System.out.println("hubo un error");
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			conexion.cerrarConexion();
+		}
+		
+		return ingreso_log;
 	}
 		
 }

@@ -19,7 +19,8 @@ public class MarcaDAO
 		private static final String delete = "UPDATE marca_producto SET habilitado='0' WHERE id = ?";
 		private static final String readall = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true;";
 		private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
-		private static final Conexion conexion = Conexion.getConexion();
+		private static final String find = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true AND id = ?;";
+		private static Conexion conexion = Conexion.getConexion();
 		
 		public boolean insert(MarcaDTO marca)
 		{
@@ -118,5 +119,30 @@ public class MarcaDAO
 				conexion.cerrarConexion();
 			}
 			return false;
+		}
+
+		public MarcaDTO find(int idmarca) {
+			
+			conexion = Conexion.getConexion();
+			PreparedStatement statement;
+			ResultSet resultSet;
+			MarcaDTO marca = null;
+
+			try {
+				statement = conexion.getSQLConexion().prepareStatement(find);
+				statement.setInt(1, idmarca);
+				resultSet = statement.executeQuery();
+
+				while (resultSet.next()) {
+					marca = new MarcaDTO(resultSet.getInt("id"),
+							resultSet.getString("detalle"),
+							resultSet.getInt("idusuario"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				conexion.cerrarConexion();
+			}
+			return marca;
 		}
 }

@@ -16,20 +16,21 @@ public class ClienteDAO {
 			+ "VALUES (?, ?, ?, ?, ?', ?, ?, ?, now(), ?);";
 	private static final String delete = "UPDATE cliente SET habilitado=false WHERE id= ?;";
 	private static final String readall = "SELECT * FROM cliente WHERE habilitado=true";
+	private static final String find = "SELECT * FROM cliente WHERE habilitado=true AND id=?";
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<ClienteDTO> readAll() {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
-		ArrayList<ClienteDTO> localidades = new ArrayList<ClienteDTO>();
+		ArrayList<ClienteDTO> clientes = new ArrayList<ClienteDTO>();
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(readall);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				localidades.add(new ClienteDTO(resultSet.getInt("id"),
+				clientes.add(new ClienteDTO(resultSet.getInt("id"),
 						resultSet.getInt("nrodoc"),
 						resultSet.getString("nombre"),
 						resultSet.getString("apellido"),
@@ -45,7 +46,7 @@ public class ClienteDAO {
 		} finally {
 			conexion.cerrarConexion();
 		}
-		return localidades;
+		return clientes;
 	}
 
 	public boolean delete(ClienteDTO cliente_a_eliminar) {
@@ -90,5 +91,36 @@ public class ClienteDAO {
 			conexion.cerrarConexion();
 		}
 		return false;
+	}
+
+	public ClienteDTO find(int idcliente) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		ClienteDTO cliente = null;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(find);
+			statement.setInt(1, idcliente);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				cliente = new ClienteDTO(resultSet.getInt("id"),
+						resultSet.getInt("nrodoc"),
+						resultSet.getString("nombre"),
+						resultSet.getString("apellido"),
+						resultSet.getString("localidad"),
+						resultSet.getString("direccion"),
+						resultSet.getString("telefono"),
+						resultSet.getString("mail"),
+						resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conexion.cerrarConexion();
+		}
+		return cliente;
 	}
 }

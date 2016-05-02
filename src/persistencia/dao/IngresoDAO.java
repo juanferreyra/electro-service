@@ -15,6 +15,7 @@ public class IngresoDAO {
 			+ "idtipo_producto,fecha_creacion,estado,idusuario) VALUES (?,?,?,?,?,?,?)";
 	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
 	private static final String readall = "SELECT * FROM ingreso WHERE habilitado=true";
+	private static final String find = "SELECT * FROM ingreso WHERE habilitado=true AND id = ?";
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<IngresoDTO> readAll() {
@@ -85,5 +86,34 @@ public class IngresoDAO {
 			conexion.cerrarConexion();
 		}
 		return false;
+	}
+
+	public IngresoDTO find(int id) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		IngresoDTO ingreso = null;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(find);
+			statement.setInt(1, id);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				ingreso = new IngresoDTO(resultSet.getInt("id"),
+						resultSet.getInt("idcliente"),
+						resultSet.getString("descripcion_producto"),
+						resultSet.getInt("idmarca"),
+						resultSet.getInt("idtipo_producto"),
+						resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("estado"),
+						resultSet.getInt("idusuario"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conexion.cerrarConexion();
+		}
+		return ingreso;
 	}
 }
