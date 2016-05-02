@@ -12,7 +12,7 @@ import persistencia.conexion.Conexion;
 public class IngresoDAO {
 
 	private static final String insert = "INSERT INTO ingreso(idcliente,descripcion_producto,idmarca,"
-			+ "idtipo_producto,fecha_creacion,estado,idusuario) VALUES (?,?,?,?,?,?,?)";
+			+ "idtipo_producto,descripcion_falla,fecha_creacion,estado,idusuario) VALUES (?,?,?,?,?,?,?,?)";
 	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
 	private static final String readall = "SELECT * FROM ingreso WHERE habilitado=true";
 	private static final String find = "SELECT * FROM ingreso WHERE habilitado=true AND id = ?";
@@ -34,6 +34,7 @@ public class IngresoDAO {
 						resultSet.getString("descripcion_producto"),
 						resultSet.getInt("idmarca"),
 						resultSet.getInt("idtipo_producto"),
+						resultSet.getString("descripcion_falla"),
 						resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("estado"),
 						resultSet.getInt("idusuario")));
@@ -105,6 +106,7 @@ public class IngresoDAO {
 						resultSet.getString("descripcion_producto"),
 						resultSet.getInt("idmarca"),
 						resultSet.getInt("idtipo_producto"),
+						resultSet.getString("descripcion_falla"),
 						resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("estado"),
 						resultSet.getInt("idusuario"));

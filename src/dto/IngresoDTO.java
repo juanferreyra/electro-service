@@ -8,16 +8,19 @@ public class IngresoDTO {
 	private int idcliente;
 	private int idmarca;
 	private int idtipo_producto;
+	private String descripcion_falla;
 	private Date fecha_creacion;
 	private int estado;
 	private int idusuario;
 	
-	public IngresoDTO(int id,  int idcliente, String descripcion, int idmarca,int idtipo_producto, Date fecha_creacion, int estado, int idusuario)
+	public IngresoDTO(int id,  int idcliente, String descripcion, int idmarca,int idtipo_producto,String descripcion_falla, Date fecha_creacion, int estado, int idusuario)
 	{
 		this.id = id;
 		this.idcliente = idcliente;
+		this.descripcion = descripcion;
 		this.idmarca = idmarca;
 		this.idtipo_producto = idtipo_producto;
+		this.setDescripcion_falla(descripcion_falla);
 		this.fecha_creacion = fecha_creacion;
 		this.estado = estado;
 		this.idusuario = idusuario;
@@ -85,6 +88,14 @@ public class IngresoDTO {
 
 	public void setIdusuario(int idusuario) {
 		this.idusuario = idusuario;
+	}
+
+	public String getDescripcion_falla() {
+		return descripcion_falla;
+	}
+
+	public void setDescripcion_falla(String descripcion_falla) {
+		this.descripcion_falla = descripcion_falla;
 	}
 	
 }

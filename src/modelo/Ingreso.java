@@ -58,8 +58,12 @@ public class Ingreso {
 		this.setLogIngresos(log_ingresos.find(id));
 	}
 	
+	public IngresoDTO getIngreso() {
+		return ingr;
+	}
+	
 	private void setIngreso(IngresoDTO ingreso) {
-		this.ingr = ingreso;
+		ingr = ingreso;
 	}
 
 	public ClienteDTO getCliente() {

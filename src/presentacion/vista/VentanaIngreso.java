@@ -10,6 +10,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -26,11 +27,12 @@ public class VentanaIngreso extends JFrame {
 	private JTextField numeroCliente_txf;
 	private JTable table;
 	private JTextField nombreProducto_txf;
+	private JTextArea descripcionFalla_txtArea;
 	private JTextField direccionAlternativa_txf;
 	private JButton buscarCliente_btn;
 	private JComboBox<String> marca_ComboBox;
 	private JComboBox<String> tipo_ComboBox ;
-	private Object[][] informacionTabla;
+	
 
 	public VentanaIngreso() {
 		
@@ -83,7 +85,7 @@ public class VentanaIngreso extends JFrame {
 		contentPane.add(crearCliente_btn);
 
 		String[] nombreColumnas = { "Nombre", "Apellido", "Dirección", "Email", "Teléfono" };
-		informacionTabla = null;
+		Object[][] informacionTabla = {};
 
 		table = new JTable(informacionTabla, nombreColumnas);
 		table.setEnabled(false);
@@ -140,7 +142,7 @@ public class VentanaIngreso extends JFrame {
 		descripcionFalla_jScrollPane
 				.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-		JTextArea descripcionFalla_txtArea = new JTextArea();
+		descripcionFalla_txtArea = new JTextArea();
 		descripcionFalla_txtArea.setRows(5);
 		descripcionFalla_txtArea.setColumns(20);
 		descripcionFalla_jScrollPane.setViewportView(descripcionFalla_txtArea);
@@ -195,8 +197,13 @@ public class VentanaIngreso extends JFrame {
 	public JComboBox<String> getComboTiposProductos() {
 		return tipo_ComboBox;
 	}
-	
-	public void setInformacionTabla(Object[][] datos) {
-		this.informacionTabla = datos;
+
+	public JTextField getTextNombreProducto() {
+		return nombreProducto_txf;
 	}
+
+	public JTextArea getTextDescripcionFalla() {
+		return descripcionFalla_txtArea;
+	}
+	
 }

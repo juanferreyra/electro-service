@@ -86,6 +86,7 @@ CREATE TABLE `ingreso` (
   `descripcion_producto` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
   `idmarca` int(11) DEFAULT NULL,
   `idtipo_producto` int(11) DEFAULT NULL,
+  `descripcion_falla` longtext COLLATE latin1_spanish_ci,
   `envio` tinyint(1) DEFAULT NULL,
   `envio_default` tinyint(1) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
@@ -102,7 +103,7 @@ CREATE TABLE `ingreso` (
 
 LOCK TABLES `ingreso` WRITE;
 /*!40000 ALTER TABLE `ingreso` DISABLE KEYS */;
-INSERT INTO `ingreso` VALUES (1,1,'GALAXY S3 MINI',2,1,1,1,1,'2016-04-30 00:01:52',0,1);
+INSERT INTO `ingreso` VALUES (1,1,'GALAXY S3 MINI',2,1,'Se le rompio la pantalla entones lo traje para reparar',1,1,1,'2016-04-30 00:01:52',0,1);
 /*!40000 ALTER TABLE `ingreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,4 +388,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-01 20:15:09
+-- Dump completed on 2016-05-02  2:32:08

@@ -31,6 +31,8 @@ public class ControladorVentanaIngreso implements ActionListener{
 		this.llenarComboMarcas();
 		this.llenarComboTiposProductos();
 		
+		this.ventana_ingreso.getTextNombreProducto().setText(ingreso.getIngreso().getDescripcion());
+		this.ventana_ingreso.getTextDescripcionFalla().setText(ingreso.getIngreso().getDescripcion_falla());
 		this.ventana_ingreso.setVisible(true);
 	}
 
