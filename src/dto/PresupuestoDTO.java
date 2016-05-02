@@ -1,7 +1,6 @@
 package dto;
 
-import sun.util.calendar.LocalGregorianCalendar.Date;
-
+import java.util.Date;
 
 public class PresupuestoDTO {
 	
