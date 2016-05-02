@@ -22,18 +22,26 @@ public class ControladorVentanaIngreso implements ActionListener{
 		this.ventana_ingreso.getBtnBuscarCliente().addActionListener(this);
 	}
 	
-	public void inicializar()
-	{
+	public void inicializar() {
 		if(ingreso.getId()!=-1)
 		{
 			ingreso.cargarModeloCompleto();
+			this.cargarVentana();
+		} else {
+			this.llenarComboMarcas();
+			this.llenarComboTiposProductos();
 		}
-		this.llenarComboMarcas();
-		this.llenarComboTiposProductos();
 		
+		this.ventana_ingreso.setVisible(true);
+	}
+
+	private void cargarVentana() {
 		this.ventana_ingreso.getTextNombreProducto().setText(ingreso.getIngreso().getDescripcion());
 		this.ventana_ingreso.getTextDescripcionFalla().setText(ingreso.getIngreso().getDescripcion_falla());
-		this.ventana_ingreso.setVisible(true);
+		this.ventana_ingreso.getComboTiposProductos().addItem(ingreso.getTipoproducto().getDetalle());
+		this.ventana_ingreso.getComboMarcas().addItem(ingreso.getMarca().getDetalle());
+		this.ventana_ingreso.getEnvioDomicilio().setSelected(ingreso.getIngreso().getEnvio());
+		this.ventana_ingreso.getDireccionAlternativa().setSelected(ingreso.getIngreso().getEnvio_default());
 	}
 
 	@Override

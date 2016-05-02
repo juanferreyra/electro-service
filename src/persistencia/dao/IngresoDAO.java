@@ -35,6 +35,8 @@ public class IngresoDAO {
 						resultSet.getInt("idmarca"),
 						resultSet.getInt("idtipo_producto"),
 						resultSet.getString("descripcion_falla"),
+						resultSet.getBoolean("envio"),
+						resultSet.getBoolean("envio_default"),
 						resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("estado"),
 						resultSet.getInt("idusuario")));
@@ -107,6 +109,8 @@ public class IngresoDAO {
 						resultSet.getInt("idmarca"),
 						resultSet.getInt("idtipo_producto"),
 						resultSet.getString("descripcion_falla"),
+						resultSet.getBoolean("envio"),
+						resultSet.getBoolean("envio_default"),
 						resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("estado"),
 						resultSet.getInt("idusuario"));

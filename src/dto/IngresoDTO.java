@@ -9,18 +9,22 @@ public class IngresoDTO {
 	private int idmarca;
 	private int idtipo_producto;
 	private String descripcion_falla;
+	private Boolean envio;
+	private Boolean envio_default;
 	private Date fecha_creacion;
 	private int estado;
 	private int idusuario;
 	
-	public IngresoDTO(int id,  int idcliente, String descripcion, int idmarca,int idtipo_producto,String descripcion_falla, Date fecha_creacion, int estado, int idusuario)
+	public IngresoDTO(int id,  int idcliente, String descripcion, int idmarca,int idtipo_producto,String descripcion_falla, Boolean envio, Boolean envioDefault, Date fecha_creacion, int estado, int idusuario)
 	{
 		this.id = id;
 		this.idcliente = idcliente;
 		this.descripcion = descripcion;
 		this.idmarca = idmarca;
 		this.idtipo_producto = idtipo_producto;
-		this.setDescripcion_falla(descripcion_falla);
+		this.descripcion_falla = descripcion_falla;
+		this.setEnvio(envio);
+		this.setEnvio_default(envioDefault);
 		this.fecha_creacion = fecha_creacion;
 		this.estado = estado;
 		this.idusuario = idusuario;
@@ -96,6 +100,22 @@ public class IngresoDTO {
 
 	public void setDescripcion_falla(String descripcion_falla) {
 		this.descripcion_falla = descripcion_falla;
+	}
+
+	public Boolean getEnvio() {
+		return envio;
+	}
+
+	public void setEnvio(Boolean envio) {
+		this.envio = envio;
+	}
+
+	public Boolean getEnvio_default() {
+		return envio_default;
+	}
+
+	public void setEnvio_default(Boolean envio_default) {
+		this.envio_default = envio_default;
 	}
 	
 }

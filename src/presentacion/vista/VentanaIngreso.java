@@ -32,6 +32,8 @@ public class VentanaIngreso extends JFrame {
 	private JButton buscarCliente_btn;
 	private JComboBox<String> marca_ComboBox;
 	private JComboBox<String> tipo_ComboBox ;
+	private JCheckBox envioDomicilio_checkBox;
+	private JCheckBox direccionDefecto_checkBox;
 	
 
 	public VentanaIngreso() {
@@ -84,7 +86,7 @@ public class VentanaIngreso extends JFrame {
 		crearCliente_btn.setBounds(313, 48, 33, 23);
 		contentPane.add(crearCliente_btn);
 
-		String[] nombreColumnas = { "Nombre", "Apellido", "Dirección", "Email", "Teléfono" };
+		String[] nombreColumnas = { "Nombre", "Apellido", "Direcciï¿½n", "Email", "Telï¿½fono" };
 		Object[][] informacionTabla = {};
 
 		table = new JTable(informacionTabla, nombreColumnas);
@@ -130,7 +132,7 @@ public class VentanaIngreso extends JFrame {
 		tipo_ComboBox.setBounds(313, 188, 120, 20);
 		contentPane.add(tipo_ComboBox);
 
-		JLabel descripcionFalla_lbl = new JLabel("Descripción falla:");
+		JLabel descripcionFalla_lbl = new JLabel("Descripciï¿½n falla:");
 		descripcionFalla_lbl.setBounds(10, 227, 146, 14);
 		contentPane.add(descripcionFalla_lbl);
 
@@ -161,7 +163,7 @@ public class VentanaIngreso extends JFrame {
 		envioAdomicilio_lbl.setBounds(10, 326, 181, 14);
 		contentPane.add(envioAdomicilio_lbl);
 		
-		JCheckBox envioDomicilio_checkBox = new JCheckBox("");
+		envioDomicilio_checkBox = new JCheckBox("");
 		envioDomicilio_checkBox.setBackground(Color.WHITE);
 		envioDomicilio_checkBox.setBounds(132, 326, 21, 14);
 		contentPane.add(envioDomicilio_checkBox);
@@ -170,7 +172,7 @@ public class VentanaIngreso extends JFrame {
 		direccionDefecto_lbl.setBounds(10, 351, 163, 14);
 		contentPane.add(direccionDefecto_lbl);
 		
-		JCheckBox direccionDefecto_checkBox = new JCheckBox("");
+		direccionDefecto_checkBox = new JCheckBox("");
 		direccionDefecto_checkBox.setBackground(Color.WHITE);
 		direccionDefecto_checkBox.setBounds(132, 351, 21, 14);
 		contentPane.add(direccionDefecto_checkBox);
@@ -204,6 +206,14 @@ public class VentanaIngreso extends JFrame {
 
 	public JTextArea getTextDescripcionFalla() {
 		return descripcionFalla_txtArea;
+	}
+	
+	public JCheckBox getEnvioDomicilio() {
+		return envioDomicilio_checkBox;
+	}
+	
+	public JCheckBox getDireccionAlternativa() {
+		return direccionDefecto_checkBox;
 	}
 	
 }
