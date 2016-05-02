@@ -17,6 +17,7 @@ public class ClienteDAO {
 	private static final String delete = "UPDATE cliente SET habilitado=false WHERE id= ?;";
 	private static final String readall = "SELECT * FROM cliente WHERE habilitado=true";
 	private static final String find = "SELECT * FROM cliente WHERE habilitado=true AND id=?";
+	private static final String find2 = "SELECT * FROM cliente WHERE habilitado=true AND nrodoc=?";
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<ClienteDTO> readAll() {
@@ -102,6 +103,37 @@ public class ClienteDAO {
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(find);
 			statement.setInt(1, idcliente);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				cliente = new ClienteDTO(resultSet.getInt("id"),
+						resultSet.getInt("nrodoc"),
+						resultSet.getString("nombre"),
+						resultSet.getString("apellido"),
+						resultSet.getString("localidad"),
+						resultSet.getString("direccion"),
+						resultSet.getString("telefono"),
+						resultSet.getString("mail"),
+						resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			conexion.cerrarConexion();
+		}
+		return cliente;
+	}
+	
+	public ClienteDTO findPorNrodoc(int nrodoc) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		ClienteDTO cliente = null;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(find2);
+			statement.setInt(1, nrodoc);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {

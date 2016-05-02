@@ -7,7 +7,7 @@ import dto.ClienteDTO;
 import dto.MarcaDTO;
 import dto.TipoProductoDTO;
 import dto.IngresoEstadoDTO;
-
+import dto.IngresoLogDTO;
 import persistencia.dao.ClienteDAO;
 import persistencia.dao.IngresoDAO;
 import persistencia.dao.MarcaDAO;
@@ -56,6 +56,14 @@ public class Ingreso {
 		this.setMarca(marca.find(ingr.getIdmarca()));
 		this.setTipoproducto(tipoproducto.find(ingr.getIdtipo_producto()));
 		this.setLogIngresos(log_ingresos.find(id));
+	}
+	
+	public void guardarIngreso(IngresoDTO igr, ClienteDTO clien, IngresoLogDTO ingrLog )
+	{
+		//guardo todos los objetos DTO con su respectivo DAO
+		this.ingreso.insert(ingr);
+		this.cliente.insert(clien);
+		this.log_ingresos.insert(ingrLog);
 	}
 	
 	public IngresoDTO getIngreso() {

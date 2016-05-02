@@ -34,6 +34,8 @@ public class VentanaIngreso extends JFrame {
 	private JComboBox<String> tipo_ComboBox ;
 	private JCheckBox envioDomicilio_checkBox;
 	private JCheckBox direccionDefecto_checkBox;
+	private JButton cancelar_btn;
+	private JButton aceptar_btn;
 	
 
 	public VentanaIngreso() {
@@ -70,7 +72,7 @@ public class VentanaIngreso extends JFrame {
 		contentPane.add(numeroCliente_lbl);
 
 		numeroCliente_txf = new JTextField();
-		numeroCliente_txf.setBounds(140, 49, 120, 20);
+		numeroCliente_txf.setBounds(98, 49, 146, 20);
 		contentPane.add(numeroCliente_txf);
 		numeroCliente_txf.setColumns(10);
 
@@ -151,11 +153,11 @@ public class VentanaIngreso extends JFrame {
 
 		contentPane.add(descripcionFalla_jScrollPane);
 		
-		JButton cancelar_btn = new JButton("Cancelar");
+		cancelar_btn = new JButton("Cancelar");
 		cancelar_btn.setBounds(585, 428, 89, 23);
 		contentPane.add(cancelar_btn);
 		
-		JButton aceptar_btn = new JButton("Aceptar");
+		aceptar_btn = new JButton("Aceptar");
 		aceptar_btn.setBounds(486, 428, 89, 23);
 		contentPane.add(aceptar_btn);
 		
@@ -191,6 +193,10 @@ public class VentanaIngreso extends JFrame {
 	public JButton getBtnBuscarCliente() {
 		return buscarCliente_btn;
 	}
+	
+	public JTextField getTxtNroCliente() {
+		 return numeroCliente_txf;
+	}
 
 	public JComboBox<String> getComboMarcas() {
 		return marca_ComboBox;
@@ -214,6 +220,18 @@ public class VentanaIngreso extends JFrame {
 	
 	public JCheckBox getDireccionAlternativa() {
 		return direccionDefecto_checkBox;
+	}
+	
+	public JButton getBtnAceptar() {
+		return aceptar_btn;
+	}
+	
+	public JButton getBtnCancelar() {
+		return cancelar_btn;
+	}
+
+	public JTable getClienteTable() {
+		return this.table;
 	}
 	
 }
