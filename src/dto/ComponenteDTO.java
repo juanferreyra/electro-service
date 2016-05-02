@@ -5,7 +5,6 @@ import java.util.Date;
 public class ComponenteDTO {
 	
 	private int id;
-	private String nombre;
 	private String detalle;
 	private float precioUnitario;
 	private int stockMinimo;
@@ -13,11 +12,10 @@ public class ComponenteDTO {
 	private int idUsuario;
 	private int habilitado;
 	
-	public ComponenteDTO (int id, String nombre, String detalle, float precioUnitario,
+	public ComponenteDTO (int id, String detalle, float precioUnitario,
 			int stockMinimo, Date fechaCreacion,int idUsuario, int habilitado ){
 		
 		this.id = id;
-		this.nombre = nombre;
 		this.detalle = detalle;
 		this.precioUnitario = precioUnitario;
 		this.stockMinimo = stockMinimo;
@@ -33,14 +31,6 @@ public class ComponenteDTO {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	public String getDetalle() {

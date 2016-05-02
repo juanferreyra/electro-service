@@ -20,7 +20,7 @@ public class ComponenteDAO {
 	
 	private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
 	
-	private static final String search = "SELECT * FROM electro_service_db.repuesto WHERE nombre = ? ;";
+	private static final String search = "SELECT * FROM electro_service_db.repuesto WHERE detalle = ? ;";
 	
 	private static final Conexion conexion = Conexion.getConexion();
 	
@@ -31,8 +31,7 @@ public class ComponenteDAO {
 		{
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 			statement.setInt(1,componente.getId());
-			statement.setString(2,componente.getNombre());
-			statement.setString(3,componente.getDetalle());
+			statement.setString(2,componente.getDetalle());
 			
 			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
 				return true;
@@ -84,7 +83,7 @@ public class ComponenteDAO {
 			
 			while(resultSet.next())
 			{
-				componentes.add(new ComponenteDTO(resultSet.getInt("id"),resultSet.getString("nombre"),
+				componentes.add(new ComponenteDTO(resultSet.getInt("id"),
 						resultSet.getString("detalle"),resultSet.getFloat("precio"),
 						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("idusuario"),resultSet.getInt("habilitado")));
@@ -142,7 +141,7 @@ public class ComponenteDAO {
 			
 			while(resultSet.next())
 			{
-				componentes.add(new ComponenteDTO(resultSet.getInt("id"),resultSet.getString("nombre"),
+				componentes.add(new ComponenteDTO(resultSet.getInt("id"),
 						resultSet.getString("detalle"),resultSet.getFloat("precio"),
 						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("idusuario"),resultSet.getInt("habilitado")));

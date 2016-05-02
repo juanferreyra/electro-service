@@ -50,7 +50,7 @@ public class ControladorConfiguracion implements ActionListener {
 			// CONEXION
 			// Y
 			// SERIALIZO
-//			Conexion.setConection(configuracion);
+			//Conexion.setConection(configuracion);
 			serializador = new SerializadorBD();
 			serializador.Serializar(configuracion);
 			this.ventanaConfiguracion.dispose();

@@ -45,6 +45,7 @@ public class VentanaConfigDataBase extends javax.swing.JFrame
         panel.add(lblUrl);
 
         txtUrl = new JTextField();
+        txtUrl.setText("localhost");
         txtUrl.setBounds(149, 10, 200, 19);
         panel.add(txtUrl);
         txtUrl.setColumns(10);
@@ -54,6 +55,7 @@ public class VentanaConfigDataBase extends javax.swing.JFrame
         panel.add(lblPuerto);
 
         txtPuerto = new JTextField();
+        txtPuerto.setText("3306");
         txtPuerto.setBounds(149, 56, 114, 19);
         panel.add(txtPuerto);
         txtPuerto.setColumns(10);

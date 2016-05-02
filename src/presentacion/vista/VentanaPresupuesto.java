@@ -215,7 +215,7 @@ public class VentanaPresupuesto extends JFrame {
 				new ImageIcon(VentanaPresupuesto.class.getResource("/minus-outline.png")));
 		contentPane.add(decrementoCantComponente_btn);
 
-		cantidad_lbl = new JLabel("0");
+		cantidad_lbl = new JLabel("1");
 		cantidad_lbl.setBounds(345, 275, 33, 20);
 		cantidad_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		cantidad_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));

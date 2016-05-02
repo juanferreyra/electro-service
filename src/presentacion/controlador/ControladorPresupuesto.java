@@ -13,7 +13,6 @@ import dto.ComponenteDTO;
 import modelo.Componente;
 import modelo.Ingreso;
 import presentacion.vista.VentanaPresupuesto;
-import sun.util.calendar.BaseCalendar.Date;
 
 public class ControladorPresupuesto implements ActionListener{
 	
@@ -21,7 +20,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private Ingreso ingreso;
 	private List<ComponenteDTO> listaDeComponetes; 
 	private Componente componente;
-	private Integer cantidad = 0;
+	private Integer cantidad = 1;
 	private DefaultTableModel modelo = new DefaultTableModel();
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso) {
@@ -55,7 +54,7 @@ public class ControladorPresupuesto implements ActionListener{
 		listaDeComponetes = this.componente.obtenercomponentes();
 		
 		for (ComponenteDTO c : listaDeComponetes){
-			this.ventanaPresupuesto.getComponente_ComboBox().addItem(c.getNombre());
+			this.ventanaPresupuesto.getComponente_ComboBox().addItem(c.getDetalle());
 		}
 		
 		
@@ -75,7 +74,7 @@ public class ControladorPresupuesto implements ActionListener{
 
 		}else if (e.getSource() == this.ventanaPresupuesto.getDecrementoCantComponente_btn()){
 
-			if(cantidad != 0){
+			if(cantidad != 1){
 				cantidad -=1;
 				this.ventanaPresupuesto.getCantidad_lbl().setText(cantidad.toString());
 			}
@@ -118,7 +117,7 @@ public class ControladorPresupuesto implements ActionListener{
 		for (int i = 0; i < this.listaDeComponetes.size(); i ++)
 		{
 
-			Object[] fila = {this.listaDeComponetes.get(i).getNombre(), this.listaDeComponetes.get(i).getDetalle(),
+			Object[] fila = {this.listaDeComponetes.get(i).getDetalle(),
 					this.ventanaPresupuesto.getCantidad_lbl().getText(), "$ "+this.listaDeComponetes.get(i).getPrecioUnitario(),
 					 "$ "+Float.parseFloat(this.ventanaPresupuesto.getCantidad_lbl().getText()) *
 					this.listaDeComponetes.get(i).getPrecioUnitario()};
@@ -129,11 +128,11 @@ public class ControladorPresupuesto implements ActionListener{
 	}
 	public static void main(String[] args) {
 		
-		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+		/*ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
 				new Ingreso());
 		
 		controladorPresupuesto.inicializar();
-		
+		*/
 	}
 
 }
