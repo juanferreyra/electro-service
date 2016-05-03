@@ -22,6 +22,7 @@ public class VentanaConfigDataBase extends javax.swing.JFrame
     /**
      * Creates new form ConfigDataBase
      */
+    
     public VentanaConfigDataBase()
     {
         super();

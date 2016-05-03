@@ -79,7 +79,6 @@ public class Conexion implements Serializable {
 	public static void reconectar() {
 		cerrarConexion();
 		Conexion.getConexion();
-		System.out.println(Conexion.isFallo());
 	}
 
 	public static boolean isFallo() {
