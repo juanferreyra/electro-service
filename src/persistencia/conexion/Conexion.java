@@ -84,4 +84,5 @@ public class Conexion implements Serializable {
 	public static boolean isFallo() {
 		return fallo;
 	}
+	
 }

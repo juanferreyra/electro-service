@@ -9,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 
 public class VentanaConfigDataBase extends javax.swing.JFrame
 {
-
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField txtUrl;
@@ -19,16 +18,11 @@ public class VentanaConfigDataBase extends javax.swing.JFrame
     private JTextField txtContrasena;
     private JButton btnTest;
     private JButton btnAceptar;
-    /**
-     * Creates new form ConfigDataBase
-     */
     
     public VentanaConfigDataBase()
     {
         super();
         setTitle("Configuracion de Base de Datos");
-
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 279);
         contentPane = new JPanel();
@@ -96,25 +90,17 @@ public class VentanaConfigDataBase extends javax.swing.JFrame
         return txtPuerto;
     }
 
-
-
     public JTextField getTxtUsuario() {
         return txtUsuario;
     }
-
-
-
+    
     public JButton getBtnTest() {
         return btnTest;
     }
-
-
-
+    
     public JButton getBtnAceptar() {
         return btnAceptar;
     }
-
-
 
     public JTextField getTxtContrasena() {
         return txtContrasena;

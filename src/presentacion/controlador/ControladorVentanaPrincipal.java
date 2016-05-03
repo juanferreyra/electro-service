@@ -138,11 +138,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Ingreso ingr = new Ingreso();
-		ingr.setId(1);
 		if (e.getSource() == this.principal.getIngresarProducto_btn()) {
 			ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(new VentanaIngreso(),
-					ingr);
+					new Ingreso());
 
 			controladorVentanaIngreso.inicializar();
 
