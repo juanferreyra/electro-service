@@ -1,7 +1,5 @@
 package dto;
 
-import sun.util.calendar.BaseCalendar.Date;
-
 public class PresupuestoRepuestoDTO {
 	
 	private int id;

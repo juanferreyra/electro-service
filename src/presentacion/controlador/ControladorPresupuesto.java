@@ -10,8 +10,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.ComponenteDTO;
+import dto.PresupuestoDTO;
+import dto.PresupuestoRepuestoDTO;
 import modelo.Componente;
 import modelo.Ingreso;
+import modelo.PresupuestoRepuestos;
+import persistencia.dao.PresupuestoDAO;
 import presentacion.vista.VentanaPresupuesto;
 
 public class ControladorPresupuesto implements ActionListener{
@@ -22,6 +26,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private Componente componente;
 	private Integer cantidad = 1;
 	private DefaultTableModel modelo = new DefaultTableModel();
+	private float suma = 0;
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso) {
 		
@@ -34,6 +39,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
 		
 	}
+	
 	
 	public void inicializar(){
 		
@@ -48,9 +54,11 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
 		cargarComboComponentes();
 		cargarIngreso();
-		
+		this.ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
 	}
 	
+	
+
 	private void cargarIngreso() {
 		
 		this.ventanaPresupuesto.getNombreProductoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
@@ -90,8 +98,9 @@ public class ControladorPresupuesto implements ActionListener{
 			}
 			// agrega a la tabla 
 		}else if(e.getSource() == this.ventanaPresupuesto.getAgregarComponente_btn()){
-			
-			llenarTablaComponentes();
+			 
+				llenarTablaComponentes();
+				sumarTotales();
 
 			// elimina componete de la tabla
 		}else if(e.getSource() == this.ventanaPresupuesto.getEliminarComponente_btn()){
@@ -110,14 +119,44 @@ public class ControladorPresupuesto implements ActionListener{
 		}
 	}
 
-	private void guardarRepuestos(int id) {
-		// TODO Auto-generated method stub
+
+
+	
+	private void guardarRepuestos(int idPresupuesto) {
 		
+		for(int i = 0; i < this.ventanaPresupuesto.getComponentes_table().getRowCount(); i++){
+
+			PresupuestoRepuestoDTO repuestoNuevo = new PresupuestoRepuestoDTO(
+					0,
+					idPresupuesto,
+					(int) this.modelo.getValueAt(i, 0),
+					3);
+			
+			PresupuestoRepuestos nuevo = new PresupuestoRepuestos();
+			nuevo.agregarRepuesto(repuestoNuevo);
+		}
 	}
 
-	private int  guardarPresupuesto() {
+private int  guardarPresupuesto() {
 		
-		return 0;
+		
+		PresupuestoDTO presupuestoNuevo = new PresupuestoDTO(
+				ingreso.getId(),
+				this.ventanaPresupuesto.getDescripcionBreve_jTextArea().getText(),
+				this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText(),
+				this.ventanaPresupuesto.getManoDeObra_txf().getText(),
+				
+				this.ventanaPresupuesto.getVencimiento_Calendario().getDate(),
+				
+				Integer.parseInt(this.ventanaPresupuesto.getNroTecnico_txf().getText()));
+		
+		PresupuestoDAO nuevo = new PresupuestoDAO();
+		
+		nuevo.insert(presupuestoNuevo);
+		
+		this.ventanaPresupuesto.dispose();
+		
+		return 10;
 		
 	}
 
@@ -126,6 +165,8 @@ public class ControladorPresupuesto implements ActionListener{
 		if (this.ventanaPresupuesto.getComponentes_table().getSelectedRow() != -1){
 
 			modelo.removeRow(this.ventanaPresupuesto.getComponentes_table().getSelectedRow());
+			sumarTotales();
+			
 		}else{
 			
 			JOptionPane.showMessageDialog(this.ventanaPresupuesto, "debe seleccionar fila para eliminar ", "Atencion!",
@@ -149,6 +190,20 @@ public class ControladorPresupuesto implements ActionListener{
 			
 				modelo.insertRow(0, fila);
 		}
+		
+		
+	}
+	
+	private void sumarTotales() {
+
+		suma = 0;
+		
+		for (int i = 0 ; i < this.ventanaPresupuesto.getComponentes_table().getRowCount(); i++){
+
+			suma += Float.parseFloat(this.ventanaPresupuesto.getComponentes_table().getValueAt(i, 4).toString());
+		}
+
+		this.ventanaPresupuesto.getTotal_lbl().setText(String.valueOf(suma));
 
 	}
 	public static void main(String[] args) {
@@ -157,9 +212,7 @@ public class ControladorPresupuesto implements ActionListener{
 		ing.setId(1);
 		ing.cargarModeloCompleto();
 		
-		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-				ing);
-		
+		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),ing);
 		controladorPresupuesto.inicializar();
 		
 	}
