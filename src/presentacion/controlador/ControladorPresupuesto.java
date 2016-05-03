@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -27,6 +29,8 @@ public class ControladorPresupuesto implements ActionListener{
 	private Integer cantidad = 1;
 	private DefaultTableModel modelo = new DefaultTableModel();
 	private float suma = 0;
+	private float sumatotal = 0;
+	private float  manoDeObra = 0;
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso) {
 		
@@ -37,6 +41,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
+		 this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
 		
 	}
 	
@@ -54,7 +59,10 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
 		cargarComboComponentes();
 		cargarIngreso();
+		
 		this.ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
+		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(sumatotal));
+		this.ventanaPresupuesto.getManoDeObra_txf().setText(String.valueOf(manoDeObra));
 	}
 	
 	
@@ -83,7 +91,6 @@ public class ControladorPresupuesto implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-
 		// suma y resta componentes
 		if (e.getSource() == this.ventanaPresupuesto.getIncrementoCantComponente_btn()){
 
@@ -101,6 +108,7 @@ public class ControladorPresupuesto implements ActionListener{
 			 
 				llenarTablaComponentes();
 				sumarTotales();
+				sumarTotalComponentes();
 
 			// elimina componete de la tabla
 		}else if(e.getSource() == this.ventanaPresupuesto.getEliminarComponente_btn()){
@@ -114,14 +122,69 @@ public class ControladorPresupuesto implements ActionListener{
 
 		}else if(e.getSource() == this.ventanaPresupuesto.getGuardar_btn()){
 			
-			guardarRepuestos(guardarPresupuesto());
+			if(this.ventanaPresupuesto.getNroTecnico_txf().getText().isEmpty() || this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null){
+				
+				JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO  o FECHA DE VENCIMIENTO no pueden estar vacio ", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}else{
+				
+				guardarRepuestos(guardarPresupuesto());
+			}
 			
+		}else if (e.getSource() == this.ventanaPresupuesto.getManoDeObra_txf()){
+			
+			this.ventanaPresupuesto.getManoDeObra_txf().addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					
+					if (arg0.getKeyCode() == KeyEvent.VK_ENTER){
+							
+							sumarTotalComponentes();
+							
+					}else if (arg0.getKeyCode() == KeyEvent.VK_DELETE){
+						
+						restarTotalComponentes();
+						
+					}
+					
+				}
+			});
 		}
+		
 	}
 
 
 
 	
+	protected void restarTotalComponentes() {
+		
+		float resta = Float.parseFloat(this.ventanaPresupuesto.getValorPresupuestado_txf().getText()) -
+				Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText());
+		
+		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(resta));
+	}
+
+
+	private void sumarTotalComponentes() {
+		
+		if(this.ventanaPresupuesto.getManoDeObra_txf().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo MANO DE OBRA no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else{
+			
+			float suma = Float.parseFloat(this.ventanaPresupuesto.getTotal_lbl().getText()) +
+					Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText());
+
+			this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(suma));
+			
+			
+		}
+
+	}
+
+
 	private void guardarRepuestos(int idPresupuesto) {
 		
 		for(int i = 0; i < this.ventanaPresupuesto.getComponentes_table().getRowCount(); i++){
@@ -184,8 +247,8 @@ private int  guardarPresupuesto() {
 		{
 
 			Object[] fila = {this.listaDeComponetes.get(i).getId(),this.listaDeComponetes.get(i).getDetalle(),
-					this.ventanaPresupuesto.getCantidad_lbl().getText(), "$ "+this.listaDeComponetes.get(i).getPrecioUnitario(),
-					 "$ "+Float.parseFloat(this.ventanaPresupuesto.getCantidad_lbl().getText()) *
+					this.ventanaPresupuesto.getCantidad_lbl().getText(), this.listaDeComponetes.get(i).getPrecioUnitario(),
+					 Float.parseFloat(this.ventanaPresupuesto.getCantidad_lbl().getText()) *
 					this.listaDeComponetes.get(i).getPrecioUnitario()};
 			
 				modelo.insertRow(0, fila);
