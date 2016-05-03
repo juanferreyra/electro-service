@@ -148,10 +148,14 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		} else if (e.getSource() == this.principal.getPresupuestar_btn()) {
 
-			ControladorPresupuesto ControladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-					new Ingreso());
-
-			ControladorPresupuesto.inicializar();
+			Ingreso ing = new Ingreso();
+			ing.setId(1);
+			ing.cargarModeloCompleto();
+			
+			ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+					ing);
+			
+			controladorPresupuesto.inicializar();
 
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
 			// this.controladorVentanaReparacion = new

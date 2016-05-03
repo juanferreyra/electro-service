@@ -12,7 +12,7 @@ public class Conexion implements Serializable {
 	public static Conexion instancia;
 	private final static String driver = "com.mysql.jdbc.Driver";
 	private Connection conexion;
-	private static ConfigDataBaseDTO configuracionDB = SerializadorBD.DeSerializar();;
+	private static ConfigDataBaseDTO configuracionDB = SerializadorBD.DeSerializar();
 	private static boolean fallo;
 
 	private Conexion(ConfigDataBaseDTO conf) {

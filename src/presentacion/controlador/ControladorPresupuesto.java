@@ -153,14 +153,7 @@ public class ControladorPresupuesto implements ActionListener{
 	}
 	public static void main(String[] args) {
 		
-		Ingreso ing = new Ingreso();
-		ing.setId(1);
-		ing.cargarModeloCompleto();
 		
-		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-				ing);
-		
-		controladorPresupuesto.inicializar();
 		
 	}
 
