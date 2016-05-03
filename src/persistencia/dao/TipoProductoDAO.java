@@ -144,3 +144,4 @@ public class TipoProductoDAO
 			return tipo_producto;
 		}
 }
+
