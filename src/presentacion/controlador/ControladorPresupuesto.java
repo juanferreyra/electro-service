@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -27,6 +29,8 @@ public class ControladorPresupuesto implements ActionListener{
 	private Integer cantidad = 1;
 	private DefaultTableModel modelo = new DefaultTableModel();
 	private float suma = 0;
+	private float sumatotal = 0;
+	private float  manoDeObra = 0;
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso) {
 		
@@ -37,6 +41,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
+		 this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
 		
 	}
 	
@@ -52,9 +57,13 @@ public class ControladorPresupuesto implements ActionListener{
 		
 		this.componente = new Componente();
 		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
+		
 		cargarComboComponentes();
 		cargarIngreso();
+		
 		this.ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
+		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(sumatotal));
+		this.ventanaPresupuesto.getManoDeObra_txf().setText(String.valueOf(manoDeObra));
 	}
 	
 	
@@ -83,7 +92,6 @@ public class ControladorPresupuesto implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-
 		// suma y resta componentes
 		if (e.getSource() == this.ventanaPresupuesto.getIncrementoCantComponente_btn()){
 
@@ -100,82 +108,185 @@ public class ControladorPresupuesto implements ActionListener{
 		}else if(e.getSource() == this.ventanaPresupuesto.getAgregarComponente_btn()){
 			 
 				llenarTablaComponentes();
+				ocultarColumnaId();
 				sumarTotales();
+				sumarTotalComponentes();
 
 			// elimina componete de la tabla
 		}else if(e.getSource() == this.ventanaPresupuesto.getEliminarComponente_btn()){
 			
 			eliminarComponenteDeTabla();
-
-
-			// modifca precio de la tabla	
-		}else if(e.getSource() == this.ventanaPresupuesto.getComponentes_table().getCellEditor()){
-
-
+			
+			
 		}else if(e.getSource() == this.ventanaPresupuesto.getGuardar_btn()){
 			
-			guardarRepuestos(guardarPresupuesto());
+			validarCampos();
 			
+		}else if (e.getSource() == this.ventanaPresupuesto.getManoDeObra_txf()){
+			
+			this.ventanaPresupuesto.getManoDeObra_txf().addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent arg0) {
+					
+					if (arg0.getKeyCode() == KeyEvent.VK_ENTER){
+							
+							sumarTotalComponentes();
+							
+					}else if (arg0.getKeyCode() == KeyEvent.VK_DELETE){
+						
+						restarTotalComponentes();
+						
+					}
+					
+				}
+			});
+		}
+		
+	}
+	
+	private void ocultarColumnaId() {
+
+		this.ventanaPresupuesto.getComponentes_table().getColumnModel().getColumn(0).setMaxWidth(0);
+		this.ventanaPresupuesto.getComponentes_table().getColumnModel().getColumn(0).setMinWidth(0);
+		this.ventanaPresupuesto.getComponentes_table().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+		this.ventanaPresupuesto.getComponentes_table().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+	}
+
+
+	private void validarCampos() {
+		
+		if(this.ventanaPresupuesto.getNroTecnico_txf().getText().isEmpty()){
+			
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if (this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null){
+			
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo FECHA DE VENCIMIENTO no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(this.ventanaPresupuesto.getComponentes_table().getRowCount() == 0){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NO INGRESADO COMPONENTES AL PRESUPUESTO  no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(this.ventanaPresupuesto.getDescripcionBreve_jTextArea().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo CAMPO DESCRIPCION BREVE no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo CAMPO DESCRIPCION TECNICA no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText()) == 0.0){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo PRECIO MANO DE OBRA  no puede ser CERO ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+		}else{
+			
+			guardarPresupuesto();
+			
+			guardarRepuestos(obtenerIdPresupuesto());
 		}
 	}
 
 
 
-	
+	private void restarTotalComponentes() {
+		
+		float resta = Float.parseFloat(this.ventanaPresupuesto.getValorPresupuestado_txf().getText()) -
+				Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText());
+		
+		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(resta));
+	}
+
+
+	private void sumarTotalComponentes() {
+		
+		if(this.ventanaPresupuesto.getManoDeObra_txf().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo MANO DE OBRA no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else{
+			
+			float suma = Float.parseFloat(this.ventanaPresupuesto.getTotal_lbl().getText()) +
+					Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText());
+
+			this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(suma));
+			
+			
+		}
+
+	}
+
+
 	private void guardarRepuestos(int idPresupuesto) {
 		
+		int idRepuesto;
+		int cantidad;
+		
 		for(int i = 0; i < this.ventanaPresupuesto.getComponentes_table().getRowCount(); i++){
-
-			PresupuestoRepuestoDTO repuestoNuevo = new PresupuestoRepuestoDTO(
-					0,
-					idPresupuesto,
-					(int) this.modelo.getValueAt(i, 0),
-					3);
 			
+			idRepuesto = Integer.parseInt(this.modelo.getValueAt(i, 0).toString());
+			cantidad = Integer.parseInt(this.modelo.getValueAt(i, 2).toString());
+
+			PresupuestoRepuestoDTO repuestoNuevo = new PresupuestoRepuestoDTO(idPresupuesto,idRepuesto,cantidad);
+				
+					
 			PresupuestoRepuestos nuevo = new PresupuestoRepuestos();
 			nuevo.agregarRepuesto(repuestoNuevo);
 		}
 	}
+	
+	private int obtenerIdPresupuesto() {
+		
+		PresupuestoRepuestos buscar = new PresupuestoRepuestos();
+		return buscar.buscarIdPresupuesto(ingreso.getId());
+	}
 
-private int  guardarPresupuesto() {
-		
-		
+	private void guardarPresupuesto() {
+
 		PresupuestoDTO presupuestoNuevo = new PresupuestoDTO(
 				ingreso.getId(),
 				this.ventanaPresupuesto.getDescripcionBreve_jTextArea().getText(),
 				this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText(),
 				this.ventanaPresupuesto.getManoDeObra_txf().getText(),
-				
+
 				this.ventanaPresupuesto.getVencimiento_Calendario().getDate(),
-				
+
 				Integer.parseInt(this.ventanaPresupuesto.getNroTecnico_txf().getText()));
-		
+
 		PresupuestoDAO nuevo = new PresupuestoDAO();
-		
+
 		nuevo.insert(presupuestoNuevo);
-		
-		this.ventanaPresupuesto.dispose();
-		
-		return 10;
-		
+
+		this.ventanaPresupuesto.dispose();	
 	}
 
 	private void eliminarComponenteDeTabla() {
-		
+
 		if (this.ventanaPresupuesto.getComponentes_table().getSelectedRow() != -1){
 
 			modelo.removeRow(this.ventanaPresupuesto.getComponentes_table().getSelectedRow());
 			sumarTotales();
-			
+
 		}else{
-			
+
 			JOptionPane.showMessageDialog(this.ventanaPresupuesto, "debe seleccionar fila para eliminar ", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
 	private void llenarTablaComponentes() {
-		
+
 		modelo.setColumnIdentifiers(this.ventanaPresupuesto.getComponentes_nombreColumnas());
 
 		this.listaDeComponetes = componente.buscarComponentes((String) this.ventanaPresupuesto.getComponente_ComboBox().getSelectedItem());
@@ -184,20 +295,20 @@ private int  guardarPresupuesto() {
 		{
 
 			Object[] fila = {this.listaDeComponetes.get(i).getId(),this.listaDeComponetes.get(i).getDetalle(),
-					this.ventanaPresupuesto.getCantidad_lbl().getText(), "$ "+this.listaDeComponetes.get(i).getPrecioUnitario(),
-					 "$ "+Float.parseFloat(this.ventanaPresupuesto.getCantidad_lbl().getText()) *
+					this.ventanaPresupuesto.getCantidad_lbl().getText(), this.listaDeComponetes.get(i).getPrecioUnitario(),
+					Float.parseFloat(this.ventanaPresupuesto.getCantidad_lbl().getText()) *
 					this.listaDeComponetes.get(i).getPrecioUnitario()};
-			
-				modelo.insertRow(0, fila);
+
+			modelo.insertRow(0, fila);
 		}
-		
-		
+
+
 	}
-	
+
 	private void sumarTotales() {
 
 		suma = 0;
-		
+
 		for (int i = 0 ; i < this.ventanaPresupuesto.getComponentes_table().getRowCount(); i++){
 
 			suma += Float.parseFloat(this.ventanaPresupuesto.getComponentes_table().getValueAt(i, 4).toString());
@@ -207,14 +318,14 @@ private int  guardarPresupuesto() {
 
 	}
 	public static void main(String[] args) {
-		
+
 		Ingreso ing = new Ingreso();
-		ing.setId(1);
+		ing.setId(2);
 		ing.cargarModeloCompleto();
-		
+
 		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),ing);
 		controladorPresupuesto.inicializar();
-		
+
 	}
 
 }
