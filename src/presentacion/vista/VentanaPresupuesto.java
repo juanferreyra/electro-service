@@ -60,6 +60,7 @@ public class VentanaPresupuesto extends JFrame {
 	private JTextArea descripcionFalla_txtArea;
 	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario",
 	"Precio Total" };
+	private JLabel Total_lbl;
 	
 
 	public VentanaPresupuesto() {
@@ -309,6 +310,10 @@ public class VentanaPresupuesto extends JFrame {
 		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(484, 556, 89, 23);
 		contentPane.add(guardar_btn);
+		
+		Total_lbl = new JLabel("");
+		Total_lbl.setBounds(575, 275, 86, 15);
+		contentPane.add(Total_lbl);
 
 	}
 
@@ -441,6 +446,12 @@ public class VentanaPresupuesto extends JFrame {
 	public JTextArea getDescripcionFalla_txtArea() {
 		return descripcionFalla_txtArea;
 	}
+
+
+	public JLabel getTotal_lbl() {
+		return Total_lbl;
+	}
+
 	
 	
 	
