@@ -58,15 +58,27 @@ public class Ingreso {
 		this.setLogIngresos(log_ingresos.find(id));
 	}
 	
-	public void guardarIngreso(int idusuario)
+	public Boolean guardarIngreso(int idusuario)
 	{	
+		Boolean ingreso = true;
 		//guardo todos los objetos DTO con su respectivo DAO
-		this.ingreso.insert(ingr);
-		/*if(ingreso_id!=-1)
-		{
-			IngresoLogDTO ingrLog = new IngresoLogDTO(0, ingreso_id, 1, null, 0);
-			this.log_ingresos.insert(ingrLog);
-		}*/
+		
+		//busco el siguiente id de la tabla ingreso a insertar
+		try {
+			int ingreso_id = this.ingreso.getNextId();
+			ingr.setId(ingreso_id);
+			if(ingreso_id!=-1)
+			{
+				ingr.setId(ingreso_id);
+				IngresoLogDTO ingrLog = new IngresoLogDTO(0, ingreso_id, 1, null, 0);
+				this.log_ingresos.insert(ingrLog);
+				this.ingreso.insert(ingr);
+				
+			}
+		} catch (Exception e) {
+			ingreso = false;
+		}
+		return ingreso;
 	}
 	
 	public IngresoDTO getIngreso() {

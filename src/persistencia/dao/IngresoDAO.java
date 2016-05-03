@@ -11,11 +11,12 @@ import persistencia.conexion.Conexion;
 public class IngresoDAO {
 
 	private static final String insert = "INSERT INTO ingreso(`idcliente`, `descripcion_producto`, `idmarca`, `idtipo_producto`,"
-			+ " `descripcion_falla`, `envio`, `envio_default`, `estado`, `fecha_creacion`, `idusuario`, `habilitado`)"
-			+ " VALUES ( ? , ?, ?, ?, ?, ?, ?, ?, now(), ?, true)";
+			+ " `descripcion_falla`, `envio`, `envio_default`, `direccion_alternativa`, `monto_envio`, `estado`, `fecha_creacion`, `idusuario`, `habilitado`)"
+			+ " VALUES ( ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, true)";
 	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
 	private static final String readall = "SELECT * FROM ingreso WHERE habilitado=true";
 	private static final String find = "SELECT * FROM ingreso WHERE habilitado=true AND id = ?";
+	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'ingreso';";
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<IngresoDTO> readAll() {
@@ -37,6 +38,8 @@ public class IngresoDAO {
 						resultSet.getString("descripcion_falla"),
 						resultSet.getBoolean("envio"),
 						resultSet.getBoolean("envio_default"),
+						resultSet.getString("direccion_alternativa"),
+						resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("estado"),
 						resultSet.getInt("idusuario")));
@@ -79,8 +82,10 @@ public class IngresoDAO {
 			statement.setString(5, ingreso.getDescripcion_falla());
 			statement.setBoolean(6, ingreso.getEnvio());
 			statement.setBoolean(7, ingreso.getEnvio_default());
-			statement.setInt(8,ingreso.getEstado());
-			statement.setInt(9, ingreso.getIdusuario());
+			statement.setString(8, ingreso.getDireccion_alternativa());
+			statement.setFloat(9, ingreso.getMonto_envio());
+			statement.setInt(10,ingreso.getEstado());
+			statement.setInt(11, ingreso.getIdusuario());
 		
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -114,6 +119,8 @@ public class IngresoDAO {
 						resultSet.getString("descripcion_falla"),
 						resultSet.getBoolean("envio"),
 						resultSet.getBoolean("envio_default"),
+						resultSet.getString("direccion_alternativa"),
+						resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("estado"),
 						resultSet.getInt("idusuario"));
@@ -124,5 +131,26 @@ public class IngresoDAO {
 			Conexion.cerrarConexion();
 		}
 		return ingreso;
+	}
+
+	public int getNextId() {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		int clave = -1;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(nextId);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				clave = resultSet.getInt("siguiente");;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return clave;
 	}
 }

@@ -11,11 +11,13 @@ public class IngresoDTO {
 	private String descripcion_falla;
 	private Boolean envio;
 	private Boolean envio_default;
+	private String direccion_alternativa;
+	private float monto_envio;
 	private Date fecha_creacion;
 	private int estado;
 	private int idusuario;
 	
-	public IngresoDTO(int id,  int idcliente, String descripcion, int idmarca,int idtipo_producto,String descripcion_falla, Boolean envio, Boolean envioDefault, Date fecha_creacion, int estado, int idusuario)
+	public IngresoDTO(int id,  int idcliente, String descripcion, int idmarca,int idtipo_producto,String descripcion_falla, Boolean envio, Boolean envioDefault, String direccion_alternativa, float monto_envio, Date fecha_creacion, int estado, int idusuario)
 	{
 		this.id = id;
 		this.idcliente = idcliente;
@@ -23,8 +25,10 @@ public class IngresoDTO {
 		this.idmarca = idmarca;
 		this.idtipo_producto = idtipo_producto;
 		this.descripcion_falla = descripcion_falla;
-		this.setEnvio(envio);
-		this.setEnvio_default(envioDefault);
+		this.envio = envio;
+		this.envio_default = envioDefault;
+		this.direccion_alternativa = direccion_alternativa;
+		this.monto_envio = monto_envio;
 		this.fecha_creacion = fecha_creacion;
 		this.estado = estado;
 		this.idusuario = idusuario;
@@ -116,6 +120,27 @@ public class IngresoDTO {
 
 	public void setEnvio_default(Boolean envio_default) {
 		this.envio_default = envio_default;
+	}
+
+	public String getDireccion_alternativa() {
+		return direccion_alternativa;
+	}
+
+	public void setDireccion_alternativa(String direccion_alternativa) {
+		this.direccion_alternativa = direccion_alternativa;
+	}
+
+	public float getMonto_envio() {
+		return monto_envio;
+	}
+
+	public void setMonto_envio(float monto_envio) {
+		this.monto_envio = monto_envio;
+	}
+	
+	public String getMontoEnvioToString()
+	{
+		return envio.toString();
 	}
 	
 }

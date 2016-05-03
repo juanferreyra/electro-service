@@ -26,6 +26,8 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.ventana_ingreso.getBtnBuscarCliente().addActionListener(this);
 		this.ventana_ingreso.getBtnAceptar().addActionListener(this);
 		this.ventana_ingreso.getBtnCancelar().addActionListener(this);
+		this.ventana_ingreso.getEnvioDomicilio().addActionListener(this);
+		this.ventana_ingreso.getDireccion_default().addActionListener(this);
 	}
 
 	public void inicializar() {
@@ -47,7 +49,9 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.ventana_ingreso.getComboTiposProductos().addItem(ingreso.getTipoproducto().getDetalle());
 		this.ventana_ingreso.getComboMarcas().addItem(ingreso.getMarca().getDetalle());
 		this.ventana_ingreso.getEnvioDomicilio().setSelected(ingreso.getIngreso().getEnvio());
-		this.ventana_ingreso.getDireccionAlternativa().setSelected(ingreso.getIngreso().getEnvio_default());
+		this.ventana_ingreso.getDireccion_default().setSelected(ingreso.getIngreso().getEnvio_default());
+		this.ventana_ingreso.getTxtDireccionAlternativa().setText(ingreso.getIngreso().getDireccion_alternativa());
+		this.ventana_ingreso.getMontoEnvio().setText(ingreso.getIngreso().getMontoEnvioToString());
 	}
 
 	@Override
@@ -74,22 +78,78 @@ public class ControladorVentanaIngreso implements ActionListener {
 							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
+		} else if (e.getSource() == this.ventana_ingreso.getEnvioDomicilio()) {
+			if(this.ventana_ingreso.getEnvioDomicilio().isSelected())
+			{
+				this.ventana_ingreso.getDireccion_default().setEnabled(true);
+				this.ventana_ingreso.getTxtDireccionAlternativa().setEnabled(true);
+				this.ventana_ingreso.getMontoEnvio().setEnabled(true);
+			} else {
+				this.ventana_ingreso.getDireccion_default().setEnabled(false);
+				this.ventana_ingreso.getTxtDireccionAlternativa().setEnabled(false);
+				this.ventana_ingreso.getMontoEnvio().setEnabled(false);
+			}
 		} else if (e.getSource() == this.ventana_ingreso.getBtnAceptar()) {
 			Boolean error = false;
+			float montoFloat = 0;
 			// verifico todos los campos
-			String nombre_produ = this.ventana_ingreso.getTextNombreProducto().getText();
-			if (nombre_produ.equals("")) {
+			//CLIENTE CARGADO
+			if(this.ingreso.getCliente()==null)
+			{
 				error = true;
-				JOptionPane.showMessageDialog(this.ventana_ingreso, "Debes completar el nombre de producto",
+				JOptionPane.showMessageDialog(this.ventana_ingreso, "Debes ingresar un cliente para continuar!",
+						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+			
+			//NOMBRE DEL PRODUCTO
+			String nombre_produ = this.ventana_ingreso.getTextNombreProducto().getText();
+			if (nombre_produ.equals("") && !error) {
+				error = true;
+				JOptionPane.showMessageDialog(this.ventana_ingreso, "Debes completar el nombre de producto!",
 						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 			}
-
+			
+			//DESCRIPCION DE FALLA
 			String descripcion_falla = this.ventana_ingreso.getTextDescripcionFalla().getText();
-			if (descripcion_falla.equals("")) {
+			if (descripcion_falla.equals("") && !error) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
 						"Debes completar brevemente la descripcion de la falla", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+			if(this.ventana_ingreso.getEnvioDomicilio().isSelected()  && !error)
+			{
+				//VALIDO DIRECICION DE ENVIO DE CLIENTE
+				if(this.ventana_ingreso.getDireccion_default().isSelected()==false)
+				{
+					//Me fijo que complete la direccion alternativa y el monto
+					String direccionAlternativa = this.ventana_ingreso.getTxtDireccionAlternativa().getText();
+					if (direccionAlternativa.equals("")) {
+						error = true;
+						JOptionPane.showMessageDialog(this.ventana_ingreso,
+								"Si el cliente solicita envio debe completar una direccion o de lo contrario utilice la direccion del cliente!", "Atencion!",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+				//VALIDO EL MONTO DE ENVIO
+				String monto = this.ventana_ingreso.getMontoEnvio().getText();
+				if (monto.equals("") && !error) {
+					error = true;
+					JOptionPane.showMessageDialog(this.ventana_ingreso,
+							"Por favor ingrese el costo en pesos del envio", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				else if(!error)
+				{
+					try {
+						montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
+					}catch (NumberFormatException nfe){
+						JOptionPane.showMessageDialog(this.ventana_ingreso, "El campo Monto debe ser Numerico ",
+								"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
 			}
 
 			if (!error) {
@@ -98,10 +158,19 @@ public class ControladorVentanaIngreso implements ActionListener {
 						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(),
 							descripcion_falla,
 							this.ventana_ingreso.getEnvioDomicilio().isSelected(), 
-							this.ventana_ingreso.getDireccionAlternativa().isSelected(), null, 1, 0);				
+							this.ventana_ingreso.getDireccion_default().isSelected(),
+							this.ventana_ingreso.getTxtDireccionAlternativa().getText(),
+							montoFloat, 
+							null, 1, 0);
 				this.ingreso.ingr = ingresoDTO;
 				
-				this.ingreso.guardarIngreso(0);
+				Boolean ingreso = this.ingreso.guardarIngreso(0);
+				
+				if(ingreso){
+					JOptionPane.showMessageDialog(this.ventana_ingreso, "Ingreso Realizado correctamente!",
+							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+					this.ventana_ingreso.vaciarTodo();
+				}
 			}
 		}
 	}
@@ -122,7 +191,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 
 	private void llenarTablaCliente(ClienteDTO client){
 		Object[][] informacionCliente = {{ client.getNombre(), client.getApellido(), client.getDireccion(),client.getMail(), client.getTelefono()}};
-		String[] nombreColumnas = { "Nombre", "Apellido", "Direcciï¿½n", "Email", "Telï¿½fono" };
+		String[] nombreColumnas = { "Nombre", "Apellido", "Dirección", "Email", "Teléfono" };
 		this.ventana_ingreso.getClienteTable().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));	
 	}
 
