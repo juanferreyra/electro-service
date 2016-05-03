@@ -6,6 +6,7 @@ import dto.ComponenteDTO;
 import persistencia.dao.ComponenteDAO;
 
 public class Componente {
+	
 	private ComponenteDAO componente;
 	
 	public Componente(){

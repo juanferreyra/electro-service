@@ -91,8 +91,8 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(reparacion_btn);
 
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
-		label.setBounds(10, 11, 240, 140);
+		label.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logoNuevo.png")));
+		label.setBounds(10, 11, 270, 140);
 		contentPane.add(label);
 	}
 

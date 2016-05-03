@@ -1,35 +1,37 @@
 package modelo;
-
-
 import java.util.List;
 
-import persistencia.dao.TipoProductoDAO;
-import dto.TipoProductoDTO;
-
+import persistencia.dao.PresupuestoDAO;
+import dto.PresupuestoDTO;
 
 public class Presupuesto 
 {
-	private TipoProductoDAO tipoProducto;	
+	private PresupuestoDAO presupuetoDAO;	
 	
 	public Presupuesto()
 	{
-		tipoProducto = new TipoProductoDAO();
+		this.presupuetoDAO = new PresupuestoDAO();
 	}
 	
-	public void agregarPersona(TipoProductoDTO nuevaPersona)
-	{
-		tipoProducto.insert(nuevaPersona);
+	public void agregarPresupuesto(PresupuestoDTO nuevoPresupuesto) {
+		presupuetoDAO.insert(nuevoPresupuesto);
 	}
 
-	public void borrarPersona(TipoProductoDTO persona_a_eliminar) 
-	{
-		tipoProducto.delete(persona_a_eliminar);
+	public void borrarPresupuesto(PresupuestoDTO presupuesto_a_eliminar) {
+		presupuetoDAO.delete(presupuesto_a_eliminar);
 	}
 	
-	public List<TipoProductoDTO> obtenerTiposProducto()
-	{
-            //return tipoProducto.readAll();	
-            return null;
+	public List<PresupuestoDTO> obtenerPresupuestos() {
+		return presupuetoDAO.readAll();		
+	}
+	
+	/*public void  modificarPresupuesto(PresupuestoDTO presupuesto_a_modificar) {
+		presupuetoDAO.update(presupuesto_a_modificar);
+		
+	}*/
+	
+	public PresupuestoDTO buscarComponentes(int aBuscar) {
+		return presupuetoDAO.find(aBuscar);
 	}
 	
 }

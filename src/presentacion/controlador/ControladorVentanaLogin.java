@@ -67,7 +67,7 @@ public class ControladorVentanaLogin implements ActionListener {
 				JOptionPane.showMessageDialog(this.login, "Usuario o contraseña incorrectos", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
 
-				this.login.getUsuario_txf().setText("");
+				//this.login.getUsuario_txf().setText("");
 				// this.login.getContrasena_txf().setText("");
 
 			}

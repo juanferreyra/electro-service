@@ -28,6 +28,7 @@ import java.awt.Rectangle;
 import java.awt.SystemColor;
 
 import javax.swing.ScrollPaneConstants;
+import java.awt.Toolkit;
 
 public class VentanaPresupuesto extends JFrame {
 
@@ -63,7 +64,8 @@ public class VentanaPresupuesto extends JFrame {
 	
 
 	public VentanaPresupuesto() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresupuesto.class.getResource("/logoNuevo.png")));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 698, 660);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -441,10 +443,4 @@ public class VentanaPresupuesto extends JFrame {
 	public JTextArea getDescripcionFalla_txtArea() {
 		return descripcionFalla_txtArea;
 	}
-	
-	
-	
-	
-	
-	
 }

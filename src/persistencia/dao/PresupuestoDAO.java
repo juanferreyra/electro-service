@@ -96,7 +96,7 @@ public class PresupuestoDAO {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
-		PresupuestoDTO ingreso = null;
+		PresupuestoDTO presupuesto = null;
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(find);
@@ -121,6 +121,6 @@ public class PresupuestoDAO {
 		} finally {
 			conexion.cerrarConexion();
 		}
-		return ingreso;
+		return presupuesto;
 	}
 }
