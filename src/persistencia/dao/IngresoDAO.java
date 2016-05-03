@@ -1,6 +1,5 @@
 package persistencia.dao;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +10,9 @@ import persistencia.conexion.Conexion;
 
 public class IngresoDAO {
 
-	private static final String insert = "INSERT INTO ingreso(idcliente,descripcion_producto,idmarca,"
-			+ "idtipo_producto,descripcion_falla,fecha_creacion,estado,idusuario) VALUES (?,?,?,?,?,?,?,?)";
+	private static final String insert = "INSERT INTO ingreso(`idcliente`, `descripcion_producto`, `idmarca`, `idtipo_producto`,"
+			+ " `descripcion_falla`, `envio`, `envio_default`, `estado`, `fecha_creacion`, `idusuario`, `habilitado`)"
+			+ " VALUES ( ? , ?, ?, ?, ?, ?, ?, ?, now(), ?, true)";
 	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
 	private static final String readall = "SELECT * FROM ingreso WHERE habilitado=true";
 	private static final String find = "SELECT * FROM ingreso WHERE habilitado=true AND id = ?";
@@ -44,7 +44,7 @@ public class IngresoDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return localidades;
 	}
@@ -62,32 +62,35 @@ public class IngresoDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return false;
 	}
 
-	public boolean insert(IngresoDTO ingreso) {
+	public Boolean insert(IngresoDTO ingreso){
 		conexion = Conexion.getConexion();
-		PreparedStatement statement;
 		try {
-			statement = conexion.getSQLConexion().prepareStatement(insert);
+			PreparedStatement statement = conexion.getSQLConexion().prepareStatement(insert);
 			
 			statement.setInt(1, ingreso.getIdcliente());
 			statement.setString(2, ingreso.getDescripcion());
 			statement.setInt(3, ingreso.getIdmarca());
 			statement.setInt(4, ingreso.getIdtipo_producto());
-			statement.setDate(5, (Date) ingreso.getFecha_creacion());
-			statement.setInt(6,ingreso.getEstado());
-			statement.setInt(7, ingreso.getIdusuario());
-
+			statement.setString(5, ingreso.getDescripcion_falla());
+			statement.setBoolean(6, ingreso.getEnvio());
+			statement.setBoolean(7, ingreso.getEnvio_default());
+			statement.setInt(8,ingreso.getEstado());
+			statement.setInt(9, ingreso.getIdusuario());
+		
 			if (statement.executeUpdate() > 0)
 				return true;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
+		
 		return false;
 	}
 
@@ -118,7 +121,7 @@ public class IngresoDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return ingreso;
 	}

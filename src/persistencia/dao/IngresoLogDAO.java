@@ -29,7 +29,7 @@ public class IngresoLogDAO {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 			statement.setInt(1, ingreso_log.getIdingreso());
 			statement.setInt(2, ingreso_log.getIdestado());
-			statement.setInt(2, ingreso_log.getIdusuario());
+			statement.setInt(3, ingreso_log.getIdusuario());
 			
 			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
 				return true;
@@ -40,7 +40,7 @@ public class IngresoLogDAO {
 		}
 		finally //Se ejecuta siempre
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return false;
 	}
@@ -63,7 +63,7 @@ public class IngresoLogDAO {
 		}
 		finally //Se ejecuta siempre
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return false;
 	}
@@ -90,7 +90,7 @@ public class IngresoLogDAO {
 		}
 		finally //Se ejecuta siempre
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		
 		return marcas;
@@ -118,7 +118,7 @@ public class IngresoLogDAO {
 		}
 		finally //Se ejecuta siempre
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		
 		return ingreso_log;

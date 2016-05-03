@@ -45,7 +45,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return clientes;
 	}
@@ -63,7 +63,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return false;
 	}
@@ -89,7 +89,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return false;
 	}
@@ -120,7 +120,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return cliente;
 	}
@@ -151,7 +151,7 @@ public class ClienteDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return cliente;
 	}

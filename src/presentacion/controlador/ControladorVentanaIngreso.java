@@ -3,12 +3,10 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import dto.ClienteDTO;
+import dto.IngresoDTO;
 import dto.MarcaDTO;
 import dto.TipoProductoDTO;
 import modelo.Ingreso;
@@ -18,7 +16,7 @@ import presentacion.vista.VentanaIngreso;
 public class ControladorVentanaIngreso implements ActionListener {
 
 	private VentanaIngreso ventana_ingreso;
-	private Ingreso ingreso;
+	Ingreso ingreso;
 	private List<MarcaDTO> lista_marcas;
 	private List<TipoProductoDTO> lista_tiposproductos;
 
@@ -60,20 +58,18 @@ public class ControladorVentanaIngreso implements ActionListener {
 				JOptionPane.showMessageDialog(this.ventana_ingreso, "Antes debe ingresar un nro de cliente para buscar",
 						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 			} else {
-				try {
+				try{
 					int nrodoc = Integer.parseInt(textoingresado);
 					ClienteDAO cdao = new ClienteDAO();
 					ClienteDTO cdto = cdao.findPorNrodoc(nrodoc);
-					if (cdto.getNombre().equals("")) {
+					if (cdto == null) {
 						JOptionPane.showMessageDialog(this.ventana_ingreso, "El cliente buscado no existe!",
 								"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 					} else {
-						System.out.println("Cliente " + cdto.getNombre() + " Lodeado!!");
 						this.ingreso.setCliente(cdto);
-						// Guardo el cliente en el objeto ingresoDTO
-						this.ingreso.getIngreso().setIdcliente(cdto.getId());
+						this.llenarTablaCliente(cdto);
 					}
-				} catch (Exception e2) {
+				} catch (NumberFormatException nfe){
 					JOptionPane.showMessageDialog(this.ventana_ingreso, "El nro de cliente debe ser numerico! ",
 							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -97,13 +93,15 @@ public class ControladorVentanaIngreso implements ActionListener {
 			}
 
 			if (!error) {
-				this.ingreso.getIngreso().setDescripcion(nombre_produ);
-				this.ingreso.getIngreso().setDescripcion_falla(descripcion_falla);
-				this.ingreso.getIngreso().setIdmarca(this.ventana_ingreso.getComboMarcas().getSelectedIndex());
-				this.ingreso.getIngreso()
-						.setIdtipo_producto(this.ventana_ingreso.getComboTiposProductos().getSelectedIndex());
-				this.ingreso.getIngreso().setEnvio(this.ventana_ingreso.getEnvioDomicilio().isSelected());
-				this.ingreso.getIngreso().setEnvio_default(this.ventana_ingreso.getDireccionAlternativa().isSelected());
+				IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
+						this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
+						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(),
+							descripcion_falla,
+							this.ventana_ingreso.getEnvioDomicilio().isSelected(), 
+							this.ventana_ingreso.getDireccionAlternativa().isSelected(), null, 1, 0);				
+				this.ingreso.ingr = ingresoDTO;
+				
+				this.ingreso.guardarIngreso(0);
 			}
 		}
 	}
@@ -122,7 +120,6 @@ public class ControladorVentanaIngreso implements ActionListener {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private void llenarTablaCliente(ClienteDTO client){
 		Object[][] informacionCliente = {{ client.getNombre(), client.getApellido(), client.getDireccion(),client.getMail(), client.getTelefono()}};
 		String[] nombreColumnas = { "Nombre", "Apellido", "Direcci�n", "Email", "Tel�fono" };

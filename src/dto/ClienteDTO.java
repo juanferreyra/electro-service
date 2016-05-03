@@ -3,7 +3,7 @@ package dto;
 import java.util.Date;
 
 public class ClienteDTO {
-	private int id;
+	int id;
 	private int nroDoc;
 	private String nombre;
 	private String apellido;

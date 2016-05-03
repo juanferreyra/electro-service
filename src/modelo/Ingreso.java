@@ -15,12 +15,12 @@ import persistencia.dao.TipoProductoDAO;
 import persistencia.dao.IngresoLogDAO;
 
 public class Ingreso {
-	private int id;
-	private ClienteDTO clien;
-	private IngresoDTO ingr;
-	private MarcaDTO marc;
-	private TipoProductoDTO tipoprod;
-	private ArrayList<IngresoEstadoDTO> logIngresos;
+	public int id;
+	public ClienteDTO clien;
+	public IngresoDTO ingr;
+	public MarcaDTO marc;
+	public TipoProductoDTO tipoprod;
+	public ArrayList<IngresoEstadoDTO> logIngresos;
 	
 	//Recuperacion de datos con DAO's
 	private IngresoDAO ingreso;
@@ -58,12 +58,15 @@ public class Ingreso {
 		this.setLogIngresos(log_ingresos.find(id));
 	}
 	
-	public void guardarIngreso(IngresoDTO igr, ClienteDTO clien, IngresoLogDTO ingrLog )
-	{
+	public void guardarIngreso(int idusuario)
+	{	
 		//guardo todos los objetos DTO con su respectivo DAO
 		this.ingreso.insert(ingr);
-		this.cliente.insert(clien);
-		this.log_ingresos.insert(ingrLog);
+		/*if(ingreso_id!=-1)
+		{
+			IngresoLogDTO ingrLog = new IngresoLogDTO(0, ingreso_id, 1, null, 0);
+			this.log_ingresos.insert(ingrLog);
+		}*/
 	}
 	
 	public IngresoDTO getIngreso() {
