@@ -2,17 +2,17 @@ package dto;
 
 public class PresupuestoRepuestoDTO {
 
-	private int id;
+	//private int id;
 	private int idPresupuesto;
 	private int idComponente;
 	private int cantidad;
 	/*private Date fechaCreacion;
 	private boolean habilitado;*/
 	
-	public PresupuestoRepuestoDTO(int id, int idPresupuesto, int idComponente, 
+	public PresupuestoRepuestoDTO(/*int id, */int idPresupuesto, int idComponente, 
 			int cantidad/*, Date fechaCreacion, boolean habilitado*/  ){
 		
-		this.id = id;
+		//this.id = id;
 		this.idPresupuesto = idPresupuesto;
 		this.idComponente = idComponente;
 		this.cantidad = cantidad;
@@ -20,13 +20,13 @@ public class PresupuestoRepuestoDTO {
 		this.habilitado = habilitado;*/
 	}
 
-	public int getId() {
+	/*public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
+	}*/
 
 	public int getIdPresupuesto() {
 		return idPresupuesto;

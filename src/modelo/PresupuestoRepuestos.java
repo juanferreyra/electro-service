@@ -13,9 +13,7 @@ private PresupuestoRepuestoDAO repuesto;
 	public PresupuestoRepuestos() {
 		
 		this.repuesto = new PresupuestoRepuestoDAO();
-	
 	}
-	
 	
 	public void agregarRepuesto(PresupuestoRepuestoDTO nuevoRepuesto)
 	{
@@ -30,6 +28,12 @@ private PresupuestoRepuestoDAO repuesto;
 	public List<PresupuestoRepuestoDTO> obtenerRepuestos()
 	{
            return repuesto.readAll();	
+	}
+	
+	public int buscarIdPresupuesto(int idIngeso){
+		
+		return repuesto.buscarPresupuesto(idIngeso);
+		
 	}
 		 
 		
