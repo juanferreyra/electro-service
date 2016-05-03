@@ -35,7 +35,7 @@ CREATE TABLE `cliente` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,37360567,'Raul','Aveldaño','Malvinas Argentinas','Londres 312','153214211','ara@gmail.com','2016-04-29 23:45:10',0,1),(2,2,'Graciela','Solapa','Tigre','Tacuari 342','152315213','gsr@gmail.com','2016-04-29 23:54:42',0,1);
+INSERT INTO `cliente` VALUES (1,1,'Raul','Aveldaño','Malvinas Argentinas','Londres 312','153214211','ara@gmail.com','2016-04-29 23:45:10',0,1),(2,2,'Graciela','Solapa','Tigre','Tacuari 342','152315213','gsr@gmail.com','2016-04-29 23:54:42',0,1),(3,3,'Robert','Quilmes','Malvinas Argentinas','Guayaquil 932','153524252','ronerr@gmail.com','2016-05-03 19:57:48',0,1),(4,4,'Claudia','Alfonso','San Isidro','Stephenson 932','1543265223','erewrsd@gmail.com','2016-05-03 19:57:48',0,1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,12 +89,14 @@ CREATE TABLE `ingreso` (
   `descripcion_falla` longtext COLLATE latin1_spanish_ci,
   `envio` tinyint(1) DEFAULT NULL,
   `envio_default` tinyint(1) DEFAULT NULL,
+  `direccion_alternativa` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
+  `monto_envio` float DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +105,6 @@ CREATE TABLE `ingreso` (
 
 LOCK TABLES `ingreso` WRITE;
 /*!40000 ALTER TABLE `ingreso` DISABLE KEYS */;
-INSERT INTO `ingreso` VALUES (1,1,'GALAXY S3 MINI',2,1,'Se le rompio la pantalla entones lo traje para reparar',1,1,1,'2016-04-30 00:01:52',0,1);
 /*!40000 ALTER TABLE `ingreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +123,7 @@ CREATE TABLE `ingreso_log` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +132,6 @@ CREATE TABLE `ingreso_log` (
 
 LOCK TABLES `ingreso_log` WRITE;
 /*!40000 ALTER TABLE `ingreso_log` DISABLE KEYS */;
-INSERT INTO `ingreso_log` VALUES (1,1,1,'2016-04-30 00:03:11',0,1);
 /*!40000 ALTER TABLE `ingreso_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `marca_producto` (
 
 LOCK TABLES `marca_producto` WRITE;
 /*!40000 ALTER TABLE `marca_producto` DISABLE KEYS */;
-INSERT INTO `marca_producto` VALUES (1,'SANYO','2016-04-29 23:58:10',0,1),(2,'SAMSUNG','2016-04-29 23:58:10',0,1),(3,'EXO','2016-04-29 23:58:10',0,1),(4,'Cara de pera','2016-04-30 01:53:08',0,1);
+INSERT INTO `marca_producto` VALUES (1,'SANYO','2016-04-29 23:58:10',0,1),(2,'SAMSUNG','2016-04-29 23:58:10',0,1),(3,'EXO','2016-04-29 23:58:10',0,1),(4,'MOTOROLA','2016-04-30 01:53:08',0,1);
 /*!40000 ALTER TABLE `marca_producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,4 +388,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-02  2:32:08
+-- Dump completed on 2016-05-03 19:59:41
