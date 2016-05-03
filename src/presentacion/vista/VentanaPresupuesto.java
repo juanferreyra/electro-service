@@ -265,8 +265,10 @@ public class VentanaPresupuesto extends JFrame {
 		descripcionBreve_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		descripcionBreve_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionBreve_jScrollPane.setBounds(new Rectangle(10, 10, 30, 30));
-		descripcionBreve_jScrollPane.setBounds(47, 471, 291, 52);
+		descripcionBreve_jScrollPane.setBounds(30, 471, 291, 52);
 		contentPane.add(descripcionBreve_jScrollPane);
+		descripcionBreve_jTextArea = new JTextArea();
+		descripcionBreve_jScrollPane.setViewportView(descripcionBreve_jTextArea);
 
 		JLabel descripcionTecnica_lbl = new JLabel();
 		descripcionTecnica_lbl.setText("Descripci\u00F3n t\u00E9cnica:");
@@ -275,8 +277,10 @@ public class VentanaPresupuesto extends JFrame {
 		JScrollPane descripcionTecnica_jScrollPane = new JScrollPane();
 		descripcionTecnica_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionTecnica_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		descripcionTecnica_jScrollPane.setBounds(412, 469, 300, 52);
+		descripcionTecnica_jScrollPane.setBounds(394, 471, 300, 52);
 		contentPane.add(descripcionTecnica_jScrollPane);
+		descripcionTecnica_jTextArea = new JTextArea();
+		descripcionTecnica_jScrollPane.setViewportView(descripcionTecnica_jTextArea);
 
 		JLabel valorPresupuestado_lbl = new JLabel();
 		valorPresupuestado_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -310,12 +314,6 @@ public class VentanaPresupuesto extends JFrame {
 		Total_lbl.setBorder(new LineBorder(new Color(0, 0, 0)));
 		Total_lbl.setBounds(572, 418, 112, 15);
 		contentPane.add(Total_lbl);
-		descripcionTecnica_jTextArea = new JTextArea();
-		contentPane.add(descripcionTecnica_jTextArea);
-		descripcionTecnica_jTextArea.setBounds(new Rectangle(412, 448, 282, 49));
-		descripcionBreve_jTextArea = new JTextArea();
-		contentPane.add(descripcionBreve_jTextArea);
-		descripcionBreve_jTextArea.setBounds(new Rectangle(45, 450, 273, 49));
 		
 		JLabel lblTotalRepuestos = new JLabel("Total repuestos:");
 		lblTotalRepuestos.setBounds(412, 418, 127, 15);

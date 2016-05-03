@@ -114,22 +114,11 @@ public class ControladorPresupuesto implements ActionListener{
 		}else if(e.getSource() == this.ventanaPresupuesto.getEliminarComponente_btn()){
 			
 			eliminarComponenteDeTabla();
-
-
-			// modifca precio de la tabla	
-		}else if(e.getSource() == this.ventanaPresupuesto.getComponentes_table().getCellEditor()){
-
-
+			
+			
 		}else if(e.getSource() == this.ventanaPresupuesto.getGuardar_btn()){
 			
-			if(this.ventanaPresupuesto.getNroTecnico_txf().getText().isEmpty() || this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null){
-				
-				JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO  o FECHA DE VENCIMIENTO no pueden estar vacio ", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
-			}else{
-				
-				guardarRepuestos(guardarPresupuesto());
-			}
+			validarCampos();
 			
 		}else if (e.getSource() == this.ventanaPresupuesto.getManoDeObra_txf()){
 			
@@ -152,10 +141,50 @@ public class ControladorPresupuesto implements ActionListener{
 		}
 		
 	}
-
-
-
 	
+	private void validarCampos() {
+		
+		if(this.ventanaPresupuesto.getNroTecnico_txf().getText().isEmpty()){
+			
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if (this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null){
+			
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo FECHA DE VENCIMIENTO no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(this.ventanaPresupuesto.getComponentes_table().getRowCount() == 0){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NO INGRESADO COMPONENTES AL PRESUPUESTO  no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(this.ventanaPresupuesto.getDescripcionBreve_jTextArea().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo CAMPO DESCRIPCION BREVE no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo CAMPO DESCRIPCION TECNICA no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}else if(Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText()) == 0.0){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo PRECIO MANO DE OBRA  no puede ser CERO ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+		}else{
+			
+			guardarRepuestos(guardarPresupuesto());
+		}
+	}
+
+
 	protected void restarTotalComponentes() {
 		
 		float resta = Float.parseFloat(this.ventanaPresupuesto.getValorPresupuestado_txf().getText()) -
@@ -272,7 +301,7 @@ private int  guardarPresupuesto() {
 	public static void main(String[] args) {
 		
 		Ingreso ing = new Ingreso();
-		ing.setId(1);
+		ing.setId(2);
 		ing.cargarModeloCompleto();
 		
 		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),ing);
