@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import dto.ConfigDataBaseDTO;
-//import modelo.Presupuesto;
 import persistencia.conexion.Conexion;
 import persistencia.serializar.SerializadorBD;
 import presentacion.vista.VentanaConfigDataBase;
@@ -14,7 +13,6 @@ import presentacion.vista.VentanaConfigDataBase;
 public class ControladorConfiguracion implements ActionListener {
 
 	private VentanaConfigDataBase ventanaConfiguracion;
-	private SerializadorBD serializador;
 	private ConfigDataBaseDTO configuracion;
 
 	public ControladorConfiguracion(VentanaConfigDataBase ventanaConfiguracion) {
@@ -35,25 +33,26 @@ public class ControladorConfiguracion implements ActionListener {
 					this.ventanaConfiguracion.getTxtUsuario().getText(),
 					this.ventanaConfiguracion.getTxtContrasena().getText());
 
-			if (!Conexion.isFallo()) {
-				JOptionPane.showMessageDialog(this.ventanaConfiguracion, "Coneccion Exitosa", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
-				this.ventanaConfiguracion.getBtnAceptar().setEnabled(true);
-			} else {
-				JOptionPane.showMessageDialog(this.ventanaConfiguracion, "Por favor revise los datos ingresados",
-						"Atencion Error!", JOptionPane.ERROR_MESSAGE);
-			}
+			this.testear(configuracion);
+				
 		} else if (e.getSource() == this.ventanaConfiguracion.getBtnAceptar()) {
-			// GUARDO
-			// CONFIGURACION
-			// DE
-			// CONEXION
-			// Y
-			// SERIALIZO
-			//Conexion.setConection(configuracion);
-			serializador = new SerializadorBD();
-			serializador.Serializar(configuracion);
 			this.ventanaConfiguracion.dispose();
+			
+			ControladorVentanaLogin controlLogin = new ControladorVentanaLogin();
+			controlLogin.getPantalla();
+		}
+	}
+	
+	public void testear(ConfigDataBaseDTO config) {
+		SerializadorBD.Serializar(config);
+		Conexion.reconectar();
+		if (Conexion.isFallo()){
+			JOptionPane.showMessageDialog(this.ventanaConfiguracion, "Por favor revise los datos ingresados",
+					"Atencion Error!", JOptionPane.ERROR_MESSAGE);
+		} else {
+			JOptionPane.showMessageDialog(this.ventanaConfiguracion, "Coneccion Exitosa", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			this.ventanaConfiguracion.getBtnAceptar().setEnabled(true);
 		}
 	}
 }

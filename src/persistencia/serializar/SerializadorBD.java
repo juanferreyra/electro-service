@@ -9,10 +9,6 @@ import dto.ConfigDataBaseDTO;
 
 public class SerializadorBD {
 
-	public SerializadorBD() {
-
-	}
-
 	public static void Serializar(ConfigDataBaseDTO configuracion) {
 
 		try
@@ -27,7 +23,7 @@ public class SerializadorBD {
 
 	}
 
-	public static ConfigDataBaseDTO DeSerializar() {
+	public static ConfigDataBaseDTO DesSerializar() {
 
 		ConfigDataBaseDTO nueva = null;
 		try {
