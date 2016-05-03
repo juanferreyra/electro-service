@@ -79,7 +79,7 @@ public class PresupuestoDAO {
 			statement.setString(3, presupuesto.getDescripcionBreve());
 			statement.setString(4, presupuesto.getDescripcionTecnica());
 			statement.setString(5, presupuesto.getImporteManoObra());
-			statement.setDate(6, (java.sql.Date) presupuesto.getFechavencimiento());
+			statement.setDate(6, new java.sql.Date(presupuesto.getFechavencimiento().getTime()));
 			statement.setInt(7,presupuesto.getIdUsuario());
 
 			if (statement.executeUpdate() > 0)

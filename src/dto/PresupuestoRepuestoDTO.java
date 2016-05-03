@@ -8,18 +8,18 @@ public class PresupuestoRepuestoDTO {
 	private int idPresupuesto;
 	private int idComponente;
 	private int cantidad;
-	private Date fechaCreacion;
-	private boolean habilitado;
+	/*private Date fechaCreacion;
+	private boolean habilitado;*/
 	
 	public PresupuestoRepuestoDTO(int id, int idPresupuesto, int idComponente, 
-			int cantidad, Date fechaCreacion, boolean habilitado  ){
+			int cantidad/*, Date fechaCreacion, boolean habilitado*/  ){
 		
 		this.id = id;
 		this.idPresupuesto = idPresupuesto;
 		this.idComponente = idComponente;
 		this.cantidad = cantidad;
-		this.fechaCreacion = fechaCreacion;
-		this.habilitado = habilitado;
+		/*this.fechaCreacion = fechaCreacion;
+		this.habilitado = habilitado;*/
 	}
 
 	public int getId() {
@@ -54,7 +54,7 @@ public class PresupuestoRepuestoDTO {
 		this.cantidad = cantidad;
 	}
 
-	public Date getFechaCreacion() {
+/*	public Date getFechaCreacion() {
 		return fechaCreacion;
 	}
 
@@ -69,7 +69,7 @@ public class PresupuestoRepuestoDTO {
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
-	
+	*/
 	
 	
 	

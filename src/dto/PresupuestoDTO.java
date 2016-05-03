@@ -9,24 +9,24 @@ public class PresupuestoDTO {
 	private String descripcionBreve;
 	private String descripcionTecnica;
 	private String importeManoObra;
-	private Date fechacreacion;
+	//private Date fechacreacion;
 	private Date fechavencimiento;
 	private int idUsuario;
-	private boolean habilitado;
+	//private boolean habilitado;
 
 	
 	public PresupuestoDTO(int id, int idIngreso, String descripcionBreve, String descripcionTecnica,
-			String importeManoObra,Date fechaCreacion, Date fechaVencimiento, int idUsusario, boolean habilitado){
+			String importeManoObra,/*Date fechaCreacion,*/ Date fechaVencimiento, int idUsusario/*, boolean habilitado*/){
 		
 		this.id = id;
 		this.IdIngreso = idIngreso;
 		this.descripcionBreve = descripcionBreve;
 		this.descripcionTecnica = descripcionTecnica;
 		this.importeManoObra = importeManoObra;
-		this.fechacreacion = fechaCreacion;
+		//this.fechacreacion = fechaCreacion;
 		this.fechavencimiento = fechaVencimiento;
 		this.idUsuario = idUsusario;
-		this.habilitado = habilitado;
+		//this.habilitado = habilitado;
 	}
 
 
@@ -80,7 +80,7 @@ public class PresupuestoDTO {
 	}
 
 
-	public Date getFechacreacion() {
+	/*public Date getFechacreacion() {
 		return fechacreacion;
 	}
 
@@ -88,7 +88,7 @@ public class PresupuestoDTO {
 	public void setFechacreacion(Date fechacreacion) {
 		this.fechacreacion = fechacreacion;
 	}
-
+*/
 
 	public Date getFechavencimiento() {
 		return fechavencimiento;
@@ -110,7 +110,7 @@ public class PresupuestoDTO {
 	}
 
 
-	public boolean isHabilitado() {
+	/*public boolean isHabilitado() {
 		return habilitado;
 	}
 
@@ -118,7 +118,7 @@ public class PresupuestoDTO {
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
-	
+	*/
 	
 	
 	

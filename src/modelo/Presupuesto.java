@@ -3,33 +3,32 @@ package modelo;
 
 import java.util.List;
 
-import persistencia.dao.TipoProductoDAO;
-import dto.TipoProductoDTO;
+import persistencia.dao.PresupuestoDAO;
+import dto.PresupuestoDTO;
 
 
 public class Presupuesto 
 {
-	private TipoProductoDAO tipoProducto;	
+	private PresupuestoDAO presupuesto;;	
 	
 	public Presupuesto()
 	{
-		tipoProducto = new TipoProductoDAO();
+		presupuesto = new PresupuestoDAO();
 	}
 	
-	public void agregarPersona(TipoProductoDTO nuevaPersona)
+	public void agregarPresupuesto(PresupuestoDTO nuevoPresupuesto)
 	{
-		tipoProducto.insert(nuevaPersona);
+		presupuesto.insert(nuevoPresupuesto);
 	}
 
-	public void borrarPersona(TipoProductoDTO persona_a_eliminar) 
+	public void borrarPresupuesto(PresupuestoDTO presupuesto_a_eliminar) 
 	{
-		tipoProducto.delete(persona_a_eliminar);
+		presupuesto.delete(presupuesto_a_eliminar);
 	}
 	
-	public List<TipoProductoDTO> obtenerTiposProducto()
+	public List<PresupuestoDTO> obtenerPresupuestos()
 	{
-            //return tipoProducto.readAll();	
-            return null;
+           return presupuesto.readAll();	
 	}
 	
 }
