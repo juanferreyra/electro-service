@@ -52,7 +52,7 @@ public class Conexion implements Serializable {
 				}
 			}
 		} else {
-			System.out.println("La configuración de base de datos no existe.");
+			System.out.println("La configuraciï¿½n de base de datos no existe.");
 		}
 	}
 
@@ -74,5 +74,5 @@ public class Conexion implements Serializable {
 	public static boolean isFallo() {
 		return fallo;
 	}
-
+//
 }

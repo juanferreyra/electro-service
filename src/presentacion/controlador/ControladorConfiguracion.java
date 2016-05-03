@@ -54,6 +54,8 @@ public class ControladorConfiguracion implements ActionListener {
 			serializador = new SerializadorBD();
 			serializador.Serializar(configuracion);
 			this.ventanaConfiguracion.dispose();
+			ControladorVentanaLogin controlLogin = new ControladorVentanaLogin();
+			controlLogin.getPantalla();
 		}
 	}
 }

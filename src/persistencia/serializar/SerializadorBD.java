@@ -41,5 +41,5 @@ public class SerializadorBD {
 		return nueva;
 
 	}
-
+//
 }

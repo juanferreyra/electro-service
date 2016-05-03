@@ -36,8 +36,8 @@ public class VentanaLogin extends JFrame {
 		ImageIcon icon = new ImageIcon(url);
 
 		JLabel logo_lbl = new JLabel("");
-		logo_lbl.setIcon(new ImageIcon(VentanaLogin.class.getResource("/logo.png")));
-		logo_lbl.setBounds(22, 56, 243, 145);
+		logo_lbl.setIcon(new ImageIcon(VentanaLogin.class.getResource("/logoNuevo.png")));
+		logo_lbl.setBounds(22, 56, 277, 145);
 		contentPane.add(logo_lbl);
 
 		usuario_txf = new JTextField();
