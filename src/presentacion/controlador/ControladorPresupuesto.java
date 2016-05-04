@@ -14,8 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.ComponenteDTO;
+import dto.PerfilDTO;
 import dto.PresupuestoDTO;
 import dto.PresupuestoRepuestoDTO;
+import dto.UsuarioDTO;
 import modelo.Componente;
 import modelo.Ingreso;
 import modelo.PresupuestoRepuestos;
@@ -156,9 +158,45 @@ public class ControladorPresupuesto implements ActionListener{
 	
 	private void llenarTablaUsuarios() {
 		
+		if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("1")){
+			
+			PerfilDTO perf1 = new PerfilDTO("ADMINISTRATIVO");
+			UsuarioDTO user1 = new UsuarioDTO(1, "ROBERTO", "CARLOS", "admin", perf1);
+			
+			Object[][] informacionCliente = {{ user1.getNombre(), user1.getApellido()}};
+			String[] nombreColumnas = { "Nombre", "Apellido"};
+			this.ventanaPresupuesto.getDatosClientes_table().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));	
 		
-		
+			
+		}else if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("2")){
+			
+			PerfilDTO perf2 = new PerfilDTO("TECNICO");
+			UsuarioDTO user2 = new UsuarioDTO(2, "OSCAR", "PINTOS", "tecnico", perf2);
+			
+			Object[][] informacionCliente = {{ user2.getNombre(), user2.getApellido()}};
+			String[] nombreColumnas = { "Nombre", "Apellido"};
+			this.ventanaPresupuesto.getDatosClientes_table().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));
+
+			
+		}else if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("3")){
+			
+			PerfilDTO perf3 = new PerfilDTO("JEFE");
+			UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
+			
+			Object[][] informacionCliente = {{ user3.getNombre(), user3.getApellido()}};
+			
+			String[] nombreColumnas = { "Nombre", "Apellido"};
+			this.ventanaPresupuesto.getDatosClientes_table().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));
+			
+		}else{
+			
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO  admite solo NUMEROS  1, 2, o 3", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		}
+
 	}
+
 
 
 	private void ocultarColumnaId() {
@@ -227,7 +265,6 @@ public class ControladorPresupuesto implements ActionListener{
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO  admite solo NUMEROS", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 			
-		
 		}else{
 			
 			if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("1") || this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("2")
@@ -371,13 +408,13 @@ public class ControladorPresupuesto implements ActionListener{
 	}
 	public static void main(String[] args) {
 
-		Ingreso ing = new Ingreso();
-		ing.setId(2);
-		ing.cargarModeloCompleto();
+		/*Ingreso ing = new Ingreso();
+		//ing.setId(2);
+		//ing.cargarModeloCompleto();
 
 		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),ing);
 		controladorPresupuesto.inicializar();
-
+*/
 	}
 
 }
