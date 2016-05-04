@@ -55,7 +55,7 @@ public class VentanaPrincipal extends JFrame {
 
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "Nro.", "Fecha",
-				"Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico", "Asignado", "Estado" }) {
+				"Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico Asignado", "Estado" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { JButton.class, Integer.class, String.class, String.class, String.class,
 					Boolean.class, JButton.class, String.class, String.class };
@@ -63,6 +63,10 @@ public class VentanaPrincipal extends JFrame {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
+			}
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
 			}
 		});
 		ordenesDeTrabajo_table.setBounds(new Rectangle(0, 0, 992, 301));

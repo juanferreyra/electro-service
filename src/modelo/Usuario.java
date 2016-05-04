@@ -1,17 +1,14 @@
 package modelo;
 
+import persistencia.dao.UsuarioDAO;
+
 public class Usuario {
 
-	private String perfil;
-	
-	public Usuario(String perfil){
-		
-		this.perfil = perfil;
+	private UsuarioDAO usuario;
+
+	public Usuario() {
+
+		this.usuario = new UsuarioDAO();
 	}
 
-	public String getPerfil() {
-		return perfil;
-	}
-	
-	
 }

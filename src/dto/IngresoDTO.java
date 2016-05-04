@@ -16,9 +16,11 @@ public class IngresoDTO {
 	private Date fecha_creacion;
 	private int estado;
 	private int idusuario;
-	
-	public IngresoDTO(int id,  int idcliente, String descripcion, int idmarca,int idtipo_producto,String descripcion_falla, Boolean envio, Boolean envioDefault, String direccion_alternativa, float monto_envio, Date fecha_creacion, int estado, int idusuario)
-	{
+	private int tecnico_asignado;;
+
+	public IngresoDTO(int id, int idcliente, String descripcion, int idmarca, int idtipo_producto,
+			String descripcion_falla, Boolean envio, Boolean envioDefault, String direccion_alternativa,
+			float monto_envio, Date fecha_creacion, int estado, int idusuario, int tecnico_asignado) {
 		this.id = id;
 		this.idcliente = idcliente;
 		this.descripcion = descripcion;
@@ -32,6 +34,7 @@ public class IngresoDTO {
 		this.fecha_creacion = fecha_creacion;
 		this.estado = estado;
 		this.idusuario = idusuario;
+		this.tecnico_asignado = tecnico_asignado;
 	}
 
 	public int getId() {
@@ -137,10 +140,16 @@ public class IngresoDTO {
 	public void setMonto_envio(float monto_envio) {
 		this.monto_envio = monto_envio;
 	}
-	
-	public String getMontoEnvioToString()
-	{
+
+	public String getMontoEnvioToString() {
 		return envio.toString();
 	}
-	
+
+	public void setTecnico_asignado(int tecnico_asignado) {
+		this.tecnico_asignado = tecnico_asignado;
+	}
+
+	public int getTecnico_asignado() {
+		return this.tecnico_asignado;
+	}
 }

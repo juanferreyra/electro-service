@@ -3,13 +3,19 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
-import dto.PresupuestoDTO;
+import dto.IngresoDTO;
 import modelo.Ingreso;
+import persistencia.dao.ClienteDAO;
+import persistencia.dao.EstadoDAO;
+import persistencia.dao.IngresoDAO;
 import persistencia.dao.PresupuestoDAO;
+import persistencia.dao.UsuarioDAO;
 import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaPrincipal;
@@ -18,7 +24,11 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	private VentanaPrincipal principal;
 	private String perfil;
+	private IngresoDAO ingresoDAO;
+	private ClienteDAO clienteDAO;
 	private PresupuestoDAO presupuestoDAO;
+	private EstadoDAO estadoDAO;
+	private UsuarioDAO usuarioDAO;
 
 	public ControladorVentanaPrincipal(VentanaPrincipal principal) {
 
@@ -30,7 +40,11 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	}
 
 	public void iniciar() {
+		ingresoDAO = new IngresoDAO();
+		clienteDAO = new ClienteDAO();
 		presupuestoDAO = new PresupuestoDAO();
+		estadoDAO = new EstadoDAO();
+		usuarioDAO = new UsuarioDAO();
 		this.adecuarVentanaPrincipal();
 		this.cargar_tablaOrdenesTrabajo();
 
@@ -106,34 +120,52 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		// Eliminar ingreso,presupuesto. Es decir, cambiar el estado habilitado.
 	}
 
-	@SuppressWarnings("serial")
-	private void cargar_tablaOrdenesTrabajo() {
-		// Consigo todos los presupuestos y ordeno los datos
-		ArrayList<PresupuestoDTO> presupuestos = presupuestoDAO.readAll();
+	public void cargar_tablaOrdenesTrabajo() {
+		// Consigo todos los ingresos y genero las filas
+		ArrayList<IngresoDTO> ingresos = ingresoDAO.readAll();
+		ObtenerFilas(ingresos);
 
-		Object[][] datos = ordenarDatos(presupuestos);
-		// Seteo a la tabla un nuevo modelo con los datos de los
-		// ingresos(ordenes de trabajo)
-		this.principal.getOrdenesDeTrabajo_table().setModel(new DefaultTableModel(datos, new String[] { "", "Nro.",
-				"Fecha", "Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico", "Asignado", "Estado" }) {
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] { JButton.class, Integer.class, String.class, String.class, String.class,
-					Boolean.class, JButton.class, String.class, String.class };
-
-			@SuppressWarnings({ "unchecked", "rawtypes" })
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
 	}
 
-	private Object[][] ordenarDatos(ArrayList<PresupuestoDTO> presupuestos) {
-		// A partir de los presupuestos obtener los ingresos
-		// correspondientes(idingreso) se debe obtener todos los datos para
-		// setear en formato=
-		// ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/tecnico_asignado/estado
+	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
 
-		return null;
+		for (int i = 0; i <= ingresos.size() - 1; i++) {
+
+			this.cargarFila(i, new JButton(), ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(),
+					ingresos.get(i).getDescripcion(), clienteDAO.find(ingresos.get(i).getIdcliente()).getNombre(),
+					ingresos.get(i).getEnvio(), new JButton(),
+					usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getNombre() + " "
+							+ usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getApellido(),
+					estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
+		}
+	}
+
+	private void cargarFila(int fila, JButton botonIngreso, int id, Date fecha, String descripcion, String cliente,
+			Boolean envio, JButton botonPresupuesto, String tecnico_asignado, String estado) {
+
+		Object[] ingreso = new Object[9];
+		ingreso[0] = (JButton) botonIngreso;
+		ingreso[1] = id;
+		ingreso[2] = fecha;
+		ingreso[3] = descripcion;
+		ingreso[4] = cliente;
+		ingreso[5] = envio;
+		ingreso[6] = (JButton) botonPresupuesto;
+		ingreso[7] = tecnico_asignado;
+		ingreso[8] = estado;
+
+		// Establezco que no se pueda editar pero si seleccionar una fila
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 0);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 1);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 2);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 3);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 4);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 5);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 6);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 7);
+		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 8);
+
 	}
 
 	@Override
@@ -149,8 +181,8 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			Ingreso ing = new Ingreso();
 			ing.setId(1);
 			ing.cargarModeloCompleto();
-			
-			ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),ing);
+
+			ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(), ing);
 			controladorPresupuesto.inicializar();
 
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
