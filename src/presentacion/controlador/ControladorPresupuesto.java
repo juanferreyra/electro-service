@@ -7,9 +7,6 @@ import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -47,6 +44,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
 		 this.ventanaPresupuesto.getBuscarTecnico_btn().addActionListener(this);
+		 this.ventanaPresupuesto.getCancelar_btn().addActionListener(this);
 		
 	}
 	
@@ -88,10 +86,6 @@ public class ControladorPresupuesto implements ActionListener{
 		for (ComponenteDTO c : listaDeComponetes){
 			this.ventanaPresupuesto.getComponente_ComboBox().addItem(c.getDetalle());
 		}
-		
-		
-		
-		
 	}
 
 	@Override
@@ -152,6 +146,9 @@ public class ControladorPresupuesto implements ActionListener{
 					
 				}
 			});
+		}else if (e.getSource() == this.ventanaPresupuesto.getCancelar_btn()){
+		
+			this.ventanaPresupuesto.dispose();
 		}
 		
 	}
