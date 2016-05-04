@@ -23,33 +23,27 @@ public class IngresoDAO {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
-		ArrayList<IngresoDTO> localidades = new ArrayList<IngresoDTO>();
+		ArrayList<IngresoDTO> ingresos = new ArrayList<IngresoDTO>();
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(readall);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				localidades.add(new IngresoDTO(resultSet.getInt("id"),
-						resultSet.getInt("idcliente"),
-						resultSet.getString("descripcion_producto"),
-						resultSet.getInt("idmarca"),
-						resultSet.getInt("idtipo_producto"),
-						resultSet.getString("descripcion_falla"),
-						resultSet.getBoolean("envio"),
-						resultSet.getBoolean("envio_default"),
-						resultSet.getString("direccion_alternativa"),
-						resultSet.getFloat("monto_envio"),
-						resultSet.getDate("fecha_creacion"),
-						resultSet.getInt("estado"),
-						resultSet.getInt("idusuario")));
+				ingresos.add(new IngresoDTO(resultSet.getInt("id"), resultSet.getInt("idcliente"),
+						resultSet.getString("descripcion_producto"), resultSet.getInt("idmarca"),
+						resultSet.getInt("idtipo_producto"), resultSet.getString("descripcion_falla"),
+						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
+						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
+						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
+						resultSet.getInt("tecnico_asignado")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			Conexion.cerrarConexion();
 		}
-		return localidades;
+		return ingresos;
 	}
 
 	public boolean delete(IngresoDTO ingreso_a_eliminar) {
@@ -70,11 +64,11 @@ public class IngresoDAO {
 		return false;
 	}
 
-	public Boolean insert(IngresoDTO ingreso){
+	public Boolean insert(IngresoDTO ingreso) {
 		conexion = Conexion.getConexion();
 		try {
 			PreparedStatement statement = conexion.getSQLConexion().prepareStatement(insert);
-			
+
 			statement.setInt(1, ingreso.getIdcliente());
 			statement.setString(2, ingreso.getDescripcion());
 			statement.setInt(3, ingreso.getIdmarca());
@@ -84,18 +78,18 @@ public class IngresoDAO {
 			statement.setBoolean(7, ingreso.getEnvio_default());
 			statement.setString(8, ingreso.getDireccion_alternativa());
 			statement.setFloat(9, ingreso.getMonto_envio());
-			statement.setInt(10,ingreso.getEstado());
+			statement.setInt(10, ingreso.getEstado());
 			statement.setInt(11, ingreso.getIdusuario());
-		
+
 			if (statement.executeUpdate() > 0)
 				return true;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			Conexion.cerrarConexion();
 		}
-		
+
 		return false;
 	}
 
@@ -111,19 +105,13 @@ public class IngresoDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				ingreso = new IngresoDTO(resultSet.getInt("id"),
-						resultSet.getInt("idcliente"),
-						resultSet.getString("descripcion_producto"),
-						resultSet.getInt("idmarca"),
-						resultSet.getInt("idtipo_producto"),
-						resultSet.getString("descripcion_falla"),
-						resultSet.getBoolean("envio"),
-						resultSet.getBoolean("envio_default"),
-						resultSet.getString("direccion_alternativa"),
-						resultSet.getFloat("monto_envio"),
-						resultSet.getDate("fecha_creacion"),
-						resultSet.getInt("estado"),
-						resultSet.getInt("idusuario"));
+				ingreso = new IngresoDTO(resultSet.getInt("id"), resultSet.getInt("idcliente"),
+						resultSet.getString("descripcion_producto"), resultSet.getInt("idmarca"),
+						resultSet.getInt("idtipo_producto"), resultSet.getString("descripcion_falla"),
+						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
+						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
+						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
+						resultSet.getInt("tecnico_asignado"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -144,7 +132,8 @@ public class IngresoDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				clave = resultSet.getInt("siguiente");;
+				clave = resultSet.getInt("siguiente");
+				;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
