@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +44,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
+		 this.ventanaPresupuesto.getBuscarTecnico_btn().addActionListener(this);
 		
 	}
 	
@@ -91,12 +94,19 @@ public class ControladorPresupuesto implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		
 
 		// suma y resta componentes
 		if (e.getSource() == this.ventanaPresupuesto.getIncrementoCantComponente_btn()){
 
 			cantidad +=1;
 			this.ventanaPresupuesto.getCantidad_lbl().setText(cantidad.toString());
+			
+		}else if (e.getSource() == this.ventanaPresupuesto.getBuscarTecnico_btn()){
+			
+			llenarTablaUsuarios();
+				
 
 		}else if (e.getSource() == this.ventanaPresupuesto.getDecrementoCantComponente_btn()){
 
@@ -144,6 +154,13 @@ public class ControladorPresupuesto implements ActionListener{
 		
 	}
 	
+	private void llenarTablaUsuarios() {
+		
+		
+		
+	}
+
+
 	private void ocultarColumnaId() {
 
 		this.ventanaPresupuesto.getComponentes_table().getColumnModel().getColumn(0).setMaxWidth(0);
@@ -160,6 +177,11 @@ public class ControladorPresupuesto implements ActionListener{
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO no puede estar vacio ", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 			
+		}else if(!soloNumeros(this.ventanaPresupuesto.getNroTecnico_txf().getText().toString())){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO  admite solo NUMEROS", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+				
 		}else if (this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null){
 			
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo FECHA DE VENCIMIENTO no puede estar vacio ", "Atencion!",
@@ -185,16 +207,46 @@ public class ControladorPresupuesto implements ActionListener{
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO no puede estar vacio ", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 			
+		}else if(!soloNumeros(this.ventanaPresupuesto.getManoDeObra_txf().getText().toString())){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo PRECIO MANO DE OBRA  admite solo NUMEROS", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
 		}else if(Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText()) == 0.0){
 
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo PRECIO MANO DE OBRA  no puede ser CERO ", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
+
+		}else if(this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().isEmpty()){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRBAJO 	no puede estar vacio ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+
+		}else if(!soloNumeros(this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().toString())){
+
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO  admite solo NUMEROS", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		
 		}else{
 			
-			guardarPresupuesto();
-			
-			guardarRepuestos(obtenerIdPresupuesto());
+			if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("1") || this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("2")
+					|| this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("3")){
+
+				guardarPresupuesto();
+
+				guardarRepuestos(obtenerIdPresupuesto());
+			}else{
+				
+				JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO  admite solo NUMEROS  1, 2, o 3", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
+	}
+	
+	
+	private boolean soloNumeros(String texto){
+		 try { Integer.parseInt(texto); return true; } catch (Exception e) { return false; }
 	}
 
 

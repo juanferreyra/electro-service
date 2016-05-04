@@ -6,6 +6,9 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import modelo.JTextFieldLimit;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -20,6 +23,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class VentanaIngreso extends JFrame {
 
@@ -42,8 +46,9 @@ public class VentanaIngreso extends JFrame {
 	public VentanaIngreso() {
 		
 		super();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaIngreso.class.getResource("/document-text.png")));
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -77,6 +82,7 @@ public class VentanaIngreso extends JFrame {
 		numeroCliente_txf.setBounds(100, 50, 146, 20);
 		contentPane.add(numeroCliente_txf);
 		numeroCliente_txf.setColumns(10);
+		numeroCliente_txf.setDocument(new JTextFieldLimit(30));
 
 		buscarCliente_btn = new JButton("");
 		buscarCliente_btn
@@ -119,6 +125,7 @@ public class VentanaIngreso extends JFrame {
 		nombreProducto_txf = new JTextField();
 		nombreProducto_txf.setColumns(10);
 		nombreProducto_txf.setBounds(130, 151, 351, 20);
+		nombreProducto_txf.setDocument(new JTextFieldLimit(150));
 		contentPane.add(nombreProducto_txf);
 
 		JLabel marca_lbl = new JLabel("Marca:");
@@ -154,6 +161,7 @@ public class VentanaIngreso extends JFrame {
 		descripcionFalla_txtArea = new JTextArea();
 		descripcionFalla_txtArea.setRows(5);
 		descripcionFalla_txtArea.setColumns(20);
+		descripcionFalla_txtArea.setDocument(new JTextFieldLimit(400));
 		descripcionFalla_jScrollPane.setViewportView(descripcionFalla_txtArea);
 
 		contentPane.add(descripcionFalla_jScrollPane);
@@ -187,6 +195,7 @@ public class VentanaIngreso extends JFrame {
 		
 		direccionAlternativa_txf = new JTextField();
 		direccionAlternativa_txf.setBounds(10, 43, 293, 20);
+		direccionAlternativa_txf.setDocument(new JTextFieldLimit(60));
 		panel.add(direccionAlternativa_txf);
 		direccionAlternativa_txf.setColumns(10);
 		
@@ -197,6 +206,7 @@ public class VentanaIngreso extends JFrame {
 		
 		txtMontoEnvio = new JTextField();
 		txtMontoEnvio.setBounds(74, 68, 159, 20);
+		txtMontoEnvio.setDocument(new JTextFieldLimit(15));
 		panel.add(txtMontoEnvio);
 		txtMontoEnvio.setColumns(10);
 		

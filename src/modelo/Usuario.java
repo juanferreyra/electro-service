@@ -1,16 +1,20 @@
 package modelo;
 
+import java.util.List;
+
+import persistencia.dao.UsuarioDAO;
+
 public class Usuario {
 
-	private String perfil;
+	private UsuarioDAO usuario;
 	
-	public Usuario(String perfil){
+	public Usuario(){
 		
-		this.perfil = perfil;
+		this.usuario = new UsuarioDAO();
 	}
 
-	public String getPerfil() {
-		return perfil;
+	public List<String> buscarUsuario(int id) {
+		return usuario.find(id);
 	}
 	
 	
