@@ -379,10 +379,10 @@ INSERT INTO `usuario` VALUES (1,'ADMINISTRADOR','ADM','ADMINISTRADOR',0,1,'2016-
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
-alter table cliente
+alter table ingreso
   add tecnico_asignado int;
 
-ALTER TABLE cliente
+ALTER TABLE ingreso
 ADD FOREIGN KEY (tecnico_asignado)
 REFERENCES usuario(id);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
