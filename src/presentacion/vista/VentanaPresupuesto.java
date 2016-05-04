@@ -16,6 +16,8 @@ import javax.swing.table.JTableHeader;
 
 import com.toedter.calendar.JDateChooser;
 
+import dto.UsuarioDTO;
+
 import java.awt.Color;
 import java.awt.Font;
 
@@ -63,9 +65,12 @@ public class VentanaPresupuesto extends JFrame {
 	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario",
 	"Precio Total" };
 	private JLabel Total_lbl;
+
 	
 
-	public VentanaPresupuesto() {
+	public VentanaPresupuesto () {
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 745, 700);
 		contentPane = new JPanel();
@@ -455,4 +460,6 @@ public class VentanaPresupuesto extends JFrame {
 	public JLabel getTotal_lbl() {
 		return Total_lbl;
 	}
+	
+	
 }
