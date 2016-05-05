@@ -10,8 +10,8 @@ import persistencia.conexion.Conexion;
 
 public class PresupuestoRepuestoDAO {
 	
-	private static final String insert = "INSERT INTO presupuesto_repuestos (idpresupuesto,idrepuesto,"
-			+ "cantidad,fecha_creacion,habilitado) VALUES (?,?,?,now(),true)";
+	private static final String insert = "INSERT INTO presupuesto_repuestos (id,idpresupuesto,idrepuesto,"
+			+ "cantidad,fecha_creacion,habilitado) VALUES (?,?,?,?,now(),true)";
 	
 	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
 	
@@ -78,10 +78,10 @@ public class PresupuestoRepuestoDAO {
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 			
-			//statement.setInt(1, presupuestoRepuesto.getId());
-			statement.setInt(1, presupuestoRepuesto.getIdPresupuesto());
-			statement.setInt(2, presupuestoRepuesto.getIdComponente());
-			statement.setInt(3, presupuestoRepuesto.getCantidad());
+			statement.setInt(1, presupuestoRepuesto.getId());
+			statement.setInt(2, presupuestoRepuesto.getIdPresupuesto());
+			statement.setInt(3, presupuestoRepuesto.getIdComponente());
+			statement.setInt(4, presupuestoRepuesto.getCantidad());
 
 			if (statement.executeUpdate() > 0)
 				return true;

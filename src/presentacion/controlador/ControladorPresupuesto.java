@@ -4,9 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,6 +34,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private float suma = 0;
 	private float sumatotal = 0;
 	private float  manoDeObra = 0;
+	private Calendar hoy = new GregorianCalendar();
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso) {
 		
@@ -45,7 +48,6 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
 		 this.ventanaPresupuesto.getBuscarTecnico_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getCancelar_btn().addActionListener(this);
-		
 	}
 	
 	
@@ -62,11 +64,12 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
 		
 		cargarComboComponentes();
-		cargarIngreso();
+		//cargarIngreso();
 		
 		this.ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
 		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(sumatotal));
 		this.ventanaPresupuesto.getManoDeObra_txf().setText(String.valueOf(manoDeObra));
+		//this.ventanaPresupuesto.getEstado_lb()
 	}
 	
 	
@@ -86,6 +89,10 @@ public class ControladorPresupuesto implements ActionListener{
 		for (ComponenteDTO c : listaDeComponetes){
 			this.ventanaPresupuesto.getComponente_ComboBox().addItem(c.getDetalle());
 		}
+		
+		
+		
+		
 	}
 
 	@Override
@@ -324,7 +331,7 @@ public class ControladorPresupuesto implements ActionListener{
 			idRepuesto = Integer.parseInt(this.modelo.getValueAt(i, 0).toString());
 			cantidad = Integer.parseInt(this.modelo.getValueAt(i, 2).toString());
 
-			PresupuestoRepuestoDTO repuestoNuevo = new PresupuestoRepuestoDTO(idPresupuesto,idRepuesto,cantidad);
+			PresupuestoRepuestoDTO repuestoNuevo = new PresupuestoRepuestoDTO(0,idPresupuesto,idRepuesto,cantidad,null,true);
 				
 					
 			PresupuestoRepuestos nuevo = new PresupuestoRepuestos();
@@ -341,14 +348,16 @@ public class ControladorPresupuesto implements ActionListener{
 	private void guardarPresupuesto() {
 
 		PresupuestoDTO presupuestoNuevo = new PresupuestoDTO(
+				0,
 				ingreso.getId(),
 				this.ventanaPresupuesto.getDescripcionBreve_jTextArea().getText(),
 				this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText(),
-				this.ventanaPresupuesto.getManoDeObra_txf().getText(),
-
+				this.ventanaPresupuesto.getValorPresupuestado_txf().getText(),
+				null,
 				this.ventanaPresupuesto.getVencimiento_Calendario().getDate(),
 
-				Integer.parseInt(this.ventanaPresupuesto.getNroTecnico_txf().getText()));
+				Integer.parseInt(this.ventanaPresupuesto.getNroTecnico_txf().getText()),
+				true);
 
 		PresupuestoDAO nuevo = new PresupuestoDAO();
 
@@ -404,14 +413,14 @@ public class ControladorPresupuesto implements ActionListener{
 
 	}
 	public static void main(String[] args) {
-
-		/*Ingreso ing = new Ingreso();
-		//ing.setId(2);
+		
+		Ingreso ing = new Ingreso();
+		ing.setId(2);
 		//ing.cargarModeloCompleto();
-
+		
 		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),ing);
 		controladorPresupuesto.inicializar();
-*/
+
 	}
 
 }

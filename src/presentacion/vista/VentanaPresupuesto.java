@@ -65,6 +65,7 @@ public class VentanaPresupuesto extends JFrame {
 	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario",
 	"Precio Total" };
 	private JLabel Total_lbl;
+	private JLabel estado_lb;
 
 	
 
@@ -78,8 +79,8 @@ public class VentanaPresupuesto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		fechaIngreso_lbl = new JLabel("Fecha");
-		fechaIngreso_lbl.setBounds(537, 11, 166, 14);
+		fechaIngreso_lbl = new JLabel("");
+		fechaIngreso_lbl.setBounds(505, 11, 166, 14);
 		contentPane.add(fechaIngreso_lbl);
 
 		JLabel fechaIngresoText_lbl = new JLabel("");
@@ -140,7 +141,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(descripcionFalla_jScrollPane);
 
 		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(10, 184, 664, 7);
+		separator_2.setBounds(30, 183, 664, 7);
 		separator_2.setForeground(Color.BLUE);
 		contentPane.add(separator_2);
 
@@ -323,6 +324,18 @@ public class VentanaPresupuesto extends JFrame {
 		JLabel lblTotalRepuestos = new JLabel("Total repuestos:");
 		lblTotalRepuestos.setBounds(412, 418, 127, 15);
 		contentPane.add(lblTotalRepuestos);
+		
+		JLabel lblEstado = new JLabel("Estado:");
+		lblEstado.setBounds(402, 192, 70, 15);
+		contentPane.add(lblEstado);
+		
+		estado_lb = new JLabel("");
+		estado_lb.setBounds(465, 192, 116, 15);
+		contentPane.add(estado_lb);
+		
+		JLabel lblFecha = new JLabel("fecha:");
+		lblFecha.setBounds(435, 10, 70, 15);
+		contentPane.add(lblFecha);
 
 	}
 
@@ -460,6 +473,9 @@ public class VentanaPresupuesto extends JFrame {
 	public JLabel getTotal_lbl() {
 		return Total_lbl;
 	}
-	
-	
+
+
+	public JLabel getEstado_lb() {
+		return estado_lb;
+	}
 }
