@@ -1,3 +1,7 @@
+
+
+
+
 package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
@@ -7,7 +11,6 @@ import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import dto.IngresoDTO;
 import modelo.Ingreso;
@@ -130,12 +133,15 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
 
 		for (int i = 0; i <= ingresos.size() - 1; i++) {
+			String nombreCompletoTecnicoAsignado = "";
+			if (ingresos.get(i).getTecnico_asignado() != 0) {
+				nombreCompletoTecnicoAsignado = usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getNombre() + " "
+						+ usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getApellido();
 
+			}
 			this.cargarFila(i, new JButton(), ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(),
 					ingresos.get(i).getDescripcion(), clienteDAO.find(ingresos.get(i).getIdcliente()).getNombre(),
-					ingresos.get(i).getEnvio(), new JButton(),
-					usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getNombre() + " "
-							+ usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getApellido(),
+					ingresos.get(i).getEnvio(), new JButton(), nombreCompletoTecnicoAsignado,
 					estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
 		}
 	}
@@ -154,8 +160,22 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		ingreso[7] = tecnico_asignado;
 		ingreso[8] = estado;
 
+		// Agrego fila solo en caso de que lo permita el perfil (hardcodeo luego
+		// modificar)
+		if (this.perfil.equals("ADMINISTRATIVO") && (estado.equals("NUEVO") || estado.equals("INFORMADO")
+				|| estado.equals("IRREPARABLE") || estado.equals("REPARADO") || estado.equals("RECHAZADO")
+				|| estado.equals("AVISO DE RETIRO") || estado.equals("RETIRADO") || estado.equals("PRESUPUESTADO"))) {// HARDCODEO
+
+			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
+		} else if (this.perfil.equals("TECNICO") && (estado.equals("NUEVO") || estado.equals("ACEPTADO")
+				|| estado.equals("EN REPARACION") || estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO"))) {// HARDCODEO
+
+			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
+		} else if (this.perfil.equals("JEFE")) {
+			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
+		}
+
 		// Establezco que no se pueda editar pero si seleccionar una fila
-		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 0);
 		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 1);
 		((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).isCellEditable(fila, 2);
