@@ -29,7 +29,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private Ingreso ingreso;
 	private List<ComponenteDTO> listaDeComponetes; 
 	private Componente componente;
-	private Integer cantidad = 1;
+	private Integer cantidad = 0;
 	private DefaultTableModel modelo = new DefaultTableModel();
 	private float suma = 0;
 	private float sumatotal = 0;
