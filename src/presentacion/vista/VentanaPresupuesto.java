@@ -72,7 +72,7 @@ public class VentanaPresupuesto extends JFrame {
 	public VentanaPresupuesto () {
 		
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 745, 700);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);

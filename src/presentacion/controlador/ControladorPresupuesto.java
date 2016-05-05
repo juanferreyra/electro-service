@@ -411,16 +411,5 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getTotal_lbl().setText(String.valueOf(suma));
 
 	}
-	public static void main(String[] args) {
-		
-		
-		/*Ingreso ing = new Ingreso();
-		ing.setId(2);
-		//ing.cargarModeloCompleto();
-		
-		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),ing);
-		controladorPresupuesto.inicializar();
-*/
-	}
 
 }

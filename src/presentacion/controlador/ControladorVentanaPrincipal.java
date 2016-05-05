@@ -195,6 +195,8 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		} else if (e.getSource() == this.principal.getPresupuestar_btn()) {
 
+
+			
 			Ingreso ing = new Ingreso();
 			ing.setId(1);
 			ing.cargarModeloCompleto();
