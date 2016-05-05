@@ -64,12 +64,11 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getComponentes_table().setModel(modelo);
 		
 		cargarComboComponentes();
-		//cargarIngreso();
+		cargarIngreso();
 		
 		this.ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
 		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(sumatotal));
 		this.ventanaPresupuesto.getManoDeObra_txf().setText(String.valueOf(manoDeObra));
-		//this.ventanaPresupuesto.getEstado_lb()
 	}
 	
 	
@@ -414,13 +413,14 @@ public class ControladorPresupuesto implements ActionListener{
 	}
 	public static void main(String[] args) {
 		
-		Ingreso ing = new Ingreso();
+		
+		/*Ingreso ing = new Ingreso();
 		ing.setId(2);
 		//ing.cargarModeloCompleto();
 		
 		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),ing);
 		controladorPresupuesto.inicializar();
-
+*/
 	}
 
 }
