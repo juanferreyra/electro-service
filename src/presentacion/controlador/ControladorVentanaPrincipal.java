@@ -98,9 +98,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	}
 
 	public void limpiar_tablaOrdenesTrabajo() {
-		
+
 		int largo = ((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).getRowCount();
-		
+
 		for (int i = largo - 1; i >= 0; i--) {
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).removeRow(i);
 		}
@@ -194,25 +194,29 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			controladorVentanaIngreso.inicializar();
 
 		} else if (e.getSource() == this.principal.getPresupuestar_btn()) {
+			if (this.principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
+				int nroIngreso = (int) this.principal.getOrdenesDeTrabajo_table()
+						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
 
+				// IngresoDTO ingresoDTO = this.ingresoDAO.find(nroIngreso);
 
-			
-			Ingreso ing = new Ingreso();
-			ing.setId(1);
-			ing.cargarModeloCompleto();
+				Ingreso ing = new Ingreso();
+				ing.setId(nroIngreso);
+				ing.cargarModeloCompleto();
 
-			ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(), ing);
-			controladorPresupuesto.inicializar();
-
-		} else if (e.getSource() == this.principal.getReparacion_btn()) {
-			// this.controladorVentanaReparacion = new
-			// ControladorVentanaReparacion(new VentanaReparacion(), new
-			// Ingreso());
+				ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+						ing);
+				controladorPresupuesto.inicializar();
+			}
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
+			System.out.println(this.principal.getOrdenesDeTrabajo_table()
+					.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 4));
 
-			// conseguir nroOrden y tecnico(mediante el user actual del tecnico)
 			// this.cargarAsignacionTecnico_tablaOrdenesTrabajo(nroOrden,
 			// tecnico);
+		} else if (e.getSource() == this.principal.getReparacion_btn()) {
+
 		}
 	}
+
 }

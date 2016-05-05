@@ -333,7 +333,7 @@ public class VentanaPresupuesto extends JFrame {
 		estado_lb.setBounds(465, 192, 116, 15);
 		contentPane.add(estado_lb);
 		
-		JLabel lblFecha = new JLabel("fecha:");
+		JLabel lblFecha = new JLabel("");
 		lblFecha.setBounds(435, 10, 70, 15);
 		contentPane.add(lblFecha);
 
