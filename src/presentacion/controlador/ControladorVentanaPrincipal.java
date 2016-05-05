@@ -1,7 +1,4 @@
 
-
-
-
 package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
@@ -101,11 +98,11 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	}
 
 	public void limpiar_tablaOrdenesTrabajo() {
-		DefaultTableModel modelo = (DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel();
-		int largo = modelo.getRowCount();
+		
+		int largo = ((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).getRowCount();
+		
 		for (int i = largo - 1; i >= 0; i--) {
-			this.eliminarDatosAsociados(i);
-			modelo.removeRow(i);
+			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).removeRow(i);
 		}
 
 	}
@@ -131,7 +128,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	}
 
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
-
+		limpiar_tablaOrdenesTrabajo();
 		for (int i = 0; i <= ingresos.size() - 1; i++) {
 			String nombreCompletoTecnicoAsignado = "";
 			if (ingresos.get(i).getTecnico_asignado() != 0) {
@@ -192,7 +189,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.principal.getIngresarProducto_btn()) {
 			ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(new VentanaIngreso(),
-					new Ingreso());
+					new Ingreso(), this);
 
 			controladorVentanaIngreso.inicializar();
 

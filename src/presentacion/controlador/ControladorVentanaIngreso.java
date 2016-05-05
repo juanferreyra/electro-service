@@ -19,8 +19,10 @@ public class ControladorVentanaIngreso implements ActionListener {
 	Ingreso ingreso;
 	private List<MarcaDTO> lista_marcas;
 	private List<TipoProductoDTO> lista_tiposproductos;
+	private ControladorVentanaPrincipal controladorVentanaPrincipal;
 
-	public ControladorVentanaIngreso(VentanaIngreso ventana, Ingreso ingreso) {
+	public ControladorVentanaIngreso(VentanaIngreso ventana, Ingreso ingreso,
+			ControladorVentanaPrincipal controladorVentanaPrincipal) {
 		this.ventana_ingreso = ventana;
 		this.ingreso = ingreso;
 		this.ventana_ingreso.getBtnBuscarCliente().addActionListener(this);
@@ -28,6 +30,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.ventana_ingreso.getBtnCancelar().addActionListener(this);
 		this.ventana_ingreso.getEnvioDomicilio().addActionListener(this);
 		this.ventana_ingreso.getDireccion_default().addActionListener(this);
+		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
 	}
 
 	public void inicializar() {
@@ -36,7 +39,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			this.cargarVentana();
 			llenarTablaCliente(ingreso.getCliente());
 		} else {
-			
+
 			this.llenarComboMarcas();
 			this.llenarComboTiposProductos();
 		}
@@ -62,7 +65,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				JOptionPane.showMessageDialog(this.ventana_ingreso, "Antes debe ingresar un nro de cliente para buscar",
 						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 			} else {
-				try{
+				try {
 					int nrodoc = Integer.parseInt(textoingresado);
 					ClienteDAO cdao = new ClienteDAO();
 					ClienteDTO cdto = cdao.findPorNrodoc(nrodoc);
@@ -73,14 +76,13 @@ public class ControladorVentanaIngreso implements ActionListener {
 						this.ingreso.setCliente(cdto);
 						this.llenarTablaCliente(cdto);
 					}
-				} catch (NumberFormatException nfe){
+				} catch (NumberFormatException nfe) {
 					JOptionPane.showMessageDialog(this.ventana_ingreso, "El nro de cliente debe ser numerico! ",
 							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		} else if (e.getSource() == this.ventana_ingreso.getEnvioDomicilio()) {
-			if(this.ventana_ingreso.getEnvioDomicilio().isSelected())
-			{
+			if (this.ventana_ingreso.getEnvioDomicilio().isSelected()) {
 				this.ventana_ingreso.getDireccion_default().setEnabled(true);
 				this.ventana_ingreso.getTxtDireccionAlternativa().setEnabled(true);
 				this.ventana_ingreso.getMontoEnvio().setEnabled(true);
@@ -93,24 +95,23 @@ public class ControladorVentanaIngreso implements ActionListener {
 			Boolean error = false;
 			float montoFloat = 0;
 			// verifico todos los campos
-			//CLIENTE CARGADO
-			if(this.ingreso.getCliente()==null)
-			{
+			// CLIENTE CARGADO
+			if (this.ingreso.getCliente() == null) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso, "Debes ingresar un cliente para continuar!",
 						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
-				
+
 			}
-			
-			//NOMBRE DEL PRODUCTO
+
+			// NOMBRE DEL PRODUCTO
 			String nombre_produ = this.ventana_ingreso.getTextNombreProducto().getText();
 			if (nombre_produ.equals("") && !error) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso, "Debes completar el nombre de producto!",
 						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 			}
-			
-			//DESCRIPCION DE FALLA
+
+			// DESCRIPCION DE FALLA
 			String descripcion_falla = this.ventana_ingreso.getTextDescripcionFalla().getText();
 			if (descripcion_falla.equals("") && !error) {
 				error = true;
@@ -118,34 +119,29 @@ public class ControladorVentanaIngreso implements ActionListener {
 						"Debes completar brevemente la descripcion de la falla", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
-			
-			if(this.ventana_ingreso.getEnvioDomicilio().isSelected()  && !error)
-			{
-				//VALIDO DIRECICION DE ENVIO DE CLIENTE
-				if(this.ventana_ingreso.getDireccion_default().isSelected()==false)
-				{
-					//Me fijo que complete la direccion alternativa y el monto
+
+			if (this.ventana_ingreso.getEnvioDomicilio().isSelected() && !error) {
+				// VALIDO DIRECICION DE ENVIO DE CLIENTE
+				if (this.ventana_ingreso.getDireccion_default().isSelected() == false) {
+					// Me fijo que complete la direccion alternativa y el monto
 					String direccionAlternativa = this.ventana_ingreso.getTxtDireccionAlternativa().getText();
 					if (direccionAlternativa.equals("")) {
 						error = true;
 						JOptionPane.showMessageDialog(this.ventana_ingreso,
-								"Si el cliente solicita envio debe completar una direccion o de lo contrario utilice la direccion del cliente!", "Atencion!",
-								JOptionPane.INFORMATION_MESSAGE);
+								"Si el cliente solicita envio debe completar una direccion o de lo contrario utilice la direccion del cliente!",
+								"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
-				//VALIDO EL MONTO DE ENVIO
+				// VALIDO EL MONTO DE ENVIO
 				String monto = this.ventana_ingreso.getMontoEnvio().getText();
 				if (monto.equals("") && !error) {
 					error = true;
-					JOptionPane.showMessageDialog(this.ventana_ingreso,
-							"Por favor ingrese el costo en pesos del envio", "Atencion!",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-				else if(!error)
-				{
+					JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor ingrese el costo en pesos del envio",
+							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+				} else if (!error) {
 					try {
 						montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
-					}catch (NumberFormatException nfe){
+					} catch (NumberFormatException nfe) {
 						JOptionPane.showMessageDialog(this.ventana_ingreso, "El campo Monto debe ser Numerico ",
 								"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -155,21 +151,21 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (!error) {
 				IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
 						this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
-						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(),
-							descripcion_falla,
-							this.ventana_ingreso.getEnvioDomicilio().isSelected(), 
-							this.ventana_ingreso.getDireccion_default().isSelected(),
-							this.ventana_ingreso.getTxtDireccionAlternativa().getText(),
-							montoFloat, 
-							null, 1, 0);
+						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
+						this.ventana_ingreso.getEnvioDomicilio().isSelected(),
+						this.ventana_ingreso.getDireccion_default().isSelected(),
+						this.ventana_ingreso.getTxtDireccionAlternativa().getText(), montoFloat, null, 1, 0, 0);
 				this.ingreso.ingr = ingresoDTO;
-				
+
 				Boolean ingreso = this.ingreso.guardarIngreso(0);
-				
-				if(ingreso){
-					JOptionPane.showMessageDialog(this.ventana_ingreso, "Ingreso Realizado correctamente!",
-							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+
+				if (ingreso) {
+					// JOptionPane.showMessageDialog(this.ventana_ingreso,
+					// "Ingreso Realizado correctamente!", "Atencion!",
+					// JOptionPane.INFORMATION_MESSAGE);
 					this.ventana_ingreso.vaciarTodo();
+					this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+					this.ventana_ingreso.setVisible(false);
 				}
 			}
 		}
@@ -189,10 +185,11 @@ public class ControladorVentanaIngreso implements ActionListener {
 		}
 	}
 
-	private void llenarTablaCliente(ClienteDTO client){
-		Object[][] informacionCliente = {{ client.getNombre(), client.getApellido(), client.getDireccion(),client.getMail(), client.getTelefono()}};
+	private void llenarTablaCliente(ClienteDTO client) {
+		Object[][] informacionCliente = { { client.getNombre(), client.getApellido(), client.getDireccion(),
+				client.getMail(), client.getTelefono() } };
 		String[] nombreColumnas = { "Nombre", "Apellido", "Dirección", "Email", "Teléfono" };
-		this.ventana_ingreso.getClienteTable().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));	
+		this.ventana_ingreso.getClienteTable().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));
 	}
 
 }
