@@ -24,6 +24,8 @@ import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaIngreso extends JFrame {
 
@@ -42,6 +44,7 @@ public class VentanaIngreso extends JFrame {
 	private JButton cancelar_btn;
 	private JButton aceptar_btn;
 	private JTextField txtMontoEnvio;
+	private JButton btnVerIngreso;
 	
 	public VentanaIngreso() {
 		
@@ -223,6 +226,10 @@ public class VentanaIngreso extends JFrame {
 		direccionDefecto_checkBox.setBounds(8, 2, 20, 20);
 		panel.add(direccionDefecto_checkBox);
 		direccionDefecto_checkBox.setBackground(Color.WHITE);
+		
+		btnVerIngreso = new JButton("Imprimir Ingresos");
+		btnVerIngreso.setBounds(544, 337, 130, 23);
+		contentPane.add(btnVerIngreso);
 
 	}
 
@@ -289,5 +296,9 @@ public class VentanaIngreso extends JFrame {
 		Object[][] informacionTabla = {};
 		table.setModel(new DefaultTableModel(informacionTabla, nombreColumnas));
 		txtMontoEnvio.setText("");
+	}
+
+	public JButton getBtnReporteDeIngreso() {
+		return btnVerIngreso;
 	}	
 }

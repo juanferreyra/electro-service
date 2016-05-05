@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import dto.IngresoDTO;
 import dto.ClienteDTO;
+import dto.ImpresionIngresoDTO;
 import dto.MarcaDTO;
 import dto.TipoProductoDTO;
 import dto.IngresoEstadoDTO;
 import dto.IngresoLogDTO;
 import persistencia.dao.ClienteDAO;
+import persistencia.dao.ImpresionIngresoDAO;
 import persistencia.dao.IngresoDAO;
 import persistencia.dao.MarcaDAO;
 import persistencia.dao.TipoProductoDAO;
@@ -21,6 +23,8 @@ public class Ingreso {
 	public MarcaDTO marc;
 	public TipoProductoDTO tipoprod;
 	public ArrayList<IngresoEstadoDTO> logIngresos;
+	
+	private static ImpresionIngresoDAO ingresoStatic;
 	
 	//Recuperacion de datos con DAO's
 	private IngresoDAO ingreso;
@@ -128,4 +132,10 @@ public class Ingreso {
 	public void setLogIngresos(ArrayList<IngresoEstadoDTO> logIngresos) {
 		this.logIngresos = logIngresos;
 	}
+	
+	public ArrayList<ImpresionIngresoDTO> getTodos(){
+		ingresoStatic = new ImpresionIngresoDAO();
+		return ingresoStatic.readAll();
+	}
+
 }

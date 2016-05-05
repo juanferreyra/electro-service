@@ -11,6 +11,7 @@ import dto.MarcaDTO;
 import dto.TipoProductoDTO;
 import modelo.Ingreso;
 import persistencia.dao.ClienteDAO;
+import presentacion.reportes.ReporteIngreso;
 import presentacion.vista.VentanaIngreso;
 
 public class ControladorVentanaIngreso implements ActionListener {
@@ -30,6 +31,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.ventana_ingreso.getBtnCancelar().addActionListener(this);
 		this.ventana_ingreso.getEnvioDomicilio().addActionListener(this);
 		this.ventana_ingreso.getDireccion_default().addActionListener(this);
+		this.ventana_ingreso.getBtnReporteDeIngreso().addActionListener(this);
 		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
 	}
 
@@ -91,7 +93,12 @@ public class ControladorVentanaIngreso implements ActionListener {
 				this.ventana_ingreso.getTxtDireccionAlternativa().setEnabled(false);
 				this.ventana_ingreso.getMontoEnvio().setEnabled(false);
 			}
-		} else if (e.getSource() == this.ventana_ingreso.getBtnAceptar()) {
+		} else if (e.getSource() == this.ventana_ingreso.getBtnReporteDeIngreso()){
+			ReporteIngreso reporte = new ReporteIngreso(ingreso.getTodos());
+			reporte.mostrar();	
+		} else if (e.getSource() == this.ventana_ingreso.getBtnCancelar()) {
+			this.ventana_ingreso.dispose();
+		}else if (e.getSource() == this.ventana_ingreso.getBtnAceptar()) {
 			Boolean error = false;
 			float montoFloat = 0;
 			// verifico todos los campos

@@ -75,7 +75,7 @@ public class ControladorPresupuesto implements ActionListener{
 
 	private void cargarIngreso() {
 		
-		this.ventanaPresupuesto.getNombreProductoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
+		this.ventanaPresupuesto.getNombreProductoTexto_lbl().setText(ingreso.ingr.getDescripcion());
 		this.ventanaPresupuesto.getMarcaTexto_lbl().setText(ingreso.getMarca().getDetalle());;
 		this.ventanaPresupuesto.getDescripcionFalla_txtArea().setText(ingreso.getIngreso().getDescripcion_falla());
 		this.ventanaPresupuesto.getTipoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
@@ -88,9 +88,6 @@ public class ControladorPresupuesto implements ActionListener{
 		for (ComponenteDTO c : listaDeComponetes){
 			this.ventanaPresupuesto.getComponente_ComboBox().addItem(c.getDetalle());
 		}
-		
-		
-		
 		
 	}
 
