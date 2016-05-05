@@ -217,11 +217,11 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				}
 			}
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
-			System.out.println(this.principal.getOrdenesDeTrabajo_table()
-					.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 4));
-
-			// this.cargarAsignacionTecnico_tablaOrdenesTrabajo(nroOrden,
-			// tecnico);
+//			System.out.println(this.principal.getOrdenesDeTrabajo_table()
+//					.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 7));
+//
+//			
+			
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
 
 		}
