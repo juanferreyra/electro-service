@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.IngresoDTO;
@@ -194,19 +195,26 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			controladorVentanaIngreso.inicializar();
 
 		} else if (e.getSource() == this.principal.getPresupuestar_btn()) {
+
 			if (this.principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
 				int nroIngreso = (int) this.principal.getOrdenesDeTrabajo_table()
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
+				String estado = (String) this.principal.getOrdenesDeTrabajo_table()
+						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 8);
+				if (estado.equals("NUEVO")) {
+					// IngresoDTO ingresoDTO = this.ingresoDAO.find(nroIngreso);
 
-				// IngresoDTO ingresoDTO = this.ingresoDAO.find(nroIngreso);
+					Ingreso ing = new Ingreso();
+					ing.setId(nroIngreso);
+					ing.cargarModeloCompleto();
 
-				Ingreso ing = new Ingreso();
-				ing.setId(nroIngreso);
-				ing.cargarModeloCompleto();
-
-				ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-						ing);
-				controladorPresupuesto.inicializar();
+					ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+							ing);
+					controladorPresupuesto.inicializar();
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"No es posible presupuestar el registro seleccionado. Por favor, seleccione una orden en estado 'NUEVO'.");
+				}
 			}
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
 			System.out.println(this.principal.getOrdenesDeTrabajo_table()
