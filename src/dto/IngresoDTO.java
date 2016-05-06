@@ -142,7 +142,7 @@ public class IngresoDTO {
 	}
 
 	public String getMontoEnvioToString() {
-		return envio.toString();
+		return monto_envio + "";
 	}
 
 	public void setTecnico_asignado(int tecnico_asignado) {
