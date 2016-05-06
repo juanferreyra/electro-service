@@ -26,10 +26,10 @@ public class ReporteIngreso
     {
     	//Hardcodeado
 		Map<String, Object> parametersMap = new HashMap<String, Object>();
-		parametersMap.put("Fecha", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));		
+		parametersMap.put("Fecha", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
     	try		{
     		
-    		this.reporte = (JasperReport) JRLoader.loadObjectFromFile("ImpresionIngreso2.jasper");
+    		this.reporte = (JasperReport) JRLoader.loadObjectFromFile("ImpresionIngreso.jasper");
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap, 
 					new JRBeanCollectionDataSource(todos));
 		}

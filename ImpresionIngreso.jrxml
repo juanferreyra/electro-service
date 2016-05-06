@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-05-06T15:35:29 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ImpresionIngreso" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12a0abd7-5c3f-4ef0-bf9e-b71189e32dec">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="electroServiceAdapter"/>
 	<queryString>
@@ -57,9 +58,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="650" splitType="Stretch">
+		<band height="718" splitType="Stretch">
 			<line>
-				<reportElement x="-20" y="325" width="581" height="1" uuid="cdb8c094-6513-41ef-877d-859193147f3e"/>
+				<reportElement x="-13" y="325" width="581" height="1" uuid="cdb8c094-6513-41ef-877d-859193147f3e"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
@@ -293,12 +294,12 @@
 				<text><![CDATA[Fecha :]]></text>
 			</staticText>
 			<image>
-				<reportElement x="10" y="340" width="220" height="95" uuid="4f884e11-7548-4332-a36a-36769b5e4658"/>
-				<imageExpression><![CDATA["file:/C:/Users/juanc/workspace/icons/src/logo.png"]]></imageExpression>
+				<reportElement x="10" y="0" width="180" height="90" uuid="a52cff35-bfb6-47a0-ac4d-f210a307bfc0"/>
+				<imageExpression><![CDATA["src/presentacion/vista/logo.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="15" y="-5" width="220" height="95" uuid="ac459b87-4377-417b-ba71-7d6f3a325795"/>
-				<imageExpression><![CDATA["file:/C:/Users/juanc/workspace/icons/src/logo.png"]]></imageExpression>
+				<reportElement x="15" y="340" width="180" height="90" uuid="b03d311c-14df-41df-9633-a0d8f6c76ed4"/>
+				<imageExpression><![CDATA["src/presentacion/vista/logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</detail>

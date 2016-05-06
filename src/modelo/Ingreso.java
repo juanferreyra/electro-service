@@ -135,7 +135,7 @@ public class Ingreso {
 	
 	public ArrayList<ImpresionIngresoDTO> getTodos(){
 		ingresoStatic = new ImpresionIngresoDAO();
-		return ingresoStatic.readAll();
+		return ingresoStatic.find(this.ingr.getId());
 	}
 
 }
