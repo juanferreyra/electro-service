@@ -40,6 +40,8 @@ public class ControladorVentanaIngreso implements ActionListener {
 			ingreso.cargarModeloCompleto();
 			this.cargarVentana();
 			llenarTablaCliente(ingreso.getCliente());
+			this.ventana_ingreso.getBtnAceptar().setVisible(false);
+			this.ventana_ingreso.getBtnCancelar().setVisible(false);
 		} else {
 			this.ventana_ingreso.getBtnReporteDeIngreso().setVisible(false);
 			this.llenarComboMarcas();
