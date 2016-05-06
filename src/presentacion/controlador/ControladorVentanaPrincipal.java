@@ -36,6 +36,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal = principal;
 		this.principal.getIngresarProducto_btn().addActionListener(this);
 		this.principal.getPresupuestar_btn().addActionListener(this);
+		this.principal.getVerIngreso_btn().addActionListener(this);
 		this.perfil = this.principal.getUser().getPerfilDTO().getPerfil();
 
 	}
@@ -217,13 +218,27 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				}
 			}
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
-//			System.out.println(this.principal.getOrdenesDeTrabajo_table()
-//					.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 7));
-//
-//			
-			
+			// System.out.println(this.principal.getOrdenesDeTrabajo_table()
+			// .getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(),
+			// 7));
+			//
+			//
+
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
 
+		} else if (e.getSource() == this.principal.getVerIngreso_btn()) {
+			if (this.principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
+				int nroIngreso = (int) this.principal.getOrdenesDeTrabajo_table()
+						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
+				IngresoDTO ingresoDTO = ingresoDAO.find(nroIngreso);
+				Ingreso ingreso = new Ingreso();
+				ingreso.setId(ingresoDTO.getId());
+
+				ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(
+						new VentanaIngreso(), ingreso, this);
+
+				controladorVentanaIngreso.inicializar();
+			}
 		}
 	}
 

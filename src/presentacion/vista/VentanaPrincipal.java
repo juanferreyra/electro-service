@@ -28,6 +28,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton asignarOrden_btn;
 	private JButton reparacion_btn;
 	private JMenuBar menuBar;
+	private JButton verIngreso_btn;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal(UsuarioDTO user) {
@@ -80,7 +81,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(ordenesDeTrabajo_scrollPane);
 
 		ingresarProducto_btn = new JButton("Ingresar Producto");
-		ingresarProducto_btn.setBounds(126, 446, 137, 23);
+		ingresarProducto_btn.setBounds(157, 446, 137, 23);
 		contentPane.add(ingresarProducto_btn);
 
 		presupuestar_btn = new JButton("Presupuestar");
@@ -98,6 +99,10 @@ public class VentanaPrincipal extends JFrame {
 		label.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
 		label.setBounds(10, 11, 240, 140);
 		contentPane.add(label);
+
+		verIngreso_btn = new JButton("Ver Ingreso");
+		verIngreso_btn.setBounds(10, 446, 137, 23);
+		contentPane.add(verIngreso_btn);
 	}
 
 	public UsuarioDTO getUser() {
@@ -127,4 +132,9 @@ public class VentanaPrincipal extends JFrame {
 	public JTable getOrdenesDeTrabajo_table() {
 		return this.ordenesDeTrabajo_table;
 	}
+
+	public JButton getVerIngreso_btn() {
+		return this.verIngreso_btn;
+	}
+
 }
