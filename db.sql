@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: electro_service_db
+-- Host: localhost    Database: 20161_service_g2
 -- ------------------------------------------------------
 -- Server version	5.7.11-log
 

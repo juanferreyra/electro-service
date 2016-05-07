@@ -24,16 +24,16 @@ public class Conexion implements Serializable {
             try {
                 Class.forName(driver).newInstance();
                 conexion = DriverManager.getConnection(
-                        "jdbc:mysql://" + conf.getUrl() + ":" + conf.getPuerto() + "/electro_service_db",
+                        "jdbc:mysql://" + conf.getUrl() + ":" + conf.getPuerto() + "/20161_service_g2",
                         "" + conf.getUsuario() + "", "" + conf.getContrasena() + "");
             } catch (Exception e) {
  
                 // SI BD NO EXISTE
-                if (e.getMessage().equals("Unknown database 'electro_service_db'")) {
+                if (e.getMessage().equals("Unknown database '20161_service_g2'")) {
                     try {
                         // CREO BASE DE DATOS
                         CargadorDataBase cargar = new CargadorDataBase(conf.getUrl(), conf.getPuerto(),
-                                "electro_service_db", conf.getUsuario(), conf.getContrasena());
+                                "20161_service_g2", conf.getUsuario(), conf.getContrasena());
  
                         Boolean cargo = cargar.crearDB();
                         cargar.cargar();
@@ -41,7 +41,7 @@ public class Conexion implements Serializable {
                         if (cargo) {
                             Class.forName(driver).newInstance();
                             conexion = DriverManager.getConnection(
-                                    "jdbc:mysql://" + conf.getUrl() + ":" + conf.getPuerto() + "/electro_service_db",
+                                    "jdbc:mysql://" + conf.getUrl() + ":" + conf.getPuerto() + "/20161_service_g2",
                                     "" + conf.getUsuario() + "", "" + conf.getContrasena() + "");
                         }
                     } catch (Exception e2) {
