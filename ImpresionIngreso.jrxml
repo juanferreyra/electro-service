@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-06T15:35:29 -->
+<!-- 2016-05-06T18:29:51 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ImpresionIngreso" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12a0abd7-5c3f-4ef0-bf9e-b71189e32dec">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="electroServiceAdapter"/>
 	<queryString>
@@ -294,12 +294,12 @@
 				<text><![CDATA[Fecha :]]></text>
 			</staticText>
 			<image>
-				<reportElement x="10" y="0" width="180" height="90" uuid="a52cff35-bfb6-47a0-ac4d-f210a307bfc0"/>
-				<imageExpression><![CDATA["src/presentacion/vista/logo.png"]]></imageExpression>
+				<reportElement x="2" y="0" width="178" height="100" uuid="b787203f-fdf5-4f62-bb35-cf919f9dd402"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="15" y="340" width="180" height="90" uuid="b03d311c-14df-41df-9633-a0d8f6c76ed4"/>
-				<imageExpression><![CDATA["src/presentacion/vista/logo.png"]]></imageExpression>
+				<reportElement x="10" y="340" width="178" height="100" uuid="2c5e943e-b49f-42a8-a633-583d22138ee0"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
 			</image>
 		</band>
 	</detail>
