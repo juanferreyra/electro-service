@@ -13,6 +13,7 @@ public class PresupuestoRepuestoDAO {
 	private static final String insert = "INSERT INTO presupuesto_repuestos (id,idpresupuesto,idrepuesto,"
 			+ "cantidad,fecha_creacion,habilitado) VALUES (?,?,?,?,now(),true)";
 	
+	@SuppressWarnings("unused")
 	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
 	
 	private static final String readall = "SELECT * FROM ingreso WHERE habilitado=true";
@@ -26,6 +27,7 @@ public class PresupuestoRepuestoDAO {
 	public ArrayList<PresupuestoRepuestoDTO> readAll() {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
+		@SuppressWarnings("unused")
 		ResultSet resultSet;
 		ArrayList<PresupuestoRepuestoDTO> presupuestoRepuesto = new ArrayList<PresupuestoRepuestoDTO>();
 
@@ -96,6 +98,7 @@ public class PresupuestoRepuestoDAO {
 	public PresupuestoRepuestoDTO find(int id) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
+		@SuppressWarnings("unused")
 		ResultSet resultSet;
 		PresupuestoRepuestoDTO ingreso = null;
 

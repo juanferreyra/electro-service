@@ -44,7 +44,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	public void iniciar() {
 		ingresoDAO = new IngresoDAO();
 		clienteDAO = new ClienteDAO();
-		presupuestoDAO = new PresupuestoDAO();
+		setPresupuestoDAO(new PresupuestoDAO());
 		estadoDAO = new EstadoDAO();
 		usuarioDAO = new UsuarioDAO();
 		this.adecuarVentanaPrincipal();
@@ -240,6 +240,14 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				controladorVentanaIngreso.inicializar();
 			}
 		}
+	}
+
+	public PresupuestoDAO getPresupuestoDAO() {
+		return presupuestoDAO;
+	}
+
+	public void setPresupuestoDAO(PresupuestoDAO presupuestoDAO) {
+		this.presupuestoDAO = presupuestoDAO;
 	}
 
 }

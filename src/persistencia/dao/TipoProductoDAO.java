@@ -39,7 +39,7 @@ public class TipoProductoDAO
 			}
 			finally //Se ejecuta siempre
 			{
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			return false;
 		}
@@ -62,7 +62,7 @@ public class TipoProductoDAO
 			}
 			finally //Se ejecuta siempre
 			{
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			return false;
 		}
@@ -88,7 +88,7 @@ public class TipoProductoDAO
 			}
 			finally //Se ejecuta siempre
 			{
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			
 			return tipos_productos;
@@ -114,7 +114,7 @@ public class TipoProductoDAO
 			}
 			finally //Se ejecuta siempre 
 			{
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			return false;
 		}
@@ -139,7 +139,7 @@ public class TipoProductoDAO
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			return tipo_producto;
 		}

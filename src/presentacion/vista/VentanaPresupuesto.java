@@ -1,7 +1,6 @@
 package presentacion.vista;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,18 +8,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
 import com.toedter.calendar.JDateChooser;
-
-import dto.UsuarioDTO;
-
 import java.awt.Color;
 import java.awt.Font;
-
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -28,10 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.SystemColor;
-
 import javax.swing.ScrollPaneConstants;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class VentanaPresupuesto extends JFrame {
 

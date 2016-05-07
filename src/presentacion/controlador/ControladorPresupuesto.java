@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -34,6 +33,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private float suma = 0;
 	private float sumatotal = 0;
 	private float  manoDeObra = 0;
+	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso) {

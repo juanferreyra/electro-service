@@ -33,6 +33,7 @@ public class VentanaLogin extends JFrame {
 
 		String path = "/logo.png";
 		URL url = this.getClass().getResource(path);
+		@SuppressWarnings("unused")
 		ImageIcon icon = new ImageIcon(url);
 
 		JLabel logo_lbl = new JLabel("");

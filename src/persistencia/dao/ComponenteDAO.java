@@ -42,7 +42,7 @@ public class ComponenteDAO {
 		}
 		finally //Se ejecuta siempre
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return false;
 	}
@@ -65,7 +65,7 @@ public class ComponenteDAO {
 		}
 		finally //Se ejecuta siempre
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return false;
 	}
@@ -96,7 +96,7 @@ public class ComponenteDAO {
 		}
 		finally //Se ejecuta siempre
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		
 		return componentes;
@@ -122,7 +122,7 @@ public class ComponenteDAO {
 		}
 		finally //Se ejecuta siempre 
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		return false;
 	}
@@ -154,7 +154,7 @@ public class ComponenteDAO {
 		}
 		finally //Se ejecuta siempre
 		{
-			conexion.cerrarConexion();
+			Conexion.cerrarConexion();
 		}
 		
 		return componentes;

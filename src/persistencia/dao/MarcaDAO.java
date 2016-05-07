@@ -40,7 +40,7 @@ public class MarcaDAO
 			}
 			finally //Se ejecuta siempre
 			{
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			return false;
 		}
@@ -63,7 +63,7 @@ public class MarcaDAO
 			}
 			finally //Se ejecuta siempre
 			{
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			return false;
 		}
@@ -90,7 +90,7 @@ public class MarcaDAO
 			}
 			finally //Se ejecuta siempre
 			{
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			
 			return marcas;
@@ -116,7 +116,7 @@ public class MarcaDAO
 			}
 			finally //Se ejecuta siempre 
 			{
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			return false;
 		}
@@ -141,7 +141,7 @@ public class MarcaDAO
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
-				conexion.cerrarConexion();
+				Conexion.cerrarConexion();
 			}
 			return marca;
 		}

@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dto.EstadoDTO;
-import dto.PresupuestoDTO;
 import persistencia.conexion.Conexion;
 
 public class EstadoDAO {

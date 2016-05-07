@@ -22,7 +22,7 @@ public class PresupuestoDTO {
 		this.descripcionBreve = descripcionBreve;
 		this.descripcionTecnica = descripcionTecnica;
 		this.importeManoObra = importeManoObra;
-		this.fechacreacion = fechaCreacion;
+		this.setFechacreacion(fechaCreacion);
 		this.fechavencimiento = fechaVencimiento;
 		this.idUsuario = idUsusario;
 		this.habilitado = habilitado;
@@ -98,6 +98,14 @@ public class PresupuestoDTO {
 
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
+	}
+
+	public Date getFechacreacion() {
+		return fechacreacion;
+	}
+
+	public void setFechacreacion(Date fechacreacion) {
+		this.fechacreacion = fechacreacion;
 	}
 
 }

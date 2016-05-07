@@ -19,6 +19,7 @@ public class PresupuestoDAO {
 
 	private static final String buscarPresupuesto = "SELECT id FROM presupuesto WHERE idingreso  = ?";
 	
+	@SuppressWarnings("unused")
 	private static final String find = " ";
 
 	private Conexion conexion = Conexion.getConexion();
@@ -26,6 +27,7 @@ public class PresupuestoDAO {
 	public ArrayList<PresupuestoDTO> readAll() {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
+		@SuppressWarnings("unused")
 		ResultSet resultSet;
 		ArrayList<PresupuestoDTO> localidades = new ArrayList<PresupuestoDTO>();
 
