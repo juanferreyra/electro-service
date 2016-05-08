@@ -1,6 +1,7 @@
 
 package presentacion.controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -210,8 +211,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				// Preguntamos si hicimos clic sobre la celda que contiene el
 				// botón "Ver Orden"
 				if (principal.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JButton.class)
-						&& principal.getOrdenesDeTrabajo_table().getModel().getColumnName(columna)
-								.equals("Orden")) {
+						&& principal.getOrdenesDeTrabajo_table().getModel().getColumnName(columna).equals("Orden")) {
 					if (principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
 						int nroIngreso = (int) principal.getOrdenesDeTrabajo_table()
 								.getValueAt(principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);

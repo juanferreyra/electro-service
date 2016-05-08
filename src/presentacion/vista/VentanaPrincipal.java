@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -59,20 +60,18 @@ public class VentanaPrincipal extends JFrame {
 
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		ordenesDeTrabajo_table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Orden", "Número", "Fecha", "Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico Asignado", "Estado"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				JButton.class, Integer.class, String.class, String.class, String.class, Boolean.class, JButton.class, String.class, String.class
-			};
+		ordenesDeTrabajo_table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Orden", "Número",
+				"Fecha", "Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico Asignado", "Estado" }) {
+			Class[] columnTypes = new Class[] { JButton.class, Integer.class, String.class, String.class, String.class,
+					Boolean.class, JButton.class, String.class, String.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+
 		});
+		ordenesDeTrabajo_table.setDefaultRenderer(Object.class, new FormatoTablaOrdenesTrabajo());
+
 		ordenesDeTrabajo_table.getColumnModel().getColumn(0).setPreferredWidth(52);
 		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setPreferredWidth(80);
 		ordenesDeTrabajo_table.getColumnModel().getColumn(2).setPreferredWidth(80);
@@ -85,6 +84,9 @@ public class VentanaPrincipal extends JFrame {
 
 		ordenesDeTrabajo_table.getTableHeader().setResizingAllowed(false);
 		ordenesDeTrabajo_table.getTableHeader().setReorderingAllowed(false);
+
+		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setCellRenderer(new FormatoTablaOrdenesTrabajo());
+		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setCellRenderer(new FormatoTablaOrdenesTrabajo());
 
 		ordenesDeTrabajo_table.setDefaultRenderer(JButton.class, new TableCellRenderer() {
 			@Override
