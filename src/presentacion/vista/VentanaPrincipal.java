@@ -1,6 +1,5 @@
 package presentacion.vista;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,12 +9,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Rectangle;
+
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import dto.UsuarioDTO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -28,14 +32,13 @@ public class VentanaPrincipal extends JFrame {
 	private JButton asignarOrden_btn;
 	private JButton reparacion_btn;
 	private JMenuBar menuBar;
-	private JButton verIngreso_btn;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal(UsuarioDTO user) {
 		this.user = user;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1044, 518);
+		setBounds(100, 100, 1044, 546);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -48,51 +51,73 @@ public class VentanaPrincipal extends JFrame {
 
 		JLabel ordenesDeTrabajo_lbl = new JLabel("<html><b>\u00D3rdenes de Trabajo</b></html>");
 		ordenesDeTrabajo_lbl.setBounds(10, 43, 1005, 36);
-		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(ordenesDeTrabajo_lbl);
 
 		// TABLA PRINCIPAL DEL SISTEMA
 
 		ordenesDeTrabajo_table = new JTable();
-		ordenesDeTrabajo_table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "Nro.", "Fecha",
-				"Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico Asignado", "Estado" }) {
-			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] { JButton.class, Integer.class, String.class, String.class, String.class,
-					Boolean.class, JButton.class, String.class, String.class };
-
-			@SuppressWarnings({ "unchecked", "rawtypes" })
+		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		ordenesDeTrabajo_table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Orden", "Número", "Fecha", "Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico Asignado", "Estado"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				JButton.class, Integer.class, String.class, String.class, String.class, Boolean.class, JButton.class, String.class, String.class
+			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
+		});
+		ordenesDeTrabajo_table.getColumnModel().getColumn(0).setPreferredWidth(52);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setPreferredWidth(80);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(2).setPreferredWidth(80);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(3).setPreferredWidth(200);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(4).setPreferredWidth(200);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setPreferredWidth(45);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(6).setPreferredWidth(80);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(7).setPreferredWidth(200);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(8).setPreferredWidth(50);
 
-			public boolean isCellEditable(int row, int column) {
-				return false;
+		ordenesDeTrabajo_table.getTableHeader().setResizingAllowed(false);
+		ordenesDeTrabajo_table.getTableHeader().setReorderingAllowed(false);
+
+		ordenesDeTrabajo_table.setDefaultRenderer(JButton.class, new TableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable jtable, Object objeto, boolean estaSeleccionado,
+					boolean tieneElFoco, int fila, int columna) {
+
+				return (Component) objeto;
 			}
 		});
+
 		ordenesDeTrabajo_table.setBounds(new Rectangle(0, 0, 992, 301));
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
 		ordenesDeTrabajo_scrollPane.add(ordenesDeTrabajo_table);
 		ordenesDeTrabajo_scrollPane.setViewportView(ordenesDeTrabajo_table);
 
 		contentPane.add(ordenesDeTrabajo_scrollPane);
 
-		ingresarProducto_btn = new JButton("Ingresar Producto");
-		ingresarProducto_btn.setBounds(157, 446, 137, 23);
+		ingresarProducto_btn = new JButton("<html><center>Ingresar <br>\r\nOrden de Trabajo</center></html>");
+		ingresarProducto_btn.setBounds(10, 461, 158, 36);
 		contentPane.add(ingresarProducto_btn);
 
 		presupuestar_btn = new JButton("Presupuestar");
-		presupuestar_btn.setBounds(426, 446, 137, 23);
+		presupuestar_btn.setBounds(587, 474, 137, 23);
 		contentPane.add(presupuestar_btn);
 
 		asignarOrden_btn = new JButton("Asignar Orden");
-		asignarOrden_btn.setBounds(573, 446, 137, 23);
+		asignarOrden_btn.setBounds(734, 474, 137, 23);
 		contentPane.add(asignarOrden_btn);
 		reparacion_btn = new JButton("Reparaci\u00F3n");
-		reparacion_btn.setBounds(720, 446, 137, 23);
+		reparacion_btn.setBounds(881, 474, 137, 23);
 		contentPane.add(reparacion_btn);
 
 		JLabel label = new JLabel("");
@@ -100,9 +125,6 @@ public class VentanaPrincipal extends JFrame {
 		label.setBounds(10, 11, 240, 140);
 		contentPane.add(label);
 
-		verIngreso_btn = new JButton("Ver Ingreso");
-		verIngreso_btn.setBounds(10, 446, 137, 23);
-		contentPane.add(verIngreso_btn);
 	}
 
 	public UsuarioDTO getUser() {
@@ -131,10 +153,6 @@ public class VentanaPrincipal extends JFrame {
 
 	public JTable getOrdenesDeTrabajo_table() {
 		return this.ordenesDeTrabajo_table;
-	}
-
-	public JButton getVerIngreso_btn() {
-		return this.verIngreso_btn;
 	}
 
 }
