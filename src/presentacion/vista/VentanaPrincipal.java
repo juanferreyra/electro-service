@@ -5,13 +5,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
+
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Rectangle;
 
@@ -19,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import dto.UsuarioDTO;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -33,99 +38,120 @@ public class VentanaPrincipal extends JFrame {
 	private JButton asignarOrden_btn;
 	private JButton reparacion_btn;
 	private JMenuBar menuBar;
+	private FormatoTablaOrdenesTrabajo formatoTabla;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal(UsuarioDTO user) {
+		contentPane = new JPanel();
 		this.user = user;
-
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1044, 546);
-		contentPane = new JPanel();
+		setMinimumSize(new Dimension(1046, 546));
+
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		setLocationRelativeTo(null);
+		contentPane.setLayout(new BorderLayout());
+
+		JPanel contenedorPanelArriba = new JPanel(new BorderLayout());
+		FlowLayout flowPanelArriba = new FlowLayout();
+		JPanel subpanelArriba = new JPanel(flowPanelArriba);
 
 		menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 1028, 21);
-		contentPane.add(menuBar);
+		menuBar.setBounds(0, 0, 1028, 50);
 
-		JLabel ordenesDeTrabajo_lbl = new JLabel("<html><b>\u00D3rdenes de Trabajo</b></html>");
+		JLabel labelLOGO = new JLabel("");
+		labelLOGO.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
+		labelLOGO.setBounds(10, 11, 240, 140);
+
+		JLabel ordenesDeTrabajo_lbl = new JLabel("<html>\u00D3rdenes de Trabajo</html>");
 		ordenesDeTrabajo_lbl.setBounds(10, 43, 1005, 36);
 		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(ordenesDeTrabajo_lbl);
+
+		flowPanelArriba.setAlignment(FlowLayout.LEADING);
+
+		subpanelArriba.add(labelLOGO);
+		subpanelArriba.add(ordenesDeTrabajo_lbl);
+
+		contenedorPanelArriba.add(subpanelArriba, BorderLayout.SOUTH);
+		contenedorPanelArriba.add(menuBar, BorderLayout.NORTH);
+		contentPane.add(contenedorPanelArriba, BorderLayout.NORTH);
 
 		// TABLA PRINCIPAL DEL SISTEMA
 
 		ordenesDeTrabajo_table = new JTable();
-		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		ordenesDeTrabajo_table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Orden", "Número",
-				"Fecha", "Producto", "Cliente", "Env\u00EDo", "Presupuesto", "T\u00E9cnico Asignado", "Estado" }) {
-			Class[] columnTypes = new Class[] { JButton.class, Integer.class, String.class, String.class, String.class,
-					Boolean.class, JButton.class, String.class, String.class };
+		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
+		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número", "Fecha",
+				"Producto", "Cliente", "Env\u00EDo", "", "T\u00E9cnico Asignado", "Estado" }) {
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] { JLabel.class, Integer.class, String.class, String.class, String.class,
+					String.class, JLabel.class, String.class, String.class };
+
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 
-		});
-		ordenesDeTrabajo_table.setDefaultRenderer(Object.class, new FormatoTablaOrdenesTrabajo());
-
-		ordenesDeTrabajo_table.getColumnModel().getColumn(0).setPreferredWidth(52);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setPreferredWidth(80);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(2).setPreferredWidth(80);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(3).setPreferredWidth(200);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(4).setPreferredWidth(200);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setPreferredWidth(45);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(6).setPreferredWidth(80);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(7).setPreferredWidth(200);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(8).setPreferredWidth(50);
-
-		ordenesDeTrabajo_table.getTableHeader().setResizingAllowed(false);
-		ordenesDeTrabajo_table.getTableHeader().setReorderingAllowed(false);
-
-		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setCellRenderer(new FormatoTablaOrdenesTrabajo());
-		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setCellRenderer(new FormatoTablaOrdenesTrabajo());
-
-		ordenesDeTrabajo_table.setDefaultRenderer(JButton.class, new TableCellRenderer() {
 			@Override
-			public Component getTableCellRendererComponent(JTable jtable, Object objeto, boolean estaSeleccionado,
-					boolean tieneElFoco, int fila, int columna) {
+			public boolean isCellEditable(int fila, int columna) {
 
-				return (Component) objeto;
+				return false;
+			}
+		};
+		ordenesDeTrabajo_table.setModel(modelo);
+
+		setearPropiedadesDeTabla();
+
+		ordenesDeTrabajo_table.setDefaultRenderer(JLabel.class, new TableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean selected,
+					boolean focused, int row, int column) {
+				return (Component) value;
 			}
 		});
 
 		ordenesDeTrabajo_table.setBounds(new Rectangle(0, 0, 992, 301));
+
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
 		ordenesDeTrabajo_scrollPane.add(ordenesDeTrabajo_table);
 		ordenesDeTrabajo_scrollPane.setViewportView(ordenesDeTrabajo_table);
+		contentPane.add(ordenesDeTrabajo_scrollPane, BorderLayout.CENTER);
 
-		contentPane.add(ordenesDeTrabajo_scrollPane);
+		JPanel panelDeBotones = new JPanel(new FlowLayout());
+		contentPane.add(panelDeBotones, BorderLayout.SOUTH);
 
-		ingresarProducto_btn = new JButton("<html><center>Ingresar <br>\r\nOrden de Trabajo</center></html>");
+		ingresarProducto_btn = new JButton("<html><center>Ingresar Producto</center></html>");
 		ingresarProducto_btn.setBounds(10, 461, 158, 36);
-		contentPane.add(ingresarProducto_btn);
+		panelDeBotones.add(ingresarProducto_btn);
 
 		presupuestar_btn = new JButton("Presupuestar");
 		presupuestar_btn.setBounds(587, 474, 137, 23);
-		contentPane.add(presupuestar_btn);
+		panelDeBotones.add(presupuestar_btn);
 
 		asignarOrden_btn = new JButton("Asignar Orden");
 		asignarOrden_btn.setBounds(734, 474, 137, 23);
-		contentPane.add(asignarOrden_btn);
+		panelDeBotones.add(asignarOrden_btn);
+
 		reparacion_btn = new JButton("Reparaci\u00F3n");
 		reparacion_btn.setBounds(881, 474, 137, 23);
-		contentPane.add(reparacion_btn);
+		panelDeBotones.add(reparacion_btn);
 
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
-		label.setBounds(10, 11, 240, 140);
-		contentPane.add(label);
+	}
+
+	private void setearPropiedadesDeTabla() {
+		ordenesDeTrabajo_table.getColumnModel().getColumn(0).setMaxWidth(10);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(6).setMaxWidth(10);
+		formatoTabla = new FormatoTablaOrdenesTrabajo();
+		ordenesDeTrabajo_table.setDefaultRenderer(Object.class, formatoTabla);
+		ordenesDeTrabajo_table.getTableHeader().setResizingAllowed(false);
+		ordenesDeTrabajo_table.getTableHeader().setReorderingAllowed(false);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setCellRenderer(formatoTabla);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setCellRenderer(formatoTabla);
 
 	}
 
