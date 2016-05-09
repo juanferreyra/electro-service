@@ -1,12 +1,18 @@
 
 package presentacion.controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,7 +33,6 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	private String perfil;
 	private IngresoDAO ingresoDAO;
 	private ClienteDAO clienteDAO;
-	private PresupuestoDAO presupuestoDAO;
 	private EstadoDAO estadoDAO;
 	private UsuarioDAO usuarioDAO;
 
@@ -36,15 +41,14 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal = principal;
 		this.principal.getIngresarProducto_btn().addActionListener(this);
 		this.principal.getPresupuestar_btn().addActionListener(this);
-		this.principal.getVerIngreso_btn().addActionListener(this);
 		this.perfil = this.principal.getUser().getPerfilDTO().getPerfil();
+		this.agregarMouseListenerTabla(this);
 
 	}
 
 	public void iniciar() {
 		ingresoDAO = new IngresoDAO();
 		clienteDAO = new ClienteDAO();
-		setPresupuestoDAO(new PresupuestoDAO());
 		estadoDAO = new EstadoDAO();
 		usuarioDAO = new UsuarioDAO();
 		this.adecuarVentanaPrincipal();
@@ -52,25 +56,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	}
 
-	public void cargarOrden_tablaOrdenesTrabajo(Ingreso ingreso) {
-		/**
-		 * Estructura de la tabla ordenes de trabajo:
-		 * ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/
-		 * tecnico_asignado/estado
-		 **/
-
-	}
-
 	public void cargarAsignacionTecnico_tablaOrdenesTrabajo(int nroOrden, String tecnico) {
-		/**
-		 * Estructura de la tabla ordenes de trabajo:
-		 * ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/
-		 * tecnico_asignado/estado
-		 **/
-
-	}
-
-	public void cargarEstado_tablaOrdenesTrabajo(int nroOrden, String estado) {
 		/**
 		 * Estructura de la tabla ordenes de trabajo:
 		 * ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/
@@ -109,24 +95,10 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	}
 
-	public void eliminarFilaSeleccionada_tablaOrdenesTrabajo() {
-		int fila = this.principal.getOrdenesDeTrabajo_table().getSelectedRow();
-
-		this.eliminarDatosAsociados(fila);
-
-		DefaultTableModel modelo = (DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel();
-		modelo.removeRow(fila);
-	}
-
-	private void eliminarDatosAsociados(int fila) {
-		// Eliminar ingreso,presupuesto. Es decir, cambiar el estado habilitado.
-	}
-
 	public void cargar_tablaOrdenesTrabajo() {
 		// Consigo todos los ingresos y genero las filas
 		ArrayList<IngresoDTO> ingresos = ingresoDAO.readAll();
 		ObtenerFilas(ingresos);
-
 	}
 
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
@@ -138,24 +110,26 @@ public class ControladorVentanaPrincipal implements ActionListener {
 						+ usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getApellido();
 
 			}
-			this.cargarFila(i, new JButton(), ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(),
-					ingresos.get(i).getDescripcion(), clienteDAO.find(ingresos.get(i).getIdcliente()).getNombre(),
-					ingresos.get(i).getEnvio(), new JButton(), nombreCompletoTecnicoAsignado,
-					estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
+			this.cargarFila(i, new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
+					ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(), ingresos.get(i).getDescripcion(),
+					clienteDAO.find(ingresos.get(i).getIdcliente()).getNombre(),
+					(ingresos.get(i).getEnvio()) ? "SI" : "NO",
+					new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
+					nombreCompletoTecnicoAsignado, estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
 		}
 	}
 
-	private void cargarFila(int fila, JButton botonIngreso, int id, Date fecha, String descripcion, String cliente,
-			Boolean envio, JButton botonPresupuesto, String tecnico_asignado, String estado) {
+	private void cargarFila(int fila, JLabel botonIngreso, int id, Date fecha, String descripcion, String cliente,
+			String envio, JLabel botonPresupuesto, String tecnico_asignado, String estado) {
 
 		Object[] ingreso = new Object[9];
-		ingreso[0] = (JButton) botonIngreso;
+		ingreso[0] = (JLabel) botonIngreso;
 		ingreso[1] = id;
 		ingreso[2] = fecha;
 		ingreso[3] = descripcion;
 		ingreso[4] = cliente;
 		ingreso[5] = envio;
-		ingreso[6] = (JButton) botonPresupuesto;
+		ingreso[6] = (JLabel) botonPresupuesto;
 		ingreso[7] = tecnico_asignado;
 		ingreso[8] = estado;
 
@@ -166,6 +140,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				|| estado.equals("AVISO DE RETIRO") || estado.equals("RETIRADO") || estado.equals("PRESUPUESTADO"))) {// HARDCODEO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
+
 		} else if (this.perfil.equals("TECNICO") && (estado.equals("NUEVO") || estado.equals("ACEPTADO")
 				|| estado.equals("EN REPARACION") || estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO"))) {// HARDCODEO
 
@@ -189,6 +164,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		if (e.getSource() == this.principal.getIngresarProducto_btn()) {
 			ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(new VentanaIngreso(),
 					new Ingreso(), this);
@@ -203,7 +179,6 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				String estado = (String) this.principal.getOrdenesDeTrabajo_table()
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 8);
 				if (estado.equals("NUEVO")) {
-					// IngresoDTO ingresoDTO = this.ingresoDAO.find(nroIngreso);
 
 					Ingreso ing = new Ingreso();
 					ing.setId(nroIngreso);
@@ -218,36 +193,45 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				}
 			}
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
-			// System.out.println(this.principal.getOrdenesDeTrabajo_table()
-			// .getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(),
-			// 7));
-			//
-			//
 
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
 
-		} else if (e.getSource() == this.principal.getVerIngreso_btn()) {
-			if (this.principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
-				int nroIngreso = (int) this.principal.getOrdenesDeTrabajo_table()
-						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
-				IngresoDTO ingresoDTO = ingresoDAO.find(nroIngreso);
-				Ingreso ingreso = new Ingreso();
-				ingreso.setId(ingresoDTO.getId());
-
-				ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(
-						new VentanaIngreso(), ingreso, this);
-
-				controladorVentanaIngreso.inicializar();
-			}
 		}
 	}
 
-	public PresupuestoDAO getPresupuestoDAO() {
-		return presupuestoDAO;
-	}
+	private void agregarMouseListenerTabla(ControladorVentanaPrincipal controladorVentanaPrincipal) {
+		this.principal.getOrdenesDeTrabajo_table().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int fila = principal.getOrdenesDeTrabajo_table().rowAtPoint(e.getPoint());
+				int columna = principal.getOrdenesDeTrabajo_table().columnAtPoint(e.getPoint());
 
-	public void setPresupuestoDAO(PresupuestoDAO presupuestoDAO) {
-		this.presupuestoDAO = presupuestoDAO;
+				// Preguntamos si hicimos clic sobre la celda que contiene el
+				// botón "Ver Orden"
+				if (principal.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JLabel.class)
+						&& columna == 0) {
+					if (principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
+						int nroIngreso = (int) principal.getOrdenesDeTrabajo_table()
+								.getValueAt(principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
+						IngresoDTO ingresoDTO = ingresoDAO.find(nroIngreso);
+						Ingreso ingreso = new Ingreso();
+						ingreso.setId(ingresoDTO.getId());
+
+						ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(
+								new VentanaIngreso(), ingreso, controladorVentanaPrincipal);
+
+						controladorVentanaIngreso.inicializar();
+					}
+				}
+				// Preguntamos si hicimos clic sobre la celda que contiene el
+				// botón "Presupuesto"
+				if (principal.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JLabel.class)
+						&& columna == 6) {
+					JOptionPane.showMessageDialog(null, "Presupuesto");
+				}
+			}
+		});
+
 	}
 
 }
