@@ -13,56 +13,56 @@ public class PresupuestoDAO {
 	static final String insert = "INSERT INTO presupuesto (id,idingreso,descripcion_breve,"
 			+ "descripcion_tecnica,importe_mano_obra,fecha_creacion,fecha_vencimiento,idusuario,habilitado) VALUES (?,?,?,?,?,now(),?,?,true)";
 
-	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
+	private static final String delete = "UPDATE presupuesto SET habilitado='0' WHERE id= ?;";
 
-	private static final String readall = "SELECT * FROM ingreso WHERE habilitado=true";
+	private static final String readall = "SELECT * FROM presupuesto WHERE habilitado=true";
 
-	private static final String buscarPresupuesto = "SELECT id FROM presupuesto WHERE idingreso  = ?";
+	private static final String buscarPresupuesto = "SELECT id FROM presupuesto WHERE idingreso  = ? and habilitado = true";
 	
 	@SuppressWarnings("unused")
-	private static final String find = " ";
+	private static final String find = "SELECT * FROM presupuesto WHERE idingreso  = ? and habilitado = true";
 
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<PresupuestoDTO> readAll() {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
-		@SuppressWarnings("unused")
 		ResultSet resultSet;
-		ArrayList<PresupuestoDTO> localidades = new ArrayList<PresupuestoDTO>();
+		ArrayList<PresupuestoDTO> presupuestos = new ArrayList<PresupuestoDTO>();
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(readall);
 			resultSet = statement.executeQuery();
 
-			/*
-			 * while (resultSet.next()) { localidades.add(new
-			 * PresupuestoDTO(resultSet.getInt("id"),
-			 * resultSet.getInt("idingreso"),
-			 * resultSet.getString("descripcion_producto"),
-			 * resultSet.getInt("idmarca"), resultSet.getInt("idtipo_producto"),
-			 * resultSet.getString("descripcion_falla"),
-			 * resultSet.getBoolean("envio"),
-			 * resultSet.getBoolean("envio_default"),
-			 * resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"),
-			 * resultSet.getInt("idusuario"))); }
-			 */
+			
+			while (resultSet.next()) { presupuestos.add(new
+					PresupuestoDTO(resultSet.getInt("id"),
+							resultSet.getInt("idingreso"),
+							resultSet.getString("descripcion_breve"),
+							resultSet.getString("descripcion_tecnica"),
+							resultSet.getString("importe_mano_obra"),
+							resultSet.getDate("fecha_creacion"),
+							resultSet.getDate("fecha_vencimiento"),
+							resultSet.getInt("idusuario"),
+							resultSet.getBoolean("habillitado"))); }
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			Conexion.cerrarConexion();
 		}
-		return localidades;
+		return presupuestos;
 	}
 
-	public boolean delete(PresupuestoDTO ingreso_a_eliminar) {
+	public boolean delete(PresupuestoDTO presupuesto_a_eliminar) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		int chequeoUpdate = 0;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(delete);
-			// statement.setString(1,
-			// Integer.toString(ingreso_a_eliminar.getId()));
+			statement.setString(1,
+			Integer.toString(presupuesto_a_eliminar.getId()));
+			
 			chequeoUpdate = statement.executeUpdate();
 			if (chequeoUpdate > 0)
 				return true;
@@ -122,7 +122,39 @@ public class PresupuestoDAO {
 			}
 		} catch (
 
-		SQLException e) {
+				SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return presupuesto;
+	}
+
+	public PresupuestoDTO buscar_Presupuesto_Completo(int idingreso) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		PresupuestoDTO presupuesto = null;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(buscarPresupuesto);
+			statement.setInt(1, idingreso);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				presupuesto = new PresupuestoDTO(resultSet.getInt("id"),
+						resultSet.getInt("idingreso"),
+						resultSet.getString("ddescripcion_breve"),
+						resultSet.getString("descripcion_ecnica"),
+						resultSet.getString("importe_mano_obra"),
+						resultSet.getDate("fecha_creacion"),
+						resultSet.getDate("fecha_vencimiento"),
+						resultSet.getInt("idususario"),
+						resultSet.getBoolean("habilitado"));
+			}
+		} catch (
+
+				SQLException e) {
 			e.printStackTrace();
 		} finally {
 			Conexion.cerrarConexion();

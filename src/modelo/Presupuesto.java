@@ -28,13 +28,17 @@ public class Presupuesto
 	
 	public List<PresupuestoDTO> obtenerPresupuestos()
 	{
-            //return tipoProducto.readAll();	
-            return null;
+		return presupuesto.readAll();	
 	}
-	
+
 	public PresupuestoDTO find (int idingreso){
 		
 		return presupuesto.find(idingreso);
+	}
+	
+	public PresupuestoDTO find_Presuesto_Completo(int idingreso){
+
+		return presupuesto.buscar_Presupuesto_Completo(idingreso);
 	}
 	
 }
