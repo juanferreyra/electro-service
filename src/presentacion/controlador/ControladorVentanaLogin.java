@@ -36,7 +36,7 @@ public class ControladorVentanaLogin implements ActionListener {
 				UsuarioDTO user1 = new UsuarioDTO(1, "ROBERTO", "CARLOS", "admin", perf1);
 				
 				this.login.setVisible(false);
-				controladorVentanaPrincipal = new ControladorVentanaPrincipal(new VentanaPrincipal(user1));
+				controladorVentanaPrincipal = new ControladorVentanaPrincipal(new VentanaPrincipal(),user1);
 				controladorVentanaPrincipal.iniciar();
 
 			} else if (this.login.getUsuario_txf().getText().equals("tecnico")
@@ -48,7 +48,7 @@ public class ControladorVentanaLogin implements ActionListener {
 				UsuarioDTO user2 = new UsuarioDTO(2, "OSCAR", "PINTOS", "tecnico", perf2);
 
 				this.login.setVisible(false);
-				controladorVentanaPrincipal = new ControladorVentanaPrincipal(new VentanaPrincipal(user2));
+				controladorVentanaPrincipal = new ControladorVentanaPrincipal(new VentanaPrincipal(),user2);
 				controladorVentanaPrincipal.iniciar();
 
 			} else if (this.login.getUsuario_txf().getText().equals("jefe")
@@ -59,7 +59,7 @@ public class ControladorVentanaLogin implements ActionListener {
 				UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
 				
 				this.login.setVisible(false);
-				controladorVentanaPrincipal = new ControladorVentanaPrincipal(new VentanaPrincipal(user3));
+				controladorVentanaPrincipal = new ControladorVentanaPrincipal(new VentanaPrincipal(),user3);
 				controladorVentanaPrincipal.iniciar();
 
 			} else {

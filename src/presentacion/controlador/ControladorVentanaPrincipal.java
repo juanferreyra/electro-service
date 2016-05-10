@@ -1,7 +1,6 @@
 
 package presentacion.controlador;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -9,19 +8,17 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.IngresoDTO;
+import dto.UsuarioDTO;
 import modelo.Ingreso;
 import persistencia.dao.ClienteDAO;
 import persistencia.dao.EstadoDAO;
 import persistencia.dao.IngresoDAO;
-import persistencia.dao.PresupuestoDAO;
 import persistencia.dao.UsuarioDAO;
 import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaPresupuesto;
@@ -35,15 +32,16 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	private ClienteDAO clienteDAO;
 	private EstadoDAO estadoDAO;
 	private UsuarioDAO usuarioDAO;
+	private UsuarioDTO usuarioLogueado;
 
-	public ControladorVentanaPrincipal(VentanaPrincipal principal) {
+	public ControladorVentanaPrincipal(VentanaPrincipal principal, UsuarioDTO usuario) {
 
 		this.principal = principal;
+		this.usuarioLogueado = usuario;
 		this.principal.getIngresarProducto_btn().addActionListener(this);
 		this.principal.getPresupuestar_btn().addActionListener(this);
-		this.perfil = this.principal.getUser().getPerfilDTO().getPerfil();
+		this.perfil = usuario.getPerfilDTO().getPerfil();
 		this.agregarMouseListenerTabla(this);
-
 	}
 
 	public void iniciar() {
@@ -185,7 +183,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					ing.cargarModeloCompleto();
 
 					ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-							ing);
+							ing, usuarioLogueado);
 					controladorPresupuesto.inicializar();
 				} else {
 					JOptionPane.showMessageDialog(null,
@@ -207,7 +205,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				int columna = principal.getOrdenesDeTrabajo_table().columnAtPoint(e.getPoint());
 
 				// Preguntamos si hicimos clic sobre la celda que contiene el
-				// botón "Ver Orden"
+				// botï¿½n "Ver Orden"
 				if (principal.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JLabel.class)
 						&& columna == 0) {
 					if (principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
@@ -224,7 +222,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					}
 				}
 				// Preguntamos si hicimos clic sobre la celda que contiene el
-				// botón "Presupuesto"
+				// botï¿½n "Presupuesto"
 				if (principal.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JLabel.class)
 						&& columna == 6) {
 					JOptionPane.showMessageDialog(null, "Presupuesto");
