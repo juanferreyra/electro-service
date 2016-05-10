@@ -1,44 +1,55 @@
 package modelo;
 
-
 import java.util.List;
 
+import dto.ComponenteDTO;
+import persistencia.dao.ComponenteDAO;
 import persistencia.dao.PresupuestoDAO;
-import dto.PresupuestoDTO;
-
+import persistencia.dao.PresupuestoRepuestoDAO;
 
 public class Presupuesto 
 {
-	private PresupuestoDAO presupuesto;	
+	private int id;
+	private PresupuestoDAO presupuesto;
+	private PresupuestoRepuestoDAO repuesto;
+	private ComponenteDAO componente;
+	
 	
 	public Presupuesto()
 	{
+		id = -1;
 		presupuesto = new PresupuestoDAO();
-	}
-	
-	public void agregarPersona(PresupuestoDTO nuevaPresupuesto)
-	{
-		presupuesto.insert(nuevaPresupuesto);
-	}
-
-	public void borrarPersona(PresupuestoDTO presupuesto_a_eliminar) 
-	{
-		presupuesto.delete(presupuesto_a_eliminar);
-	}
-	
-	public List<PresupuestoDTO> obtenerPresupuestos()
-	{
-		return presupuesto.readAll();	
-	}
-
-	public PresupuestoDTO find (int idingreso){
+		repuesto = new PresupuestoRepuestoDAO();
+		componente = new ComponenteDAO();
 		
-		return presupuesto.find(idingreso);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
-	public PresupuestoDTO find_Presuesto_Completo(int idingreso){
-
-		return presupuesto.buscar_Presupuesto_Completo(idingreso);
+	public void agregarComponente(ComponenteDTO nuevoComponente) {
+		componente.insert(nuevoComponente);
+	}
+	
+	public void borrarcomponente(ComponenteDTO componente_a_eliminar) {
+		componente.delete(componente_a_eliminar);
+	}
+	
+	public List<ComponenteDTO> obtenercomponentes() {
+		return componente.readAll();		
+	}
+	
+	public void  modificarcomponente(ComponenteDTO componente_a_modificar) {
+		componente.update(componente_a_modificar);
+		
+	}
+	public List<ComponenteDTO> buscarComponentes(String aBuscar) {
+		return componente.search(aBuscar);
 	}
 	
 }

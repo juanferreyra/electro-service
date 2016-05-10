@@ -16,11 +16,11 @@ public class ComponenteDAO {
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
 	private static final String delete = "UPDATE repuesto SET habilitado='0' WHERE id = ?";
 	
-	private static final String readall = "SELECT * FROM electro_service_db.repuesto;";
+	private static final String readall = "SELECT * FROM repuesto;";
 	
 	private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
 	
-	private static final String search = "SELECT * FROM electro_service_db.repuesto WHERE detalle = ? ;";
+	private static final String search = "SELECT * FROM repuesto WHERE detalle = ? ;";
 	
 	private static final Conexion conexion = Conexion.getConexion();
 	

@@ -5,7 +5,7 @@ import java.util.Date;
 public class PresupuestoDTO {
 
 	private int id;
-	private int IdIngreso;
+	private int idIngreso;
 	private String descripcionBreve;
 	private String descripcionTecnica;
 	private String importeManoObra;
@@ -16,13 +16,12 @@ public class PresupuestoDTO {
 
 	public PresupuestoDTO(int id, int idIngreso, String descripcionBreve, String descripcionTecnica,
 			String importeManoObra, Date fechaCreacion, Date fechaVencimiento, int idUsusario, boolean habilitado) {
-
 		this.id = id;
-		this.IdIngreso = idIngreso;
+		this.idIngreso = idIngreso;
 		this.descripcionBreve = descripcionBreve;
 		this.descripcionTecnica = descripcionTecnica;
 		this.importeManoObra = importeManoObra;
-		this.setFechacreacion(fechaCreacion);
+		this.fechacreacion = fechaCreacion;
 		this.fechavencimiento = fechaVencimiento;
 		this.idUsuario = idUsusario;
 		this.habilitado = habilitado;
@@ -37,11 +36,11 @@ public class PresupuestoDTO {
 	}
 
 	public int getIdIngreso() {
-		return IdIngreso;
+		return idIngreso;
 	}
 
 	public void setIdIngreso(int idIngreso) {
-		IdIngreso = idIngreso;
+		this.idIngreso = idIngreso;
 	}
 
 	public String getDescripcionBreve() {
@@ -67,15 +66,7 @@ public class PresupuestoDTO {
 	public void setImporteManoObra(String importeManoObra) {
 		this.importeManoObra = importeManoObra;
 	}
-
-	/*
-	 * public Date getFechacreacion() { return fechacreacion; }
-	 * 
-	 * 
-	 * public void setFechacreacion(Date fechacreacion) { this.fechacreacion =
-	 * fechacreacion; }
-	 */
-
+	
 	public Date getFechavencimiento() {
 		return fechavencimiento;
 	}

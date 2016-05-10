@@ -20,7 +20,7 @@ public class PresupuestoRepuestoDAO {
 	
 	private static final String find = "SELECT * FROM ingreso WHERE habilitado=true AND id = ?";
 	
-	private static final String buscarPresupuesto = "SELECT id FROM electro_service_db.presupuesto WHERE idingreso  = ?";
+	private static final String buscarPresupuesto = "SELECT id FROM presupuesto WHERE idingreso  = ?";
 	
 	private Conexion conexion = Conexion.getConexion();
 
