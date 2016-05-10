@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.ComponenteDTO;
-import dto.PerfilDTO;
 import dto.PresupuestoDTO;
 import dto.PresupuestoRepuestoDTO;
 import dto.UsuarioDTO;
@@ -27,7 +26,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private VentanaPresupuesto ventanaPresupuesto;
 	private Ingreso ingreso;
 	private Presupuesto presupuesto;
-	
+	private UsuarioDTO usuarioLogueado;
 	private List<ComponenteDTO> listaDeComponetes;
 	private Integer cantidad = 0;
 	private DefaultTableModel modelo = new DefaultTableModel();
@@ -41,6 +40,7 @@ public class ControladorPresupuesto implements ActionListener{
 		
 		 this.ventanaPresupuesto = ventanaPresupuesto;
 		 this.ingreso = ingreso;
+		 this.usuarioLogueado = usuario;
 		 this.presupuesto = new Presupuesto();
 		 this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
@@ -48,11 +48,10 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
-		 this.ventanaPresupuesto.getBuscarTecnico_btn().addActionListener(this);
 		 this.ventanaPresupuesto.getCancelar_btn().addActionListener(this);
 	}
 	
-	public void inicializar(){
+	public void inicializar() {
 		
 		Calendar hoy = new GregorianCalendar();
 		ventanaPresupuesto.getFechaIngreso_lbl().setText("Fecha: " + hoy.get(Calendar.DAY_OF_MONTH) +" / "
@@ -61,6 +60,8 @@ public class ControladorPresupuesto implements ActionListener{
 		ventanaPresupuesto.getComponentes_table().setModel(modelo);
 		cargarComboComponentes();
 		cargarIngreso();
+		//cargo el usuario
+		ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
 		ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
 		ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(sumatotal));
 		ventanaPresupuesto.getManoDeObra_txf().setText(String.valueOf(manoDeObra));
@@ -94,11 +95,6 @@ public class ControladorPresupuesto implements ActionListener{
 			cantidad +=1;
 			this.ventanaPresupuesto.getCantidad_lbl().setText(cantidad.toString());
 			
-		}else if (e.getSource() == this.ventanaPresupuesto.getBuscarTecnico_btn()){
-			
-			llenarTablaUsuarios();
-				
-
 		}else if (e.getSource() == this.ventanaPresupuesto.getDecrementoCantComponente_btn()){
 
 			if(cantidad != 1){
@@ -147,47 +143,6 @@ public class ControladorPresupuesto implements ActionListener{
 		}
 		
 	}
-	
-	private void llenarTablaUsuarios() {
-		
-		if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("1")){
-			
-			PerfilDTO perf1 = new PerfilDTO("ADMINISTRATIVO");
-			UsuarioDTO user1 = new UsuarioDTO(1, "ROBERTO", "CARLOS", "admin", perf1);
-			
-			Object[][] informacionCliente = {{ user1.getNombre(), user1.getApellido()}};
-			String[] nombreColumnas = { "Nombre", "Apellido"};
-			this.ventanaPresupuesto.getDatosClientes_table().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));	
-		
-			
-		}else if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("2")){
-			
-			PerfilDTO perf2 = new PerfilDTO("TECNICO");
-			UsuarioDTO user2 = new UsuarioDTO(2, "OSCAR", "PINTOS", "tecnico", perf2);
-			
-			Object[][] informacionCliente = {{ user2.getNombre(), user2.getApellido()}};
-			String[] nombreColumnas = { "Nombre", "Apellido"};
-			this.ventanaPresupuesto.getDatosClientes_table().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));
-
-			
-		}else if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("3")){
-			
-			PerfilDTO perf3 = new PerfilDTO("JEFE");
-			UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
-			
-			Object[][] informacionCliente = {{ user3.getNombre(), user3.getApellido()}};
-			
-			String[] nombreColumnas = { "Nombre", "Apellido"};
-			this.ventanaPresupuesto.getDatosClientes_table().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));
-			
-		}else{
-			
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO  admite solo NUMEROS  1, 2, o 3", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
-			
-		}
-
-	}
 
 	private void ocultarColumnaId() {
 
@@ -199,17 +154,7 @@ public class ControladorPresupuesto implements ActionListener{
 
 	private void validarCampos() {
 		
-		if(this.ventanaPresupuesto.getNroTecnico_txf().getText().isEmpty()){
-			
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO no puede estar vacio ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
-			
-		}else if(!soloNumeros(this.ventanaPresupuesto.getNroTecnico_txf().getText().toString())){
-
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO  admite solo NUMEROS", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
-				
-		}else if (this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null){
+		if (this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null){
 			
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo FECHA DE VENCIMIENTO no puede estar vacio ", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -256,17 +201,9 @@ public class ControladorPresupuesto implements ActionListener{
 			
 		}else{
 			
-			if(this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("1") || this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("2")
-					|| this.ventanaPresupuesto.getNroTecnico_txf().getText().equals("3")){
+			guardarPresupuesto();
 
-				guardarPresupuesto();
-
-				guardarRepuestos(obtenerIdPresupuesto());
-			}else{
-				
-				JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo NRO DE TECNICO  admite solo NUMEROS  1, 2, o 3", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
-			}
+			guardarRepuestos(obtenerIdPresupuesto());
 		}
 	}
 	
@@ -340,8 +277,7 @@ public class ControladorPresupuesto implements ActionListener{
 				ventanaPresupuesto.getValorPresupuestado_txf().getText(),
 				null,
 				ventanaPresupuesto.getVencimiento_Calendario().getDate(),
-
-				Integer.parseInt(ventanaPresupuesto.getNroTecnico_txf().getText()),
+				this.usuarioLogueado.getId(),
 				true);
 
 		PresupuestoDAO nuevo = new PresupuestoDAO();

@@ -1,6 +1,5 @@
 package presentacion.vista;
 
-import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,12 +8,12 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
-import javax.swing.table.JTableHeader;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
@@ -26,11 +25,8 @@ public class VentanaPresupuesto extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField nroTecnico_txf;
 	private JTextField horasDeTrabajo_txf;
 	private JTextField manoDeObra_txf;
-	private JButton buscarTecnico_btn;
-	private JTable datosClientes_table;
 	private JDateChooser vencimiento_Calendario;
 	private JComboBox<String> componente_ComboBox; 
 	private JButton incrementoCantComponente_btn;
@@ -55,8 +51,7 @@ public class VentanaPresupuesto extends JFrame {
 	"Precio Total" };
 	private JLabel Total_lbl;
 	private JLabel estado_lb;
-
-	
+	private JLabel lbltecnico;
 
 	public VentanaPresupuesto () {
 		
@@ -134,41 +129,9 @@ public class VentanaPresupuesto extends JFrame {
 		separator_2.setForeground(Color.BLUE);
 		contentPane.add(separator_2);
 
-		JLabel lblNroTcnico = new JLabel("Nro. T\u00E9cnico:");
-		lblNroTcnico.setBounds(40, 192, 116, 14);
-		contentPane.add(lblNroTcnico);
-
-		nroTecnico_txf = new JTextField();
-		nroTecnico_txf.setBounds(153, 190, 146, 20);
-		contentPane.add(nroTecnico_txf);
-		nroTecnico_txf.setColumns(10);
-
-		buscarTecnico_btn = new JButton("");
-		buscarTecnico_btn.setBounds(311, 183, 33, 23);
-		buscarTecnico_btn
-				.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/search.png")));
-		contentPane.add(buscarTecnico_btn);
-
-		String[] datosClientes_nombreColumnas = { "Nombre", "Apellido" };
-		Object[][] datosClientes_informacionTabla = {};
-
-		datosClientes_table = new JTable(datosClientes_informacionTabla, datosClientes_nombreColumnas);
-		datosClientes_table.setEnabled(false);
-		datosClientes_table.setRowSelectionAllowed(false);
-		datosClientes_table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		datosClientes_table.setFont(new Font("Tahoma", Font.PLAIN, 10));
-
-		JPanel panelTablaDatosCliente = new JPanel();
-		panelTablaDatosCliente.setBounds(30, 218, 664, 41);
-		panelTablaDatosCliente.setBorder(new LineBorder(Color.LIGHT_GRAY));
-
-		JTableHeader datosClientes_header = datosClientes_table.getTableHeader();
-
-		panelTablaDatosCliente.setLayout(new BorderLayout(0, 0));
-		panelTablaDatosCliente.add(datosClientes_header, BorderLayout.NORTH);
-		panelTablaDatosCliente.add(datosClientes_table, BorderLayout.CENTER);
-
-		contentPane.add(panelTablaDatosCliente);
+		JLabel lblTecnico = new JLabel("Técnico:");
+		lblTecnico.setBounds(40, 192, 102, 14);
+		contentPane.add(lblTecnico);
 
 		JLabel horasDeTrabajo_lbl = new JLabel("Horas de trabajo:");
 		horasDeTrabajo_lbl.setBounds(10, 550, 146, 14);
@@ -325,146 +288,118 @@ public class VentanaPresupuesto extends JFrame {
 		JLabel lblFecha = new JLabel("");
 		lblFecha.setBounds(435, 10, 70, 15);
 		contentPane.add(lblFecha);
-
+		
+		lbltecnico = new JLabel("");
+		lbltecnico.setBounds(140, 191, 214, 15);
+		contentPane.add(lbltecnico);
 	}
-
 
 	public JLabel getCantidad_lbl() {
 		return cantidad_lbl;
 	}
-
-
-	public JTextField getNroTecnico_txf() {
-		return nroTecnico_txf;
-	}
-
-
+	
 	public JTextField getHorasDeTrabajo_txf() {
 		return horasDeTrabajo_txf;
 	}
 
-
 	public JTextField getManoDeObra_txf() {
 		return manoDeObra_txf;
 	}
-
-
-	public JButton getBuscarTecnico_btn() {
-		return buscarTecnico_btn;
-	}
-
-
-	public JTable getDatosClientes_table() {
-		return datosClientes_table;
-	}
-
-
+	
 	public JDateChooser getVencimiento_Calendario() {
 		return vencimiento_Calendario;
 	}
-
 
 	public JComboBox<String> getComponente_ComboBox() {
 		return componente_ComboBox;
 	}
 
-
 	public JButton getIncrementoCantComponente_btn() {
 		return incrementoCantComponente_btn;
 	}
-
 
 	public JButton getDecrementoCantComponente_btn() {
 		return decrementoCantComponente_btn;
 	}
 
-
 	public JButton getAgregarComponente_btn() {
 		return agregarComponente_btn;
 	}
-
 
 	public JButton getEliminarComponente_btn() {
 		return eliminarComponente_btn;
 	}
 
-
 	public JTextArea getDescripcionBreve_jTextArea() {
 		return descripcionBreve_jTextArea;
 	}
-
 
 	public JTextArea getDescripcionTecnica_jTextArea() {
 		return descripcionTecnica_jTextArea;
 	}
 
-
 	public JTextField getValorPresupuestado_txf() {
 		return valorPresupuestado_txf;
 	}
-
 
 	public JButton getVerPresupuesto_btn() {
 		return verPresupuesto_btn;
 	}
 
-
 	public JButton getEnviarPresupuesto_btn() {
 		return enviarPresupuesto_btn;
 	}
-
 
 	public JButton getCancelar_btn() {
 		return cancelar_btn;
 	}
 
-
 	public JButton getGuardar_btn() {
 		return guardar_btn;
 	}
-
 
 	public JTable getComponentes_table() {
 		return componentes_table;
 	}
 
-
 	public String[] getComponentes_nombreColumnas() {
 		return componentes_nombreColumnas;
 	}
-
 
 	public JLabel getFechaIngreso_lbl() {
 		return fechaIngreso_lbl;
 	}
 
-
 	public JLabel getNombreProductoTexto_lbl() {
 		return nombreProductoTexto_lbl;
 	}
-
 
 	public JLabel getTipoTexto_lbl() {
 		return tipoTexto_lbl;
 	}
 
-
 	public JLabel getMarcaTexto_lbl() {
 		return marcaTexto_lbl;
 	}
-
 
 	public JTextArea getDescripcionFalla_txtArea() {
 		return descripcionFalla_txtArea;
 	}
 
-
 	public JLabel getTotal_lbl() {
 		return Total_lbl;
 	}
 
-
 	public JLabel getEstado_lb() {
 		return estado_lb;
 	}
+
+	public JLabel getLbltecnico() {
+		return lbltecnico;
+	}
+
+	public void setLbltecnico(JLabel lbltecnico) {
+		this.lbltecnico = lbltecnico;
+	}
+
 }
