@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -21,9 +20,6 @@ import java.awt.Rectangle;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-
-import dto.UsuarioDTO;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -32,7 +28,6 @@ public class VentanaPrincipal extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable ordenesDeTrabajo_table;
-	private UsuarioDTO user;
 	private JButton ingresarProducto_btn;
 	private JButton presupuestar_btn;
 	private JButton asignarOrden_btn;
@@ -41,9 +36,8 @@ public class VentanaPrincipal extends JFrame {
 	private FormatoTablaOrdenesTrabajo formatoTabla;
 
 	@SuppressWarnings("serial")
-	public VentanaPrincipal(UsuarioDTO user) {
+	public VentanaPrincipal() {
 		contentPane = new JPanel();
-		this.user = user;
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1044, 546);
@@ -83,7 +77,7 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número", "Fecha",
+		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Nï¿½mero", "Fecha",
 				"Producto", "Cliente", "Env\u00EDo", "", "T\u00E9cnico Asignado", "Estado" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { JLabel.class, Integer.class, String.class, String.class, String.class,
@@ -153,10 +147,6 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setCellRenderer(formatoTabla);
 		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setCellRenderer(formatoTabla);
 
-	}
-
-	public UsuarioDTO getUser() {
-		return user;
 	}
 
 	public JButton getIngresarProducto_btn() {
