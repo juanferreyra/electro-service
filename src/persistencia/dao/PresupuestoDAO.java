@@ -10,16 +10,14 @@ import persistencia.conexion.Conexion;
 
 public class PresupuestoDAO {
 
-	static final String insert = "INSERT INTO presupuesto (id,idingreso,descripcion_breve,"
-			+ "descripcion_tecnica,importe_mano_obra,fecha_creacion,fecha_vencimiento,idusuario,habilitado) VALUES (?,?,?,?,?,now(),?,?,true)";
+	static final String insert = "INSERT INTO presupuesto ( idingreso, descripcion_breve,"
+			+ "descripcion_tecnica, horas_dedicadas, importe_mano_obra, fecha_creacion,"
+			+ "fecha_vencimiento, idusuario, habilitado) VALUES (?,?,?,?,?,now(),?,?,true)";
 
 	private static final String delete = "UPDATE presupuesto SET habilitado='0' WHERE id= ?;";
 
 	private static final String readall = "SELECT * FROM presupuesto WHERE habilitado=true";
 
-	private static final String buscarPresupuesto = "SELECT id FROM presupuesto WHERE idingreso  = ? and habilitado = true";
-	
-	@SuppressWarnings("unused")
 	private static final String find = "SELECT * FROM presupuesto WHERE idingreso  = ? and habilitado = true";
 
 	private Conexion conexion = Conexion.getConexion();
@@ -40,11 +38,12 @@ public class PresupuestoDAO {
 							resultSet.getInt("idingreso"),
 							resultSet.getString("descripcion_breve"),
 							resultSet.getString("descripcion_tecnica"),
-							resultSet.getString("importe_mano_obra"),
+							resultSet.getFloat("importe_mano_obra"),
+							resultSet.getInt("horas_dedicadas"),
 							resultSet.getDate("fecha_creacion"),
 							resultSet.getDate("fecha_vencimiento"),
 							resultSet.getInt("idusuario"),
-							resultSet.getBoolean("habillitado"))); }
+							resultSet.getBoolean("habilitado"))); }
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -84,9 +83,10 @@ public class PresupuestoDAO {
 			statement.setInt(2, presupuesto.getIdIngreso());
 			statement.setString(3, presupuesto.getDescripcionBreve());
 			statement.setString(4, presupuesto.getDescripcionTecnica());
-			statement.setString(5, presupuesto.getImporteManoObra());
-			statement.setDate(6, new java.sql.Date(presupuesto.getFechavencimiento().getTime()));
-			statement.setInt(7, presupuesto.getIdUsuario());
+			statement.setInt(5, presupuesto.getHorasTrabajo());
+			statement.setFloat(6, presupuesto.getImporteManoObra());
+			statement.setDate(7, new java.sql.Date(presupuesto.getFechavencimiento().getTime()));
+			statement.setInt(8, presupuesto.getIdUsuario());
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -105,23 +105,24 @@ public class PresupuestoDAO {
 		PresupuestoDTO presupuesto = null;
 
 		try {
-			statement = conexion.getSQLConexion().prepareStatement(buscarPresupuesto);
+			statement = conexion.getSQLConexion().prepareStatement(find);
 			statement.setInt(1, idingreso);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				presupuesto = new PresupuestoDTO(resultSet.getInt("id"),
+				presupuesto = new PresupuestoDTO(
+						resultSet.getInt("id"),
 						resultSet.getInt("idingreso"),
-						resultSet.getString("ddescripcion_breve"),
-						resultSet.getString("descripcion_ecnica"),
-						resultSet.getString("importe_mano_obra"),
+						resultSet.getString("descripcion_breve"),
+						resultSet.getString("descripcion_tecnica"),
+						resultSet.getFloat("importe_mano_obra"),
+						resultSet.getInt("horas_dedicadas"),
 						resultSet.getDate("fecha_creacion"),
 						resultSet.getDate("fecha_vencimiento"),
-						resultSet.getInt("idususario"),
+						resultSet.getInt("idusuario"),
 						resultSet.getBoolean("habilitado"));
 			}
 		} catch (
-
 				SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -129,39 +130,4 @@ public class PresupuestoDAO {
 		}
 		return presupuesto;
 	}
-
-	public PresupuestoDTO buscar_Presupuesto_Completo(int idingreso) {
-		conexion = Conexion.getConexion();
-		PreparedStatement statement;
-		ResultSet resultSet;
-		PresupuestoDTO presupuesto = null;
-
-		try {
-			statement = conexion.getSQLConexion().prepareStatement(buscarPresupuesto);
-			statement.setInt(1, idingreso);
-			resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-				presupuesto = new PresupuestoDTO(resultSet.getInt("id"),
-						resultSet.getInt("idingreso"),
-						resultSet.getString("ddescripcion_breve"),
-						resultSet.getString("descripcion_ecnica"),
-						resultSet.getString("importe_mano_obra"),
-						resultSet.getDate("fecha_creacion"),
-						resultSet.getDate("fecha_vencimiento"),
-						resultSet.getInt("idususario"),
-						resultSet.getBoolean("habilitado"));
-			}
-		} catch (
-
-				SQLException e) {
-			e.printStackTrace();
-		} finally {
-			Conexion.cerrarConexion();
-		}
-		return presupuesto;
-	}
-
-	
-
 }

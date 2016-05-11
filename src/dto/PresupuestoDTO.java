@@ -8,19 +8,21 @@ public class PresupuestoDTO {
 	private int idIngreso;
 	private String descripcionBreve;
 	private String descripcionTecnica;
-	private String importeManoObra;
+	private int horasTrabajo;
+	private float importeManoObra;
 	private Date fechacreacion;
 	private Date fechavencimiento;
 	private int idUsuario;
 	private boolean habilitado;
 
 	public PresupuestoDTO(int id, int idIngreso, String descripcionBreve, String descripcionTecnica,
-			String importeManoObra, Date fechaCreacion, Date fechaVencimiento, int idUsusario, boolean habilitado) {
+			float importeManoObra, int horasTrabajo, Date fechaCreacion, Date fechaVencimiento, int idUsusario, boolean habilitado) {
 		this.id = id;
 		this.idIngreso = idIngreso;
 		this.descripcionBreve = descripcionBreve;
 		this.descripcionTecnica = descripcionTecnica;
 		this.importeManoObra = importeManoObra;
+		this.horasTrabajo = horasTrabajo;
 		this.fechacreacion = fechaCreacion;
 		this.fechavencimiento = fechaVencimiento;
 		this.idUsuario = idUsusario;
@@ -59,11 +61,11 @@ public class PresupuestoDTO {
 		this.descripcionTecnica = descripcionTecnica;
 	}
 
-	public String getImporteManoObra() {
+	public float getImporteManoObra() {
 		return importeManoObra;
 	}
 
-	public void setImporteManoObra(String importeManoObra) {
+	public void setImporteManoObra(float importeManoObra) {
 		this.importeManoObra = importeManoObra;
 	}
 	
@@ -97,6 +99,14 @@ public class PresupuestoDTO {
 
 	public void setFechacreacion(Date fechacreacion) {
 		this.fechacreacion = fechacreacion;
+	}
+
+	public int getHorasTrabajo() {
+		return horasTrabajo;
+	}
+
+	public void setHorasTrabajo(int horasTrabajo) {
+		this.horasTrabajo = horasTrabajo;
 	}
 
 }

@@ -16,7 +16,7 @@ public class ComponenteDAO {
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
 	private static final String delete = "UPDATE repuesto SET habilitado='0' WHERE id = ?";
 	
-	private static final String readall = "SELECT * FROM repuesto;";
+	private static final String readall = "SELECT * FROM repuesto WHERE idpresupuesto = ? AND habilitado = true;";
 	
 	private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
 	
