@@ -97,7 +97,7 @@ CREATE TABLE `ingreso` (
   `habilitado` tinyint(1) DEFAULT NULL,
   `tecnico_asignado` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,6 +106,7 @@ CREATE TABLE `ingreso` (
 
 LOCK TABLES `ingreso` WRITE;
 /*!40000 ALTER TABLE `ingreso` DISABLE KEYS */;
+INSERT INTO `ingreso` VALUES (6,1,'afsf',0,0,'fdswqf',0,0,'',0,1,'2016-05-06 22:35:28',0,1,NULL),(7,1,'Rasrsarara',0,0,'dsaasrsa',1,0,'Direccion Alternativa',4324,1,'2016-05-06 23:05:39',0,1,NULL);
 /*!40000 ALTER TABLE `ingreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +125,7 @@ CREATE TABLE `ingreso_log` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,6 +134,7 @@ CREATE TABLE `ingreso_log` (
 
 LOCK TABLES `ingreso_log` WRITE;
 /*!40000 ALTER TABLE `ingreso_log` DISABLE KEYS */;
+INSERT INTO `ingreso_log` VALUES (6,6,1,'2016-05-06 22:35:28',0,1),(7,6,1,'2016-05-06 23:05:39',0,1);
 /*!40000 ALTER TABLE `ingreso_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +152,7 @@ CREATE TABLE `marca_producto` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,13 +252,15 @@ CREATE TABLE `presupuesto` (
   `idingreso` int(11) DEFAULT NULL,
   `descripcion_breve` longtext COLLATE latin1_spanish_ci,
   `descripcion_tecnica` longtext COLLATE latin1_spanish_ci,
-  `importe_mano_obra` varchar(45) COLLATE latin1_spanish_ci DEFAULT NULL,
-  `fecha_creacion` datetime DEFAULT NULL,
+  `horas_dedicadas` int(11) DEFAULT NULL,
+  `importe_mano_obra` float DEFAULT NULL,
+  `importe_total` float DEFAULT NULL,
   `fecha_vencimiento` date DEFAULT NULL,
   `idusuario` int(11) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,6 +269,7 @@ CREATE TABLE `presupuesto` (
 
 LOCK TABLES `presupuesto` WRITE;
 /*!40000 ALTER TABLE `presupuesto` DISABLE KEYS */;
+INSERT INTO `presupuesto` VALUES (3,6,'descripcion_ brere','dsadadescripcion_tecnica',123,12.32,30000,'2016-04-10',1,'2016-05-10 18:59:22',1);
 /*!40000 ALTER TABLE `presupuesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,7 +288,7 @@ CREATE TABLE `presupuesto_repuestos` (
   `fecha_creacion` datetime DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,6 +297,7 @@ CREATE TABLE `presupuesto_repuestos` (
 
 LOCK TABLES `presupuesto_repuestos` WRITE;
 /*!40000 ALTER TABLE `presupuesto_repuestos` DISABLE KEYS */;
+INSERT INTO `presupuesto_repuestos` VALUES (1,3,1,21,'2016-05-14 08:21:30',1);
 /*!40000 ALTER TABLE `presupuesto_repuestos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -338,7 +344,7 @@ CREATE TABLE `tipo_producto` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,4 +395,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-05  0:53:54
+-- Dump completed on 2016-05-14 18:00:14
