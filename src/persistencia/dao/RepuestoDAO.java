@@ -6,25 +6,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.ComponenteDTO;
+import dto.RepuestoDTO;
 import persistencia.conexion.Conexion;
 
-public class ComponenteDAO {
+public class RepuestoDAO {
 	
 	private static final String insert = "INSERT INTO repuesto ("
 			+ "`nombre`, `detalle`, `precio`, `stock_minimo`,`fecha_creacion`,`idusuario`,`habilitado`)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
 	private static final String delete = "UPDATE repuesto SET habilitado='0' WHERE id = ?";
 	
-	private static final String readall = "SELECT * FROM repuesto WHERE idpresupuesto = ? AND habilitado = true;";
+	private static final String readall = "SELECT * FROM repuesto WHERE habilitado = true;";
 	
-	private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
+	private static final String update = "";
 	
-	private static final String search = "SELECT * FROM repuesto WHERE detalle = ? ;";
+	private static final String find = "SELECT * FROM repuesto WHERE detalle = ? ;";
 	
 	private static final Conexion conexion = Conexion.getConexion();
 	
-	public boolean insert(ComponenteDTO componente)
+	public boolean insert(RepuestoDTO componente)
 	{
 		PreparedStatement statement;
 		try 
@@ -47,7 +47,7 @@ public class ComponenteDAO {
 		return false;
 	}
 	
-	public boolean delete(ComponenteDTO marca_a_eliminar)
+	public boolean delete(RepuestoDTO marca_a_eliminar)
 	{
 		PreparedStatement statement;
 		int chequeoUpdate=0;
@@ -70,11 +70,11 @@ public class ComponenteDAO {
 		return false;
 	}
 	
-	public List<ComponenteDTO> readAll()
+	public List<RepuestoDTO> readAll()
 	{
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query
-		ArrayList<ComponenteDTO> componentes = new ArrayList<ComponenteDTO>();
+		ArrayList<RepuestoDTO> componentes = new ArrayList<RepuestoDTO>();
 		try
 		{
 			statement = conexion.getSQLConexion().prepareStatement(readall);
@@ -83,7 +83,7 @@ public class ComponenteDAO {
 			
 			while(resultSet.next())
 			{
-				componentes.add(new ComponenteDTO(resultSet.getInt("id"),
+				componentes.add(new RepuestoDTO(resultSet.getInt("id"),
 						resultSet.getString("detalle"),resultSet.getFloat("precio"),
 						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("idusuario"),resultSet.getInt("habilitado")));
@@ -102,7 +102,7 @@ public class ComponenteDAO {
 		return componentes;
 	}
 	
-	public boolean update (ComponenteDTO marca_a_modificar)
+	public boolean update(RepuestoDTO marca_a_modificar)
 
 	{
 		PreparedStatement statement;
@@ -127,24 +127,24 @@ public class ComponenteDAO {
 		return false;
 	}
 	
-	public List<ComponenteDTO> search(String aBuscar)
+	public RepuestoDTO find(String aBuscar)
 	{
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query
-		ArrayList<ComponenteDTO> componentes = new ArrayList<ComponenteDTO>();
+		RepuestoDTO componente = null;
 		try
 		{
-			statement = conexion.getSQLConexion().prepareStatement(search);
+			statement = conexion.getSQLConexion().prepareStatement(find);
 			statement.setString(1, aBuscar);
 			resultSet = statement.executeQuery();
 
 			
 			while(resultSet.next())
 			{
-				componentes.add(new ComponenteDTO(resultSet.getInt("id"),
+				componente = new RepuestoDTO(resultSet.getInt("id"),
 						resultSet.getString("detalle"),resultSet.getFloat("precio"),
 						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
-						resultSet.getInt("idusuario"),resultSet.getInt("habilitado")));
+						resultSet.getInt("idusuario"),resultSet.getInt("habilitado"));
 			}
 		}
 		catch (SQLException e) 
@@ -157,7 +157,6 @@ public class ComponenteDAO {
 			Conexion.cerrarConexion();
 		}
 		
-		return componentes;
+		return componente;
 	}
-
 }

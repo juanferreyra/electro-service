@@ -1,10 +1,11 @@
 package modelo;
 
 import java.util.List;
-import dto.ComponenteDTO;
+import dto.RepuestoDTO;
 import dto.IngresoDTO;
+import dto.ItemPresupuestoRepuestoDTO;
 import dto.PresupuestoDTO;
-import persistencia.dao.ComponenteDAO;
+import persistencia.dao.RepuestoDAO;
 import persistencia.dao.PresupuestoDAO;
 import persistencia.dao.PresupuestoRepuestoDAO;
 
@@ -12,19 +13,27 @@ public class Presupuesto
 {
 	private int id;
 	private IngresoDTO ingreso;
-	private PresupuestoDAO presupuestoDAO;
-	private PresupuestoRepuestoDAO repuestoDAO;
-	private ComponenteDAO componenteDAO;
-	
 	private PresupuestoDTO presupuesto;
-	private List<ComponenteDTO> listaDeComponetes;
+	private List<ItemPresupuestoRepuestoDTO> listaDeRepuestos;
+	
+	private PresupuestoDAO presupuestoDAO;
+	private PresupuestoRepuestoDAO presupuestoRepuestoDAO;
+	private RepuestoDAO repuestoDAO;
 	
 	public Presupuesto(IngresoDTO ingr) {
-		ingreso = ingr;
+		//Recuperacion y guardado de datos DAO's
 		presupuestoDAO = new PresupuestoDAO();
-		presupuesto = presupuestoDAO.find(ingreso.getId());
-		repuestoDAO = new PresupuestoRepuestoDAO();
-		componenteDAO = new ComponenteDAO();
+		presupuestoRepuestoDAO = new PresupuestoRepuestoDAO();
+		repuestoDAO = new RepuestoDAO();
+		
+		ingreso = ingr;
+		try {
+			presupuesto = presupuestoDAO.find(ingreso.getId());
+			id = presupuesto.getId();
+			listaDeRepuestos = obtenerItemsRepuestos(id);
+		} catch (Exception e) {
+			id = -1;
+		}
 	}
 
 	public int getId() {
@@ -35,26 +44,10 @@ public class Presupuesto
 		this.id = id;
 	}
 	
-	public void agregarComponente(ComponenteDTO nuevoComponente) {
-		componenteDAO.insert(nuevoComponente);
+	public void guardarModelo() {
+		// TODO Auto-generated method stub
 	}
-	
-	public void borrarcomponente(ComponenteDTO componente_a_eliminar) {
-		componenteDAO.delete(componente_a_eliminar);
-	}
-	
-	public List<ComponenteDTO> obtenercomponentes() {
-		return componenteDAO.readAll();		
-	}
-	
-	public void  modificarcomponente(ComponenteDTO componente_a_modificar) {
-		componenteDAO.update(componente_a_modificar);
-		
-	}
-	public List<ComponenteDTO> buscarComponentes(String aBuscar) {
-		return componenteDAO.search(aBuscar);
-	}
-	
+
 	public PresupuestoDTO getPresupuesto() {
 		return presupuesto;
 	}
@@ -62,21 +55,42 @@ public class Presupuesto
 	public void setPresupuesto(PresupuestoDTO presupuesto) {
 		this.presupuesto = presupuesto;
 	}
-
-	public List<ComponenteDTO> getListaDeComponetes() {
-		return listaDeComponetes;
-	}
-
-	public void setListaDeComponetes(List<ComponenteDTO> listaDeComponetes) {
-		this.listaDeComponetes = listaDeComponetes;
-	}
-
+	
 	public IngresoDTO getIngreso() {
 		return ingreso;
 	}
 
 	public void setIngreso(IngresoDTO ingreso) {
 		this.ingreso = ingreso;
+	}
+	
+	public int buscarIdPresupuesto(int idIngeso) {	
+		return presupuestoDAO.find(idIngeso).getId();	
+	}
+
+	//Funciones Repuestos
+	public List<ItemPresupuestoRepuestoDTO> obtenerItemsRepuestos(int id) {
+           return presupuestoRepuestoDAO.readAll(id);
+	}
+	
+	public RepuestoDTO buscarRepuesto(String aBuscar) {
+		return repuestoDAO.find(aBuscar);
+	}
+	
+	public List<RepuestoDTO> obtenerRepuestos() {
+		return repuestoDAO.readAll();		
+	}
+	
+	public List<ItemPresupuestoRepuestoDTO> getListaDeRepuestos() {
+		return listaDeRepuestos;
+	}
+	
+	public void agregarRepuesto(RepuestoDTO nuevoComponente) {
+		repuestoDAO.insert(nuevoComponente);
+	}
+	
+	public void addRepuestoListaDeComponentes(ItemPresupuestoRepuestoDTO resp) {
+		
 	}
 
 }

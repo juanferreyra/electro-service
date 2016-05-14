@@ -7,7 +7,7 @@ import dto.ClienteDTO;
 import dto.ImpresionIngresoDTO;
 import dto.MarcaDTO;
 import dto.TipoProductoDTO;
-import dto.IngresoEstadoDTO;
+import dto.ItemIngresoLogDTO;
 import dto.IngresoLogDTO;
 import persistencia.dao.ClienteDAO;
 import persistencia.dao.ImpresionIngresoDAO;
@@ -22,7 +22,7 @@ public class Ingreso {
 	public IngresoDTO ingr;
 	public MarcaDTO marc;
 	public TipoProductoDTO tipoprod;
-	public ArrayList<IngresoEstadoDTO> logIngresos;
+	public ArrayList<ItemIngresoLogDTO> logIngresos;
 	
 	private static ImpresionIngresoDAO ingresoStatic;
 	
@@ -125,11 +125,11 @@ public class Ingreso {
 		return tipoproducto.readAll();
 	}
 
-	public ArrayList<IngresoEstadoDTO> getLogIngresos() {
+	public ArrayList<ItemIngresoLogDTO> getLogIngresos() {
 		return logIngresos;
 	}
 
-	public void setLogIngresos(ArrayList<IngresoEstadoDTO> logIngresos) {
+	public void setLogIngresos(ArrayList<ItemIngresoLogDTO> logIngresos) {
 		this.logIngresos = logIngresos;
 	}
 	

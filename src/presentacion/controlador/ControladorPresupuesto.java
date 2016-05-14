@@ -6,17 +6,18 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import dto.RepuestoDTO;
+import dto.ItemPresupuestoRepuestoDTO;
 import dto.PerfilDTO;
 import dto.PresupuestoDTO;
-import dto.PresupuestoRepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.Ingreso;
 import modelo.Presupuesto;
-import modelo.PresupuestoRepuestos;
 import persistencia.dao.PresupuestoDAO;
 import presentacion.vista.VentanaPresupuesto;
 
@@ -45,9 +46,7 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ingreso = ingreso;
 		 this.usuarioLogueado = usuario;
 		 this.presupuesto = new Presupuesto(ingreso.getIngreso());
-		 if(presupuesto.getPresupuesto()!=null)
-		 {
-			 //System.out.println(presupuesto.getPresupuesto().getDescripcionBreve());
+		 if(presupuesto.getId()!=-1) {
 			 cargarModelo();
 		 }
 	}
@@ -62,9 +61,11 @@ public class ControladorPresupuesto implements ActionListener{
 		cargarComboComponentes();
 		cargarIngreso();
 		//cargo el usuario
-		ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
-		ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
-		ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(sumatotal));
+		if(presupuesto.getId()!=-1) {
+			ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
+			ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
+			ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(sumatotal));
+		}
 	}
 	
 	private void cargarIngreso() {
@@ -83,9 +84,9 @@ public class ControladorPresupuesto implements ActionListener{
 	
 	private void cargarModelo()
 	{
-		//TODO:cargo la lista de componentes
-		
-		//cargo descripcion tecnica 
+		//cargo la lista de componentes
+		actualizarTablaRepuestos();
+		//cargo descripcion tecnica
 		this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().setText(this.presupuesto.getPresupuesto().getDescripcionTecnica());
 		//cargo descripcion Breve
 		this.ventanaPresupuesto.getDescripcionBreve_jTextArea().setText(this.presupuesto.getPresupuesto().getDescripcionTecnica());
@@ -99,8 +100,8 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getManoDeObra_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteManoObra()));
 		//seteo la cantidad de horas totales
 		this.ventanaPresupuesto.getHorasDeTrabajo_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getHorasTrabajo()));
-		//TODO:seteo el total del presupuesto (que actualmente se guarda en mano de obra)
-		
+		//seteo el total del presupuesto (que actualmente se guarda en mano de obra)
+		this.ventanaPresupuesto.getTotal_lbl().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
 	}
 
 	@Override
@@ -121,7 +122,7 @@ public class ControladorPresupuesto implements ActionListener{
 			// agrega a la tabla 
 		}else if(e.getSource() == this.ventanaPresupuesto.getAgregarComponente_btn()){
 			 
-				llenarTablaComponentes();
+				agregarRepuestoATabla();
 				ocultarColumnaId();
 				sumarTotales();
 				sumarTotalComponentes();
@@ -196,16 +197,11 @@ public class ControladorPresupuesto implements ActionListener{
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO no puede estar vacio ", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 			
-		}else if(!soloNumeros(this.ventanaPresupuesto.getManoDeObra_txf().getText().toString())){
+		}else if(!soloFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText().toString())){
 
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo PRECIO MANO DE OBRA  admite solo NUMEROS", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 			
-		}else if(Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText()) == 0.0){
-
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo PRECIO MANO DE OBRA  no puede ser CERO ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
-
 		}else if(this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().isEmpty()){
 
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRBAJO 	no puede estar vacio ", "Atencion!",
@@ -218,15 +214,27 @@ public class ControladorPresupuesto implements ActionListener{
 			
 		}else{
 			
-			guardarPresupuesto();
-
-			guardarRepuestos(obtenerIdPresupuesto());
+			this.presupuesto.guardarModelo();
 		}
 	}
 	
 	
 	private boolean soloNumeros(String texto){
-		 try { Integer.parseInt(texto); return true; } catch (Exception e) { return false; }
+		try { 
+			Integer.parseInt(texto); 
+			return true; 
+		} catch (Exception e) { 
+			return false; 
+		}
+	}
+	
+	private boolean soloFloat(String texto) {
+		try {
+			Float.parseFloat(texto);
+			return true;
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
 	}
 
 
@@ -253,35 +261,25 @@ public class ControladorPresupuesto implements ActionListener{
 					Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText());
 
 			this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(suma));
-			
-			
-		}
-
-	}
-
-
-	private void guardarRepuestos(int idPresupuesto) {
-		
-		int idRepuesto;
-		int cantidad;
-		
-		for(int i = 0; i < this.ventanaPresupuesto.getComponentes_table().getRowCount(); i++){
-			
-			idRepuesto = Integer.parseInt(this.modelTable.getValueAt(i, 0).toString());
-			cantidad = Integer.parseInt(this.modelTable.getValueAt(i, 2).toString());
-
-			PresupuestoRepuestoDTO repuestoNuevo = new PresupuestoRepuestoDTO(0,idPresupuesto,idRepuesto,cantidad,null,true);
-				
-					
-			PresupuestoRepuestos nuevo = new PresupuestoRepuestos();
-			nuevo.agregarRepuesto(repuestoNuevo);
 		}
 	}
-	
-	private int obtenerIdPresupuesto() {
+
+	private void actualizarTablaRepuestos() {
+		modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
+		 
+		List<ItemPresupuestoRepuestoDTO> repuestosAgregados = presupuesto.getListaDeRepuestos();
 		
-		PresupuestoRepuestos buscar = new PresupuestoRepuestos();
-		return buscar.buscarIdPresupuesto(ingreso.getId());
+		for(int i = 0; i < repuestosAgregados.size(); i++){
+			Object[] fila = {repuestosAgregados.get(i).getId(),repuestosAgregados.get(i).getDetalle(),
+					repuestosAgregados.get(i).getCantidad(),repuestosAgregados.get(i).getPrecioUnitario(),
+					repuestosAgregados.get(i).getPrecio()};
+
+			modelTable.insertRow(0, fila);
+		}
+		
+		this.ventanaPresupuesto.getComponentes_table().setModel(modelTable);
+		
+		ocultarColumnaId();
 	}
 
 	private void guardarPresupuesto() {
@@ -297,6 +295,7 @@ public class ControladorPresupuesto implements ActionListener{
 				ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText(),
 				importeManoObra ,
 				horasTrabajo,
+				sumatotal,
 				null,
 				ventanaPresupuesto.getVencimiento_Calendario().getDate(),
 				this.usuarioLogueado.getId(),
@@ -306,39 +305,40 @@ public class ControladorPresupuesto implements ActionListener{
 
 		nuevo.insert(presupuestoNuevo);
 
-		ventanaPresupuesto.dispose();	
+		ventanaPresupuesto.dispose();
 	}
 
 	private void eliminarComponenteDeTabla() {
 
-		if (this.ventanaPresupuesto.getComponentes_table().getSelectedRow() != -1){
+		if(this.ventanaPresupuesto.getComponentes_table().getSelectedRow() != -1) {
 
-			modelTable.removeRow(ventanaPresupuesto.getComponentes_table().getSelectedRow());
+			int seleccionado = ventanaPresupuesto.getComponentes_table().getSelectedRow();
+			String id = ventanaPresupuesto.getComponentes_table().getValueAt(seleccionado, 2).toString();
+			for (int i = 0; i < this.presupuesto.getListaDeRepuestos().size(); i++) {
+				if(this.presupuesto.getListaDeRepuestos().get(i).getIdrepuesto() == Integer.parseInt(id)) {
+					this.presupuesto.getListaDeRepuestos().remove(i);
+				}
+			}
+			
 			sumarTotales();
-
-		}else{
+		} else {
 
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "debe seleccionar fila para eliminar ", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
-	private void llenarTablaComponentes() {
+	private void agregarRepuestoATabla() {
 
-		/*modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
-
-		this.listaDeComponetes = presupuesto.buscarComponentes((String) this.ventanaPresupuesto.getComponente_ComboBox().getSelectedItem());
-
-		for (int i = 0; i < this.listaDeComponetes.size(); i ++)
-		{
-
-			Object[] fila = {this.listaDeComponetes.get(i).getId(),this.listaDeComponetes.get(i).getDetalle(),
-					ventanaPresupuesto.getCantidad_lbl().getText(), this.listaDeComponetes.get(i).getPrecioUnitario(),
-					Float.parseFloat(this.ventanaPresupuesto.getCantidad_lbl().getText()) *
-					this.listaDeComponetes.get(i).getPrecioUnitario()};
-
-			modelTable.insertRow(0, fila);
-		}*/
+		modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
+		
+		//agrego el repuesto al objeto Presupuesto con su lista
+		int cantidad = Integer.parseInt(ventanaPresupuesto.getCantidad_lbl().getText());
+		RepuestoDTO resp = presupuesto.buscarRepuesto((String) this.ventanaPresupuesto.getComponente_ComboBox().getSelectedItem());
+		ItemPresupuestoRepuestoDTO itemRepuesto = new ItemPresupuestoRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, resp.getPrecioUnitario(),resp.getPrecioUnitario() * cantidad);
+		presupuesto.addRepuestoListaDeComponentes(itemRepuesto);
+		//actualizo la tabla de repuestos
+		actualizarTablaRepuestos();
 	}
 
 	private void sumarTotales() {
@@ -358,7 +358,7 @@ public class ControladorPresupuesto implements ActionListener{
 		PerfilDTO perf3 = new PerfilDTO("JEFE");
 		UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
 		Ingreso ing = new Ingreso();
-		ing.setId(6);
+		ing.setId(7);
 		ing.cargarModeloCompleto();
 
 		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),

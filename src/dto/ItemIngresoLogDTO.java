@@ -2,13 +2,13 @@ package dto;
 
 import java.util.Date;
 
-public class IngresoEstadoDTO {
+public class ItemIngresoLogDTO {
 	private int id;
 	private String detalle;
 	private Date fecha_creacion;
 	private int idusuario;
 	
-	public IngresoEstadoDTO(int id, String detalle, Date fecha_creacion, int idusuario){
+	public ItemIngresoLogDTO(int id, String detalle, Date fecha_creacion, int idusuario){
 		this.id = id;
 		this.detalle = detalle;
 		this.setFecha_creacion(fecha_creacion);

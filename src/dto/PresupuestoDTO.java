@@ -10,18 +10,20 @@ public class PresupuestoDTO {
 	private String descripcionTecnica;
 	private int horasTrabajo;
 	private float importeManoObra;
+	private float importeTotal;
 	private Date fechacreacion;
 	private Date fechavencimiento;
 	private int idUsuario;
 	private boolean habilitado;
 
 	public PresupuestoDTO(int id, int idIngreso, String descripcionBreve, String descripcionTecnica,
-			float importeManoObra, int horasTrabajo, Date fechaCreacion, Date fechaVencimiento, int idUsusario, boolean habilitado) {
+			float importeManoObra, int horasTrabajo, float importeTotal, Date fechaCreacion, Date fechaVencimiento, int idUsusario, boolean habilitado) {
 		this.id = id;
 		this.idIngreso = idIngreso;
 		this.descripcionBreve = descripcionBreve;
 		this.descripcionTecnica = descripcionTecnica;
 		this.importeManoObra = importeManoObra;
+		this.importeTotal = importeTotal;
 		this.horasTrabajo = horasTrabajo;
 		this.fechacreacion = fechaCreacion;
 		this.fechavencimiento = fechaVencimiento;
@@ -107,6 +109,14 @@ public class PresupuestoDTO {
 
 	public void setHorasTrabajo(int horasTrabajo) {
 		this.horasTrabajo = horasTrabajo;
+	}
+
+	public float getImporteTotal() {
+		return importeTotal;
+	}
+
+	public void setImporteTotal(float importeTotal) {
+		this.importeTotal = importeTotal;
 	}
 
 }

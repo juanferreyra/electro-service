@@ -2,7 +2,7 @@ package dto;
 
 import java.util.Date;
 
-public class ComponenteDTO {
+public class RepuestoDTO {
 	
 	private int id;
 	private String detalle;
@@ -12,7 +12,7 @@ public class ComponenteDTO {
 	private int idUsuario;
 	private int habilitado;
 	
-	public ComponenteDTO (int id, String detalle, float precioUnitario,
+	public RepuestoDTO (int id, String detalle, float precioUnitario,
 			int stockMinimo, Date fechaCreacion,int idUsuario, int habilitado ){
 		
 		this.id = id;

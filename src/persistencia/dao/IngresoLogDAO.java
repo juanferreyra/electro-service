@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.IngresoEstadoDTO;
+import dto.ItemIngresoLogDTO;
 import dto.IngresoLogDTO;
 import persistencia.conexion.Conexion;
 
@@ -96,10 +96,10 @@ public class IngresoLogDAO {
 		return marcas;
 	}
 
-	public ArrayList<IngresoEstadoDTO> find(int idIngreso) {
+	public ArrayList<ItemIngresoLogDTO> find(int idIngreso) {
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query
-		ArrayList<IngresoEstadoDTO> ingreso_log = new ArrayList<IngresoEstadoDTO>();
+		ArrayList<ItemIngresoLogDTO> ingreso_log = new ArrayList<ItemIngresoLogDTO>();
 		try
 		{
 			statement = conexion.getSQLConexion().prepareStatement(find);
@@ -108,7 +108,7 @@ public class IngresoLogDAO {
 			
 			while(resultSet.next())
 			{
-				ingreso_log.add(new IngresoEstadoDTO(resultSet.getInt("id"),resultSet.getString("detalle"),resultSet.getDate("fecha_creacion"),resultSet.getInt("idusuario")));
+				ingreso_log.add(new ItemIngresoLogDTO(resultSet.getInt("id"),resultSet.getString("detalle"),resultSet.getDate("fecha_creacion"),resultSet.getInt("idusuario")));
 			}
 		}
 		catch (SQLException e) 
