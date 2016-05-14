@@ -22,6 +22,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -77,8 +79,8 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Nï¿½mero", "Fecha",
-				"Producto", "Cliente", "Env\u00EDo", "", "T\u00E9cnico Asignado", "Estado" }) {
+		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número", "Fecha",
+				"Producto", "Cliente", "Envío", "", "Técnico Asignado", "Estado" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { JLabel.class, Integer.class, String.class, String.class, String.class,
 					String.class, JLabel.class, String.class, String.class };
@@ -119,20 +121,20 @@ public class VentanaPrincipal extends JFrame {
 		JPanel panelDeBotones = new JPanel(new FlowLayout());
 		contentPane.add(panelDeBotones, BorderLayout.SOUTH);
 
-		ingresarProducto_btn = new JButton("<html><center>Ingresar Producto</center></html>");
+		ingresarProducto_btn = new JButton("<html><center>Crear</center></html>");
 		ingresarProducto_btn.setBounds(10, 461, 158, 36);
 		panelDeBotones.add(ingresarProducto_btn);
 
-		presupuestar_btn = new JButton("Presupuestar");
-		presupuestar_btn.setBounds(587, 474, 137, 23);
+		presupuestar_btn = new JButton("<html>Presupuestar</html>");
+		presupuestar_btn.setBounds(587, 474,  158, 36);
 		panelDeBotones.add(presupuestar_btn);
 
 		asignarOrden_btn = new JButton("Asignar Orden");
-		asignarOrden_btn.setBounds(734, 474, 137, 23);
+		asignarOrden_btn.setBounds(734, 474, 158, 36);
 		panelDeBotones.add(asignarOrden_btn);
 
-		reparacion_btn = new JButton("Reparaci\u00F3n");
-		reparacion_btn.setBounds(881, 474, 137, 23);
+		reparacion_btn = new JButton("Detalle reparaci\u00F3n");
+		reparacion_btn.setBounds(881, 474,  158, 36);
 		panelDeBotones.add(reparacion_btn);
 
 	}

@@ -23,6 +23,7 @@ import persistencia.dao.UsuarioDAO;
 import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaPrincipal;
+import presentacion.vista.VentanaReparacion;
 
 public class ControladorVentanaPrincipal implements ActionListener {
 
@@ -40,6 +41,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.usuarioLogueado = usuario;
 		this.principal.getIngresarProducto_btn().addActionListener(this);
 		this.principal.getPresupuestar_btn().addActionListener(this);
+		this.principal.getReparacion_btn().addActionListener(this);
 		this.perfil = usuario.getPerfilDTO().getPerfil();
 		this.agregarMouseListenerTabla(this);
 	}
@@ -193,7 +195,27 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
 
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
+			
+			//REVISAR (COPI Y PASTE DE PRESUPUESTO)
+			if (this.principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
+				int nroIngreso = (int) this.principal.getOrdenesDeTrabajo_table()
+						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
+				String estado = (String) this.principal.getOrdenesDeTrabajo_table()
+						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 8);
+				if (estado.equals("EN REPARACION")) {
 
+					Ingreso ing = new Ingreso();
+					ing.setId(nroIngreso);
+					ing.cargarModeloCompleto();
+
+					ControladorReparacion controladorReparacion = new ControladorReparacion(new VentanaReparacion(),
+							ing, usuarioLogueado);
+					controladorReparacion.inicializar();
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"No es posible presupuestar el registro seleccionado. Por favor, seleccione una orden en estado 'NUEVO'.");
+				}
+			}
 		}
 	}
 
