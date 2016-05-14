@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JCheckBox;
 
 public class VentanaReparacion extends JFrame {
 
@@ -56,8 +57,8 @@ public class VentanaReparacion extends JFrame {
 		fechaIngresoText_lbl.setBounds(572, 11, 102, 14);
 		contentPane.add(fechaIngresoText_lbl);
 
-		JLabel titulo_lbl = new JLabel("<html><b>REPARACI\u00D3N</b></html>");
-		titulo_lbl.setBounds(52, 11, 495, 14);
+		JLabel titulo_lbl = new JLabel("<html><i>DETALLE DE REPARACION</i></html>");
+		titulo_lbl.setBounds(30, 11, 495, 14);
 		contentPane.add(titulo_lbl);
 
 		JSeparator separator = new JSeparator();
@@ -66,27 +67,28 @@ public class VentanaReparacion extends JFrame {
 		contentPane.add(separator);
 
 		JLabel nombreProducto_lbl = new JLabel("<html><i>Nombre Producto:</i></html>");
-		nombreProducto_lbl.setBounds(47, 37, 116, 29);
+		nombreProducto_lbl.setBounds(30, 33, 212, 29);
 		contentPane.add(nombreProducto_lbl);
 
 		nombreProductoTexto_lbl = new JLabel("");
-		nombreProductoTexto_lbl.setBounds(179, 37, 445, 26);
+		nombreProductoTexto_lbl.setHorizontalTextPosition(SwingConstants.LEFT);
+		nombreProductoTexto_lbl.setBounds(121, 36, 445, 21);
 		contentPane.add(nombreProductoTexto_lbl);
 
 		JLabel marca_lbl = new JLabel("<html><i>Marca:</i></html>");
-		marca_lbl.setBounds(52, 78, 116, 14);
+		marca_lbl.setBounds(30, 68, 138, 14);
 		contentPane.add(marca_lbl);
 
 		marcaTexto_lbl = new JLabel("");
-		marcaTexto_lbl.setBounds(153, 70, 184, 14);
+		marcaTexto_lbl.setBounds(72, 68, 184, 14);
 		contentPane.add(marcaTexto_lbl);
 
 		JLabel tipo_lbl = new JLabel("<html><i>Tipo:</i></html>");
-		tipo_lbl.setBounds(338, 78, 116, 14);
+		tipo_lbl.setBounds(255, 68, 116, 14);
 		contentPane.add(tipo_lbl);
 
 		tipoTexto_lbl = new JLabel("");
-		tipoTexto_lbl.setBounds(490, 78, 184, 14);
+		tipoTexto_lbl.setBounds(275, 68, 219, 14);
 		contentPane.add(tipoTexto_lbl);
 
 		JLabel descripcionFalla_lbl = new JLabel("<html><i>Descripci\u00F3n falla:</i></html>");
@@ -192,6 +194,9 @@ public class VentanaReparacion extends JFrame {
 		JLabel lblFecha = new JLabel("");
 		lblFecha.setBounds(435, 10, 70, 15);
 		contentPane.add(lblFecha);
+		
+		JCheckBox reparable_CheckBox = new JCheckBox("Reparable");
+		reparable_CheckBox.setBounds(591, 40, 97, 23);
+		contentPane.add(reparable_CheckBox);
 	}
-
 }
