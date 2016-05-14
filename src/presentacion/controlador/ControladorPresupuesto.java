@@ -46,9 +46,6 @@ public class ControladorPresupuesto implements ActionListener{
 		 this.ingreso = ingreso;
 		 this.usuarioLogueado = usuario;
 		 this.presupuesto = new Presupuesto(ingreso.getIngreso());
-		 if(presupuesto.getId()!=-1) {
-			 cargarModelo();
-		 }
 	}
 	
 	public void inicializar() {
@@ -61,10 +58,13 @@ public class ControladorPresupuesto implements ActionListener{
 		cargarComboComponentes();
 		cargarIngreso();
 		//cargo el usuario
-		if(presupuesto.getId()!=-1) {
+		if(presupuesto.getId()==-1) {
 			ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
-			ventanaPresupuesto.getTotal_lbl().setText((String.valueOf(suma)));
-			ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(sumatotal));
+			ventanaPresupuesto.getManoDeObra_txf().setText("0");
+		} else {
+			cargarModelo();
+			ventanaPresupuesto.getGuardar_btn().setVisible(false);
+			ventanaPresupuesto.getCancelar_btn().setText("Cerrar");
 		}
 	}
 	
@@ -77,9 +77,9 @@ public class ControladorPresupuesto implements ActionListener{
 
 	private void cargarComboComponentes() {
 		
-		/*for (ComponenteDTO c : presupuesto.getListaDeComponetes()){
+		for (RepuestoDTO c : presupuesto.obtenerRepuestos()){
 			this.ventanaPresupuesto.getComponente_ComboBox().addItem(c.getDetalle());
-		}*/
+		}
 	}
 	
 	private void cargarModelo()
@@ -95,13 +95,13 @@ public class ControladorPresupuesto implements ActionListener{
 		//seteo la fecha de vencimiento
 		this.ventanaPresupuesto.getVencimiento_Calendario().setDate(this.presupuesto.getPresupuesto().getFechavencimiento());
 		//seteo el total de repuestos
-		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteManoObra()));
+		sumarTotales();
 		//seteo el total de mano de obra
 		this.ventanaPresupuesto.getManoDeObra_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteManoObra()));
 		//seteo la cantidad de horas totales
 		this.ventanaPresupuesto.getHorasDeTrabajo_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getHorasTrabajo()));
 		//seteo el total del presupuesto (que actualmente se guarda en mano de obra)
-		this.ventanaPresupuesto.getTotal_lbl().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
+		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
 	}
 
 	@Override
@@ -265,6 +265,7 @@ public class ControladorPresupuesto implements ActionListener{
 	}
 
 	private void actualizarTablaRepuestos() {
+		modelTable = new DefaultTableModel();
 		modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
 		 
 		List<ItemPresupuestoRepuestoDTO> repuestosAgregados = presupuesto.getListaDeRepuestos();
@@ -304,7 +305,7 @@ public class ControladorPresupuesto implements ActionListener{
 		PresupuestoDAO nuevo = new PresupuestoDAO();
 
 		nuevo.insert(presupuestoNuevo);
-
+		
 		ventanaPresupuesto.dispose();
 	}
 

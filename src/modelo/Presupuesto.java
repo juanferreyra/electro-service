@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 import dto.RepuestoDTO;
 import dto.IngresoDTO;
@@ -14,7 +15,7 @@ public class Presupuesto
 	private int id;
 	private IngresoDTO ingreso;
 	private PresupuestoDTO presupuesto;
-	private List<ItemPresupuestoRepuestoDTO> listaDeRepuestos;
+	private ArrayList<ItemPresupuestoRepuestoDTO> listaDeRepuestos;
 	
 	private PresupuestoDAO presupuestoDAO;
 	private PresupuestoRepuestoDAO presupuestoRepuestoDAO;
@@ -33,6 +34,7 @@ public class Presupuesto
 			listaDeRepuestos = obtenerItemsRepuestos(id);
 		} catch (Exception e) {
 			id = -1;
+			listaDeRepuestos = new ArrayList<ItemPresupuestoRepuestoDTO>();
 		}
 	}
 
@@ -45,7 +47,7 @@ public class Presupuesto
 	}
 	
 	public void guardarModelo() {
-		// TODO Auto-generated method stub
+		// TODO Aca agarraria el modelo cargado con todos los datos y lo guardaria con su correspondiente dao
 	}
 
 	public PresupuestoDTO getPresupuesto() {
@@ -69,7 +71,7 @@ public class Presupuesto
 	}
 
 	//Funciones Repuestos
-	public List<ItemPresupuestoRepuestoDTO> obtenerItemsRepuestos(int id) {
+	public ArrayList<ItemPresupuestoRepuestoDTO> obtenerItemsRepuestos(int id) {
            return presupuestoRepuestoDAO.readAll(id);
 	}
 	
@@ -90,7 +92,6 @@ public class Presupuesto
 	}
 	
 	public void addRepuestoListaDeComponentes(ItemPresupuestoRepuestoDTO resp) {
-		
+		listaDeRepuestos.add(resp);
 	}
-
 }
