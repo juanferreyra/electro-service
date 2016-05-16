@@ -1,18 +1,45 @@
 package presentacion.controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import dto.UsuarioDTO;
 import modelo.Ingreso;
 import presentacion.vista.VentanaReparacion;
 
-public class ControladorReparacion {
+public class ControladorReparacion implements ActionListener {
 
-	public ControladorReparacion(VentanaReparacion ventanaReparacion, Ingreso ing, UsuarioDTO usuarioLogueado) {
-		// TODO Auto-generated constructor stub
+	private VentanaReparacion ventanaReparacion;
+	private Ingreso ingreso;
+
+	public ControladorReparacion(VentanaReparacion ventanaReparacion, Ingreso ingreso, UsuarioDTO usuarioLogueado) {
+		this.ventanaReparacion = ventanaReparacion;
+		this.ingreso = ingreso;
+
 	}
 
 	public void inicializar() {
-		// TODO Auto-generated method stub
+		setearDatosIngreso();
+		// cargaComboBoxComponentes();
+		// cargarComponentes();
 
+		// setearEstadoReparable();
+		this.ventanaReparacion.setVisible(true);
+	}
+
+	private void setearDatosIngreso() {
+		this.ventanaReparacion.setTipoTexto_lbl(ingreso.getTipoproducto().getDetalle());
+		this.ventanaReparacion.setMarcaTexto_lbl(ingreso.getMarca().getDetalle());
+		this.ventanaReparacion.setNombreProductoTexto_lbl(ingreso.ingr.getDescripcion());
+		this.ventanaReparacion.getDescripcionFalla_txtArea().setText(ingreso.getIngreso().getDescripcion_falla());
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		// if (e.getSource() == this.ventanaReparacion) {
+		// }
 	}
 
 }
