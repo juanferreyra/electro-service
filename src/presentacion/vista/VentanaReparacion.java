@@ -66,42 +66,29 @@ public class VentanaReparacion extends JFrame {
 		separator.setForeground(Color.BLUE);
 		contentPane.add(separator);
 
-		JLabel nombreProducto_lbl = new JLabel("<html><i>Nombre Producto:</i></html>");
-		nombreProducto_lbl.setBounds(30, 33, 212, 29);
-		contentPane.add(nombreProducto_lbl);
-
 		nombreProductoTexto_lbl = new JLabel("");
 		nombreProductoTexto_lbl.setHorizontalTextPosition(SwingConstants.LEFT);
-		nombreProductoTexto_lbl.setBounds(121, 36, 445, 21);
+		nombreProductoTexto_lbl.setBounds(30, 42, 445, 21);
 		contentPane.add(nombreProductoTexto_lbl);
 
-		JLabel marca_lbl = new JLabel("<html><i>Marca:</i></html>");
-		marca_lbl.setBounds(30, 68, 138, 14);
-		contentPane.add(marca_lbl);
-
 		marcaTexto_lbl = new JLabel("");
-		marcaTexto_lbl.setBounds(72, 68, 184, 14);
+		marcaTexto_lbl.setBounds(30, 68, 184, 14);
 		contentPane.add(marcaTexto_lbl);
 
-		JLabel tipo_lbl = new JLabel("<html><i>Tipo:</i></html>");
-		tipo_lbl.setBounds(255, 68, 116, 14);
-		contentPane.add(tipo_lbl);
-
 		tipoTexto_lbl = new JLabel("");
-		tipoTexto_lbl.setBounds(275, 68, 219, 14);
+		tipoTexto_lbl.setBounds(280, 68, 219, 14);
 		contentPane.add(tipoTexto_lbl);
 
 		JLabel descripcionFalla_lbl = new JLabel("<html><i>Descripci\u00F3n falla:</i></html>");
-		descripcionFalla_lbl.setBounds(47, 103, 146, 14);
+		descripcionFalla_lbl.setBounds(30, 101, 146, 14);
 		contentPane.add(descripcionFalla_lbl);
 
 		JScrollPane descripcionFalla_jScrollPane = new javax.swing.JScrollPane();
+		descripcionFalla_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		descripcionFalla_jScrollPane.setBounds(30, 126, 664, 46);
 		descripcionFalla_jScrollPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		descripcionFalla_jScrollPane
 				.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		descripcionFalla_jScrollPane
-				.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		descripcionFalla_txtArea = new JTextArea();
 		descripcionFalla_txtArea.setEditable(false);
@@ -163,7 +150,7 @@ public class VentanaReparacion extends JFrame {
 		contentPane.add(componentes_scrollPane);
 
 		componentes_table = new JTable(componentes_informacionTabla, componentes_nombreColumnas);
-		// componentes_table.setEnabled(false);
+
 		componentes_scrollPane.setViewportView(componentes_table);
 
 		JLabel descripcionFinal_lbl = new JLabel("Descripcion final:");
@@ -194,9 +181,58 @@ public class VentanaReparacion extends JFrame {
 		JLabel lblFecha = new JLabel("");
 		lblFecha.setBounds(435, 10, 70, 15);
 		contentPane.add(lblFecha);
-		
+
 		JCheckBox reparable_CheckBox = new JCheckBox("Reparable");
 		reparable_CheckBox.setBounds(591, 40, 97, 23);
 		contentPane.add(reparable_CheckBox);
 	}
+
+	public JButton getCancelar_btn() {
+		return cancelar_btn;
+	}
+
+	public void setCancelar_btn(JButton cancelar_btn) {
+		this.cancelar_btn = cancelar_btn;
+	}
+
+	public JButton getGuardar_btn() {
+		return guardar_btn;
+	}
+
+	public void setGuardar_btn(JButton guardar_btn) {
+		this.guardar_btn = guardar_btn;
+	}
+
+	public JLabel getNombreProductoTexto_lbl() {
+		return nombreProductoTexto_lbl;
+	}
+
+	public void setNombreProductoTexto_lbl(String nombreProducto) {
+		this.nombreProductoTexto_lbl.setText(nombreProducto);
+	}
+
+	public JLabel getTipoTexto_lbl() {
+		return tipoTexto_lbl;
+	}
+
+	public void setTipoTexto_lbl(String tipo) {
+		this.tipoTexto_lbl.setText(tipo);
+	}
+
+	public JLabel getMarcaTexto_lbl() {
+		return marcaTexto_lbl;
+	}
+
+	public void setMarcaTexto_lbl(String marca) {
+		this.marcaTexto_lbl.setText(marca);
+	}
+
+	public JTextArea getDescripcionFalla_txtArea() {
+		return descripcionFalla_txtArea;
+	}
+
+	public void setDescripcionFalla_txtArea(JTextArea descripcionFalla_txtArea) {
+		this.descripcionFalla_txtArea = descripcionFalla_txtArea;
+	}
+
 }

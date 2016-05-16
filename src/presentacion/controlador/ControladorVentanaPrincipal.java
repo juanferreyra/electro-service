@@ -195,14 +195,14 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
 
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
-			
-			//REVISAR (COPI Y PASTE DE PRESUPUESTO)
+
+			// REVISAR (COPI Y PASTE DE PRESUPUESTO)
 			if (this.principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
 				int nroIngreso = (int) this.principal.getOrdenesDeTrabajo_table()
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
 				String estado = (String) this.principal.getOrdenesDeTrabajo_table()
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 8);
-				if (estado.equals("EN REPARACION")) {
+				if (estado.equals("NUEVO")) {//Para cambiar a "EN REPARACION", solo para debug
 
 					Ingreso ing = new Ingreso();
 					ing.setId(nroIngreso);
@@ -213,7 +213,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					controladorReparacion.inicializar();
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"No es posible presupuestar el registro seleccionado. Por favor, seleccione una orden en estado 'NUEVO'.");
+							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'EN REPARACION'.");
 				}
 			}
 		}
