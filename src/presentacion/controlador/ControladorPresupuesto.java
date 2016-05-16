@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 
 import dto.RepuestoDTO;
 import dto.ItemPresupuestoRepuestoDTO;
-import dto.PerfilDTO;
 import dto.UsuarioDTO;
 import modelo.Ingreso;
 import modelo.Presupuesto;
@@ -99,6 +98,8 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getHorasDeTrabajo_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getHorasTrabajo()));
 		//seteo el total del presupuesto (que actualmente se guarda en mano de obra)
 		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
+		//TODO:Deberia setear el usuario que creo el presupuesto, por ahora seteo el lodeado hasta que hagamos el ABM de usuarios
+		ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
 	}
 
 	@Override
@@ -353,16 +354,4 @@ public class ControladorPresupuesto implements ActionListener{
 		ventanaPresupuesto.getTotal_lbl().setText(String.valueOf(suma));
 
 	}
-	
-	/*public static void main(String[] args) {
-		PerfilDTO perf3 = new PerfilDTO("JEFE");
-		UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
-		Ingreso ing = new Ingreso();
-		ing.setId(7);
-		ing.cargarModeloCompleto();
-
-		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-				ing, user3);
-		controladorPresupuesto.inicializar();
-	}*/
 }

@@ -36,7 +36,6 @@ public class VentanaPresupuesto extends JFrame {
 	private JTextArea descripcionBreve_jTextArea;
 	private JTextArea descripcionTecnica_jTextArea;
 	private JTextField valorPresupuestado_txf;
-	private JButton verPresupuesto_btn;
 	private JButton enviarPresupuesto_btn;
 	private JButton cancelar_btn;
 	private JButton guardar_btn;
@@ -81,7 +80,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(separator);
 
 		JLabel nombreProducto_lbl = new JLabel("<html><i>Nombre Producto:</i></html>");
-		nombreProducto_lbl.setBounds(47, 37, 116, 29);
+		nombreProducto_lbl.setBounds(40, 36, 116, 29);
 		contentPane.add(nombreProducto_lbl);
 
 		nombreProductoTexto_lbl = new JLabel("");
@@ -89,7 +88,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(nombreProductoTexto_lbl);
 
 		JLabel marca_lbl = new JLabel("<html><i>Marca:</i></html>");
-		marca_lbl.setBounds(52, 78, 116, 14);
+		marca_lbl.setBounds(40, 77, 116, 14);
 		contentPane.add(marca_lbl);
 
 		marcaTexto_lbl = new JLabel("");
@@ -128,11 +127,11 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(separator_2);
 
 		JLabel lblTecnico = new JLabel("Tecnico Asignado:");
-		lblTecnico.setBounds(40, 192, 153, 14);
+		lblTecnico.setBounds(40, 192, 116, 14);
 		contentPane.add(lblTecnico);
 
 		JLabel horasDeTrabajo_lbl = new JLabel("Horas de trabajo:");
-		horasDeTrabajo_lbl.setBounds(10, 550, 146, 14);
+		horasDeTrabajo_lbl.setBounds(30, 551, 112, 14);
 		contentPane.add(horasDeTrabajo_lbl);
 
 		horasDeTrabajo_txf = new JTextField();
@@ -141,7 +140,7 @@ public class VentanaPresupuesto extends JFrame {
 		horasDeTrabajo_txf.setColumns(10);
 
 		JLabel manoDeObra_lbl = new JLabel("Mano de Obra:");
-		manoDeObra_lbl.setBounds(250, 550, 146, 14);
+		manoDeObra_lbl.setBounds(250, 550, 118, 14);
 		contentPane.add(manoDeObra_lbl);
 
 		manoDeObra_txf = new JTextField();
@@ -155,41 +154,41 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(vencimiento_lbl);
 
 		vencimiento_Calendario = new JDateChooser();
-		vencimiento_Calendario.setBounds(583, 544, 129, 20);
+		vencimiento_Calendario.setBounds(574, 548, 129, 20);
 		contentPane.add(vencimiento_Calendario);
 
 		JLabel componentesAUtilizar_lbl = new JLabel("Componentes a utilizar:");
-		componentesAUtilizar_lbl.setBounds(30, 279, 193, 14);
+		componentesAUtilizar_lbl.setBounds(30, 221, 193, 14);
 		contentPane.add(componentesAUtilizar_lbl);
 
 		componente_ComboBox = new JComboBox<String>();
-		componente_ComboBox.setBounds(193, 276, 146, 20);
+		componente_ComboBox.setBounds(193, 218, 146, 20);
 		contentPane.add(componente_ComboBox);
 
 		incrementoCantComponente_btn = new JButton("");
-		incrementoCantComponente_btn.setBounds(360, 275, 33, 23);
+		incrementoCantComponente_btn.setBounds(360, 217, 33, 23);
 		incrementoCantComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/plus-outline.png")));
 		contentPane.add(incrementoCantComponente_btn);
 
 		decrementoCantComponente_btn = new JButton("");
-		decrementoCantComponente_btn.setBounds(443, 275, 33, 23);
+		decrementoCantComponente_btn.setBounds(443, 217, 33, 23);
 		decrementoCantComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/minus-outline.png")));
 		contentPane.add(decrementoCantComponente_btn);
 
 		cantidad_lbl = new JLabel("1");
-		cantidad_lbl.setBounds(402, 276, 33, 20);
+		cantidad_lbl.setBounds(402, 218, 33, 20);
 		cantidad_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		cantidad_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		cantidad_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255)));
 		contentPane.add(cantidad_lbl);
 
 		agregarComponente_btn = new JButton("");
-		agregarComponente_btn.setBounds(486, 275, 33, 23);
+		agregarComponente_btn.setBounds(486, 217, 33, 23);
 		agregarComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/tick-outline.png")));
 		contentPane.add(agregarComponente_btn);
 
 		eliminarComponente_btn = new JButton("");
-		eliminarComponente_btn.setBounds(527, 275, 33, 23);
+		eliminarComponente_btn.setBounds(527, 217, 33, 23);
 		eliminarComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/times-outline.png")));
 		contentPane.add(eliminarComponente_btn);
 
@@ -199,8 +198,8 @@ public class VentanaPresupuesto extends JFrame {
 		componentes_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		componentes_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		componentes_scrollPane.setEnabled(false);
-		componentes_scrollPane.setSize(664, 95);
-		componentes_scrollPane.setLocation(30, 304);
+		componentes_scrollPane.setSize(664, 118);
+		componentes_scrollPane.setLocation(30, 246);
 		componentes_scrollPane.setBackground(Color.WHITE);
 		contentPane.add(componentes_scrollPane);
 
@@ -209,47 +208,44 @@ public class VentanaPresupuesto extends JFrame {
 		componentes_scrollPane.setViewportView(componentes_table);
 
 		JLabel descripcionBreve_lbl = new JLabel("Descripcion breve:");
-		descripcionBreve_lbl.setBounds(47, 445, 156, 14);
+		descripcionBreve_lbl.setBounds(47, 397, 156, 14);
 		contentPane.add(descripcionBreve_lbl);
 		JScrollPane descripcionBreve_jScrollPane = new JScrollPane();
 		descripcionBreve_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		descripcionBreve_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionBreve_jScrollPane.setBounds(new Rectangle(10, 10, 30, 30));
-		descripcionBreve_jScrollPane.setBounds(30, 471, 291, 52);
+		descripcionBreve_jScrollPane.setBounds(30, 422, 291, 111);
 		contentPane.add(descripcionBreve_jScrollPane);
 		descripcionBreve_jTextArea = new JTextArea();
+		descripcionBreve_jTextArea.setLineWrap(true);
 		descripcionBreve_jScrollPane.setViewportView(descripcionBreve_jTextArea);
 
 		JLabel descripcionTecnica_lbl = new JLabel();
 		descripcionTecnica_lbl.setText("Descripci\u00F3n t\u00E9cnica:");
-		descripcionTecnica_lbl.setBounds(412, 445, 291, 14);
+		descripcionTecnica_lbl.setBounds(412, 397, 291, 14);
 		contentPane.add(descripcionTecnica_lbl);
 		JScrollPane descripcionTecnica_jScrollPane = new JScrollPane();
 		descripcionTecnica_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionTecnica_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		descripcionTecnica_jScrollPane.setBounds(394, 471, 300, 52);
+		descripcionTecnica_jScrollPane.setBounds(394, 422, 300, 111);
 		contentPane.add(descripcionTecnica_jScrollPane);
 		descripcionTecnica_jTextArea = new JTextArea();
+		descripcionTecnica_jTextArea.setLineWrap(true);
 		descripcionTecnica_jScrollPane.setViewportView(descripcionTecnica_jTextArea);
 
 		JLabel valorPresupuestado_lbl = new JLabel();
 		valorPresupuestado_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		valorPresupuestado_lbl.setText("Valor Presupuestado:");
-		valorPresupuestado_lbl.setBounds(10, 580, 196, 20);
+		valorPresupuestado_lbl.setBounds(30, 578, 196, 20);
 		contentPane.add(valorPresupuestado_lbl);
 		valorPresupuestado_txf = new JTextField();
 		valorPresupuestado_txf.setBackground(SystemColor.text);
-		valorPresupuestado_txf.setBounds(193, 580, 146, 23);
+		valorPresupuestado_txf.setBounds(222, 579, 146, 23);
 		contentPane.add(valorPresupuestado_txf);
-
-		verPresupuesto_btn = new JButton("Imprimir");
-		verPresupuesto_btn.setIcon(new ImageIcon("/printer.png"));
-		verPresupuesto_btn.setBounds(12, 615, 146, 23);
-		contentPane.add(verPresupuesto_btn);
 
 		enviarPresupuesto_btn = new JButton("Enviar presupuesto");
 		enviarPresupuesto_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/mail.png")));
-		enviarPresupuesto_btn.setBounds(164, 615, 212, 23);
+		enviarPresupuesto_btn.setBounds(30, 615, 212, 23);
 		contentPane.add(enviarPresupuesto_btn);
 
 		cancelar_btn = new JButton("Cancelar");
@@ -262,11 +258,11 @@ public class VentanaPresupuesto extends JFrame {
 
 		Total_lbl = new JLabel("");
 		Total_lbl.setBorder(new LineBorder(new Color(0, 0, 0)));
-		Total_lbl.setBounds(572, 418, 112, 15);
+		Total_lbl.setBounds(576, 371, 112, 20);
 		contentPane.add(Total_lbl);
 
 		JLabel lblTotalRepuestos = new JLabel("Total repuestos:");
-		lblTotalRepuestos.setBounds(412, 418, 127, 15);
+		lblTotalRepuestos.setBounds(443, 371, 127, 15);
 		contentPane.add(lblTotalRepuestos);
 
 		JLabel lblEstado = new JLabel("Estado:");
@@ -282,7 +278,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(lblFecha);
 
 		lbltecnico = new JLabel("");
-		lbltecnico.setBounds(140, 191, 214, 15);
+		lbltecnico.setBounds(162, 191, 214, 15);
 		contentPane.add(lbltecnico);
 	}
 
@@ -332,10 +328,6 @@ public class VentanaPresupuesto extends JFrame {
 
 	public JTextField getValorPresupuestado_txf() {
 		return valorPresupuestado_txf;
-	}
-
-	public JButton getVerPresupuesto_btn() {
-		return verPresupuesto_btn;
 	}
 
 	public JButton getEnviarPresupuesto_btn() {
