@@ -17,6 +17,7 @@ public class IngresoDAO {
 	private static final String readall = "SELECT * FROM ingreso WHERE habilitado=true";
 	private static final String find = "SELECT * FROM ingreso WHERE habilitado=true AND id = ?";
 	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'ingreso';";
+	private static final String paraEnviar ="SELECT * FROM ingresos WHERE estado = '10' and envio=true";
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<IngresoDTO> readAll() {
@@ -141,5 +142,32 @@ public class IngresoDAO {
 			Conexion.cerrarConexion();
 		}
 		return clave;
+	}
+
+	public ArrayList<IngresoDTO> paraEnviar() {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		ArrayList<IngresoDTO> ingresos = new ArrayList<IngresoDTO>();
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readall);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				ingresos.add(new IngresoDTO(resultSet.getInt("id"), resultSet.getInt("idcliente"),
+						resultSet.getString("descripcion_producto"), resultSet.getInt("idmarca"),
+						resultSet.getInt("idtipo_producto"), resultSet.getString("descripcion_falla"),
+						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
+						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
+						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
+						resultSet.getInt("tecnico_asignado")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return ingresos;
 	}
 }
