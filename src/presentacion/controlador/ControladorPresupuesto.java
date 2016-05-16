@@ -14,11 +14,9 @@ import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
 import dto.ItemPresupuestoRepuestoDTO;
 import dto.PerfilDTO;
-import dto.PresupuestoDTO;
 import dto.UsuarioDTO;
 import modelo.Ingreso;
 import modelo.Presupuesto;
-import persistencia.dao.PresupuestoDAO;
 import presentacion.vista.VentanaPresupuesto;
 
 public class ControladorPresupuesto implements ActionListener{
@@ -30,7 +28,6 @@ public class ControladorPresupuesto implements ActionListener{
 	private Integer cantidad = 0;
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private float suma = 0;
-	private float sumatotal = 0;
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
 	
@@ -213,11 +210,26 @@ public class ControladorPresupuesto implements ActionListener{
 					JOptionPane.INFORMATION_MESSAGE);
 			
 		}else{
+			this.presupuesto.getPresupuesto().setFechavencimiento(this.ventanaPresupuesto.getVencimiento_Calendario().getDate());
+			this.presupuesto.getPresupuesto().setDescripcionBreve(this.ventanaPresupuesto.getDescripcionBreve_jTextArea().getText());
+			this.presupuesto.getPresupuesto().setDescripcionTecnica(this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText());
+			this.presupuesto.getPresupuesto().setHorasTrabajo(Integer.parseInt(this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText()));
+			this.presupuesto.getPresupuesto().setImporteManoObra(Float.parseFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText()));
+			this.presupuesto.getPresupuesto().setImporteTotal(Float.parseFloat(this.ventanaPresupuesto.getTotal_lbl().getText()));
+			this.presupuesto.getPresupuesto().setIdUsuario(this.usuarioLogueado.getId());
 			
-			this.presupuesto.guardarModelo();
+			Boolean ingreso = this.presupuesto.guardarPresupuesto(this.usuarioLogueado.getId());
+			
+			if(ingreso){
+				JOptionPane.showMessageDialog(ventanaPresupuesto, "Presupuesto guardado correctamente", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+				this.ventanaPresupuesto.dispose();
+			} else {
+				JOptionPane.showMessageDialog(ventanaPresupuesto, "Ocurrio un error al guardar el presupuesto", "Atencion!",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
-	
 	
 	private boolean soloNumeros(String texto){
 		try { 
@@ -283,45 +295,22 @@ public class ControladorPresupuesto implements ActionListener{
 		ocultarColumnaId();
 	}
 
-	private void guardarPresupuesto() {
-		
-		float importeManoObra = Float.parseFloat(ventanaPresupuesto.getValorPresupuestado_txf().getText());
-		
-		int horasTrabajo = Integer.parseInt(ventanaPresupuesto.getHorasDeTrabajo_txf().getText());
-		
-		PresupuestoDTO presupuestoNuevo = new PresupuestoDTO(
-				0,
-				ingreso.getId(),
-				ventanaPresupuesto.getDescripcionBreve_jTextArea().getText(),
-				ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText(),
-				importeManoObra ,
-				horasTrabajo,
-				sumatotal,
-				null,
-				ventanaPresupuesto.getVencimiento_Calendario().getDate(),
-				this.usuarioLogueado.getId(),
-				true);
-
-		PresupuestoDAO nuevo = new PresupuestoDAO();
-
-		nuevo.insert(presupuestoNuevo);
-		
-		ventanaPresupuesto.dispose();
-	}
-
 	private void eliminarComponenteDeTabla() {
 
 		if(this.ventanaPresupuesto.getComponentes_table().getSelectedRow() != -1) {
 
 			int seleccionado = ventanaPresupuesto.getComponentes_table().getSelectedRow();
-			String id = ventanaPresupuesto.getComponentes_table().getValueAt(seleccionado, 2).toString();
+			String nombre = ventanaPresupuesto.getComponentes_table().getValueAt(seleccionado, 1).toString();
+			
+			System.out.println(nombre);
 			for (int i = 0; i < this.presupuesto.getListaDeRepuestos().size(); i++) {
-				if(this.presupuesto.getListaDeRepuestos().get(i).getIdrepuesto() == Integer.parseInt(id)) {
+				if(this.presupuesto.getListaDeRepuestos().get(i).getDetalle().equals(nombre)) {
 					this.presupuesto.getListaDeRepuestos().remove(i);
 				}
 			}
 			
 			sumarTotales();
+			actualizarTablaRepuestos();
 		} else {
 
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "debe seleccionar fila para eliminar ", "Atencion!",
@@ -332,12 +321,22 @@ public class ControladorPresupuesto implements ActionListener{
 	private void agregarRepuestoATabla() {
 
 		modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
-		
+		Boolean existe = false;
 		//agrego el repuesto al objeto Presupuesto con su lista
 		int cantidad = Integer.parseInt(ventanaPresupuesto.getCantidad_lbl().getText());
 		RepuestoDTO resp = presupuesto.buscarRepuesto((String) this.ventanaPresupuesto.getComponente_ComboBox().getSelectedItem());
 		ItemPresupuestoRepuestoDTO itemRepuesto = new ItemPresupuestoRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, resp.getPrecioUnitario(),resp.getPrecioUnitario() * cantidad);
-		presupuesto.addRepuestoListaDeComponentes(itemRepuesto);
+		//me fijo si existe en la tabla
+		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
+			if(presupuesto.getListaDeRepuestos().get(i).getDetalle().equals(resp.getDetalle())) {
+				existe = true;
+				this.presupuesto.getListaDeRepuestos().get(i).sumarCantidad(cantidad);
+				this.presupuesto.getListaDeRepuestos().get(i).sumarTotal(resp.getPrecioUnitario() * cantidad);
+			}
+		}
+		if(!existe) {
+			presupuesto.addRepuestoListaDeComponentes(itemRepuesto);
+		}
 		//actualizo la tabla de repuestos
 		actualizarTablaRepuestos();
 	}
@@ -355,7 +354,7 @@ public class ControladorPresupuesto implements ActionListener{
 
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		PerfilDTO perf3 = new PerfilDTO("JEFE");
 		UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
 		Ingreso ing = new Ingreso();
@@ -365,5 +364,5 @@ public class ControladorPresupuesto implements ActionListener{
 		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
 				ing, user3);
 		controladorPresupuesto.inicializar();
-	}
+	}*/
 }
