@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import dto.RepuestoDTO;
 import dto.IngresoDTO;
+import dto.IngresoLogDTO;
 import dto.ItemPresupuestoRepuestoDTO;
 import dto.PresupuestoDTO;
+import dto.PresupuestoRepuestoDTO;
 import persistencia.dao.RepuestoDAO;
+import persistencia.dao.IngresoLogDAO;
 import persistencia.dao.PresupuestoDAO;
 import persistencia.dao.PresupuestoRepuestoDAO;
 
@@ -20,12 +23,14 @@ public class Presupuesto
 	private PresupuestoDAO presupuestoDAO;
 	private PresupuestoRepuestoDAO presupuestoRepuestoDAO;
 	private RepuestoDAO repuestoDAO;
+	private IngresoLogDAO ingresoLogDAO;
 	
 	public Presupuesto(IngresoDTO ingr) {
 		//Recuperacion y guardado de datos DAO's
 		presupuestoDAO = new PresupuestoDAO();
 		presupuestoRepuestoDAO = new PresupuestoRepuestoDAO();
 		repuestoDAO = new RepuestoDAO();
+		ingresoLogDAO = new IngresoLogDAO();
 		
 		ingreso = ingr;
 		try {
@@ -46,8 +51,36 @@ public class Presupuesto
 		this.id = id;
 	}
 	
-	public void guardarModelo() {
-		// TODO Aca agarraria el modelo cargado con todos los datos y lo guardaria con su correspondiente dao
+	public Boolean guardarPresupuesto(int idusuario) {
+		Boolean ingreso = true;
+		//guardo todos los objetos DTO con su respectivo DAO
+		try {
+			//busco el siguiente id de la tabla ingreso a insertar
+			int presupuesto_id = this.presupuestoDAO.getNextId();
+			presupuesto.setId(presupuesto_id);
+			if(presupuesto_id!=-1)
+			{
+				IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.ingreso.getId(), 3, null, idusuario);
+				//ingreso el estado
+				this.ingresoLogDAO.insert(ingrLog);
+				//ingreso el presupuesto
+				this.presupuestoDAO.insert(presupuesto);
+				//ingreso los repuestos del presupuesto
+				for (int i = 0; i < listaDeRepuestos.size(); i++) {
+					
+					PresupuestoRepuestoDTO presuRep = 
+							new PresupuestoRepuestoDTO(0, presupuesto.getId(),
+									listaDeRepuestos.get(i).getIdrepuesto(),
+									listaDeRepuestos.get(i).getCantidad(),
+									null,
+									true);
+					this.presupuestoRepuestoDAO.insert(presuRep);
+				}
+			}
+		} catch (Exception e) {
+			ingreso = false;
+		}
+		return ingreso;
 	}
 
 	public PresupuestoDTO getPresupuesto() {

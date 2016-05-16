@@ -64,5 +64,13 @@ public class ItemPresupuestoRepuestoDTO {
 	public void setIdrepuesto(int idrepuesto) {
 		this.idrepuesto = idrepuesto;
 	}
+	
+	public void sumarCantidad(int cantidadASumar) {
+		this.cantidad += cantidadASumar;
+	}
+	
+	public void sumarTotal(float precioASumar) {
+		this.precio += precioASumar;
+	}
 
 }

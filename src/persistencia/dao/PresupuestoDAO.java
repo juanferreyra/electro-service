@@ -11,14 +11,16 @@ import persistencia.conexion.Conexion;
 public class PresupuestoDAO {
 
 	static final String insert = "INSERT INTO presupuesto ( idingreso, descripcion_breve,"
-			+ "descripcion_tecnica, horas_dedicadas, importe_mano_obra, fecha_creacion,"
-			+ "fecha_vencimiento, idusuario, habilitado) VALUES (?,?,?,?,?,now(),?,?,true)";
+			+ "descripcion_tecnica, horas_dedicadas, importe_mano_obra, importe_total, fecha_creacion,"
+			+ "fecha_vencimiento, idusuario, habilitado) VALUES (?,?,?,?,?,?,now(),?,?,true)";
 
 	private static final String delete = "UPDATE presupuesto SET habilitado='0' WHERE id= ?;";
 
 	private static final String readall = "SELECT * FROM presupuesto WHERE habilitado=true";
 
 	private static final String find = "SELECT * FROM presupuesto WHERE idingreso  = ? and habilitado = true";
+	
+	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'presupuesto';";
 
 	private Conexion conexion = Conexion.getConexion();
 
@@ -80,12 +82,12 @@ public class PresupuestoDAO {
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 
-			statement.setInt(1, presupuesto.getId());
-			statement.setInt(2, presupuesto.getIdIngreso());
-			statement.setString(3, presupuesto.getDescripcionBreve());
-			statement.setString(4, presupuesto.getDescripcionTecnica());
-			statement.setInt(5, presupuesto.getHorasTrabajo());
-			statement.setFloat(6, presupuesto.getImporteManoObra());
+			statement.setInt(1, presupuesto.getIdIngreso());
+			statement.setString(2, presupuesto.getDescripcionBreve());
+			statement.setString(3, presupuesto.getDescripcionTecnica());
+			statement.setInt(4, presupuesto.getHorasTrabajo());
+			statement.setFloat(5, presupuesto.getImporteManoObra());
+			statement.setFloat(6, presupuesto.getImporteTotal());
 			statement.setDate(7, new java.sql.Date(presupuesto.getFechavencimiento().getTime()));
 			statement.setInt(8, presupuesto.getIdUsuario());
 
@@ -103,7 +105,7 @@ public class PresupuestoDAO {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
-		PresupuestoDTO presupuesto = null;
+		PresupuestoDTO presupuesto = new PresupuestoDTO(-1, idingreso, null, null, 0, 0, 0, null, null, 0, true);
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(find);
@@ -131,5 +133,27 @@ public class PresupuestoDAO {
 			Conexion.cerrarConexion();
 		}
 		return presupuesto;
+	}
+	
+	public int getNextId() {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		int clave = -1;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(nextId);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				clave = resultSet.getInt("siguiente");
+				;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return clave;
 	}
 }

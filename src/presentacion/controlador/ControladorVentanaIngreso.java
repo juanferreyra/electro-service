@@ -1,10 +1,12 @@
 package presentacion.controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import dto.ClienteDTO;
 import dto.IngresoDTO;
 import dto.MarcaDTO;
@@ -30,22 +32,59 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.ventana_ingreso.getBtnAceptar().addActionListener(this);
 		this.ventana_ingreso.getBtnCancelar().addActionListener(this);
 		this.ventana_ingreso.getEnvioDomicilio().addActionListener(this);
-		this.ventana_ingreso.getDireccion_default().addActionListener(this);
+		this.ventana_ingreso.getDireccion_nueva().addActionListener(this);
 		this.ventana_ingreso.getBtnReporteDeIngreso().addActionListener(this);
+		this.ventana_ingreso.getNumeroCliente_txf().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent evt) {
+				int code = evt.getKeyCode();
+				if (code == KeyEvent.VK_ENTER) {
+					buscarCliente();
+				}
+			}
+		});
 		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
+		this.determinarVisibilidadCuadro_DireccionNueva();
+		this.determinarVisibilidadCheck_DireccionNueva();
+	}
+
+	private void determinarVisibilidadCheck_DireccionNueva() {
+		if (this.ventana_ingreso.getEnvioDomicilio().isSelected() == false) {
+			this.ventana_ingreso.getDireccion_nueva().setSelected(false);
+			this.ventana_ingreso.getDireccion_nueva().setEnabled(false);
+			this.ventana_ingreso.getOtraDireccionLabel().setForeground(Color.gray);
+		} else {
+			this.ventana_ingreso.getDireccion_nueva().setEnabled(true);
+			if (this.ventana_ingreso.getDireccion_nueva().isSelected()) {
+				this.ventana_ingreso.getDireccion_nueva().setSelected(true);
+				this.ventana_ingreso.getOtraDireccionLabel().setForeground(Color.darkGray);
+			}
+		}
+	}
+
+	private void determinarVisibilidadCuadro_DireccionNueva() {
+		if (this.ventana_ingreso.getEnvioDomicilio().isSelected()
+				&& this.ventana_ingreso.getDireccion_nueva().isSelected()) {
+			this.ventana_ingreso.getDireccionNueva_JPanel().setVisible(true);
+		} else {
+			this.ventana_ingreso.getDireccionNueva_JPanel().setVisible(false);
+		}
 	}
 
 	public void inicializar() {
 		if (ingreso.getId() != -1) {
 			ingreso.cargarModeloCompleto();
 			this.cargarVentana();
+			this.determinarVisibilidadCuadro_DireccionNueva();
 			llenarTablaCliente(ingreso.getCliente());
-			this.ventana_ingreso.getBtnAceptar().setVisible(false);
-			this.ventana_ingreso.getBtnCancelar().setVisible(false);
 		} else {
 			this.ventana_ingreso.getBtnReporteDeIngreso().setVisible(false);
 			this.llenarComboMarcas();
 			this.llenarComboTiposProductos();
+		}
+		if (this.ventana_ingreso.getEnvioDomicilio().isSelected()) {
+			this.ventana_ingreso.getDireccion_nueva().setEnabled(true);
+			this.ventana_ingreso.getOtraDireccionLabel().setForeground(Color.darkGray);
 		}
 		this.ventana_ingreso.setVisible(true);
 	}
@@ -56,59 +95,39 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.ventana_ingreso.getComboTiposProductos().addItem(ingreso.getTipoproducto().getDetalle());
 		this.ventana_ingreso.getComboMarcas().addItem(ingreso.getMarca().getDetalle());
 		this.ventana_ingreso.getEnvioDomicilio().setSelected(ingreso.getIngreso().getEnvio());
-		this.ventana_ingreso.getDireccion_default().setSelected(ingreso.getIngreso().getEnvio_default());
-		this.ventana_ingreso.getTxtDireccionAlternativa().setText(ingreso.getIngreso().getDireccion_alternativa());
+		this.ventana_ingreso.getDireccion_nueva().setSelected(ingreso.getIngreso().getEnvio_default());
+		this.ventana_ingreso.getTxtDireccionNueva().setText(ingreso.getIngreso().getDireccion_alternativa());
 		this.ventana_ingreso.getMontoEnvio().setText(ingreso.getIngreso().getMontoEnvioToString());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.ventana_ingreso.getBtnBuscarCliente()) {
-			String textoingresado = this.ventana_ingreso.getTxtNroCliente().getText();
-			if (textoingresado == null || textoingresado.equals("")) {
-				JOptionPane.showMessageDialog(this.ventana_ingreso, "Antes debe ingresar un nro de cliente para buscar",
-						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				try {
-					int nrodoc = Integer.parseInt(textoingresado);
-					ClienteDAO cdao = new ClienteDAO();
-					ClienteDTO cdto = cdao.findPorNrodoc(nrodoc);
-					if (cdto == null) {
-						JOptionPane.showMessageDialog(this.ventana_ingreso, "El cliente buscado no existe!",
-								"Atencion!", JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						this.ingreso.setCliente(cdto);
-						this.llenarTablaCliente(cdto);
-					}
-				} catch (NumberFormatException nfe) {
-					JOptionPane.showMessageDialog(this.ventana_ingreso, "El nro de cliente debe ser numerico! ",
-							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
+			this.buscarCliente();
+
 		} else if (e.getSource() == this.ventana_ingreso.getEnvioDomicilio()) {
+			this.ventana_ingreso.getDireccion_nueva().setEnabled(true);
 			if (this.ventana_ingreso.getEnvioDomicilio().isSelected()) {
-				this.ventana_ingreso.getDireccion_default().setEnabled(true);
-				this.ventana_ingreso.getTxtDireccionAlternativa().setEnabled(true);
-				this.ventana_ingreso.getMontoEnvio().setEnabled(true);
+				determinarVisibilidadCheck_DireccionNueva();
+				this.ventana_ingreso.getOtraDireccionLabel().setForeground(Color.darkGray);
 			} else {
-				this.ventana_ingreso.getDireccion_default().setEnabled(false);
-				this.ventana_ingreso.getTxtDireccionAlternativa().setEnabled(false);
-				this.ventana_ingreso.getMontoEnvio().setEnabled(false);
+				this.ocultarOpcionDireccionAlternativa();
 			}
-		} else if (e.getSource() == this.ventana_ingreso.getBtnReporteDeIngreso()){
+		} else if (e.getSource() == this.ventana_ingreso.getBtnReporteDeIngreso()) {
 			ReporteIngreso reporte = new ReporteIngreso(ingreso.getTodos());
-			reporte.mostrar();	
+			reporte.mostrar();
 		} else if (e.getSource() == this.ventana_ingreso.getBtnCancelar()) {
 			this.ventana_ingreso.dispose();
-		}else if (e.getSource() == this.ventana_ingreso.getBtnAceptar()) {
+		} else if (e.getSource() == this.ventana_ingreso.getBtnAceptar()) {
 			Boolean error = false;
 			float montoFloat = 0;
 			// verifico todos los campos
 			// CLIENTE CARGADO
 			if (this.ingreso.getCliente() == null) {
 				error = true;
-				JOptionPane.showMessageDialog(this.ventana_ingreso, "Debes ingresar un cliente para continuar!",
-						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.ventana_ingreso,
+						"Debes ingresar un cliente para continuar. Por favor, vuelva a intentarlo.", null,
+						JOptionPane.INFORMATION_MESSAGE);
 
 			}
 
@@ -116,8 +135,9 @@ public class ControladorVentanaIngreso implements ActionListener {
 			String nombre_produ = this.ventana_ingreso.getTextNombreProducto().getText();
 			if (nombre_produ.equals("") && !error) {
 				error = true;
-				JOptionPane.showMessageDialog(this.ventana_ingreso, "Debes completar el nombre de producto!",
-						"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.ventana_ingreso,
+						"Debes completar el nombre de producto. Por favor, vuelva a intentarlo.", null,
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 
 			// DESCRIPCION DE FALLA
@@ -125,34 +145,40 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (descripcion_falla.equals("") && !error) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"Debes completar brevemente la descripcion de la falla", "Atencion!",
+						"La descripcion de la falla está vacia. Por favor, vuelva a intentarlo.", null,
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 
 			if (this.ventana_ingreso.getEnvioDomicilio().isSelected() && !error) {
+				// habilitarOpcionDireccionNueva();
+				determinarVisibilidadCheck_DireccionNueva();
 				// VALIDO DIRECICION DE ENVIO DE CLIENTE
-				if (this.ventana_ingreso.getDireccion_default().isSelected() == false) {
+				if (this.ventana_ingreso.getDireccion_nueva().isSelected() == true) {
 					// Me fijo que complete la direccion alternativa y el monto
-					String direccionAlternativa = this.ventana_ingreso.getTxtDireccionAlternativa().getText();
+					String direccionAlternativa = this.ventana_ingreso.getTxtDireccionNueva().getText();
 					if (direccionAlternativa.equals("")) {
 						error = true;
 						JOptionPane.showMessageDialog(this.ventana_ingreso,
-								"Si el cliente solicita envio debe completar una direccion o de lo contrario utilice la direccion del cliente!",
-								"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+								"Si el cliente solicita envio debe completar una direccion. De lo contrario, utilice la direccion del cliente.",
+								null, JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 				// VALIDO EL MONTO DE ENVIO
-				String monto = this.ventana_ingreso.getMontoEnvio().getText();
-				if (monto.equals("") && !error) {
-					error = true;
-					JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor ingrese el costo en pesos del envio",
-							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
-				} else if (!error) {
-					try {
-						montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
-					} catch (NumberFormatException nfe) {
-						JOptionPane.showMessageDialog(this.ventana_ingreso, "El campo Monto debe ser Numerico ",
-								"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+				if (this.ventana_ingreso.getDireccion_nueva().isSelected()) {
+					String monto = this.ventana_ingreso.getMontoEnvio().getText();
+					if (monto.equals("") && !error) {
+						error = true;
+						JOptionPane.showMessageDialog(this.ventana_ingreso,
+								"Por favor, ingrese el costo en pesos del envio.", null,
+								JOptionPane.INFORMATION_MESSAGE);
+					} else if (!error) {
+						try {
+							montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
+						} catch (NumberFormatException nfe) {
+							JOptionPane.showMessageDialog(this.ventana_ingreso,
+									"El monto no es válido. Por favor, vuelva a intentarlo.", null,
+									JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				}
 			}
@@ -162,22 +188,58 @@ public class ControladorVentanaIngreso implements ActionListener {
 						this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
 						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
 						this.ventana_ingreso.getEnvioDomicilio().isSelected(),
-						this.ventana_ingreso.getDireccion_default().isSelected(),
-						this.ventana_ingreso.getTxtDireccionAlternativa().getText(), montoFloat, null, 1, 0, 0);
+						this.ventana_ingreso.getDireccion_nueva().isSelected(),
+						this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1, 0, 0);
 				this.ingreso.ingr = ingresoDTO;
 
 				Boolean ingreso = this.ingreso.guardarIngreso(0);
 
 				if (ingreso) {
-					// JOptionPane.showMessageDialog(this.ventana_ingreso,
-					// "Ingreso Realizado correctamente!", "Atencion!",
-					// JOptionPane.INFORMATION_MESSAGE);
 					this.ventana_ingreso.vaciarTodo();
 					this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 					this.ventana_ingreso.setVisible(false);
 				}
 			}
+		} else if (e.getSource() == this.ventana_ingreso.getDireccion_nueva()) {
+			this.ventana_ingreso.setTxtDireccionNueva("");
+			this.ventana_ingreso.setMontoEnvio("");
+			this.determinarVisibilidadCuadro_DireccionNueva();
 		}
+	}
+
+	private void ocultarOpcionDireccionAlternativa() {
+		this.ventana_ingreso.getDireccion_nueva().setSelected(false);
+		this.ventana_ingreso.setTxtDireccionNueva("");
+		this.ventana_ingreso.setMontoEnvio("");
+		this.determinarVisibilidadCheck_DireccionNueva();
+		this.determinarVisibilidadCuadro_DireccionNueva();
+	}
+
+	private void buscarCliente() {
+		String textoingresado = this.ventana_ingreso.getTxtNroCliente().getText();
+		if (textoingresado == null || textoingresado.equals("")) {
+			JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor, ingrese un número de cliente.", null,
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			try {
+				int nrodoc = Integer.parseInt(textoingresado);
+				ClienteDAO cdao = new ClienteDAO();
+				ClienteDTO cdto = cdao.findPorNrodoc(nrodoc);
+				if (cdto == null) {
+					JOptionPane.showMessageDialog(this.ventana_ingreso,
+							"El cliente buscado no existe, por favor, ingrese un valor válido.", null,
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					this.ingreso.setCliente(cdto);
+					this.llenarTablaCliente(cdto);
+				}
+			} catch (NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(this.ventana_ingreso,
+						"El número de cliente es incorrecto, vuelva a intentarlo. ", null,
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+
 	}
 
 	private void llenarComboMarcas() {
@@ -195,10 +257,10 @@ public class ControladorVentanaIngreso implements ActionListener {
 	}
 
 	private void llenarTablaCliente(ClienteDTO client) {
-		Object[][] informacionCliente = { { client.getNombre(), client.getApellido(), client.getDireccion(),
-				client.getMail(), client.getTelefono() } };
-		String[] nombreColumnas = { "Nombre", "Apellido", "Dirección", "Email", "Teléfono" };
-		this.ventana_ingreso.getClienteTable().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));
+		this.ventana_ingreso.getLbl_nombre_apellido_cliente().setText(client.getNombre()+", "+client.getApellido());
+		this.ventana_ingreso.getLbl_direccion_cliente().setText(client.getDireccion());
+		this.ventana_ingreso.getLbl_telefono_cliente().setText("Telefono: "+client.getTelefono());
+		this.ventana_ingreso.getLbl_email_cliente().setText("Email: "+client.getMail());
 	}
 
 }
