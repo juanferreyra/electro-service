@@ -21,6 +21,7 @@ import presentacion.vista.VentanaPresupuesto;
 public class ControladorPresupuesto implements ActionListener{
 	
 	private VentanaPresupuesto ventanaPresupuesto;
+	private ControladorVentanaPrincipal controladorVentanaPrincipal;
 	private Ingreso ingreso;
 	private Presupuesto presupuesto;
 	private UsuarioDTO usuarioLogueado;
@@ -30,18 +31,20 @@ public class ControladorPresupuesto implements ActionListener{
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
 	
-	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso, UsuarioDTO usuario) {
+	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso,
+			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
 		this.ventanaPresupuesto = ventanaPresupuesto;
-		 this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
-		 this.ventanaPresupuesto.getCancelar_btn().addActionListener(this); 
-		 this.ingreso = ingreso;
-		 this.usuarioLogueado = usuario;
-		 this.presupuesto = new Presupuesto(ingreso.getIngreso());
+		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
+		this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
+		this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
+		this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
+		this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
+		this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
+		this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
+		this.ventanaPresupuesto.getCancelar_btn().addActionListener(this); 
+		this.ingreso = ingreso;
+		this.usuarioLogueado = usuario;
+		this.presupuesto = new Presupuesto(ingreso.getIngreso());
 	}
 	
 	public void inicializar() {
@@ -225,6 +228,7 @@ public class ControladorPresupuesto implements ActionListener{
 				JOptionPane.showMessageDialog(ventanaPresupuesto, "Presupuesto guardado correctamente", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
 				this.ventanaPresupuesto.dispose();
+				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 			} else {
 				JOptionPane.showMessageDialog(ventanaPresupuesto, "Ocurrio un error al guardar el presupuesto", "Atencion!",
 						JOptionPane.ERROR_MESSAGE);
