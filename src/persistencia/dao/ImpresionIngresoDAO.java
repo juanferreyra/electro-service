@@ -46,7 +46,7 @@ public class ImpresionIngresoDAO {
 				inge.setDireccion_cliente(resultSet.getString("envio_default"));
 				inge.setDireccion_alternativa(resultSet.getString("direccion_alternativa"));
 				inge.setMonto_envio(resultSet.getString("monto"));
-				inge.setFecha(resultSet.getString("fecha_creacion"));
+				inge.setFecha(resultSet.getDate("fecha_creacion"));
 				clientes.add(inge);
 			}
 		} catch (SQLException e) {
@@ -84,7 +84,7 @@ public class ImpresionIngresoDAO {
 				inge.setDireccion_cliente(resultSet.getString("envio_default"));
 				inge.setDireccion_alternativa(resultSet.getString("direccion_alternativa"));
 				inge.setMonto_envio(resultSet.getString("monto"));
-				inge.setFecha(resultSet.getString("fecha_creacion"));
+				inge.setFecha(resultSet.getDate("fecha_creacion"));
 				clientes.add(inge);
 			}
 		} catch (SQLException e) {

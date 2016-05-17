@@ -1,5 +1,7 @@
 package dto;
 
+import java.sql.Date;
+
 public class ImpresionIngresoDTO {
 
 	private int id;
@@ -19,7 +21,7 @@ public class ImpresionIngresoDTO {
 	private String direccion_alternativa;
 	
 	private String monto_envio;
-	private String fecha;
+	private Date fecha;
 	
 	public ImpresionIngresoDTO(){
 		
@@ -137,12 +139,12 @@ public class ImpresionIngresoDTO {
 		this.monto_envio = monto_envio;
 	}
 
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public void setFecha(Date date) {
+		this.fecha = date;
 	}
 
 }
