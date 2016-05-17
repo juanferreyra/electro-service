@@ -7,7 +7,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.JTextComponent;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -15,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
+import java.util.Vector;
+
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;
 
@@ -30,7 +36,7 @@ public class VentanaReparacion extends JFrame {
 	private JTextArea descripcionFinal_jTextArea;
 	private JButton enviarAvisoReparacion_btn;
 	private JButton cancelar_btn;
-	private JButton guardar_btn;
+	private JButton finalizar_btn;
 	private JLabel cantidad_lbl;
 	private JTable componentes_table;
 	private JLabel fechaIngreso_lbl;
@@ -174,9 +180,9 @@ public class VentanaReparacion extends JFrame {
 		cancelar_btn.setBounds(582, 615, 117, 23);
 		contentPane.add(cancelar_btn);
 
-		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(438, 615, 118, 23);
-		contentPane.add(guardar_btn);
+		finalizar_btn = new JButton("Finalizar");
+		finalizar_btn.setBounds(438, 615, 118, 23);
+		contentPane.add(finalizar_btn);
 
 		JLabel lblFecha = new JLabel("");
 		lblFecha.setBounds(435, 10, 70, 15);
@@ -195,12 +201,12 @@ public class VentanaReparacion extends JFrame {
 		this.cancelar_btn = cancelar_btn;
 	}
 
-	public JButton getGuardar_btn() {
-		return guardar_btn;
+	public JButton getFinalizar_btn() {
+		return finalizar_btn;
 	}
 
-	public void setGuardar_btn(JButton guardar_btn) {
-		this.guardar_btn = guardar_btn;
+	public void setFinalizar_btn(JButton finalizar_btn) {
+		this.finalizar_btn = finalizar_btn;
 	}
 
 	public JLabel getNombreProductoTexto_lbl() {
@@ -233,6 +239,50 @@ public class VentanaReparacion extends JFrame {
 
 	public void setDescripcionFalla_txtArea(JTextArea descripcionFalla_txtArea) {
 		this.descripcionFalla_txtArea = descripcionFalla_txtArea;
+	}
+
+	public JButton getIncrementoCantComponente_btn() {
+		return incrementoCantComponente_btn;
+	}
+
+	public JLabel getCantidad_lbl() {
+		return cantidad_lbl;
+	}
+
+	public JButton getDecrementoCantComponente_btn() {
+		return decrementoCantComponente_btn;
+	}
+
+	public JButton getAgregarComponente_btn() {
+		return agregarComponente_btn;
+	}
+
+	public JTable getComponentes_table() {
+		return componentes_table;
+	}
+
+	public String[] getComponentes_nombreColumnas() {
+		return componentes_nombreColumnas;
+	}
+
+	// public JLabel getTotal_lbl() {
+	// return Total_lbl;
+	// }
+
+	public JButton getEliminarComponente_btn() {
+		return eliminarComponente_btn;
+	}
+
+//	public JTextField getValorPresupuestado_txf() {
+//		return valorPresupuestado_txf;
+//	}
+//
+//	public JTextField getManoDeObra_txf() {
+//		return manoDeObra_txf;
+//	}
+
+	public JComboBox<String> getComponente_ComboBox() {
+		return componente_ComboBox;
 	}
 
 }
