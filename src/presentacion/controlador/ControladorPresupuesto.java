@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
 import dto.ItemPresupuestoRepuestoDTO;
 import dto.UsuarioDTO;
+import modelo.Email;
 import modelo.Ingreso;
 import modelo.Presupuesto;
 import presentacion.vista.VentanaPresupuesto;
@@ -30,6 +31,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private float suma = 0;
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
+	private Email email = new Email();
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso,
 			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
@@ -45,6 +47,7 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ingreso = ingreso;
 		this.usuarioLogueado = usuario;
 		this.presupuesto = new Presupuesto(ingreso.getIngreso());
+		this.ventanaPresupuesto.getEnviarPresupuesto_btn().addActionListener(this);
 	}
 	
 	public void inicializar() {
@@ -85,10 +88,10 @@ public class ControladorPresupuesto implements ActionListener{
 	{
 		//cargo la lista de componentes
 		actualizarTablaRepuestos();
+		//cargo descripcion Breve
+		this.ventanaPresupuesto.getDescripcionBreve_jTextArea().setText(this.presupuesto.getPresupuesto().getDescripcionBreve());
 		//cargo descripcion tecnica
 		this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().setText(this.presupuesto.getPresupuesto().getDescripcionTecnica());
-		//cargo descripcion Breve
-		this.ventanaPresupuesto.getDescripcionBreve_jTextArea().setText(this.presupuesto.getPresupuesto().getDescripcionTecnica());
 		//setear fecha de creacion del presupuesto
 		this.ventanaPresupuesto.getFechaIngreso_lbl().setText(this.presupuesto.getPresupuesto().getFechacreacion().toString());
 		//seteo la fecha de vencimiento
@@ -159,6 +162,11 @@ public class ControladorPresupuesto implements ActionListener{
 		}else if (e.getSource() == this.ventanaPresupuesto.getCancelar_btn()){
 		
 			this.ventanaPresupuesto.dispose();
+			
+		}else if (e.getSource() == this.ventanaPresupuesto.getEnviarPresupuesto_btn()){
+			
+			// envia email
+			email.enviarPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
 		}
 		
 	}
@@ -227,6 +235,10 @@ public class ControladorPresupuesto implements ActionListener{
 			if(ingreso){
 				JOptionPane.showMessageDialog(ventanaPresupuesto, "Presupuesto guardado correctamente", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
+				
+				// envia email
+				email.enviarPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
+				
 				this.ventanaPresupuesto.dispose();
 				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 			} else {

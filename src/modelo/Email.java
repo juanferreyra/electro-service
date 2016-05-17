@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Calendar;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -10,22 +11,76 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import dto.UsuarioDTO;
+import presentacion.vista.VentanaPresupuesto;
 
 public class Email {
 	
-	private String destinatarios;
-	private String mensaje;
-	private String asunto;
+	int envio = 0;
+
 	
-	public Email(String asunto, String destinatarios, String mensaje){
-		
-		this.asunto = asunto;
-		this.destinatarios = destinatarios;
-		this.mensaje = mensaje;
+	public Email(){
 		
 	}
 	
-	public void enviar(){
+	public void enviarPresupuesto(Ingreso ingreso, UsuarioDTO usuario, VentanaPresupuesto ventana){
+		
+		String destinatario = ingreso.getCliente().getMail();
+		
+
+		int dia = ventana.getVencimiento_Calendario().getCalendar().get(Calendar.DAY_OF_MONTH);
+		int mes = ventana.getVencimiento_Calendario().getCalendar().get(Calendar.MONTH ) +1;
+		int anio = ventana.getVencimiento_Calendario().getCalendar().get(Calendar.YEAR);
+		
+		String fechaVencimiento = dia +" / "+ mes +" / "+ anio;
+		
+		
+		if (ingreso.getIngreso().getEnvio()){
+			envio = 500;
+		}
+		
+		float totalpresupuesto = Float.parseFloat(ventana.getValorPresupuestado_txf().getText()) + envio ;
+		
+		//String con lista de componentes
+		String componentes = "";
+		
+		for(int i = 0; i <  ventana.getComponentes_table().getRowCount(); i++){
+			
+			componentes += "<b>Repuesto:</b>&nbsp;&nbsp;"+ (String) ventana.getComponentes_table().getModel().getValueAt(i, 1) + "&nbsp; &nbsp;&nbsp;&nbsp;" + 
+							"<b>Cantidad:</b>&nbsp;&nbsp;" + (int) ventana.getComponentes_table().getModel().getValueAt(i, 2) + "&nbsp;&nbsp;&nbsp;&nbsp;" + 
+							"<b>PrecioTotal: $ </b>&nbsp;&nbsp;" + (float)ventana.getComponentes_table().getModel().getValueAt(i, 4) + "<br>";
+		}
+		
+		//asunto
+		String asunto ="Presupuesto de "+ ingreso.ingr.getDescripcion() +" de Electro Service."; 
+		
+		
+		///Cuerpo de mensaje
+		String mensaje = 
+				
+		"<p>Estimado cliente:  " + ingreso.getCliente().getNombre() + " " + ingreso.getCliente().getApellido() +" </p><br>"+
+		"<p style=text-indent:4cm > El presupuesto por la reparaci&#243;n Nro: <b> "+ingreso.getId()+" </b> del producto <b>"+ingreso.ingr.getDescripcion()+"</b> " +
+		 "ingresado el d&#237;a  "+ ingreso.getIngreso().getFecha_creacion()+ " consta del siguiente detalle: </p><br> " +
+		"<p> <b> Informe t&#233;cnico:     </b>" + ventana.getDescripcionBreve_jTextArea().getText() + "</p><br>" +
+		"<p> <b>Repuestos a utilizar:  </b></p><br>" +
+		"<p>" + componentes +" </p> <br>"+
+		"<p> <b>Total de repuestos:     $  </b>"+ventana.getTotal_lbl().getText()+"</p><br>"+
+		"<p> <b>Mano de Obra:     $  </b>" + ventana.getManoDeObra_txf().getText()+"</p><br>"+
+		"<p> <b>Total presupuesto:     $  </b>"+ ventana.getValorPresupuestado_txf().getText()+"</p><br>"+
+		"<p> <b>Env&#237;o a domicilio:    $  </b> " + envio + "</p><br>" +
+		"<p> <b>Total :     $  </b> "+totalpresupuesto +"</p><br>"+
+		"<p> <b>Le solicitamos que confirme el presupuesto antes de "+fechaVencimiento +".</b></p><br>"+
+		"<p> <b>ATTE:  </b>"+usuario.getNombre()+"   "+ usuario.getApellido()+"</p>";
+		
+		this.enviar(destinatario, mensaje, asunto,ventana);
+		
+
+		
+	}
+	
+	
+	
+	private void enviar(String destinatarios ,String mensaje, String asunto, VentanaPresupuesto ventana ){
 		try
 		{
 			// se obtiene el objeto Session. La configuración es para
@@ -43,10 +98,10 @@ public class Email {
 			// Se compone la parte del texto
 			BodyPart texto = new MimeBodyPart();
 						
-			texto.setContent("<font color=red> <h1>Electro Service</font></h1></font> <br>"
-					+ "Darregueyra 3896,Los Polvorines, Malvinas Argentinas, Buenos Aires<br>"
-					+ "<font color=Navy><h3>Teléfono: 4685 -5438  </h3></font> <br>"
-					+this.mensaje, "text/html");
+			texto.setContent("<font color=red> <h1 align=center>Electro Service</font></h1></font> <br>" +
+							"<p align=center>Darregueyra 3896,Los Polvorines, Malvinas Argentinas, Buenos Aires<br></p>" +
+					        "<font color=Navy><h3 align=center>Tel&#233;fono: 4685 -5438  </h3></font> <br>" +
+					        mensaje, "text/html");
 
 			// Se compone el adjunto con la imagen
 			BodyPart adjunto = new MimeBodyPart();
@@ -57,7 +112,7 @@ public class Email {
 			// Una MultiParte para agrupar texto e imagen.
 			MimeMultipart multiParte = new MimeMultipart();
 			multiParte.addBodyPart(texto);
-			multiParte.addBodyPart(adjunto);
+			//multiParte.addBodyPart(adjunto);
 
 			// Se compone el correo, dando to, from, subject y el
 			// contenido.
@@ -67,13 +122,9 @@ public class Email {
 			message.setFrom(new InternetAddress("reparaciones.electroservice@gmail.com"));
 
 			//para
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(this.destinatarios));
-			
-			//+ "juangabrielferreyra93@gmail.com,"
-			//+ "sabrina.sacz@gmail.com,"
-			//+ "joaquin.tellechea@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatarios));
 
-			message.setSubject(this.asunto);
+			message.setSubject(asunto);
 			message.setContent(multiParte);
 
 			// Se envia el correo.
@@ -83,23 +134,23 @@ public class Email {
 			t.close();
 
 			//Con esta imprimimos en consola que el mensaje fue enviado
+			
 			System.out.println("Mensaje Enviado");
+			/*JOptionPane.showMessageDialog(ventana, "Email de Presupuesto enviado correctamente", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);*/
 		}
 		catch (Exception e)
 		{
+			
 			e.printStackTrace();
 		}
 	}
 
 
 	public static void main(String[] args){
-		
-		//Email nuevo = new Email("mail con html","pintososcar@hotmail.com", "HOLAs");
-		//nuevo.enviar();
+
+
+
 
 	}
-
-	
-	
-
 }
