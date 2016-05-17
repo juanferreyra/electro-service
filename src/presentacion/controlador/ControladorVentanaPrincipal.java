@@ -251,9 +251,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					if (principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
 						int nroIngreso = (int) principal.getOrdenesDeTrabajo_table()
 								.getValueAt(principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
-						IngresoDTO ingresoDTO = ingresoDAO.find(nroIngreso);
 						Ingreso ingreso = new Ingreso();
-						ingreso.setId(ingresoDTO.getId());
+						ingreso.setId(nroIngreso);
+						ingreso.cargarModeloCompleto();
 
 						ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
 								ingreso, controladorVentanaPrincipal, usuarioLogueado);
