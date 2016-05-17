@@ -6,24 +6,24 @@ public class FleteDTO {
 	int id;
 	private int nroDoc;
 	private String nombre;
-	private String apellido;
 	private String modelo;
 	private String patente;
 	private String telefono;
 	private Date vtoLicencia;
 	private Date fecha_creacion;
-	public FleteDTO(int id, int nroDoc, String nombre, String apellido, String modelo, String patente, String telefono,
-			Date vtoLicencia, Date fecha_creacion) {
-		super();
+	private int idusuario;
+	
+	public FleteDTO(int id, int nroDoc, String nombre, String modelo, String patente, String telefono,
+			Date vtoLicencia, Date fecha_creacion,int idusuario) {
 		this.id = id;
 		this.nroDoc = nroDoc;
 		this.nombre = nombre;
-		this.apellido = apellido;
 		this.modelo = modelo;
 		this.patente = patente;
 		this.telefono = telefono;
 		this.vtoLicencia = vtoLicencia;
 		this.fecha_creacion = fecha_creacion;
+		this.setIdusuario(idusuario);
 	}
 	public int getId() {
 		return id;
@@ -42,12 +42,6 @@ public class FleteDTO {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public String getApellido() {
-		return apellido;
-	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
 	}
 	public String getModelo() {
 		return modelo;
@@ -78,6 +72,12 @@ public class FleteDTO {
 	}
 	public void setFecha_creacion(Date fecha_creacion) {
 		this.fecha_creacion = fecha_creacion;
+	}
+	public int getIdusuario() {
+		return idusuario;
+	}
+	public void setIdusuario(int idusuario) {
+		this.idusuario = idusuario;
 	}
 	
 }

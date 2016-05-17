@@ -6,26 +6,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.HojaDeRutaIngresosDTO;
-import dto.ItemPresupuestoRepuestoDTO;
-import dto.PresupuestoRepuestoDTO;
 import persistencia.conexion.Conexion;
 
 public class HojaDeRutaIngresosDAO {
-	private static final String insert = "INSERT INTO hojaDeRuta_ingresos (id,idHojaDeRuta,idIngreso,fecha_creacion,habilitado) VALUES (?,?,?,now(),true)";
 	
-	private static final String find = "SELECT pr.id, pr.idIngreso, FROM hojaDeRuta_ingresos pr LEFT JOIN ingresos r ON(pr.idIngreso = r.id) WHERE pr.id = ? AND pr.habilitado=true;";
+	private static final String insert = "INSERT INTO hojaruta_ingreso (`id`, `idingreso`, `entregado`, `fecha_creacion`) VALUES (?, ?, '0', now());";
+	
+	private static final String findList = "SELECT * FROM hojaruta_ingreso WHERE idhojaruta=? AND entregado=false;";
 	
 	private Conexion conexion = Conexion.getConexion();
 
-	public boolean insert(HojaDeRutaIngresosDTO hojasDeRutaIngresops) {
+	public boolean insert(HojaDeRutaIngresosDTO hojasDeRutaIngresos) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 			
-			statement.setInt(1, hojasDeRutaIngresops.getId());
-			statement.setInt(2, hojasDeRutaIngresops.getIdHojaDeRuta());
-			statement.setInt(3, hojasDeRutaIngresops.getIdIngreso());
+			statement.setInt(1, hojasDeRutaIngresos.getIdHojaDeRuta());
+			statement.setInt(2, hojasDeRutaIngresos.getIdIngreso());
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -36,30 +34,30 @@ public class HojaDeRutaIngresosDAO {
 		}
 		return false;
 	}
-
-//	public ArrayList<HojaDeRutaIngresosDAO> readAll(int id) {
-//		conexion = Conexion.getConexion();
-//		PreparedStatement statement;
-//		ResultSet resultSet;
-//		ArrayList<HojaDeRutaIngresosDAO> hojasDeRutaIngresos = new ArrayList<HojaDeRutaIngresosDAO>();
-//
-//		try {
-//			statement = conexion.getSQLConexion().prepareStatement(find);
-//			statement.setInt(1, id);
-//			resultSet = statement.executeQuery();
-//
-//			while (resultSet.next()) {
-//				hojasDeRutaIngresos.add(new ItemPresupuestoRepuestoDTO(
-//						//TODO
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			Conexion.cerrarConexion();
-//		}
-//		return hojasDeRutaIngresos;
-//	}
-
 	
-	
+	public ArrayList<HojaDeRutaIngresosDTO> findAll(int id) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		ArrayList<HojaDeRutaIngresosDTO> hojasDeRutaIngresos = new ArrayList<HojaDeRutaIngresosDTO>();
+		
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(findList);
+			statement.setInt(1, id);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) { hojasDeRutaIngresos.add(new HojaDeRutaIngresosDTO(
+					resultSet.getInt("id"),
+					resultSet.getInt("idhojaruta"),
+					resultSet.getInt("idingreso"),
+					resultSet.getBoolean("entregado"),
+					resultSet.getDate("fecha_creacion")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return hojasDeRutaIngresos;
+	}
 }

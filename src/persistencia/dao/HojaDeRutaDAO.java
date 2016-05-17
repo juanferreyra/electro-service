@@ -4,19 +4,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import dto.HojaDeRutaDTO;
 import dto.PresupuestoDTO;
 import persistencia.conexion.Conexion;
 
 public class HojaDeRutaDAO {
-	static final String insert = "INSERT INTO hojaDeRuta ( id, fleteId , creacion)";
+	
+	private static final String insert = "INSERT INTO hojaruta (`idflete`, `fecha_creacion`, `habilitado`, `idusuario`) VALUES (?, now(), true, ?);";
 
-	private static final String delete = "UPDATE hojaDeRuta SET habilitado='0' WHERE id= ?;";
+	private static final String readall = "SELECT * FROM hojaruta WHERE habilitado=true";
 
-	private static final String readall = "SELECT * FROM hojaDeRuta WHERE habilitado=true";
-
-	private static final String find = "SELECT * FROM hojaDeRuta WHERE id  = ? and habilitado = true";
+	private static final String find = "SELECT * FROM hojaruta WHERE id  = ? and habilitado = true";
 
 	private Conexion conexion = Conexion.getConexion();
 
@@ -32,10 +30,11 @@ public class HojaDeRutaDAO {
 			resultSet = statement.executeQuery();
 
 			
-			while (resultSet.next()) { hojasDeRuta.add(new
-					HojaDeRutaDTO(resultSet.getDate("creacion"),
-							resultSet.getInt("idingreso"),
-							resultSet.getInt("id")));
+			while (resultSet.next()) { hojasDeRuta.add(new HojaDeRutaDTO(
+						resultSet.getInt("id"),
+						resultSet.getInt("idflete"),
+						resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -50,10 +49,8 @@ public class HojaDeRutaDAO {
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
-
-			statement.setInt(1, hojaDeRuta.getId());
-			statement.setInt(2, hojaDeRuta.getIdIngreso());
-			statement.setDate(3, new java.sql.Date(hojaDeRuta.getFechavencimiento().getTime()));
+			statement.setInt(1, hojaDeRuta.getIdIngreso());
+			statement.setInt(2, hojaDeRuta.getIdUsuario());
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -78,12 +75,12 @@ public class HojaDeRutaDAO {
 
 			while (resultSet.next()) {
 				hojasDeRuta = new HojaDeRutaDTO(
+						resultSet.getInt("id"),
+						resultSet.getInt("idflete"),
 						resultSet.getDate("fecha_creacion"),
-						resultSet.getInt("idingreso"),
-						resultSet.getInt("id"));
+						resultSet.getInt("idusuario"));
 			}
-		} catch (
-				SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			Conexion.cerrarConexion();

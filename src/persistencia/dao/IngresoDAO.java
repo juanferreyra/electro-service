@@ -24,6 +24,12 @@ public class IngresoDAO {
 										   + "FROM ingreso i WHERE i.habilitado=true AND i.id = ?";
 	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'ingreso';";
 	private static final String paraEnviar ="SELECT * FROM ingresos WHERE estado = '10' and envio=true";
+	
+	private static final String findReparados = "SELECT i.id, i.idcliente, i.descripcion_producto, i.idmarca, i.idtipo_producto, i.descripcion_falla, "
+												+"i.envio, i.envio_default, i.direccion_alternativa, i.monto_envio, log.estado, i.fecha_creacion, i.idusuario, "											
+												+"i.habilitado, i.tecnico_asignado FROM ingreso i LEFT JOIN (SELECT il.idingreso, (SELECT idestado FROM ingreso_log "
+												+"WHERE idingreso = il.idingreso ORDER BY id desc limit 1) as estado FROM ingreso_log il GROUP BY il.idingreso) log "
+												+"ON (i.id = log.idingreso) WHERE i.habilitado = TRUE AND (log.estado = 7 OR log.estado = 8) AND envio=true;";
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<IngresoDTO> readAll() {
@@ -158,6 +164,33 @@ public class IngresoDAO {
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(readall);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				ingresos.add(new IngresoDTO(resultSet.getInt("id"), resultSet.getInt("idcliente"),
+						resultSet.getString("descripcion_producto"), resultSet.getInt("idmarca"),
+						resultSet.getInt("idtipo_producto"), resultSet.getString("descripcion_falla"),
+						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
+						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
+						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
+						resultSet.getInt("tecnico_asignado")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return ingresos;
+	}
+	
+	public ArrayList<IngresoDTO> readReparadosNoReparados() {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		ArrayList<IngresoDTO> ingresos = new ArrayList<IngresoDTO>();
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(findReparados);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {

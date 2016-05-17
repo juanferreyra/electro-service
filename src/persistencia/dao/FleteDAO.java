@@ -5,16 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import dto.ClienteDTO;
 import dto.FleteDTO;
 import persistencia.conexion.Conexion;
 
 public class FleteDAO {
-	private static final String insert = "INSERT INTO flete("
-			+ "`nrodoc`, `nombre`, `apellido`, `modelo`, `patente`, `telefono`, `vtoLicencia`, `fecha_creacion`, `idusuario`) "
-			+ "VALUES (?, ?, ?, ?, ?', ?, ?, ?, now(), ?);";
-	private static final String delete = "UPDATE flete SET habilitado=false WHERE id= ?;";
+	private static final String insert = "INSERT INTO flete (`nrodoc`, `nombre_conductor`, `modelo`, `patente`, `telefono`, `vto_licencia`, "
+			+ "`fecha_creacion`, `idusuario`, `habilitado`)"
+			+ " VALUES (?, ?, ?, ?, ?, now(), now(), ?, '1'); ";
 	private static final String readall = "SELECT * FROM flete WHERE habilitado=true";
 	private static final String find = "SELECT * FROM flete WHERE habilitado=true AND id=?";
 	private static final String findDNI = "SELECT * FROM flete WHERE habilitado=true AND nrodoc=?";
@@ -31,15 +28,16 @@ public class FleteDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				fletes.add(new FleteDTO(resultSet.getInt("id"),
+				fletes.add(new FleteDTO(
+						resultSet.getInt("id"),
 						resultSet.getInt("nrodoc"),
-						resultSet.getString("nombre"),
-						resultSet.getString("apellido"),
+						resultSet.getString("nombre_conductor"),
 						resultSet.getString("modelo"),
 						resultSet.getString("patente"),
 						resultSet.getString("telefono"),
-						resultSet.getDate("vtoLicencia"),
-						resultSet.getDate("fecha_creacion")));
+						resultSet.getDate("vto_licencia"),
+						resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -48,40 +46,20 @@ public class FleteDAO {
 		}
 		return fletes;
 	}
-	
-	
-	public boolean delete(ClienteDTO flete_a_eliminar) {
-		conexion = Conexion.getConexion();
-		PreparedStatement statement;
-		int chequeoUpdate = 0;
-		try {
-			statement = conexion.getSQLConexion().prepareStatement(delete);
-			statement.setString(1, Integer.toString(flete_a_eliminar.getId()));
-			chequeoUpdate = statement.executeUpdate();
-			if (chequeoUpdate > 0)
-				return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			Conexion.cerrarConexion();
-		}
-		return false;
-	}
-	
+
 	public boolean insert(FleteDTO flete) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
-			
 			statement.setInt(1, flete.getNroDoc());
 			statement.setString(2, flete.getNombre());
-			statement.setString(3, flete.getApellido());
-			statement.setString(4, flete.getModelo());
-			statement.setString(5, flete.getPatente());
-			statement.setString(6, flete.getTelefono());
-			statement.setDate(7, (Date) flete.getVtoLicencia());
-			statement.setDate(8, (Date) flete.getFecha_creacion());
+			statement.setString(3, flete.getModelo());
+			statement.setString(4, flete.getPatente());
+			statement.setString(5, flete.getTelefono());
+			statement.setDate(6, (Date) flete.getVtoLicencia());
+			statement.setDate(7, (Date) flete.getFecha_creacion());
+			statement.setInt(8, flete.getIdusuario());
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -109,13 +87,13 @@ public class FleteDAO {
 			while (resultSet.next()) {
 				flete = new FleteDTO(resultSet.getInt("id"),
 						resultSet.getInt("nrodoc"),
-						resultSet.getString("nombre"),
-						resultSet.getString("apellido"),
+						resultSet.getString("nombre_conductor"),
 						resultSet.getString("modelo"),
 						resultSet.getString("patente"),
 						resultSet.getString("telefono"),
-						resultSet.getDate("vtoLicencia"),
-						resultSet.getDate("fecha_creacion"));
+						resultSet.getDate("vto_licencia"),
+						resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -139,13 +117,13 @@ public class FleteDAO {
 			while (resultSet.next()) {
 				fletes = new FleteDTO(resultSet.getInt("id"),
 						resultSet.getInt("nrodoc"),
-						resultSet.getString("nombre"),
-						resultSet.getString("apellido"),
+						resultSet.getString("nombre_conductor"),
 						resultSet.getString("modelo"),
 						resultSet.getString("patente"),
 						resultSet.getString("telefono"),
 						resultSet.getDate("vtoLicencia"),
-						resultSet.getDate("fecha_creacion"));
+						resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -154,8 +132,5 @@ public class FleteDAO {
 		}
 		return fletes;
 	}
-	
-	
-	
 }
 

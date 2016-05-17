@@ -1,49 +1,49 @@
 package dto;
 
-import java.sql.Date;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+import java.util.Date;
 
 public class HojaDeRutaDTO {
-	private Date creacion;
-	private int Id;
+	private int id;
 	private int fleteId;
-	private List destinos;
-	public HojaDeRutaDTO(Date creacion, int id, int fleteId) {
-		super();
-		this.creacion = creacion;
-		Id = id;
+	private Date fecha_creacion;
+	private int idusuario;
+	
+	public HojaDeRutaDTO(int id, int fleteId, Date creacion, int idusuario) {
+		this.id = id;
 		this.fleteId = fleteId;
-		this.destinos = destinos;
+		this.fecha_creacion = creacion;
+		this.setIdusuario(idusuario);
 	}
 	
 	public Date getCreacion() {
-		return creacion;
+		return fecha_creacion;
 	}
+	
 	public void setCreacion(Date creacion) {
-		this.creacion = creacion;
+		this.fecha_creacion = creacion;
 	}
+	
 	public int getId() {
-		return Id;
+		return id;
 	}
+	
 	public void setId(int id) {
-		Id = id;
+		this.id = id;
 	}
+	
 	public int getFleteId() {
 		return fleteId;
 	}
+	
 	public void setFleteId(int fleteId) {
 		this.fleteId = fleteId;
 	}
-	public List getDestinos() {
-		return destinos;
+
+	public int getIdusuario() {
+		return idusuario;
 	}
-	public void setDestinos(List destinos) {
-		this.destinos = destinos;
+
+	public void setIdusuario(int idusuario) {
+		this.idusuario = idusuario;
 	}
-	
-	
-	
-	
-	
 }
