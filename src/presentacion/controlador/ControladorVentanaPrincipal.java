@@ -202,7 +202,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
 				String estado = (String) this.principal.getOrdenesDeTrabajo_table()
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 8);
-				if (estado.equals("NUEVO")) {//Para cambiar a "EN REPARACION", solo para debug
+				if (estado.equals("PRESUPUESTADO")) {
 
 					Ingreso ing = new Ingreso();
 					ing.setId(nroIngreso);
@@ -213,7 +213,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					controladorReparacion.inicializar();
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'EN REPARACION'.");
+							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'PRESUPUESTADO'.");
 				}
 			}
 		}

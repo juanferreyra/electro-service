@@ -265,21 +265,10 @@ public class VentanaReparacion extends JFrame {
 		return componentes_nombreColumnas;
 	}
 
-	// public JLabel getTotal_lbl() {
-	// return Total_lbl;
-	// }
 
 	public JButton getEliminarComponente_btn() {
 		return eliminarComponente_btn;
 	}
-
-//	public JTextField getValorPresupuestado_txf() {
-//		return valorPresupuestado_txf;
-//	}
-//
-//	public JTextField getManoDeObra_txf() {
-//		return manoDeObra_txf;
-//	}
 
 	public JComboBox<String> getComponente_ComboBox() {
 		return componente_ComboBox;

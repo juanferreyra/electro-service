@@ -31,11 +31,45 @@ public class ControladorReparacion implements ActionListener {
 	public ControladorReparacion(VentanaReparacion ventanaReparacion, Ingreso ingreso, UsuarioDTO usuarioLogueado) {
 		this.ventanaReparacion = ventanaReparacion;
 		this.ingreso = ingreso;
+		this.ventanaReparacion.getIncrementoCantComponente_btn().addActionListener(this);
+		this.ventanaReparacion.getDecrementoCantComponente_btn().addActionListener(this);
+		this.ventanaReparacion.getAgregarComponente_btn().addActionListener(this);
+		this.ventanaReparacion.getEliminarComponente_btn().addActionListener(this);
+		this.ventanaReparacion.getFinalizar_btn().addActionListener(this);
+		this.ventanaReparacion.getCancelar_btn().addActionListener(this);
+		this.usuarioLogueado = usuarioLogueado;
+		this.presupuesto = new Presupuesto(ingreso.getIngreso());
 	}
 
+	// public void inicializar() {
+	// setearDatosIngreso();
+	// this.ventanaReparacion.setVisible(true);
+	// }
+
 	public void inicializar() {
+
+		Calendar hoy = new GregorianCalendar();
+		// ventanaReparacion.getFechaIngreso_lbl().setText("Fecha: " +
+		// hoy.get(Calendar.DAY_OF_MONTH) + " / "
+		// + hoy.get(Calendar.MONTH) + " / " + hoy.get(Calendar.YEAR));
+		ventanaReparacion.setVisible(true);
+		ventanaReparacion.getComponentes_table().setModel(modelTable);
+		cargarComboComponentes();
 		setearDatosIngreso();
-		this.ventanaReparacion.setVisible(true);
+		// cargo el usuario
+		if (presupuesto.getId() == -1) {
+			// ventanaReparacion.getLbltecnico()
+			// .setText(this.usuarioLogueado.getNombre() + " " +
+			// this.usuarioLogueado.getApellido());
+		} else {
+			cargarModelo();
+			ventanaReparacion.getFinalizar_btn().setVisible(false);
+			ventanaReparacion.getCancelar_btn().setText("Cerrar");
+		}
+	}
+
+	private void cargarModelo() {
+
 	}
 
 	private void setearDatosIngreso() {
@@ -45,11 +79,15 @@ public class ControladorReparacion implements ActionListener {
 		this.ventanaReparacion.getDescripcionFalla_txtArea().setText(ingreso.getIngreso().getDescripcion_falla());
 	}
 
+	private void cargarComboComponentes() {
+
+		for (RepuestoDTO c : presupuesto.obtenerRepuestos()) {
+			this.ventanaReparacion.getComponente_ComboBox().addItem(c.getDetalle());
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// if (e.getSource() == this.ventanaReparacion) {
-		// }
-
 		// suma y resta componentes
 		if (e.getSource() == this.ventanaReparacion.getIncrementoCantComponente_btn()) {
 
@@ -167,8 +205,11 @@ public class ControladorReparacion implements ActionListener {
 	}
 
 	private void ocultarColumnaId() {
-		// TODO Auto-generated method stub
 
+		this.ventanaReparacion.getComponentes_table().getColumnModel().getColumn(0).setMaxWidth(0);
+		this.ventanaReparacion.getComponentes_table().getColumnModel().getColumn(0).setMinWidth(0);
+		this.ventanaReparacion.getComponentes_table().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+		this.ventanaReparacion.getComponentes_table().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 	}
 
 	private void eliminarComponenteDeTabla() {
