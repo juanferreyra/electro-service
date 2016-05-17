@@ -133,7 +133,7 @@ public class VentanaPrincipal extends JFrame {
 		asignarOrden_btn.setBounds(734, 474, 158, 36);
 		panelDeBotones.add(asignarOrden_btn);
 
-		reparacion_btn = new JButton("Detalle reparaci\u00F3n");
+		reparacion_btn = new JButton("Finalizar Reparaci\u00F3n");
 		reparacion_btn.setBounds(881, 474,  158, 36);
 		panelDeBotones.add(reparacion_btn);
 

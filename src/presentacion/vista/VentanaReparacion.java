@@ -30,7 +30,7 @@ public class VentanaReparacion extends JFrame {
 	private JTextArea descripcionFinal_jTextArea;
 	private JButton enviarAvisoReparacion_btn;
 	private JButton cancelar_btn;
-	private JButton guardar_btn;
+	private JButton finalizar_btn;
 	private JLabel cantidad_lbl;
 	private JTable componentes_table;
 	private JLabel fechaIngreso_lbl;
@@ -174,9 +174,9 @@ public class VentanaReparacion extends JFrame {
 		cancelar_btn.setBounds(582, 615, 117, 23);
 		contentPane.add(cancelar_btn);
 
-		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(438, 615, 118, 23);
-		contentPane.add(guardar_btn);
+		finalizar_btn = new JButton("Finalizar");
+		finalizar_btn.setBounds(438, 615, 118, 23);
+		contentPane.add(finalizar_btn);
 
 		JLabel lblFecha = new JLabel("");
 		lblFecha.setBounds(435, 10, 70, 15);
@@ -195,12 +195,12 @@ public class VentanaReparacion extends JFrame {
 		this.cancelar_btn = cancelar_btn;
 	}
 
-	public JButton getGuardar_btn() {
-		return guardar_btn;
+	public JButton getFinalizar_btn() {
+		return finalizar_btn;
 	}
 
-	public void setGuardar_btn(JButton guardar_btn) {
-		this.guardar_btn = guardar_btn;
+	public void setFinalizar_btn(JButton finalizar_btn) {
+		this.finalizar_btn = finalizar_btn;
 	}
 
 	public JLabel getNombreProductoTexto_lbl() {
