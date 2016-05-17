@@ -248,7 +248,17 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				// bot�n "Presupuesto"
 				if (principal.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JLabel.class)
 						&& columna == 6) {
-					JOptionPane.showMessageDialog(null, "Presupuesto");
+					if (principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
+						int nroIngreso = (int) principal.getOrdenesDeTrabajo_table()
+								.getValueAt(principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
+						IngresoDTO ingresoDTO = ingresoDAO.find(nroIngreso);
+						Ingreso ingreso = new Ingreso();
+						ingreso.setId(ingresoDTO.getId());
+
+						ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+								ingreso, controladorVentanaPrincipal, usuarioLogueado);
+						controladorPresupuesto.inicializar();
+					}
 				}
 			}
 		});

@@ -63,6 +63,7 @@ public class ControladorPresupuesto implements ActionListener{
 		if(presupuesto.getId()==-1) {
 			ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
 			ventanaPresupuesto.getManoDeObra_txf().setText("0");
+			ventanaPresupuesto.getTotal_lbl().setText("0");
 		} else {
 			cargarModelo();
 			ventanaPresupuesto.getGuardar_btn().setVisible(false);
