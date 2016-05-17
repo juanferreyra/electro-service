@@ -11,19 +11,35 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.swing.JOptionPane;
+
 import dto.UsuarioDTO;
 import presentacion.vista.VentanaPresupuesto;
 
-public class Email {
+public class EmailPresupuesto extends Thread {
 	
-	int envio = 0;
+	private int envio = 0;
+	private Ingreso ingreso;
+	private UsuarioDTO usuario;
+	private VentanaPresupuesto ventana;
 
-	
-	public Email(){
+
+	public EmailPresupuesto (Ingreso ingreso, UsuarioDTO usuario, VentanaPresupuesto ventana) {
+		
+		this.ingreso = ingreso;
+		this.usuario = usuario;
+		this.ventana = ventana;
 		
 	}
 	
-	public void enviarPresupuesto(Ingreso ingreso, UsuarioDTO usuario, VentanaPresupuesto ventana){
+	@Override
+	public void run() {
+		
+		this.enviarPresupuesto();
+		
+	}
+	
+	private void enviarPresupuesto(){
 		
 		String destinatario = ingreso.getCliente().getMail();
 		
@@ -77,9 +93,7 @@ public class Email {
 
 		
 	}
-	
-	
-	
+		
 	private void enviar(String destinatarios ,String mensaje, String asunto, VentanaPresupuesto ventana ){
 		try
 		{
@@ -136,8 +150,8 @@ public class Email {
 			//Con esta imprimimos en consola que el mensaje fue enviado
 			
 			System.out.println("Mensaje Enviado");
-			/*JOptionPane.showMessageDialog(ventana, "Email de Presupuesto enviado correctamente", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);*/
+			JOptionPane.showMessageDialog(null, "Email de Presupuesto enviado correctamente", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 		catch (Exception e)
 		{
@@ -147,10 +161,5 @@ public class Email {
 	}
 
 
-	public static void main(String[] args){
-
-
-
-
-	}
+	
 }
