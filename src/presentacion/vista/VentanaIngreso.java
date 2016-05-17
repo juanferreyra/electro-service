@@ -4,23 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-
 import modelo.JTextFieldLimit;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
-import java.awt.Font;
 import javax.swing.border.LineBorder;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -33,7 +25,10 @@ public class VentanaIngreso extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField numeroCliente_txf;
-	private JTable table;
+	private JLabel lbl_nombre_apellido_cliente;
+	private JLabel lbl_telefono_cliente;
+	private JLabel lbl_email_cliente;
+	private JLabel lbl_direccion_cliente;
 	private JTextField nombreProducto_txf;
 	private JTextArea descripcionFalla_txtArea;
 	private JTextField direccionNueva_txf;
@@ -47,8 +42,8 @@ public class VentanaIngreso extends JFrame {
 	private JTextField txtMontoEnvio;
 	private JButton btnVerIngreso;
 	private JPanel direccionNueva_JPanel;
-	private JLabel direccinNueva_lbl;
 	private JLabel otraDireccion_lbl;
+
 
 	public VentanaIngreso() {
 
@@ -103,62 +98,41 @@ public class VentanaIngreso extends JFrame {
 		crearCliente_btn.setBounds(410, 52, 33, 20);
 		contentPane.add(crearCliente_btn);
 
-		String[] nombreColumnas = { "Nombre", "Apellido", "Direccion", "Email", "Telefono" };
-		Object[][] informacionTabla = {};
-
-		table = new JTable(informacionTabla, nombreColumnas);
-		table.setEnabled(false);
-		table.setRowSelectionAllowed(false);
-		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		table.setFont(new Font("Tahoma", Font.PLAIN, 15));
-
-		JPanel panelTablaDatosCliente = new JPanel();
-		panelTablaDatosCliente.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panelTablaDatosCliente.setBounds(10, 80, 664, 47);
-
-		JTableHeader header = table.getTableHeader();
-
-		panelTablaDatosCliente.setLayout(new BorderLayout(0, 0));
-		panelTablaDatosCliente.add(header, BorderLayout.NORTH);
-		panelTablaDatosCliente.add(table, BorderLayout.CENTER);
-
-		contentPane.add(panelTablaDatosCliente);
-
 		JLabel nombreProducto_lbl = new JLabel("Nombre Producto:");
 		nombreProducto_lbl.setHorizontalAlignment(SwingConstants.LEFT);
-		nombreProducto_lbl.setBounds(10, 151, 260, 20);
+		nombreProducto_lbl.setBounds(10, 139, 260, 20);
 		contentPane.add(nombreProducto_lbl);
 
 		nombreProducto_txf = new JTextField();
 		nombreProducto_txf.setColumns(10);
-		nombreProducto_txf.setBounds(141, 151, 533, 20);
+		nombreProducto_txf.setBounds(141, 139, 533, 20);
 		nombreProducto_txf.setDocument(new JTextFieldLimit(150));
 		contentPane.add(nombreProducto_txf);
 
 		JLabel marca_lbl = new JLabel("Marca:");
 		marca_lbl.setHorizontalAlignment(SwingConstants.LEFT);
-		marca_lbl.setBounds(10, 182, 127, 20);
+		marca_lbl.setBounds(10, 170, 127, 20);
 		contentPane.add(marca_lbl);
 
 		marca_ComboBox = new JComboBox<String>();
-		marca_ComboBox.setBounds(141, 185, 191, 20);
+		marca_ComboBox.setBounds(141, 173, 191, 20);
 		contentPane.add(marca_ComboBox);
 
 		JLabel tipo_lbl = new JLabel("Tipo:");
 		tipo_lbl.setHorizontalAlignment(SwingConstants.LEFT);
-		tipo_lbl.setBounds(396, 182, 150, 20);
+		tipo_lbl.setBounds(396, 170, 150, 20);
 		contentPane.add(tipo_lbl);
 
 		tipo_ComboBox = new JComboBox<String>();
-		tipo_ComboBox.setBounds(483, 185, 191, 20);
+		tipo_ComboBox.setBounds(483, 173, 191, 20);
 		contentPane.add(tipo_ComboBox);
 
 		JLabel descripcionFalla_lbl = new JLabel("Descripcion falla:");
-		descripcionFalla_lbl.setBounds(10, 227, 146, 20);
+		descripcionFalla_lbl.setBounds(10, 204, 146, 20);
 		contentPane.add(descripcionFalla_lbl);
 
 		JScrollPane descripcionFalla_jScrollPane = new javax.swing.JScrollPane();
-		descripcionFalla_jScrollPane.setBounds(10, 252, 664, 63);
+		descripcionFalla_jScrollPane.setBounds(10, 227, 664, 104);
 		descripcionFalla_jScrollPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		descripcionFalla_jScrollPane
 				.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -166,6 +140,7 @@ public class VentanaIngreso extends JFrame {
 				.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		descripcionFalla_txtArea = new JTextArea();
+		descripcionFalla_txtArea.setLineWrap(true);
 		descripcionFalla_txtArea.setRows(5);
 		descripcionFalla_txtArea.setColumns(20);
 		descripcionFalla_txtArea.setDocument(new JTextFieldLimit(400));
@@ -239,7 +214,26 @@ public class VentanaIngreso extends JFrame {
 		direccionNueva_checkBox.setBounds(124, 342, 20, 14);
 		contentPane.add(direccionNueva_checkBox);
 		direccionNueva_checkBox.setBackground(Color.WHITE);
-
+		
+		JLabel lblCliente = new JLabel("Datos Cliente :");
+		lblCliente.setBounds(10, 83, 89, 20);
+		contentPane.add(lblCliente);
+		
+		lbl_nombre_apellido_cliente = new JLabel("");
+		lbl_nombre_apellido_cliente.setBounds(103, 83, 272, 20);
+		contentPane.add(lbl_nombre_apellido_cliente);
+		
+		lbl_telefono_cliente = new JLabel("");
+		lbl_telefono_cliente.setBounds(396, 108, 278, 20);
+		contentPane.add(lbl_telefono_cliente);
+		
+		lbl_email_cliente = new JLabel("");
+		lbl_email_cliente.setBounds(397, 83, 272, 20);
+		contentPane.add(lbl_email_cliente);
+		
+		lbl_direccion_cliente = new JLabel("");
+		lbl_direccion_cliente.setBounds(103, 108, 272, 20);
+		contentPane.add(lbl_direccion_cliente);
 	}
 
 	public JButton getBtnBuscarCliente() {
@@ -290,10 +284,6 @@ public class VentanaIngreso extends JFrame {
 		return cancelar_btn;
 	}
 
-	public JTable getClienteTable() {
-		return this.table;
-	}
-
 	public JTextField getMontoEnvio() {
 		return txtMontoEnvio;
 	}
@@ -309,9 +299,10 @@ public class VentanaIngreso extends JFrame {
 		envioDomicilio_checkBox.setSelected(false);
 		direccionNueva_checkBox.setSelected(false);
 		direccionNueva_txf.setText("");
-		String[] nombreColumnas = { "Nombre", "Apellido", "Dirección", "Email", "Teléfono" };
-		Object[][] informacionTabla = {};
-		table.setModel(new DefaultTableModel(informacionTabla, nombreColumnas));
+		lbl_nombre_apellido_cliente.setText("");
+		lbl_telefono_cliente.setText("");
+		lbl_email_cliente.setText("");
+		lbl_direccion_cliente.setText("");
 		txtMontoEnvio.setText("");
 	}
 
@@ -330,4 +321,37 @@ public class VentanaIngreso extends JFrame {
 	public JLabel getOtraDireccionLabel() {
 		return this.otraDireccion_lbl;
 	}
+	
+	public JLabel getLbl_nombre_apellido_cliente() {
+		return lbl_nombre_apellido_cliente;
+	}
+
+	public void setLbl_nombre_apellido_cliente(JLabel lbl_nombre_apellido_cliente) {
+		this.lbl_nombre_apellido_cliente = lbl_nombre_apellido_cliente;
+	}
+
+	public JLabel getLbl_telefono_cliente() {
+		return lbl_telefono_cliente;
+	}
+
+	public void setLbl_telefono_cliente(JLabel lbl_telefono_cliente) {
+		this.lbl_telefono_cliente = lbl_telefono_cliente;
+	}
+
+	public JLabel getLbl_email_cliente() {
+		return lbl_email_cliente;
+	}
+
+	public void setLbl_email_cliente(JLabel lbl_email_cliente) {
+		this.lbl_email_cliente = lbl_email_cliente;
+	}
+
+	public JLabel getLbl_direccion_cliente() {
+		return lbl_direccion_cliente;
+	}
+
+	public void setLbl_direccion_cliente(JLabel lbl_direccion_cliente) {
+		this.lbl_direccion_cliente = lbl_direccion_cliente;
+	}
+
 }

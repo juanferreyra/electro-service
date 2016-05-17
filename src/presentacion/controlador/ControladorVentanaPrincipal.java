@@ -185,7 +185,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					ing.cargarModeloCompleto();
 
 					ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-							ing, usuarioLogueado);
+							ing, this, usuarioLogueado);
 					controladorPresupuesto.inicializar();
 				} else {
 					JOptionPane.showMessageDialog(null,
@@ -223,6 +223,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getOrdenesDeTrabajo_table().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				@SuppressWarnings("unused")
 				int fila = principal.getOrdenesDeTrabajo_table().rowAtPoint(e.getPoint());
 				int columna = principal.getOrdenesDeTrabajo_table().columnAtPoint(e.getPoint());
 
@@ -247,7 +248,17 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				// bot�n "Presupuesto"
 				if (principal.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JLabel.class)
 						&& columna == 6) {
-					JOptionPane.showMessageDialog(null, "Presupuesto");
+					if (principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
+						int nroIngreso = (int) principal.getOrdenesDeTrabajo_table()
+								.getValueAt(principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
+						Ingreso ingreso = new Ingreso();
+						ingreso.setId(nroIngreso);
+						ingreso.cargarModeloCompleto();
+
+						ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
+								ingreso, controladorVentanaPrincipal, usuarioLogueado);
+						controladorPresupuesto.inicializar();
+					}
 				}
 			}
 		});

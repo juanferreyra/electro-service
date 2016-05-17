@@ -7,7 +7,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import dto.ClienteDTO;
 import dto.IngresoDTO;
 import dto.MarcaDTO;
@@ -258,10 +257,10 @@ public class ControladorVentanaIngreso implements ActionListener {
 	}
 
 	private void llenarTablaCliente(ClienteDTO client) {
-		Object[][] informacionCliente = { { client.getNombre(), client.getApellido(), client.getDireccion(),
-				client.getMail(), client.getTelefono() } };
-		String[] nombreColumnas = { "Nombre", "Apellido", "Dirección", "Email", "Teléfono" };
-		this.ventana_ingreso.getClienteTable().setModel(new DefaultTableModel(informacionCliente, nombreColumnas));
+		this.ventana_ingreso.getLbl_nombre_apellido_cliente().setText(client.getNombre()+", "+client.getApellido());
+		this.ventana_ingreso.getLbl_direccion_cliente().setText(client.getDireccion());
+		this.ventana_ingreso.getLbl_telefono_cliente().setText("Telefono: "+client.getTelefono());
+		this.ventana_ingreso.getLbl_email_cliente().setText("Email: "+client.getMail());
 	}
 
 }

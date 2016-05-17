@@ -22,8 +22,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
-public class VentanaPrincipal extends JFrame {
+public class Envios extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -36,7 +39,7 @@ public class VentanaPrincipal extends JFrame {
 	private FormatoTablaOrdenesTrabajo formatoTabla;
 
 	@SuppressWarnings("serial")
-	public VentanaPrincipal() {
+	public Envios() {
 		contentPane = new JPanel();
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,7 +61,7 @@ public class VentanaPrincipal extends JFrame {
 		labelLOGO.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
 		labelLOGO.setBounds(10, 11, 240, 140);
 
-		JLabel ordenesDeTrabajo_lbl = new JLabel("<html>\u00D3rdenes de Trabajo</html>");
+		JLabel ordenesDeTrabajo_lbl = new JLabel("<html>Lista de Envios</html>");
 		ordenesDeTrabajo_lbl.setBounds(10, 43, 1005, 36);
 		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -77,11 +80,11 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número", "Fecha",
-				"Producto", "Cliente", "Envío", "", "Técnico Asignado", "Estado" }) {
+		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "Enviar", "Número", "Fecha",
+				"Producto", "Cliente", "Direccion", "Localidad","Valor", ""}) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { JLabel.class, Integer.class, String.class, String.class, String.class,
-					String.class, JLabel.class, String.class, String.class };
+					String.class, String.class, String.class, String.class };
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
@@ -131,7 +134,7 @@ public class VentanaPrincipal extends JFrame {
 		asignarOrden_btn.setBounds(734, 474, 158, 36);
 		panelDeBotones.add(asignarOrden_btn);
 
-		reparacion_btn = new JButton("Finalizar Reparaci\u00F3n");
+		reparacion_btn = new JButton("Detalle reparaci\u00F3n");
 		reparacion_btn.setBounds(881, 474,  158, 36);
 		panelDeBotones.add(reparacion_btn);
 
@@ -174,3 +177,4 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 }
+

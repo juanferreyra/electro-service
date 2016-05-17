@@ -54,9 +54,8 @@ public class Presupuesto
 	public Boolean guardarPresupuesto(int idusuario) {
 		Boolean ingreso = true;
 		//guardo todos los objetos DTO con su respectivo DAO
-		
-		//busco el siguiente id de la tabla ingreso a insertar
-		
+		try {
+			//busco el siguiente id de la tabla ingreso a insertar
 			int presupuesto_id = this.presupuestoDAO.getNextId();
 			presupuesto.setId(presupuesto_id);
 			if(presupuesto_id!=-1)
@@ -78,7 +77,9 @@ public class Presupuesto
 					this.presupuestoRepuestoDAO.insert(presuRep);
 				}
 			}
-		
+		} catch (Exception e) {
+			ingreso = false;
+		}
 		return ingreso;
 	}
 

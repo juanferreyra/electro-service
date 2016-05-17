@@ -13,8 +13,8 @@ import javax.swing.table.DefaultTableModel;
 
 import dto.RepuestoDTO;
 import dto.ItemPresupuestoRepuestoDTO;
-import dto.PerfilDTO;
 import dto.UsuarioDTO;
+import modelo.Email;
 import modelo.Ingreso;
 import modelo.Presupuesto;
 import presentacion.vista.VentanaPresupuesto;
@@ -22,6 +22,7 @@ import presentacion.vista.VentanaPresupuesto;
 public class ControladorPresupuesto implements ActionListener{
 	
 	private VentanaPresupuesto ventanaPresupuesto;
+	private ControladorVentanaPrincipal controladorVentanaPrincipal;
 	private Ingreso ingreso;
 	private Presupuesto presupuesto;
 	private UsuarioDTO usuarioLogueado;
@@ -30,19 +31,23 @@ public class ControladorPresupuesto implements ActionListener{
 	private float suma = 0;
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
+	private Email email = new Email();
 	
-	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso, UsuarioDTO usuario) {
+	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso,
+			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
 		this.ventanaPresupuesto = ventanaPresupuesto;
-		 this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
-		 this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
-		 this.ventanaPresupuesto.getCancelar_btn().addActionListener(this); 
-		 this.ingreso = ingreso;
-		 this.usuarioLogueado = usuario;
-		 this.presupuesto = new Presupuesto(ingreso.getIngreso());
+		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
+		this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
+		this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
+		this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
+		this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
+		this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
+		this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
+		this.ventanaPresupuesto.getCancelar_btn().addActionListener(this); 
+		this.ingreso = ingreso;
+		this.usuarioLogueado = usuario;
+		this.presupuesto = new Presupuesto(ingreso.getIngreso());
+		this.ventanaPresupuesto.getEnviarPresupuesto_btn().addActionListener(this);
 	}
 	
 	public void inicializar() {
@@ -58,6 +63,7 @@ public class ControladorPresupuesto implements ActionListener{
 		if(presupuesto.getId()==-1) {
 			ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
 			ventanaPresupuesto.getManoDeObra_txf().setText("0");
+			ventanaPresupuesto.getTotal_lbl().setText("0");
 		} else {
 			cargarModelo();
 			ventanaPresupuesto.getGuardar_btn().setVisible(false);
@@ -83,10 +89,10 @@ public class ControladorPresupuesto implements ActionListener{
 	{
 		//cargo la lista de componentes
 		actualizarTablaRepuestos();
+		//cargo descripcion Breve
+		this.ventanaPresupuesto.getDescripcionBreve_jTextArea().setText(this.presupuesto.getPresupuesto().getDescripcionBreve());
 		//cargo descripcion tecnica
 		this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().setText(this.presupuesto.getPresupuesto().getDescripcionTecnica());
-		//cargo descripcion Breve
-		this.ventanaPresupuesto.getDescripcionBreve_jTextArea().setText(this.presupuesto.getPresupuesto().getDescripcionTecnica());
 		//setear fecha de creacion del presupuesto
 		this.ventanaPresupuesto.getFechaIngreso_lbl().setText(this.presupuesto.getPresupuesto().getFechacreacion().toString());
 		//seteo la fecha de vencimiento
@@ -99,6 +105,8 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getHorasDeTrabajo_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getHorasTrabajo()));
 		//seteo el total del presupuesto (que actualmente se guarda en mano de obra)
 		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
+		//TODO:Deberia setear el usuario que creo el presupuesto, por ahora seteo el lodeado hasta que hagamos el ABM de usuarios
+		ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
 	}
 
 	@Override
@@ -155,6 +163,11 @@ public class ControladorPresupuesto implements ActionListener{
 		}else if (e.getSource() == this.ventanaPresupuesto.getCancelar_btn()){
 		
 			this.ventanaPresupuesto.dispose();
+			
+		}else if (e.getSource() == this.ventanaPresupuesto.getEnviarPresupuesto_btn()){
+			
+			// envia email
+			email.enviarPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
 		}
 		
 	}
@@ -223,7 +236,12 @@ public class ControladorPresupuesto implements ActionListener{
 			if(ingreso){
 				JOptionPane.showMessageDialog(ventanaPresupuesto, "Presupuesto guardado correctamente", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
+				
+				// envia email
+				email.enviarPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
+				
 				this.ventanaPresupuesto.dispose();
+				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 			} else {
 				JOptionPane.showMessageDialog(ventanaPresupuesto, "Ocurrio un error al guardar el presupuesto", "Atencion!",
 						JOptionPane.ERROR_MESSAGE);
@@ -353,16 +371,4 @@ public class ControladorPresupuesto implements ActionListener{
 		ventanaPresupuesto.getTotal_lbl().setText(String.valueOf(suma));
 
 	}
-	
-	/*public static void main(String[] args) {
-		PerfilDTO perf3 = new PerfilDTO("JEFE");
-		UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
-		Ingreso ing = new Ingreso();
-		ing.setId(7);
-		ing.cargarModeloCompleto();
-
-		ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-				ing, user3);
-		controladorPresupuesto.inicializar();
-	}*/
 }
