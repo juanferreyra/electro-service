@@ -70,7 +70,6 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		if (this.perfil.equals("ADMINISTRATIVO")) {
 			// Visualizacion modo administrativo
 			this.principal.getPresupuestar_btn().setVisible(false);
-			this.principal.getAsignarOrden_btn().setVisible(false);
 			this.principal.getReparacion_btn().setVisible(false);
 			this.principal.setVisible(true);
 
@@ -192,8 +191,6 @@ public class ControladorVentanaPrincipal implements ActionListener {
 							"No es posible presupuestar el registro seleccionado. Por favor, seleccione una orden en estado 'NUEVO'.");
 				}
 			}
-		} else if (e.getSource() == this.principal.getAsignarOrden_btn()) {
-
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
 
 			// REVISAR (COPI Y PASTE DE PRESUPUESTO)
