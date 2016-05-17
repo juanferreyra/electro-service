@@ -50,6 +50,10 @@ public class VentanaPresupuesto extends JFrame {
 	private JLabel Total_lbl;
 	private JLabel estado_lb;
 	private JLabel lbltecnico;
+	private JButton btnAsignar;
+	private JButton btnAceptado;
+	private JButton btnInformado;
+	
 
 	public VentanaPresupuesto() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresupuesto.class.getResource("/calculator.png")));
@@ -63,7 +67,7 @@ public class VentanaPresupuesto extends JFrame {
 		setLocationRelativeTo(null);
 
 		fechaIngreso_lbl = new JLabel("");
-		fechaIngreso_lbl.setBounds(505, 11, 166, 14);
+		fechaIngreso_lbl.setBounds(522, 36, 166, 14);
 		contentPane.add(fechaIngreso_lbl);
 
 		JLabel fechaIngresoText_lbl = new JLabel("");
@@ -71,40 +75,40 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(fechaIngresoText_lbl);
 
 		JLabel titulo_lbl = new JLabel("<html><i>PRESUPUESTO</i></html>");
-		titulo_lbl.setBounds(30, 11, 495, 14);
+		titulo_lbl.setBounds(30, 34, 332, 14);
 		contentPane.add(titulo_lbl);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(30, 36, 658, 21);
+		separator.setBounds(30, 53, 658, 7);
 		separator.setForeground(Color.BLUE);
 		contentPane.add(separator);
 
 		JLabel nombreProducto_lbl = new JLabel("<html><i>Nombre Producto:</i></html>");
-		nombreProducto_lbl.setBounds(40, 36, 116, 29);
+		nombreProducto_lbl.setBounds(30, 54, 116, 26);
 		contentPane.add(nombreProducto_lbl);
 
 		nombreProductoTexto_lbl = new JLabel("");
-		nombreProductoTexto_lbl.setBounds(179, 37, 445, 26);
+		nombreProductoTexto_lbl.setBounds(179, 54, 389, 26);
 		contentPane.add(nombreProductoTexto_lbl);
 
 		JLabel marca_lbl = new JLabel("<html><i>Marca:</i></html>");
-		marca_lbl.setBounds(40, 77, 116, 14);
+		marca_lbl.setBounds(30, 82, 116, 26);
 		contentPane.add(marca_lbl);
 
 		marcaTexto_lbl = new JLabel("");
-		marcaTexto_lbl.setBounds(153, 70, 184, 14);
+		marcaTexto_lbl.setBounds(123, 82, 184, 26);
 		contentPane.add(marcaTexto_lbl);
 
 		JLabel tipo_lbl = new JLabel("<html><i>Tipo:</i></html>");
-		tipo_lbl.setBounds(338, 78, 116, 14);
+		tipo_lbl.setBounds(317, 82, 116, 26);
 		contentPane.add(tipo_lbl);
 
 		tipoTexto_lbl = new JLabel("");
-		tipoTexto_lbl.setBounds(490, 78, 184, 14);
+		tipoTexto_lbl.setBounds(402, 82, 184, 26);
 		contentPane.add(tipoTexto_lbl);
 
 		JLabel descripcionFalla_lbl = new JLabel("<html><i>Descripci\u00F3n falla:</i></html>");
-		descripcionFalla_lbl.setBounds(30, 103, 146, 14);
+		descripcionFalla_lbl.setBounds(30, 110, 146, 14);
 		contentPane.add(descripcionFalla_lbl);
 
 		JScrollPane descripcionFalla_jScrollPane = new javax.swing.JScrollPane();
@@ -274,12 +278,24 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(estado_lb);
 
 		JLabel lblFecha = new JLabel("");
-		lblFecha.setBounds(435, 10, 70, 15);
+		lblFecha.setBounds(443, 35, 70, 15);
 		contentPane.add(lblFecha);
 
 		lbltecnico = new JLabel("");
 		lbltecnico.setBounds(162, 191, 214, 15);
 		contentPane.add(lbltecnico);
+		
+		btnAsignar = new JButton("Asignar");
+		btnAsignar.setBounds(299, 2, 115, 23);
+		contentPane.add(btnAsignar);
+		
+		btnAceptado = new JButton("Aceptado");
+		btnAceptado.setBounds(179, 2, 116, 23);
+		contentPane.add(btnAceptado);
+		
+		btnInformado = new JButton("Informado");
+		btnInformado.setBounds(60, 2, 116, 23);
+		contentPane.add(btnInformado);
 	}
 
 	public JLabel getCantidad_lbl() {
@@ -385,5 +401,16 @@ public class VentanaPresupuesto extends JFrame {
 	public void setLbltecnico(JLabel lbltecnico) {
 		this.lbltecnico = lbltecnico;
 	}
+	
+	public JButton getBtnAsignar() {
+		return btnAsignar;
+	}
 
+	public JButton getBtnAceptado() {
+		return btnAceptado;
+	}
+
+	public JButton getBtnInformado() {
+		return btnInformado;
+	}
 }

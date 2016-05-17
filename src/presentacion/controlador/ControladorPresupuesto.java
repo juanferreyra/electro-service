@@ -12,11 +12,13 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.RepuestoDTO;
+import dto.IngresoLogDTO;
 import dto.ItemPresupuestoRepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.Email;
 import modelo.Ingreso;
 import modelo.Presupuesto;
+import persistencia.dao.IngresoLogDAO;
 import presentacion.vista.VentanaPresupuesto;
 
 public class ControladorPresupuesto implements ActionListener{
@@ -32,9 +34,14 @@ public class ControladorPresupuesto implements ActionListener{
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
 	private Email email = new Email();
+	private String perfil;
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso,
 			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
+		this.ingreso = ingreso;
+		this.usuarioLogueado = usuario;
+		this.perfil = usuario.getPerfilDTO().getPerfil();
+		this.presupuesto = new Presupuesto(ingreso.getIngreso());
 		this.ventanaPresupuesto = ventanaPresupuesto;
 		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
 		this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
@@ -43,11 +50,11 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
 		this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
 		this.ventanaPresupuesto.getManoDeObra_txf().addActionListener(this);
-		this.ventanaPresupuesto.getCancelar_btn().addActionListener(this); 
-		this.ingreso = ingreso;
-		this.usuarioLogueado = usuario;
-		this.presupuesto = new Presupuesto(ingreso.getIngreso());
+		this.ventanaPresupuesto.getCancelar_btn().addActionListener(this);
 		this.ventanaPresupuesto.getEnviarPresupuesto_btn().addActionListener(this);
+		this.ventanaPresupuesto.getBtnInformado().addActionListener(this);
+		this.ventanaPresupuesto.getBtnAceptado().addActionListener(this);
+		this.ventanaPresupuesto.getBtnAsignar().addActionListener(this);
 	}
 	
 	public void inicializar() {
@@ -64,10 +71,25 @@ public class ControladorPresupuesto implements ActionListener{
 			ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
 			ventanaPresupuesto.getManoDeObra_txf().setText("0");
 			ventanaPresupuesto.getTotal_lbl().setText("0");
+			ventanaPresupuesto.getBtnInformado().setVisible(false);
+			ventanaPresupuesto.getBtnAceptado().setVisible(false);
+			ventanaPresupuesto.getBtnAsignar().setVisible(false);
 		} else {
 			cargarModelo();
 			ventanaPresupuesto.getGuardar_btn().setVisible(false);
 			ventanaPresupuesto.getCancelar_btn().setText("Cerrar");
+			System.out.println(this.ingreso.getIngreso().getEstado());
+			if(this.ingreso.getIngreso().getEstado()==3 && (perfil.equals("ADMINISTRATIVO") || perfil.equals("JEFE"))) {
+				mostrarBotonInformado();
+			}
+			
+			if(this.ingreso.getIngreso().getEstado()==4 && (perfil.equals("ADMINISTRATIVO") || perfil.equals("JEFE"))) {
+				mostrarBotonAceptado();
+			}
+			
+			if(this.ingreso.getIngreso().getEstado()==5 && (perfil.equals("TECNICO") || perfil.equals("JEFE"))) {
+				mostrarBotonAsignar();
+			}
 		}
 	}
 	
@@ -168,6 +190,56 @@ public class ControladorPresupuesto implements ActionListener{
 			
 			// envia email
 			email.enviarPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
+		}else if(e.getSource() == this.ventanaPresupuesto.getBtnInformado()) {
+			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como Informado al cliente.<br> Esta seguro?", "Confirmar",
+		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    if (response == JOptionPane.NO_OPTION) {
+		      
+		    } else if (response == JOptionPane.YES_OPTION) {
+		    		IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.ingreso.getId(), 4, null, usuarioLogueado.getId());
+					IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+					//ingreso el estado
+				ingresoLogDAO.insert(ingrLog);
+				mostrarBotonAceptado();
+				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+		    } else if (response == JOptionPane.CLOSED_OPTION) {
+		      
+		    }
+		} else if(e.getSource() == this.ventanaPresupuesto.getBtnAceptado()) {
+			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como aceptado por el cliente. Esta seguro?", "Confirmar",
+			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    if (response == JOptionPane.NO_OPTION) {
+		      
+		    } else if (response == JOptionPane.YES_OPTION) {
+		    		IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.ingreso.getId(), 5, null, usuarioLogueado.getId());
+					IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+					//ingreso el estado
+				ingresoLogDAO.insert(ingrLog);
+				if(perfil.equals("TECNICO") || perfil.equals("JEFE")){
+					mostrarBotonAsignar();
+				}else {
+					ocultarBotonesEstados();
+				}
+				
+				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+		    } else if (response == JOptionPane.CLOSED_OPTION) {
+		      
+		    }
+		} else if(e.getSource() == this.ventanaPresupuesto.getBtnAsignar()) {
+			int response = JOptionPane.showConfirmDialog(null, "Esta seguro que desea asignarse esta tarea para realizarla?", "Confirmar",
+			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    if (response == JOptionPane.NO_OPTION) {
+		      
+		    } else if (response == JOptionPane.YES_OPTION) {
+		    		IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.ingreso.getId(), 6, null, usuarioLogueado.getId());
+					IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+					//ingreso el estado
+				ingresoLogDAO.insert(ingrLog);
+				ocultarBotonesEstados();
+				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+		    } else if (response == JOptionPane.CLOSED_OPTION) {
+		      
+		    }
 		}
 		
 	}
@@ -370,5 +442,29 @@ public class ControladorPresupuesto implements ActionListener{
 
 		ventanaPresupuesto.getTotal_lbl().setText(String.valueOf(suma));
 
+	}
+	
+	private void mostrarBotonInformado() {
+		ventanaPresupuesto.getBtnInformado().setVisible(true);
+		ventanaPresupuesto.getBtnAceptado().setVisible(false);
+		ventanaPresupuesto.getBtnAsignar().setVisible(false);
+	}
+	
+	private void mostrarBotonAceptado() {
+		ventanaPresupuesto.getBtnInformado().setVisible(false);
+		ventanaPresupuesto.getBtnAceptado().setVisible(true);
+		ventanaPresupuesto.getBtnAsignar().setVisible(false);
+	}
+	
+	private void mostrarBotonAsignar() {
+		ventanaPresupuesto.getBtnInformado().setVisible(false);
+		ventanaPresupuesto.getBtnAceptado().setVisible(false);
+		ventanaPresupuesto.getBtnAsignar().setVisible(true);
+	}
+	
+	private void ocultarBotonesEstados() {
+		ventanaPresupuesto.getBtnInformado().setVisible(false);
+		ventanaPresupuesto.getBtnAceptado().setVisible(false);
+		ventanaPresupuesto.getBtnAsignar().setVisible(false);
 	}
 }

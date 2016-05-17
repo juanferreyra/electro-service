@@ -30,7 +30,6 @@ public class VentanaPrincipal extends JFrame {
 	private JTable ordenesDeTrabajo_table;
 	private JButton ingresarProducto_btn;
 	private JButton presupuestar_btn;
-	private JButton asignarOrden_btn;
 	private JButton reparacion_btn;
 	private JMenuBar menuBar;
 	private FormatoTablaOrdenesTrabajo formatoTabla;
@@ -127,10 +126,6 @@ public class VentanaPrincipal extends JFrame {
 		presupuestar_btn.setBounds(587, 474,  158, 36);
 		panelDeBotones.add(presupuestar_btn);
 
-		asignarOrden_btn = new JButton("Asignar Orden");
-		asignarOrden_btn.setBounds(734, 474, 158, 36);
-		panelDeBotones.add(asignarOrden_btn);
-
 		reparacion_btn = new JButton("Finalizar Reparaci\u00F3n");
 		reparacion_btn.setBounds(881, 474,  158, 36);
 		panelDeBotones.add(reparacion_btn);
@@ -155,10 +150,6 @@ public class VentanaPrincipal extends JFrame {
 
 	public JButton getPresupuestar_btn() {
 		return this.presupuestar_btn;
-	}
-
-	public JButton getAsignarOrden_btn() {
-		return this.asignarOrden_btn;
 	}
 
 	public JButton getReparacion_btn() {
