@@ -18,7 +18,10 @@ public class IngresoDAO {
 										   + "i.envio, i.envio_default, i.direccion_alternativa, i.monto_envio, (SELECT il.idestado FROM ingreso_log il WHERE il.idingreso=i.id order by il.id desc limit 1) as estado,  "
 										   + "i.fecha_creacion, i.idusuario, i.habilitado, i.tecnico_asignado "
 										   + "FROM ingreso i WHERE i.habilitado=true";
-	private static final String find = "SELECT * FROM ingreso WHERE habilitado=true AND id = ?";
+	private static final String find = "SELECT i.id, i.idcliente, i.descripcion_producto, i.idmarca, i.idtipo_producto, i.descripcion_falla, "
+										   + "i.envio, i.envio_default, i.direccion_alternativa, i.monto_envio, (SELECT il.idestado FROM ingreso_log il WHERE il.idingreso=i.id order by il.id desc limit 1) as estado,  "
+										   + "i.fecha_creacion, i.idusuario, i.habilitado, i.tecnico_asignado "
+										   + "FROM ingreso i WHERE i.habilitado=true AND i.id = ?";
 	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'ingreso';";
 	private static final String paraEnviar ="SELECT * FROM ingresos WHERE estado = '10' and envio=true";
 	private Conexion conexion = Conexion.getConexion();

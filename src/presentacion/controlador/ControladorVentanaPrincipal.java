@@ -262,7 +262,5 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				}
 			}
 		});
-
 	}
-
 }
