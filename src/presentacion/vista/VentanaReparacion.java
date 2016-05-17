@@ -7,7 +7,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.JTextComponent;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -15,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
+import java.util.Vector;
+
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;
 
@@ -233,6 +239,50 @@ public class VentanaReparacion extends JFrame {
 
 	public void setDescripcionFalla_txtArea(JTextArea descripcionFalla_txtArea) {
 		this.descripcionFalla_txtArea = descripcionFalla_txtArea;
+	}
+
+	public JButton getIncrementoCantComponente_btn() {
+		return incrementoCantComponente_btn;
+	}
+
+	public JLabel getCantidad_lbl() {
+		return cantidad_lbl;
+	}
+
+	public JButton getDecrementoCantComponente_btn() {
+		return decrementoCantComponente_btn;
+	}
+
+	public JButton getAgregarComponente_btn() {
+		return agregarComponente_btn;
+	}
+
+	public JTable getComponentes_table() {
+		return componentes_table;
+	}
+
+	public String[] getComponentes_nombreColumnas() {
+		return componentes_nombreColumnas;
+	}
+
+	// public JLabel getTotal_lbl() {
+	// return Total_lbl;
+	// }
+
+	public JButton getEliminarComponente_btn() {
+		return eliminarComponente_btn;
+	}
+
+//	public JTextField getValorPresupuestado_txf() {
+//		return valorPresupuestado_txf;
+//	}
+//
+//	public JTextField getManoDeObra_txf() {
+//		return manoDeObra_txf;
+//	}
+
+	public JComboBox<String> getComponente_ComboBox() {
+		return componente_ComboBox;
 	}
 
 }
