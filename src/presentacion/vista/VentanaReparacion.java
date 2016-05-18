@@ -45,6 +45,7 @@ public class VentanaReparacion extends JFrame {
 	private JLabel marcaTexto_lbl;
 	private JTextArea descripcionFalla_txtArea;
 	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario", "Precio Total" };
+	private JCheckBox reparable_CheckBox;
 
 	public VentanaReparacion() {
 
@@ -188,7 +189,7 @@ public class VentanaReparacion extends JFrame {
 		lblFecha.setBounds(435, 10, 70, 15);
 		contentPane.add(lblFecha);
 
-		JCheckBox reparable_CheckBox = new JCheckBox("Reparable");
+		reparable_CheckBox = new JCheckBox("Reparable");
 		reparable_CheckBox.setBounds(591, 40, 97, 23);
 		contentPane.add(reparable_CheckBox);
 	}
@@ -279,6 +280,14 @@ public class VentanaReparacion extends JFrame {
 
 	public void setDescripcionFinal_jTextArea(String descripcionFinal) {
 		this.descripcionFinal_jTextArea.setText(descripcionFinal);
+	}
+
+	public JCheckBox getReparable_CheckBox() {
+		return reparable_CheckBox;
+	}
+
+	public void setReparable_CheckBox(JCheckBox reparable_CheckBox) {
+		this.reparable_CheckBox = reparable_CheckBox;
 	}
 
 }

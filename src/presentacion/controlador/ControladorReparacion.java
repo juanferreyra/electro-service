@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import dto.ItemPresupuestoRepuestoDTO;
 import dto.RepuestoDTO;
 import dto.UsuarioDTO;
+import modelo.EmailReparacion;
 import modelo.Ingreso;
 import modelo.Presupuesto;
 import modelo.Reparacion;
@@ -120,7 +121,9 @@ public class ControladorReparacion implements ActionListener {
 
 			guardarReparacionesRepuestosEnBD(this.reparacion.getIdReparacion());
 
-			// ENVIAR MAIL DE AVISO AUTOMATiCAMENTE ACÁ.
+			// ENVIAR MAIL DE AVISO AUTOMATiCAMENTE ACï¿½.
+			EmailReparacion email = new EmailReparacion(ingreso, usuarioLogueado, ventanaReparacion, reparacion);
+			email.start();
 
 			this.ventanaReparacion.dispose();
 			// this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();

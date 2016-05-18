@@ -15,85 +15,81 @@ import javax.swing.JOptionPane;
 
 import dto.UsuarioDTO;
 import presentacion.vista.VentanaPresupuesto;
+import presentacion.vista.VentanaReparacion;
 
-public class EmailPresupuesto extends Thread {
+public class EmailReparacion extends Thread  {
 	
-	private int envio = 0;
 	private Ingreso ingreso;
 	private UsuarioDTO usuario;
-	private VentanaPresupuesto ventana;
-
-
-	public EmailPresupuesto (Ingreso ingreso, UsuarioDTO usuario, VentanaPresupuesto ventana) {
+	private VentanaReparacion ventana;
+	private Reparacion reparacion;
+	
+	public EmailReparacion (Ingreso ingreso, UsuarioDTO usuario, VentanaReparacion ventana, Reparacion reparacion){
 		
 		this.ingreso = ingreso;
 		this.usuario = usuario;
 		this.ventana = ventana;
+		this.reparacion =reparacion;
 		
 	}
+	
+	
+	
+
 	
 	@Override
 	public void run() {
 		
-		this.enviarPresupuesto();
-		
+		this.enviarReparacion();
 	}
-	
-	private void enviarPresupuesto(){
-		
-		String destinatario = ingreso.getCliente().getMail();
-		
 
-		int dia = ventana.getVencimiento_Calendario().getCalendar().get(Calendar.DAY_OF_MONTH);
-		int mes = ventana.getVencimiento_Calendario().getCalendar().get(Calendar.MONTH ) +1;
-		int anio = ventana.getVencimiento_Calendario().getCalendar().get(Calendar.YEAR);
-		
-		String fechaVencimiento = dia +" / "+ mes +" / "+ anio;
-		
-		
+
+	private void enviarReparacion() {
+
+		String destinatario = ingreso.getCliente().getMail();
+		String estado ="";
+		String envio ="";
+
+		if (ventana.getReparable_CheckBox().isSelected()){
+				estado = "Reparado";
+		}else{
+			 estado = "Irreparable"; 
+		}
 		if (ingreso.getIngreso().getEnvio()){
-			envio = 500;
+			envio =" coordinar el env&#237;o del equipo al domicilio: " + ingreso.getCliente().getDireccion() + ". Muchas Gracias ";
+		}else{
+			envio =" coordinar fecha y horario en el que puede pasar a retirar el equipo por la siguiente direcci&#243;n: "
+					+ "  Darregueyra 3896,Los Polvorines, Malvinas Argentinas, Buenos Aires. Muchas Gracias";
 		}
-		
-		float totalpresupuesto = Float.parseFloat(ventana.getValorPresupuestado_txf().getText()) + envio ;
-		
-		//String con lista de componentes
-		String componentes = "";
-		
-		for(int i = 0; i <  ventana.getComponentes_table().getRowCount(); i++){
-			
-			componentes += "<b>Repuesto:</b>&nbsp;&nbsp;"+ (String) ventana.getComponentes_table().getModel().getValueAt(i, 1) + "&nbsp; &nbsp;&nbsp;&nbsp;" + 
-							"<b>Cantidad:</b>&nbsp;&nbsp;" + (int) ventana.getComponentes_table().getModel().getValueAt(i, 2) + "&nbsp;&nbsp;&nbsp;&nbsp;" + 
-							"<b>PrecioTotal: $ </b>&nbsp;&nbsp;" + (float)ventana.getComponentes_table().getModel().getValueAt(i, 4) + "<br>";
-		}
-		
+
 		//asunto
-		String asunto ="Presupuesto de "+ ingreso.ingr.getDescripcion() +" de Electro Service."; 
-		
-		
+		String asunto ="Aviso de reparaci&#243;n  de "+ ingreso.ingr.getDescripcion() +" de Electro Service."; 
+
+
 		///Cuerpo de mensaje
 		String mensaje = 
-				
-		"<p>Estimado cliente:  " + ingreso.getCliente().getNombre() + " " + ingreso.getCliente().getApellido() +" </p><br>"+
-		"<p style=text-indent:4cm > El presupuesto por la reparaci&#243;n Nro: <b> "+ingreso.getId()+" </b> del producto <b>"+ingreso.ingr.getDescripcion()+"</b> " +
-		 "ingresado el d&#237;a  "+ ingreso.getIngreso().getFecha_creacion()+ " consta del siguiente detalle: </p><br> " +
-		"<p> <b> Informe t&#233;cnico:     </b>" + ventana.getDescripcionBreve_jTextArea().getText() + "</p><br>" +
-		"<p> <b>Repuestos a utilizar:  </b></p><br>" +
-		"<p>" + componentes +" </p> <br>"+
-		"<p> <b>Total de repuestos:     $  </b>"+ventana.getTotal_lbl().getText()+"</p><br>"+
-		"<p> <b>Mano de Obra:     $  </b>" + ventana.getManoDeObra_txf().getText()+"</p><br>"+
-		"<p> <b>Total presupuesto:     $  </b>"+ ventana.getValorPresupuestado_txf().getText()+"</p><br>"+
-		"<p> <b>Env&#237;o a domicilio:    $  </b> " + envio + "</p><br>" +
-		"<p> <b>Total :     $  </b> "+totalpresupuesto +"</p><br>"+
-		"<p> <b>Le solicitamos que confirme el presupuesto antes de "+fechaVencimiento +".</b></p><br>"+
-		"<p> <b>ATTE:  </b>"+usuario.getNombre()+"   "+ usuario.getApellido()+"</p>";
-		
-		this.enviar(destinatario, mensaje, asunto);
-		
 
+				"<p>Estimado cliente:  " + ingreso.getCliente().getNombre() + " " + ingreso.getCliente().getApellido() +" </p><br>"+
+						"<p style=text-indent:4cm > La reparaci&#243;n del producto <b>"+ingreso.ingr.getDescripcion()+"</b> " +
+						" se encuentra en estado : &nbsp;<b>" + estado + "</b></p><br> " +
+						"<p> Le solicitamos que por favor se comunique al tel&#233;fono : <b>4685 -5438</b>, para&nbsp;&nbsp<b>" + envio + "</b></p><br>"+
+						"<p> <b>ATTE:  </b>"+usuario.getNombre()+"   "+ usuario.getApellido()+"</p>";
+		
+		this.verificarConeccion();
+
+		this.enviar(destinatario, mensaje, asunto);
+
+	}
+	
+	private boolean verificarConeccion() {
+		return false;
 		
 	}
-		
+
+
+
+
+
 	private void enviar(String destinatarios ,String mensaje, String asunto){
 		try
 		{
@@ -150,7 +146,7 @@ public class EmailPresupuesto extends Thread {
 			//Con esta imprimimos en consola que el mensaje fue enviado
 			
 			System.out.println("Mensaje Enviado");
-			JOptionPane.showMessageDialog(null, "Email de Presupuesto enviado correctamente", "Atencion!",
+			JOptionPane.showMessageDialog(null, "Email de Aviso de Reparación enviado correctamente", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 		catch (Exception e)
@@ -161,5 +157,9 @@ public class EmailPresupuesto extends Thread {
 	}
 
 
-	
+
+
 }
+
+
+
