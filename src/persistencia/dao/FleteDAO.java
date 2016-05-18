@@ -121,7 +121,7 @@ public class FleteDAO {
 						resultSet.getString("modelo"),
 						resultSet.getString("patente"),
 						resultSet.getString("telefono"),
-						resultSet.getDate("vtoLicencia"),
+						resultSet.getDate("vto_licencia"),
 						resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("idusuario"));
 			}

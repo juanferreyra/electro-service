@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import dto.FleteDTO;
 import dto.HojaDeRutaDTO;
 import dto.HojaDeRutaIngresosDTO;
+import dto.IngresoDTO;
+import dto.UsuarioDTO;
 import persistencia.dao.ClienteDAO;
 import persistencia.dao.FleteDAO;
 import persistencia.dao.HojaDeRutaDAO;
@@ -38,9 +40,28 @@ public class HojaDeRuta {
 	}
 	
 	public void cargarVariables() {
-		hojaRuta = hojaRutaDAO.find(id);
-		ingresosEnHoja = hojaRutaIngresosDAO.findAll(id);
-		flete = fleteDAO.find(hojaRuta.getFleteId());
+		if(id!=-1) {
+			hojaRuta = hojaRutaDAO.find(id);
+			ingresosEnHoja = hojaRutaIngresosDAO.findAll(id);
+			flete = fleteDAO.find(hojaRuta.getFleteId());
+		} else {
+			ingresosEnHoja = new ArrayList<HojaDeRutaIngresosDTO>();
+			flete = null;
+		}
+	}
+	
+	public ArrayList<IngresoDTO> getIngresosSeleccionadosEnHoja() {
+		ArrayList<IngresoDTO> ingresos = new ArrayList<IngresoDTO>();
+		
+		for (int i = 0; i < ingresosEnHoja.size(); i++) {
+			ingresos.add(ingresoDAO.find(ingresosEnHoja.get(i).getIdIngreso()));
+		}
+		
+		return ingresos;
+	}
+	
+	public ArrayList<IngresoDTO> getIngresosReparados() {
+		return this.ingresoDAO.readReparadosNoReparados();
 	}
 	
 	public HojaDeRutaIngresosDAO getHojaRutaIngresosDAO() {
@@ -105,5 +126,28 @@ public class HojaDeRuta {
 
 	public ClienteDAO getClienteDAO() {
 		return clienteDAO;
+	}
+
+	public void cargarFlete(int nro) {
+		this.flete = this.fleteDAO.findPorNrodoc(nro);
+	}
+
+	public Boolean guardarModelo(UsuarioDTO usuarioLogueado) {
+		try {
+			int next = hojaRutaDAO.getNextId();
+			this.hojaRuta = new HojaDeRutaDTO(next, flete.getId(), null, usuarioLogueado.getId());
+			this.hojaRutaDAO.insert(this.hojaRuta);
+			
+			for (int i = 0; i < ingresosEnHoja.size(); i++) {
+				this.ingresosEnHoja.get(i).setIdHojaDeRuta(next);
+				
+				this.hojaRutaIngresosDAO.insert(ingresosEnHoja.get(i));
+			}
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+		
 	}
 }

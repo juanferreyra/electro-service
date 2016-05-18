@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import dto.HojaDeRutaDTO;
-import dto.PresupuestoDTO;
 import persistencia.conexion.Conexion;
 
 public class HojaDeRutaDAO {
@@ -15,6 +14,8 @@ public class HojaDeRutaDAO {
 	private static final String readall = "SELECT * FROM hojaruta WHERE habilitado=true";
 
 	private static final String find = "SELECT * FROM hojaruta WHERE id  = ? and habilitado = true";
+	
+	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'hojaruta';";
 
 	private Conexion conexion = Conexion.getConexion();
 
@@ -44,13 +45,13 @@ public class HojaDeRutaDAO {
 		return hojasDeRuta;
 	}
 	
-	public boolean insert(PresupuestoDTO hojaDeRuta) {
+	public boolean insert(HojaDeRutaDTO hojaDeRuta) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
-			statement.setInt(1, hojaDeRuta.getIdIngreso());
-			statement.setInt(2, hojaDeRuta.getIdUsuario());
+			statement.setInt(1, hojaDeRuta.getFleteId());
+			statement.setInt(2, hojaDeRuta.getIdusuario());
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -86,6 +87,27 @@ public class HojaDeRutaDAO {
 			Conexion.cerrarConexion();
 		}
 		return hojasDeRuta;
+	}
+	
+	public int getNextId() {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		int clave = -1;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(nextId);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				clave = resultSet.getInt("siguiente");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return clave;
 	}
 }
 

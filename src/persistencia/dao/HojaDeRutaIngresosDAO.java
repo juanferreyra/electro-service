@@ -10,9 +10,9 @@ import persistencia.conexion.Conexion;
 
 public class HojaDeRutaIngresosDAO {
 	
-	private static final String insert = "INSERT INTO hojaruta_ingreso (`id`, `idingreso`, `en_entrega`, `fecha_creacion`) VALUES (?, ?, '0', now());";
+	private static final String insert = "INSERT INTO hojaruta_ingreso (`idhojaruta`, `idingreso`, `en_entrega`, `fecha_creacion`) VALUES (?, ?, '1', now());";
 	
-	private static final String findList = "SELECT * FROM hojaruta_ingreso WHERE idhojaruta=? AND entregado=false;";
+	private static final String findList = "SELECT * FROM hojaruta_ingreso WHERE idhojaruta=? AND en_entrega=false;";
 	
 	private Conexion conexion = Conexion.getConexion();
 

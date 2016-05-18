@@ -147,7 +147,6 @@ public class PresupuestoDAO {
 
 			while (resultSet.next()) {
 				clave = resultSet.getInt("siguiente");
-				;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
