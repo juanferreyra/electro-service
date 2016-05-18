@@ -3,7 +3,7 @@ package dto;
 import java.util.Date;
 
 public class ReparacionDTO {
-
+	private int id;
 	private String tecnico_asignado;
 	private Date fecha_reparacion;
 	private int horas;
@@ -11,14 +11,19 @@ public class ReparacionDTO {
 	private String descripcion_final;
 	private int ingreso_id;
 
-	public ReparacionDTO(String tecnico_asignado, Date fecha_reparacion, int horas, int valor_estimado,
+	public ReparacionDTO(int id, String tecnico_asignado, Date fecha_reparacion, int horas, int valor_estimado,
 			String descripcion_final, int ingreso_id) {
+		this.id = id;
 		this.tecnico_asignado = tecnico_asignado;
 		this.fecha_reparacion = fecha_reparacion;
 		this.horas = horas;
 		this.valor_estimado = valor_estimado;
 		this.descripcion_final = descripcion_final;
 		this.ingreso_id = ingreso_id;
+	}
+
+	public ReparacionDTO() {
+
 	}
 
 	public String getTecnico_asignado() {
@@ -67,6 +72,14 @@ public class ReparacionDTO {
 
 	public void setIngreso_id(int ingreso_id) {
 		this.ingreso_id = ingreso_id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

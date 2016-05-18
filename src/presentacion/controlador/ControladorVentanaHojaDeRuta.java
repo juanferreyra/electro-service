@@ -19,7 +19,7 @@ import dto.UsuarioDTO;
 import modelo.HojaDeRuta;
 import presentacion.vista.VentanaHojaDeRuta;
 
-public class ControladorVentanaHojaDeRuta implements ActionListener{
+public class ControladorVentanaHojaDeRuta implements ActionListener {
 	
 	protected static final String JCheckBox = null;
 	private VentanaHojaDeRuta ventanaHojaRuta;
@@ -28,8 +28,8 @@ public class ControladorVentanaHojaDeRuta implements ActionListener{
 	private HojaDeRuta hojaDeRuta;
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
-	
-	public ControladorVentanaHojaDeRuta( VentanaHojaDeRuta ventanaHojaRuta,
+
+	public ControladorVentanaHojaDeRuta(VentanaHojaDeRuta ventanaHojaRuta,
 			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
 		this.usuarioLogueado = usuario;
 		this.ventanaHojaRuta = ventanaHojaRuta;
@@ -37,12 +37,13 @@ public class ControladorVentanaHojaDeRuta implements ActionListener{
 		this.hojaDeRuta = new HojaDeRuta();
 		agregarMouseListenerTabla();
 	}
-	
+
 	public void inicializar() {
-		
-		//Calendar hoy = new GregorianCalendar();
-		//ventanaHojaRuta.getFechaIngreso_lbl().setText("Fecha: " + hoy.get(Calendar.DAY_OF_MONTH) +" / "
-		//+ hoy.get(Calendar.MONTH) +" / "+ hoy.get(Calendar.YEAR));
+
+		// Calendar hoy = new GregorianCalendar();
+		// ventanaHojaRuta.getFechaIngreso_lbl().setText("Fecha: " +
+		// hoy.get(Calendar.DAY_OF_MONTH) +" / "
+		// + hoy.get(Calendar.MONTH) +" / "+ hoy.get(Calendar.YEAR));
 		ventanaHojaRuta.setVisible(true);
 		//cargo el usuario
 		if(hojaDeRuta.getId()==-1) {
@@ -51,11 +52,6 @@ public class ControladorVentanaHojaDeRuta implements ActionListener{
 			this.hojaDeRuta.cargarVariables();
 			cargarModelo();
 		}
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
 	}
 	
 	private void cargarModelo() {
@@ -173,7 +169,11 @@ public class ControladorVentanaHojaDeRuta implements ActionListener{
 		
 		hojaruta.inicializar();
 	}
-	
-	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -15,7 +15,7 @@ import dto.RepuestoDTO;
 import dto.IngresoLogDTO;
 import dto.ItemPresupuestoRepuestoDTO;
 import dto.UsuarioDTO;
-import modelo.Email;
+import modelo.EmailPresupuesto;
 import modelo.Ingreso;
 import modelo.Presupuesto;
 import persistencia.dao.IngresoLogDAO;
@@ -33,7 +33,7 @@ public class ControladorPresupuesto implements ActionListener{
 	private float suma = 0;
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
-	private Email email = new Email();
+	private EmailPresupuesto email;
 	private String perfil;
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso,
@@ -189,7 +189,9 @@ public class ControladorPresupuesto implements ActionListener{
 		}else if (e.getSource() == this.ventanaPresupuesto.getEnviarPresupuesto_btn()){
 			
 			// envia email
-			email.enviarPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
+			email = new EmailPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
+			email.start();
+			
 		}else if(e.getSource() == this.ventanaPresupuesto.getBtnInformado()) {
 			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como Informado al cliente.<br> Esta seguro?", "Confirmar",
 		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -310,7 +312,8 @@ public class ControladorPresupuesto implements ActionListener{
 						JOptionPane.INFORMATION_MESSAGE);
 				
 				// envia email
-				email.enviarPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
+				email = new EmailPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
+				email.start();
 				
 				this.ventanaPresupuesto.dispose();
 				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();

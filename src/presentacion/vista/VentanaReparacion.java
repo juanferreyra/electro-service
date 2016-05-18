@@ -265,13 +265,20 @@ public class VentanaReparacion extends JFrame {
 		return componentes_nombreColumnas;
 	}
 
-
 	public JButton getEliminarComponente_btn() {
 		return eliminarComponente_btn;
 	}
 
 	public JComboBox<String> getComponente_ComboBox() {
 		return componente_ComboBox;
+	}
+
+	public String getDescripcionFinal() {
+		return descripcionFinal_jTextArea.getText();
+	}
+
+	public void setDescripcionFinal_jTextArea(String descripcionFinal) {
+		this.descripcionFinal_jTextArea.setText(descripcionFinal);
 	}
 
 }
