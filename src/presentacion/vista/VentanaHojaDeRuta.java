@@ -1,5 +1,6 @@
 package presentacion.vista;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.util.Date;
 import java.awt.Color;
 
 public class VentanaHojaDeRuta extends JFrame {
@@ -24,6 +26,7 @@ public class VentanaHojaDeRuta extends JFrame {
 	private JPanel contentPane;
 	private JTable listaEnviosTable;
 
+	@SuppressWarnings("serial")
 	public VentanaHojaDeRuta() {
 		setBackground(Color.WHITE);
 		setTitle("Preparar Hoja de ruta");
@@ -35,9 +38,10 @@ public class VentanaHojaDeRuta extends JFrame {
 
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout());
+		contentPane.setLayout(null);
 
 		JPanel contenedorPanelArriba = new JPanel(new BorderLayout());
+		contenedorPanelArriba.setBounds(5, 5, 674, 35);
 		FlowLayout flowPanelArriba = new FlowLayout();
 		JPanel subpanelArriba = new JPanel(flowPanelArriba);
 
@@ -50,7 +54,7 @@ public class VentanaHojaDeRuta extends JFrame {
 		subpanelArriba.add(ordenesDeTrabajo_lbl);
 
 		contenedorPanelArriba.add(subpanelArriba, BorderLayout.SOUTH);
-		contentPane.add(contenedorPanelArriba, BorderLayout.NORTH);
+		contentPane.add(contenedorPanelArriba);
 
 		// TABLA PRINCIPAL DE CHECKBOX
 
@@ -60,8 +64,8 @@ public class VentanaHojaDeRuta extends JFrame {
 		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "Nº", "Fecha",
 				"Producto", "Cliente",  "Direccion Envio", "Estado" }) {
 			@SuppressWarnings("rawtypes")
-			Class[] columnTypes = new Class[] { Integer.class, String.class, String.class, String.class,
-					String.class ,String.class };
+			Class[] columnTypes = new Class[] { Integer.class, Date.class, String.class, String.class,
+					String.class, JCheckBox.class };
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
@@ -75,10 +79,10 @@ public class VentanaHojaDeRuta extends JFrame {
 			}
 		};
 		listaEnviosTable.setModel(modelo);
-
+		
 		setearPropiedadesDeTabla();
 
-		listaEnviosTable.setDefaultRenderer(JLabel.class, new TableCellRenderer() {
+		listaEnviosTable.setDefaultRenderer(JCheckBox.class, new TableCellRenderer() {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean selected,
 					boolean focused, int row, int column) {
@@ -91,13 +95,10 @@ public class VentanaHojaDeRuta extends JFrame {
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
+		ordenesDeTrabajo_scrollPane.setBounds(5, 107, 679, 400);
 		ordenesDeTrabajo_scrollPane.add(listaEnviosTable);
 		ordenesDeTrabajo_scrollPane.setViewportView(listaEnviosTable);
-		contentPane.add(ordenesDeTrabajo_scrollPane, BorderLayout.CENTER);
-
-		JPanel panelDeBotones = new JPanel(new FlowLayout());
-		contentPane.add(panelDeBotones, BorderLayout.SOUTH);
+		contentPane.add(ordenesDeTrabajo_scrollPane);
 
 	}
 

@@ -5,28 +5,36 @@ import java.util.ArrayList;
 import dto.FleteDTO;
 import dto.HojaDeRutaDTO;
 import dto.HojaDeRutaIngresosDTO;
+import persistencia.dao.ClienteDAO;
 import persistencia.dao.FleteDAO;
 import persistencia.dao.HojaDeRutaDAO;
 import persistencia.dao.HojaDeRutaIngresosDAO;
+import persistencia.dao.IngresoDAO;
 
 public class HojaDeRuta {
 	private int id;
-	private HojaDeRutaIngresosDAO hojaRutaIngresosDAO;
-	private HojaDeRutaDAO hojaRutaDAO;
-	private FleteDAO fleteDAO;
 	private HojaDeRutaDTO hojaRuta;
 	private FleteDTO flete;
 	private ArrayList<HojaDeRutaIngresosDTO> ingresosEnHoja;
+	
+	private HojaDeRutaIngresosDAO hojaRutaIngresosDAO;
+	private HojaDeRutaDAO hojaRutaDAO;
+	private FleteDAO fleteDAO;
+	private IngresoDAO ingresoDAO;
+	private ClienteDAO clienteDAO;
 	
 	public HojaDeRuta() {
 		//DAOS
 		hojaRutaIngresosDAO = new HojaDeRutaIngresosDAO();
 		hojaRutaDAO = new HojaDeRutaDAO();
 		fleteDAO = new FleteDAO();
+		ingresoDAO = new IngresoDAO();
+		clienteDAO = new ClienteDAO();
 		
 		//Variables Locales
 		id = -1;
 		ingresosEnHoja = new ArrayList<HojaDeRutaIngresosDTO>();
+		flete = null;
 	}
 	
 	public void cargarVariables() {
@@ -89,5 +97,13 @@ public class HojaDeRuta {
 
 	public void setFlete(FleteDTO flete) {
 		this.flete = flete;
+	}
+
+	public IngresoDAO getIngresoDAO() {
+		return ingresoDAO;
+	}
+
+	public ClienteDAO getClienteDAO() {
+		return clienteDAO;
 	}
 }

@@ -10,7 +10,7 @@ import persistencia.conexion.Conexion;
 
 public class HojaDeRutaIngresosDAO {
 	
-	private static final String insert = "INSERT INTO hojaruta_ingreso (`id`, `idingreso`, `entregado`, `fecha_creacion`) VALUES (?, ?, '0', now());";
+	private static final String insert = "INSERT INTO hojaruta_ingreso (`id`, `idingreso`, `en_entrega`, `fecha_creacion`) VALUES (?, ?, '0', now());";
 	
 	private static final String findList = "SELECT * FROM hojaruta_ingreso WHERE idhojaruta=? AND entregado=false;";
 	
@@ -50,7 +50,7 @@ public class HojaDeRutaIngresosDAO {
 					resultSet.getInt("id"),
 					resultSet.getInt("idhojaruta"),
 					resultSet.getInt("idingreso"),
-					resultSet.getBoolean("entregado"),
+					resultSet.getBoolean("en_entrega"),
 					resultSet.getDate("fecha_creacion")));
 			}
 		} catch (SQLException e) {

@@ -7,14 +7,14 @@ public class HojaDeRutaIngresosDTO {
 	private int idHojaDeRuta;
 	private int idIngreso;
 	private Date fechaCreacion;
-	private boolean entregado;
+	private boolean en_entrega;
 	
-	public HojaDeRutaIngresosDTO(int id, int idHojaDeRuta, int idIngreso, boolean entregado, Date fechaCreacion) {
+	public HojaDeRutaIngresosDTO(int id, int idHojaDeRuta, int idIngreso, boolean en_entrega, Date fechaCreacion) {
 		super();
 		this.id = id;
 		this.idHojaDeRuta = idHojaDeRuta;
 		this.idIngreso = idIngreso;
-		this.setEntregado(entregado);
+		this.en_entrega = en_entrega;
 		this.fechaCreacion = fechaCreacion;
 	}
 	
@@ -51,11 +51,11 @@ public class HojaDeRutaIngresosDTO {
 		this.fechaCreacion = fechaCreacion;
 	}
 	
-	public boolean isEntregado() {
-		return entregado;
+	public boolean isEnEntrega() {
+		return en_entrega;
 	}
 
-	public void setEntregado(boolean entregado) {
-		this.entregado = entregado;
+	public void setEnEntrega(boolean en_entrega) {
+		this.en_entrega = en_entrega;
 	}
 }
