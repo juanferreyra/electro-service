@@ -143,7 +143,7 @@ CREATE TABLE `hojaruta_ingreso` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idhojaruta` int(11) DEFAULT NULL,
   `idingreso` int(11) DEFAULT NULL,
-  `entregado` tinyint(1) DEFAULT NULL,
+  `en_entrega` tinyint(1) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -192,7 +192,7 @@ CREATE TABLE `ingreso` (
 
 LOCK TABLES `ingreso` WRITE;
 /*!40000 ALTER TABLE `ingreso` DISABLE KEYS */;
-INSERT INTO `ingreso` VALUES (7,1,'Rasrsarara',0,0,'dsaasrsa',1,0,'Direccion Alternativa',4324,1,'2016-05-06 23:05:39',0,1,NULL),(8,2,'Samsung Galaxy s3',2,1,'FDasfafsafsaLasdsad ddescr iocnrocnrocnnsofd',1,1,'Lavallolr 2341',2431.21,1,'2016-05-15 22:22:46',0,1,NULL),(9,3,'Test de carga de presupuesto',1,0,'Descripcion de falla del test de presupuesto',0,0,'',0,1,'2016-05-16 18:39:11',0,1,NULL),(10,1,'Raras',0,0,'ewqrqrqrw',1,1,'Lavallor 23123',3000,1,'2016-05-16 19:12:47',0,1,NULL),(11,4,'Lg storm',3,2,'Se rompio el vibrador del telefono',0,0,'',0,1,'2016-05-16 19:35:47',0,1,NULL),(12,1,'Zarazaza2',1,0,'Test definitivo de recorrido',0,0,'',0,1,'2016-05-16 22:42:15',0,1,NULL),(13,1,'dsadsa',0,0,'cdasdad',0,0,'',0,1,'2016-05-17 00:42:01',0,1,NULL),(14,2,'Auricular Sony',1,2,'No anda el derecho',1,0,'',0,1,'2016-05-17 13:58:29',0,1,NULL);
+INSERT INTO `ingreso` VALUES (7,1,'Rasrsarara',0,0,'dsaasrsa',1,0,'Direccion Alternativa',4324,1,'2016-05-06 23:05:39',0,1,NULL),(8,2,'Samsung Galaxy s3',2,1,'FDasfafsafsaLasdsad ddescr iocnrocnrocnnsofd',1,1,'Lavallolr 2341',2431.21,1,'2016-05-15 22:22:46',0,1,NULL),(9,3,'Test de carga de presupuesto',1,0,'Descripcion de falla del test de presupuesto',1,0,'',0,1,'2016-05-16 18:39:11',0,1,NULL),(10,1,'Raras',0,0,'ewqrqrqrw',1,1,'Lavallor 23123',3000,1,'2016-05-16 19:12:47',0,1,NULL),(11,4,'Lg storm',3,2,'Se rompio el vibrador del telefono',1,0,'',0,1,'2016-05-16 19:35:47',0,1,NULL),(12,1,'Zarazaza2',1,0,'Test definitivo de recorrido',1,0,'',0,1,'2016-05-16 22:42:15',0,1,NULL),(13,1,'dsadsa',0,0,'cdasdad',1,0,'',0,1,'2016-05-17 00:42:01',0,1,NULL),(14,2,'Auricular Sony',1,2,'No anda el derecho',1,0,'',0,1,'2016-05-17 13:58:29',0,1,NULL);
 /*!40000 ALTER TABLE `ingreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +220,7 @@ CREATE TABLE `ingreso_log` (
 
 LOCK TABLES `ingreso_log` WRITE;
 /*!40000 ALTER TABLE `ingreso_log` DISABLE KEYS */;
-INSERT INTO `ingreso_log` VALUES (29,7,3,'2016-05-15 21:39:05',3,1),(30,8,1,'2016-05-15 22:22:46',0,1),(31,8,3,'2016-05-15 22:23:40',3,1),(32,9,1,'2016-05-16 18:39:11',0,1),(33,9,3,'2016-05-16 18:40:04',3,1),(34,10,1,'2016-05-16 19:12:47',0,1),(35,10,3,'2016-05-16 19:13:16',3,1),(36,11,1,'2016-05-16 19:35:47',0,1),(37,11,3,'2016-05-16 19:36:12',3,1),(38,12,1,'2016-05-16 22:42:15',0,1),(39,12,3,'2016-05-16 22:42:59',3,1),(40,7,4,'2016-05-17 00:23:31',3,1),(41,7,5,'2016-05-17 00:32:37',3,1),(42,7,6,'2016-05-17 00:32:43',3,1),(43,10,4,'2016-05-17 00:40:27',1,1),(44,10,5,'2016-05-17 00:40:34',1,1),(45,10,6,'2016-05-17 00:41:08',2,1),(46,12,4,'2016-05-17 00:41:29',3,1),(47,12,5,'2016-05-17 00:41:32',3,1),(48,12,6,'2016-05-17 00:41:34',3,1),(49,13,1,'2016-05-17 00:42:01',0,1),(50,8,4,'2016-05-17 13:57:21',3,1),(51,8,5,'2016-05-17 13:57:23',3,1),(52,8,6,'2016-05-17 13:57:26',3,1),(53,9,4,'2016-05-17 13:57:35',3,1),(54,9,5,'2016-05-17 13:57:38',3,1),(55,9,6,'2016-05-17 13:57:42',3,1),(56,14,1,'2016-05-17 13:58:29',0,1),(57,14,3,'2016-05-17 13:59:15',3,1),(58,14,4,'2016-05-17 14:00:23',3,1),(59,14,5,'2016-05-17 14:00:30',3,1),(60,14,6,'2016-05-17 14:00:34',3,1);
+INSERT INTO `ingreso_log` VALUES (29,7,3,'2016-05-15 21:39:05',3,1),(30,8,1,'2016-05-15 22:22:46',0,1),(31,8,3,'2016-05-15 22:23:40',3,1),(32,9,1,'2016-05-16 18:39:11',0,1),(33,9,3,'2016-05-16 18:40:04',3,1),(34,10,1,'2016-05-16 19:12:47',0,1),(35,10,7,'2016-05-16 19:13:16',3,1),(36,11,1,'2016-05-16 19:35:47',0,1),(37,11,7,'2016-05-16 19:36:12',3,1),(38,12,1,'2016-05-16 22:42:15',0,1),(39,12,7,'2016-05-16 22:42:59',3,1),(40,7,4,'2016-05-17 00:23:31',3,1),(41,7,5,'2016-05-17 00:32:37',3,1),(42,7,8,'2016-05-17 00:32:43',3,1),(43,10,4,'2016-05-17 00:40:27',1,1),(44,10,5,'2016-05-17 00:40:34',1,1),(45,10,7,'2016-05-17 00:41:08',2,1),(46,12,4,'2016-05-17 00:41:29',3,1),(47,12,5,'2016-05-17 00:41:32',3,1),(48,12,8,'2016-05-17 00:41:34',3,1),(49,13,1,'2016-05-17 00:42:01',0,1),(50,8,4,'2016-05-17 13:57:21',3,1),(51,8,5,'2016-05-17 13:57:23',3,1),(52,8,7,'2016-05-17 13:57:26',3,1),(53,9,4,'2016-05-17 13:57:35',3,1),(54,9,5,'2016-05-17 13:57:38',3,1),(55,9,7,'2016-05-17 13:57:42',3,1),(56,14,1,'2016-05-17 13:58:29',0,1),(57,14,3,'2016-05-17 13:59:15',3,1),(58,14,4,'2016-05-17 14:00:23',3,1),(59,14,5,'2016-05-17 14:00:30',3,1),(60,14,8,'2016-05-17 14:00:34',3,1);
 /*!40000 ALTER TABLE `ingreso_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -395,7 +395,7 @@ DROP TABLE IF EXISTS `reparaciones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reparaciones` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tecnico_asignado` varchar(20) DEFAULT NULL,
   `fecha_reparacion` datetime DEFAULT NULL,
   `horas` int(11) DEFAULT NULL,
@@ -423,7 +423,7 @@ DROP TABLE IF EXISTS `reparaciones_repuestos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reparaciones_repuestos` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idreparacion` int(11) DEFAULT NULL,
   `idrepuesto` int(11) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
@@ -536,4 +536,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-17 14:08:34
+-- Dump completed on 2016-05-18  1:36:09
