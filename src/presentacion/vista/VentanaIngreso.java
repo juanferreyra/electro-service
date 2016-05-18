@@ -168,7 +168,7 @@ public class VentanaIngreso extends JFrame {
 		direccionNueva_JPanel = new JPanel();
 		direccionNueva_JPanel.setForeground(Color.DARK_GRAY);
 		direccionNueva_JPanel.setBorder(new MatteBorder(2, 1, 2, 1, (Color) new Color(191, 205, 219)));
-		direccionNueva_JPanel.setBounds(10, 363, 310, 88);
+		direccionNueva_JPanel.setBounds(10, 394, 310, 57);
 		contentPane.add(direccionNueva_JPanel);
 		direccionNueva_JPanel.setLayout(null);
 
@@ -183,23 +183,6 @@ public class VentanaIngreso extends JFrame {
 		direccionNueva_txf.setDocument(new JTextFieldLimit(60));
 		direccionNueva_JPanel.add(direccionNueva_txf);
 		direccionNueva_txf.setColumns(10);
-
-		JLabel lblMontoEnvio = new JLabel("Monto de envio:");
-		lblMontoEnvio.setForeground(Color.DARK_GRAY);
-		lblMontoEnvio.setEnabled(false);
-		lblMontoEnvio.setBounds(10, 61, 120, 20);
-		direccionNueva_JPanel.add(lblMontoEnvio);
-
-		txtMontoEnvio = new JTextField();
-		txtMontoEnvio.setBounds(101, 61, 159, 20);
-		txtMontoEnvio.setDocument(new JTextFieldLimit(15));
-		direccionNueva_JPanel.add(txtMontoEnvio);
-		txtMontoEnvio.setColumns(10);
-
-		JLabel label = new JLabel("$");
-		label.setEnabled(false);
-		label.setBounds(268, 61, 20, 20);
-		direccionNueva_JPanel.add(label);
 
 		btnVerIngreso = new JButton("Imprimir");
 		btnVerIngreso.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/printer.png")));
@@ -234,6 +217,23 @@ public class VentanaIngreso extends JFrame {
 		lbl_direccion_cliente = new JLabel("");
 		lbl_direccion_cliente.setBounds(103, 108, 272, 20);
 		contentPane.add(lbl_direccion_cliente);
+		
+				JLabel lblMontoEnvio = new JLabel("Monto de envio:");
+				lblMontoEnvio.setBounds(10, 367, 89, 20);
+				contentPane.add(lblMontoEnvio);
+				lblMontoEnvio.setForeground(Color.DARK_GRAY);
+				lblMontoEnvio.setEnabled(false);
+				
+						txtMontoEnvio = new JTextField();
+						txtMontoEnvio.setBounds(101, 367, 189, 20);
+						contentPane.add(txtMontoEnvio);
+						txtMontoEnvio.setDocument(new JTextFieldLimit(15));
+						txtMontoEnvio.setColumns(10);
+						
+								JLabel label = new JLabel("$");
+								label.setBounds(300, 367, 20, 20);
+								contentPane.add(label);
+								label.setEnabled(false);
 	}
 
 	public JButton getBtnBuscarCliente() {

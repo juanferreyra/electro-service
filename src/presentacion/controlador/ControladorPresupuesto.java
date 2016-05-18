@@ -66,14 +66,14 @@ public class ControladorPresupuesto implements ActionListener{
 		ventanaPresupuesto.getComponentes_table().setModel(modelTable);
 		cargarComboComponentes();
 		cargarIngreso();
+		ventanaPresupuesto.getBtnInformado().setVisible(false);
+		ventanaPresupuesto.getBtnAceptado().setVisible(false);
+		ventanaPresupuesto.getBtnAsignar().setVisible(false);
 		//cargo el usuario
 		if(presupuesto.getId()==-1) {
 			ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
 			ventanaPresupuesto.getManoDeObra_txf().setText("0");
 			ventanaPresupuesto.getTotal_lbl().setText("0");
-			ventanaPresupuesto.getBtnInformado().setVisible(false);
-			ventanaPresupuesto.getBtnAceptado().setVisible(false);
-			ventanaPresupuesto.getBtnAsignar().setVisible(false);
 		} else {
 			cargarModelo();
 			ventanaPresupuesto.getGuardar_btn().setVisible(false);

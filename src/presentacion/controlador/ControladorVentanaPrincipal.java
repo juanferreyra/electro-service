@@ -20,6 +20,7 @@ import persistencia.dao.ClienteDAO;
 import persistencia.dao.EstadoDAO;
 import persistencia.dao.IngresoDAO;
 import persistencia.dao.UsuarioDAO;
+import presentacion.vista.VentanaHojaDeRuta;
 import presentacion.vista.VentanaIngreso;
 import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaPrincipal;
@@ -42,6 +43,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getIngresarProducto_btn().addActionListener(this);
 		this.principal.getPresupuestar_btn().addActionListener(this);
 		this.principal.getReparacion_btn().addActionListener(this);
+		this.principal.getBtnElaborarHojaDe().addActionListener(this);
 		this.perfil = usuario.getPerfilDTO().getPerfil();
 		this.agregarMouseListenerTabla(this);
 	}
@@ -213,6 +215,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'PRESUPUESTADO'.");
 				}
 			}
+		} else if (e.getSource() == this.principal.getBtnElaborarHojaDe()) {
+			ControladorVentanaHojaDeRuta hojaruta = new ControladorVentanaHojaDeRuta(new VentanaHojaDeRuta(), this, usuarioLogueado);
+			hojaruta.inicializar();
 		}
 	}
 

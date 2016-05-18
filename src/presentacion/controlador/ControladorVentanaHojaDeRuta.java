@@ -16,7 +16,6 @@ import dto.ClienteDTO;
 import dto.FleteDTO;
 import dto.HojaDeRutaIngresosDTO;
 import dto.IngresoDTO;
-import dto.PerfilDTO;
 import dto.UsuarioDTO;
 import modelo.HojaDeRuta;
 import presentacion.vista.VentanaHojaDeRuta;
@@ -292,17 +291,6 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
 				}
 			}
-		}
-		
+		}	
 	}
-	
-	public static void main(String[] args) {
-		PerfilDTO perf3 = new PerfilDTO("JEFE");
-		UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
-		
-		ControladorVentanaHojaDeRuta hojaruta = new ControladorVentanaHojaDeRuta(new VentanaHojaDeRuta(), null, user3);
-		
-		hojaruta.inicializar();
-	}
-
 }

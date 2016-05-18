@@ -50,7 +50,7 @@ public class VentanaHojaDeRuta extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(Color.BLACK);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 698, 614);
 		setMinimumSize(new Dimension(700, 546));
 

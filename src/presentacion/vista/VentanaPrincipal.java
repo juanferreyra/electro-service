@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -31,12 +32,14 @@ public class VentanaPrincipal extends JFrame {
 	private JButton ingresarProducto_btn;
 	private JButton presupuestar_btn;
 	private JButton reparacion_btn;
+	private JButton btnElaborarHojaDe;
 	private JMenuBar menuBar;
 	private FormatoTablaOrdenesTrabajo formatoTabla;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1044, 546);
@@ -49,6 +52,8 @@ public class VentanaPrincipal extends JFrame {
 		JPanel contenedorPanelArriba = new JPanel(new BorderLayout());
 		FlowLayout flowPanelArriba = new FlowLayout();
 		JPanel subpanelArriba = new JPanel(flowPanelArriba);
+		subpanelArriba.setBackground(Color.WHITE);
+		subpanelArriba.setForeground(Color.WHITE);
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 1028, 50);
@@ -59,7 +64,7 @@ public class VentanaPrincipal extends JFrame {
 
 		JLabel ordenesDeTrabajo_lbl = new JLabel("<html>\u00D3rdenes de Trabajo</html>");
 		ordenesDeTrabajo_lbl.setBounds(10, 43, 1005, 36);
-		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		ordenesDeTrabajo_lbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 22));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
 		flowPanelArriba.setAlignment(FlowLayout.LEADING);
@@ -116,19 +121,27 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(ordenesDeTrabajo_scrollPane, BorderLayout.CENTER);
 
 		JPanel panelDeBotones = new JPanel(new FlowLayout());
+		panelDeBotones.setBackground(Color.WHITE);
 		contentPane.add(panelDeBotones, BorderLayout.SOUTH);
 
 		ingresarProducto_btn = new JButton("<html><center>Crear</center></html>");
+		ingresarProducto_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/pencil.png")));
 		ingresarProducto_btn.setBounds(10, 461, 158, 36);
 		panelDeBotones.add(ingresarProducto_btn);
 
 		presupuestar_btn = new JButton("<html>Presupuestar</html>");
+		presupuestar_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/th-list-outline.png")));
 		presupuestar_btn.setBounds(587, 474,  158, 36);
 		panelDeBotones.add(presupuestar_btn);
 
 		reparacion_btn = new JButton("Finalizar Reparaci\u00F3n");
+		reparacion_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/spanner.png")));
 		reparacion_btn.setBounds(881, 474,  158, 36);
 		panelDeBotones.add(reparacion_btn);
+		
+		btnElaborarHojaDe = new JButton("Elaborar Hoja de Ruta");
+		btnElaborarHojaDe.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/edit.png")));
+		panelDeBotones.add(btnElaborarHojaDe);
 
 	}
 
@@ -162,6 +175,10 @@ public class VentanaPrincipal extends JFrame {
 
 	public JTable getOrdenesDeTrabajo_table() {
 		return this.ordenesDeTrabajo_table;
+	}
+
+	public JButton getBtnElaborarHojaDe() {
+		return btnElaborarHojaDe;
 	}
 
 }

@@ -153,7 +153,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				// habilitarOpcionDireccionNueva();
 				determinarVisibilidadCheck_DireccionNueva();
 				// VALIDO DIRECICION DE ENVIO DE CLIENTE
-				if (this.ventana_ingreso.getDireccion_nueva().isSelected() == true) {
+				if (this.ventana_ingreso.getDireccion_nueva().isSelected()) {
 					// Me fijo que complete la direccion alternativa y el monto
 					String direccionAlternativa = this.ventana_ingreso.getTxtDireccionNueva().getText();
 					if (direccionAlternativa.equals("")) {
@@ -164,21 +164,20 @@ public class ControladorVentanaIngreso implements ActionListener {
 					}
 				}
 				// VALIDO EL MONTO DE ENVIO
-				if (this.ventana_ingreso.getDireccion_nueva().isSelected()) {
-					String monto = this.ventana_ingreso.getMontoEnvio().getText();
-					if (monto.equals("") && !error) {
+				String monto = this.ventana_ingreso.getMontoEnvio().getText();
+				if (monto.equals("") && !error) {
+					error = true;
+					JOptionPane.showMessageDialog(this.ventana_ingreso,
+							"Por favor, ingrese el costo en pesos del envio.", null,
+							JOptionPane.INFORMATION_MESSAGE);
+				} else if (!error) {
+					try {
+						montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
+					} catch (NumberFormatException nfe) {
 						error = true;
 						JOptionPane.showMessageDialog(this.ventana_ingreso,
-								"Por favor, ingrese el costo en pesos del envio.", null,
+								"El monto no es válido. Por favor, vuelva a intentarlo.", null,
 								JOptionPane.INFORMATION_MESSAGE);
-					} else if (!error) {
-						try {
-							montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
-						} catch (NumberFormatException nfe) {
-							JOptionPane.showMessageDialog(this.ventana_ingreso,
-									"El monto no es válido. Por favor, vuelva a intentarlo.", null,
-									JOptionPane.INFORMATION_MESSAGE);
-						}
 					}
 				}
 			}
