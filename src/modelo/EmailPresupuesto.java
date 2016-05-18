@@ -1,5 +1,6 @@
 package modelo;
 
+import java.net.Socket;
 import java.util.Calendar;
 import java.util.Properties;
 
@@ -18,7 +19,7 @@ import presentacion.vista.VentanaPresupuesto;
 
 public class EmailPresupuesto extends Thread {
 	
-	private int envio = 0;
+	private float envio = 0;
 	private Ingreso ingreso;
 	private UsuarioDTO usuario;
 	private VentanaPresupuesto ventana;
@@ -52,7 +53,7 @@ public class EmailPresupuesto extends Thread {
 		
 		
 		if (ingreso.getIngreso().getEnvio()){
-			envio = 500;
+			envio = ingreso.getIngreso().getMonto_envio();
 		}
 		
 		float totalpresupuesto = Float.parseFloat(ventana.getValorPresupuestado_txf().getText()) + envio ;
@@ -88,11 +89,40 @@ public class EmailPresupuesto extends Thread {
 		"<p> <b>Le solicitamos que confirme el presupuesto antes de "+fechaVencimiento +".</b></p><br>"+
 		"<p> <b>ATTE:  </b>"+usuario.getNombre()+"   "+ usuario.getApellido()+"</p>";
 		
-		this.enviar(destinatario, mensaje, asunto);
 		
+		if (this.verificarConeccion()){
 
-		
+			this.enviar(destinatario, mensaje, asunto);
+		}else{
+
+			JOptionPane.showMessageDialog(null, "CORREO NO ENVIADO, No tiene acceso a internet", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+
+
 	}
+	
+	private boolean verificarConeccion() {
+
+		String dirWeb = "www.google.com.ar";
+		int puerto = 80;
+
+		try{
+			Socket prueba = new Socket(dirWeb, puerto);
+
+			if(prueba.isConnected()){
+				return true;
+			}else{
+				return false;
+			}
+			
+		}catch(Exception e){
+			
+			e.printStackTrace();	
+		}
+		return false;
+	}
+
 		
 	private void enviar(String destinatarios ,String mensaje, String asunto){
 		try

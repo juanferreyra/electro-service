@@ -1,5 +1,6 @@
 package modelo;
 
+import java.net.Socket;
 import java.util.Calendar;
 import java.util.Properties;
 
@@ -56,14 +57,21 @@ public class EmailReparacion extends Thread  {
 			 estado = "Irreparable"; 
 		}
 		if (ingreso.getIngreso().getEnvio()){
-			envio =" coordinar el env&#237;o del equipo al domicilio: " + ingreso.getCliente().getDireccion() + ". Muchas Gracias ";
+			
+			if(ingreso.getIngreso().getEnvio_default()){
+				
+				envio =" coordinar el env&#237;o del equipo al domicilio: " + ingreso.getCliente().getDireccion() + ". Muchas Gracias ";
+			}else {
+				envio =" coordinar el env&#237;o del equipo al domicilio: " + ingreso.getIngreso().getDireccion_alternativa() + ". Muchas Gracias ";
+			}
+			
 		}else{
 			envio =" coordinar fecha y horario en el que puede pasar a retirar el equipo por la siguiente direcci&#243;n: "
 					+ "  Darregueyra 3896,Los Polvorines, Malvinas Argentinas, Buenos Aires. Muchas Gracias";
 		}
 
 		//asunto
-		String asunto ="Aviso de reparaci&#243;n  de "+ ingreso.ingr.getDescripcion() +" de Electro Service."; 
+		String asunto ="Aviso de reparación  de "+ ingreso.ingr.getDescripcion() +" de Electro Service."; 
 
 
 		///Cuerpo de mensaje
@@ -72,18 +80,41 @@ public class EmailReparacion extends Thread  {
 				"<p>Estimado cliente:  " + ingreso.getCliente().getNombre() + " " + ingreso.getCliente().getApellido() +" </p><br>"+
 						"<p style=text-indent:4cm > La reparaci&#243;n del producto <b>"+ingreso.ingr.getDescripcion()+"</b> " +
 						" se encuentra en estado : &nbsp;<b>" + estado + "</b></p><br> " +
-						"<p> Le solicitamos que por favor se comunique al tel&#233;fono : <b>4685 -5438</b>, para&nbsp;&nbsp<b>" + envio + "</b></p><br>"+
+						"<p> Le solicitamos que por favor se comunique al tel&#233;fono : <b>4685 -5438</b>, para <b>" + envio + "</b></p><br>"+
 						"<p> <b>ATTE:  </b>"+usuario.getNombre()+"   "+ usuario.getApellido()+"</p>";
 		
-		this.verificarConeccion();
+		if (this.verificarConeccion()){
+			
+			this.enviar(destinatario, mensaje, asunto);
+		}else{
+			
+			JOptionPane.showMessageDialog(null, "CORREO NO ENVIADO; No tiene acceso a internet", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
 
-		this.enviar(destinatario, mensaje, asunto);
+		
 
 	}
 	
 	private boolean verificarConeccion() {
+
+		String dirWeb = "www.google.com.ar";
+		int puerto = 80;
+
+		try{
+			Socket prueba = new Socket(dirWeb, puerto);
+
+			if(prueba.isConnected()){
+				return true;
+			}else{
+				return false;
+			}
+			
+		}catch(Exception e){
+			
+			e.printStackTrace();	
+		}
 		return false;
-		
 	}
 
 
