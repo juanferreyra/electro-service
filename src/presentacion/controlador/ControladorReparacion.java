@@ -47,6 +47,7 @@ public class ControladorReparacion implements ActionListener {
 		this.presupuesto = new Presupuesto(ingreso.getIngreso());
 		this.reparacion = new Reparacion();
 		this.reparaciones_repuestos = new Reparaciones_repuestos();
+		this.ventanaReparacion.getEnviarAvisoReparacion_btn().addActionListener(this);
 
 	}
 
@@ -130,7 +131,15 @@ public class ControladorReparacion implements ActionListener {
 
 		} else if (e.getSource() == this.ventanaReparacion.getCancelar_btn()) {
 			this.ventanaReparacion.dispose();
+			
+		} else if (e.getSource() == this.ventanaReparacion.getEnviarAvisoReparacion_btn()) {
+
+			// ENVIAR MAIL 
+			EmailReparacion email = new EmailReparacion(ingreso, usuarioLogueado, ventanaReparacion, reparacion);
+			email.start();
+
 		}
+
 
 	}
 

@@ -194,6 +194,10 @@ public class VentanaReparacion extends JFrame {
 		contentPane.add(reparable_CheckBox);
 	}
 
+	public JButton getEnviarAvisoReparacion_btn() {
+		return enviarAvisoReparacion_btn;
+	}
+
 	public JButton getCancelar_btn() {
 		return cancelar_btn;
 	}
