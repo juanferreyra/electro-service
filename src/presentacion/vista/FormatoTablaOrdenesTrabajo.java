@@ -27,10 +27,11 @@ public class FormatoTablaOrdenesTrabajo extends DefaultTableCellRenderer {
 			setBackground(Color.decode("#F6E3CE"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("RETIRADO")) {
 			setBackground(Color.decode("#F5A9A9"));
+		} else if (String.valueOf(table.getValueAt(row, 8)).equals("REPARADO")) {
+			setBackground(Color.decode("#CEF6F5"));
+		} else if (String.valueOf(table.getValueAt(row, 8)).equals("IRREPARABLE")) {
+			setBackground(Color.decode("#CED8F6"));
 		}
-
 	}
-
-
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import dto.IngresoLogDTO;
 import dto.ItemPresupuestoRepuestoDTO;
 import dto.RepuestoDTO;
 import dto.UsuarioDTO;
@@ -18,6 +19,7 @@ import modelo.Ingreso;
 import modelo.Presupuesto;
 import modelo.Reparacion;
 import modelo.Reparaciones_repuestos;
+import persistencia.dao.IngresoLogDAO;
 import presentacion.vista.VentanaReparacion;
 
 public class ControladorReparacion implements ActionListener {
@@ -33,9 +35,12 @@ public class ControladorReparacion implements ActionListener {
 	private float suma = 0;
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
+	private ControladorVentanaPrincipal controladorVentanaPrincipal;
 
-	public ControladorReparacion(VentanaReparacion ventanaReparacion, Ingreso ingreso, UsuarioDTO usuarioLogueado) {
+	public ControladorReparacion(VentanaReparacion ventanaReparacion,
+			ControladorVentanaPrincipal controladorVentanaPrincipal, Ingreso ingreso, UsuarioDTO usuarioLogueado) {
 		this.ventanaReparacion = ventanaReparacion;
+		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
 		this.ingreso = ingreso;
 		this.ventanaReparacion.getIncrementoCantComponente_btn().addActionListener(this);
 		this.ventanaReparacion.getDecrementoCantComponente_btn().addActionListener(this);
@@ -122,24 +127,43 @@ public class ControladorReparacion implements ActionListener {
 
 			guardarReparacionesRepuestosEnBD(this.reparacion.getIdReparacion());
 
-			// ENVIAR MAIL DE AVISO AUTOMATiCAMENTE AC�.
+			int tipoEstado = determinarEstado();
+			if (tipoEstado != 0) {
+				// Actualizo el estado del ingreso
+				IngresoLogDTO ingrLog = new IngresoLogDTO(0, this.ingreso.getId(), tipoEstado, null,
+						usuarioLogueado.getId());
+				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+				ingresoLogDAO.insert(ingrLog);
+			}
+
+			this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+			// ENVIAR MAIL DE AVISO AUTOMATiCAMENTE ACA.
 			EmailReparacion email = new EmailReparacion(ingreso, usuarioLogueado, ventanaReparacion, reparacion);
 			email.start();
 
 			this.ventanaReparacion.dispose();
-			// this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 
 		} else if (e.getSource() == this.ventanaReparacion.getCancelar_btn()) {
 			this.ventanaReparacion.dispose();
-			
+
 		} else if (e.getSource() == this.ventanaReparacion.getEnviarAvisoReparacion_btn()) {
 
-			// ENVIAR MAIL 
+			// ENVIAR MAIL
 			EmailReparacion email = new EmailReparacion(ingreso, usuarioLogueado, ventanaReparacion, reparacion);
 			email.start();
 
 		}
 
+	}
+
+	private int determinarEstado() {
+		int tipoEstado = this.ingreso.getIngreso().getEstado();
+		if (this.ventanaReparacion.getReparable_CheckBox().isSelected()) {
+			tipoEstado = 7;
+		} else {
+			tipoEstado = 8;
+		}
+		return tipoEstado;
 
 	}
 
@@ -148,7 +172,7 @@ public class ControladorReparacion implements ActionListener {
 		Date fecha_creacion = null;
 		boolean habilitado = true;
 		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
-			idrepuesto = (int) this.ventanaReparacion.getComponentes_table().getValueAt(0, i);
+			idrepuesto = presupuesto.getListaDeRepuestos().get(i).getIdrepuesto();
 
 			this.reparaciones_repuestos.guardarReparacion_repuesto(idReparacion, idrepuesto,
 					(int) (this.ventanaReparacion.getComponentes_table().getValueAt(i, 2)), fecha_creacion, habilitado);

@@ -55,16 +55,6 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		usuarioDAO = new UsuarioDAO();
 		this.adecuarVentanaPrincipal();
 		this.cargar_tablaOrdenesTrabajo();
-
-	}
-
-	public void cargarAsignacionTecnico_tablaOrdenesTrabajo(int nroOrden, String tecnico) {
-		/**
-		 * Estructura de la tabla ordenes de trabajo:
-		 * ingreso_btn/nro/fecha/producto/cliente/envio/presupuesto_btn/
-		 * tecnico_asignado/estado
-		 **/
-
 	}
 
 	private void adecuarVentanaPrincipal() {
@@ -195,7 +185,6 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			}
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
 
-			// REVISAR (COPI Y PASTE DE PRESUPUESTO)
 			if (this.principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
 				int nroIngreso = (int) this.principal.getOrdenesDeTrabajo_table()
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
@@ -208,15 +197,17 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					ing.cargarModeloCompleto();
 
 					ControladorReparacion controladorReparacion = new ControladorReparacion(new VentanaReparacion(),
-							ing, usuarioLogueado);
+							this, ing, usuarioLogueado);
 					controladorReparacion.inicializar();
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'PRESUPUESTADO'.");
 				}
 			}
+
 		} else if (e.getSource() == this.principal.getBtnElaborarHojaDe()) {
-			ControladorVentanaHojaDeRuta hojaruta = new ControladorVentanaHojaDeRuta(new VentanaHojaDeRuta(), this, usuarioLogueado);
+			ControladorVentanaHojaDeRuta hojaruta = new ControladorVentanaHojaDeRuta(new VentanaHojaDeRuta(), this,
+					usuarioLogueado);
 			hojaruta.inicializar();
 		}
 	}
@@ -263,8 +254,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 							ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(
 									new VentanaPresupuesto(), ingreso, controladorVentanaPrincipal, usuarioLogueado);
 							controladorPresupuesto.inicializar();
-						}else{
-							JOptionPane.showMessageDialog(null, "Disculpe, la orden de trabajo seleccionada no se encuentra presupuestada.");
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Disculpe, la orden de trabajo seleccionada no se encuentra presupuestada.");
 						}
 					}
 				}
