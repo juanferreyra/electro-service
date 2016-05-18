@@ -45,6 +45,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		this.ventanaHojaRuta.getBtnCancelar().addActionListener(this);
 		this.ventanaHojaRuta.getBtnBorrarCarga().addActionListener(this);
 		this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(false);
+		this.ventanaHojaRuta.getBtnImprimir().setVisible(false);
 		
 		agregarMouseListenerTabla();
 	}
@@ -62,7 +63,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 	}
 	
 	private void cargarModelo() {
-		if(hojaDeRuta.getId()!=-1) {
+		if(hojaDeRuta.getHojaRuta().getId()!=-1) {
 			this.ventanaHojaRuta.getTxtfldNombreConductor().setText(this.hojaDeRuta.getFlete().getNombre());
 			this.ventanaHojaRuta.getTxtfldMovil().setText(this.hojaDeRuta.getFlete().getModelo());
 			this.ventanaHojaRuta.getTxtfldTelefono().setText(this.hojaDeRuta.getFlete().getTelefono());
@@ -186,13 +187,13 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			error = true;
 		}
 		
-		if(this.hojaDeRuta.getIngresosSeleccionadosEnHoja().size()==0) { 
+		if(this.hojaDeRuta.getIngresosSeleccionadosEnHoja().size()==0 && error==false) { 
 			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Debes seleccionr al menos una orden de trabajo para su envio", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 			error = true;
 		}
 		
-		return error;
+		return !error;
 	}
 	
 	private boolean soloNumeros(String texto){
@@ -228,15 +229,22 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			String nroCarga = this.ventanaHojaRuta.getTxtfldCargarHoja().getText();
 			
 			if(soloNumeros(nroCarga)) {
-				int id = Integer.parseInt(nroCarga); 
-				this.hojaDeRuta.setId(id);
-				this.hojaDeRuta.cargarVariables();
-				cargarModelo();
-				this.ventanaHojaRuta.getBtnBuscarConductor().setEnabled(false);
-				this.ventanaHojaRuta.getTxtflBuscarConductor().setEnabled(false);
-				this.ventanaHojaRuta.getBtnGuardar().setVisible(false);
-				this.ventanaHojaRuta.getBtnCancelar().setText("Cerrar");
-				this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(true);
+				int id = Integer.parseInt(nroCarga);
+				if(this.hojaDeRuta.existeHojaDeRuta(id)){
+					this.hojaDeRuta.setId(id);
+					this.hojaDeRuta.cargarVariables();
+					cargarModelo();
+					this.ventanaHojaRuta.getBtnBuscarConductor().setEnabled(false);
+					this.ventanaHojaRuta.getTxtflBuscarConductor().setEnabled(false);
+					this.ventanaHojaRuta.getBtnGuardar().setVisible(false);
+					this.ventanaHojaRuta.getBtnCancelar().setText("Cerrar");
+					this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(true);
+					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 			} else {
 				JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Campo para cargar la hoja debe ser numerico ", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -257,9 +265,11 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			this.ventanaHojaRuta.getTxtfldNombreConductor().setText("");
 			this.ventanaHojaRuta.getTxtfldPatente().setText("");
 			this.ventanaHojaRuta.getTxtfldTelefono().setText("");
+			this.ventanaHojaRuta.getBtnImprimir().setVisible(false);
 			
 		} else if(e.getSource() == this.ventanaHojaRuta.getBtnCancelar()) {
 			this.ventanaHojaRuta.dispose();
+			this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 		} else if(e.getSource() == this.ventanaHojaRuta.getBtnBuscarConductor()) {
 			String nroConductor = this.ventanaHojaRuta.getTxtflBuscarConductor().getText();
 			if(soloNumeros(nroConductor)) {
@@ -279,6 +289,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Hoja de ruta guadada Correctamente!", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE); 
 					//vacio todos los datos o muestro la impresion
+					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
 				}
 			}
 		}

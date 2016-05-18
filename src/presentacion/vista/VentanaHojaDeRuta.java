@@ -21,7 +21,6 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import java.awt.Toolkit;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class VentanaHojaDeRuta extends JFrame {
 
@@ -63,7 +62,7 @@ public class VentanaHojaDeRuta extends JFrame {
 		listaEnviosTable = new JTable();
 		listaEnviosTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "Nº", "Fecha",
+		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "Nï¿½", "Fecha",
 				"Producto", "Cliente", "Localidad", "Direccion Envio", "" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { Integer.class, Date.class, String.class, String.class,
@@ -221,7 +220,6 @@ public class VentanaHojaDeRuta extends JFrame {
 		btnBorrarCarga.setIcon(new ImageIcon(VentanaHojaDeRuta.class.getResource("/delete.png")));
 		btnBorrarCarga.setBounds(644, 11, 25, 25);
 		contentPane.add(btnBorrarCarga);
-		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnGuardar, listaEnviosTable, lblNombreConductor, lblMovil, txtfldMovil, lblPatente, lblTelefono, txtfldPatente, txtfldTelefono, btnCancelar, btnCargarHoja, ordenesDeTrabajo_scrollPane, lblCargar, lblBuscarConductor, txtfldNombreConductor, lblHojaDeRuta, btnImprimir, txtfldCargarHoja, separator, txtflBuscarConductor, btnBuscarConductor}));
 
 	}
 

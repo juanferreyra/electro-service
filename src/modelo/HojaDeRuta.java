@@ -50,6 +50,13 @@ public class HojaDeRuta {
 		}
 	}
 	
+	public boolean existeHojaDeRuta(int id) {
+		if(hojaRutaDAO.find(id) == null) {
+			return false;	
+		}
+		return true;
+	}
+	
 	public ArrayList<IngresoDTO> getIngresosSeleccionadosEnHoja() {
 		ArrayList<IngresoDTO> ingresos = new ArrayList<IngresoDTO>();
 		
@@ -140,7 +147,6 @@ public class HojaDeRuta {
 			
 			for (int i = 0; i < ingresosEnHoja.size(); i++) {
 				this.ingresosEnHoja.get(i).setIdHojaDeRuta(next);
-				
 				this.hojaRutaIngresosDAO.insert(ingresosEnHoja.get(i));
 			}
 			return true;
