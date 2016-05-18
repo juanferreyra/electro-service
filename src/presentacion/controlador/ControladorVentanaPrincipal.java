@@ -246,15 +246,21 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				if (principal.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JLabel.class)
 						&& columna == 6) {
 					if (principal.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
-						int nroIngreso = (int) principal.getOrdenesDeTrabajo_table()
-								.getValueAt(principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
-						Ingreso ingreso = new Ingreso();
-						ingreso.setId(nroIngreso);
-						ingreso.cargarModeloCompleto();
+						String estado = (String) principal.getOrdenesDeTrabajo_table()
+								.getValueAt(principal.getOrdenesDeTrabajo_table().getSelectedRow(), 8);
+						if (!estado.equals("NUEVO")) {
+							int nroIngreso = (int) principal.getOrdenesDeTrabajo_table()
+									.getValueAt(principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
+							Ingreso ingreso = new Ingreso();
+							ingreso.setId(nroIngreso);
+							ingreso.cargarModeloCompleto();
 
-						ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(new VentanaPresupuesto(),
-								ingreso, controladorVentanaPrincipal, usuarioLogueado);
-						controladorPresupuesto.inicializar();
+							ControladorPresupuesto controladorPresupuesto = new ControladorPresupuesto(
+									new VentanaPresupuesto(), ingreso, controladorVentanaPrincipal, usuarioLogueado);
+							controladorPresupuesto.inicializar();
+						}else{
+							JOptionPane.showMessageDialog(null, "Disculpe, la orden de trabajo seleccionada no se encuentra presupuestada.");
+						}
 					}
 				}
 			}

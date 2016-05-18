@@ -3,6 +3,7 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import dto.RepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.Ingreso;
 import modelo.Presupuesto;
+import modelo.Reparacion;
+import modelo.Reparaciones_repuestos;
 import presentacion.vista.VentanaReparacion;
 
 public class ControladorReparacion implements ActionListener {
@@ -22,6 +25,8 @@ public class ControladorReparacion implements ActionListener {
 	private Ingreso ingreso;
 	private Integer cantidad = 0;
 	private Presupuesto presupuesto;
+	private Reparacion reparacion;
+	private Reparaciones_repuestos reparaciones_repuestos;
 	private UsuarioDTO usuarioLogueado;
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private float suma = 0;
@@ -39,37 +44,27 @@ public class ControladorReparacion implements ActionListener {
 		this.ventanaReparacion.getCancelar_btn().addActionListener(this);
 		this.usuarioLogueado = usuarioLogueado;
 		this.presupuesto = new Presupuesto(ingreso.getIngreso());
-	}
+		this.reparacion = new Reparacion();
+		this.reparaciones_repuestos = new Reparaciones_repuestos();
 
-	// public void inicializar() {
-	// setearDatosIngreso();
-	// this.ventanaReparacion.setVisible(true);
-	// }
+	}
 
 	public void inicializar() {
 
-		Calendar hoy = new GregorianCalendar();
-		// ventanaReparacion.getFechaIngreso_lbl().setText("Fecha: " +
-		// hoy.get(Calendar.DAY_OF_MONTH) + " / "
-		// + hoy.get(Calendar.MONTH) + " / " + hoy.get(Calendar.YEAR));
 		ventanaReparacion.setVisible(true);
 		ventanaReparacion.getComponentes_table().setModel(modelTable);
 		cargarComboComponentes();
 		setearDatosIngreso();
-		// cargo el usuario
-		if (presupuesto.getId() == -1) {
-			// ventanaReparacion.getLbltecnico()
-			// .setText(this.usuarioLogueado.getNombre() + " " +
-			// this.usuarioLogueado.getApellido());
-		} else {
-			cargarModelo();
-			ventanaReparacion.getFinalizar_btn().setVisible(false);
-			ventanaReparacion.getCancelar_btn().setText("Cerrar");
-		}
+
+		cargarModelo();
+		ventanaReparacion.getFinalizar_btn().setVisible(true);
+		ventanaReparacion.getCancelar_btn().setText("Cerrar");
+
 	}
 
 	private void cargarModelo() {
-
+		// cargo la lista de componentes
+		actualizarTablaRepuestos();
 	}
 
 	private void setearDatosIngreso() {
@@ -105,44 +100,49 @@ public class ControladorReparacion implements ActionListener {
 
 			agregarRepuestoATabla();
 			ocultarColumnaId();
-			// sumarTotales();
-			// sumarTotalComponentes();
 
 			// elimina componete de la tabla
 		} else if (e.getSource() == this.ventanaReparacion.getEliminarComponente_btn()) {
 
 			eliminarComponenteDeTabla();
 
+		} else if (e.getSource() == this.ventanaReparacion.getFinalizar_btn()) {
+
+			String tecnicoAsignado = this.usuarioLogueado.getNombre() + " " + this.usuarioLogueado.getApellido();
+			Date fecha_reparacion = null;
+			int horas = 0;
+			int valor_estimado = 0;
+			String descripcionFinal = this.ventanaReparacion.getDescripcionFinal();
+			int ingresoId = this.ingreso.getId();
+
+			this.reparacion.guardarReparacion(tecnicoAsignado, fecha_reparacion, horas, valor_estimado,
+					descripcionFinal, ingresoId);
+
+			guardarReparacionesRepuestosEnBD(this.reparacion.getIdReparacion());
+
+			// ENVIAR MAIL DE AVISO AUTOMATiCAMENTE ACÁ.
+
+			this.ventanaReparacion.dispose();
+			// this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+
+		} else if (e.getSource() == this.ventanaReparacion.getCancelar_btn()) {
+			this.ventanaReparacion.dispose();
 		}
 
 	}
 
-	// private void restarTotalComponentes() {
-	//
-	// float resta =
-	// Float.parseFloat(this.ventanaReparacion.getValorPresupuestado_txf().getText())
-	// - Float.parseFloat(this.ventanaReparacion.getManoDeObra_txf().getText());
-	//
-	// this.ventanaReparacion.getValorPresupuestado_txf().setText(String.valueOf(resta));
-	// }
-	//
-	// private void sumarTotalComponentes() {
-	//
-	// if (this.ventanaReparacion.getManoDeObra_txf().getText().isEmpty()) {
-	//
-	// JOptionPane.showMessageDialog(ventanaReparacion, "Campo MANO DE OBRA no
-	// puede estar vacio ", "Atencion!",
-	// JOptionPane.INFORMATION_MESSAGE);
-	//
-	// } else {
-	//
-	// float suma =
-	// Float.parseFloat(this.ventanaReparacion.getTotal_lbl().getText())
-	// + Float.parseFloat(this.ventanaReparacion.getManoDeObra_txf().getText());
-	//
-	// this.ventanaReparacion.getValorPresupuestado_txf().setText(String.valueOf(suma));
-	// }
-	// }
+	private void guardarReparacionesRepuestosEnBD(int idReparacion) {
+		int idrepuesto;
+		Date fecha_creacion = null;
+		boolean habilitado = true;
+		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
+			idrepuesto = (int) this.ventanaReparacion.getComponentes_table().getValueAt(0, i);
+
+			this.reparaciones_repuestos.guardarReparacion_repuesto(idReparacion, idrepuesto,
+					(int) (this.ventanaReparacion.getComponentes_table().getValueAt(i, 2)), fecha_creacion, habilitado);
+		}
+
+	}
 
 	private void agregarRepuestoATabla() {
 
@@ -168,22 +168,6 @@ public class ControladorReparacion implements ActionListener {
 		// actualizo la tabla de repuestos
 		actualizarTablaRepuestos();
 	}
-
-	// private void sumarTotales() {
-	//
-	// suma = 0;
-	//
-	// for (int i = 0; i <
-	// ventanaReparacion.getComponentes_table().getRowCount(); i++) {
-	//
-	// suma +=
-	// Float.parseFloat(ventanaReparacion.getComponentes_table().getValueAt(i,
-	// 4).toString());
-	// }
-	//
-	// ventanaReparacion.getTotal_lbl().setText(String.valueOf(suma));
-	//
-	// }
 
 	private void actualizarTablaRepuestos() {
 		modelTable = new DefaultTableModel();
@@ -226,7 +210,6 @@ public class ControladorReparacion implements ActionListener {
 				}
 			}
 
-			// sumarTotales();
 			actualizarTablaRepuestos();
 		} else {
 

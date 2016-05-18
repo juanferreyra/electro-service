@@ -3,14 +3,18 @@ package dto;
 import java.util.Date;
 
 public class ReparacionRepuestoDTO {
-
+	private int id;
 	private int idreparacion;
 	private int idrepuesto;
 	private int cantidad;
 	private Date fecha_creacion;
 	private boolean habilitado;
 
-	public ReparacionRepuestoDTO(int idreparacion, int idrepuesto, int cantidad, Date fecha_creacion,
+	public ReparacionRepuestoDTO() {
+
+	}
+
+	public ReparacionRepuestoDTO(int id, int idreparacion, int idrepuesto, int cantidad, Date fecha_creacion,
 			boolean habilitado) {
 		this.idreparacion = idreparacion;
 		this.idrepuesto = idrepuesto;
@@ -57,6 +61,14 @@ public class ReparacionRepuestoDTO {
 
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
