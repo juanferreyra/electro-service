@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-05-16T22:26:13 -->
+<!-- 2016-05-18T21:22:37 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ImpresionIngreso" columnCount="2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="421" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="12a0abd7-5c3f-4ef0-bf9e-b71189e32dec">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="electroServiceAdapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -219,7 +219,7 @@
 				<textFieldExpression><![CDATA[$F{monto_envio}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement mode="Opaque" x="434" y="16" width="178" height="100" backcolor="rgba(255, 255, 255, 0.56078434)" uuid="b787203f-fdf5-4f62-bb35-cf919f9dd402"/>
+				<reportElement mode="Opaque" x="434" y="16" width="178" height="100" backcolor="#FFFFFF" uuid="b787203f-fdf5-4f62-bb35-cf919f9dd402"/>
 				<imageExpression><![CDATA["logo.png"]]></imageExpression>
 			</image>
 			<line>
@@ -233,10 +233,10 @@
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
 				</box>
 				<textElement>
 					<font fontName="Monospaced"/>
@@ -262,10 +262,10 @@
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
 				</box>
 				<textElement>
 					<font fontName="Monospaced"/>
@@ -284,10 +284,10 @@
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
 				</box>
 				<textElement>
 					<font fontName="Monospaced"/>
@@ -306,10 +306,10 @@
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="rgba(0, 0, 0, 0.19607843)"/>
 				</box>
 				<textElement>
 					<font fontName="Monospaced"/>
@@ -334,7 +334,7 @@
 				<reportElement mode="Opaque" x="12" y="11" width="400" height="109" forecolor="#FFFFFF" backcolor="#77767E" uuid="ce9bde88-c05b-44c6-8708-d0136c8d051a"/>
 			</rectangle>
 			<image>
-				<reportElement mode="Opaque" x="18" y="16" width="178" height="100" backcolor="rgba(255, 255, 255, 0.56078434)" uuid="4d4f8e55-626b-4ae2-bb20-fac45d95873a"/>
+				<reportElement mode="Opaque" x="18" y="16" width="178" height="100" backcolor="#FFFFFF" uuid="4d4f8e55-626b-4ae2-bb20-fac45d95873a"/>
 				<imageExpression><![CDATA["logo.png"]]></imageExpression>
 			</image>
 			<textField pattern="MMMMM dd, yyyy">
@@ -350,9 +350,9 @@
 				<textFieldExpression><![CDATA["Orden de Trabajo Nº "+$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="668" y="16" width="154" height="20" forecolor="#C3C3C6" uuid="59c22ccb-29c4-4866-a566-582bd0102c9d"/>
+				<reportElement mode="Transparent" x="668" y="16" width="154" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="59c22ccb-29c4-4866-a566-582bd0102c9d"/>
 				<textElement textAlignment="Right">
-					<font fontName="Eras Demi ITC"/>
+					<font fontName="Segoe UI Semibold" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Operacion Nº "+$F{id}]]></textFieldExpression>
 			</textField>
