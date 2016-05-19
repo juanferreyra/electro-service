@@ -46,7 +46,6 @@ public class VentanaHojaDeRuta extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaHojaDeRuta.class.getResource("/th-list-outline.png")));
 		setBackground(Color.WHITE);
 		setTitle("Preparar Hoja de ruta");
-		setAlwaysOnTop(true);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setForeground(Color.BLACK);

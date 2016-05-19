@@ -18,6 +18,8 @@ import dto.HojaDeRutaIngresosDTO;
 import dto.IngresoDTO;
 import dto.UsuarioDTO;
 import modelo.HojaDeRuta;
+import presentacion.reportes.ReporteHojaDeRuta;
+import presentacion.reportes.ReporteIngreso;
 import presentacion.vista.VentanaHojaDeRuta;
 
 public class ControladorVentanaHojaDeRuta implements ActionListener {
@@ -291,6 +293,9 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
 				}
 			}
-		}	
+		} else if(e.getSource() == this.ventanaHojaRuta.getBtnImprimir()) {
+			ReporteHojaDeRuta reporte = new ReporteHojaDeRuta(hojaDeRuta.getDatosImpresion());
+			reporte.mostrar();
+		}
 	}
 }

@@ -1,16 +1,17 @@
 package modelo;
 
 import java.util.ArrayList;
-
 import dto.FleteDTO;
 import dto.HojaDeRutaDTO;
 import dto.HojaDeRutaIngresosDTO;
+import dto.ImpresionHojaDeRutaDTO;
 import dto.IngresoDTO;
 import dto.UsuarioDTO;
 import persistencia.dao.ClienteDAO;
 import persistencia.dao.FleteDAO;
 import persistencia.dao.HojaDeRutaDAO;
 import persistencia.dao.HojaDeRutaIngresosDAO;
+import persistencia.dao.ImpresionHojaDeRutaDAO;
 import persistencia.dao.IngresoDAO;
 
 public class HojaDeRuta {
@@ -18,6 +19,8 @@ public class HojaDeRuta {
 	private HojaDeRutaDTO hojaRuta;
 	private FleteDTO flete;
 	private ArrayList<HojaDeRutaIngresosDTO> ingresosEnHoja;
+	
+	private static ImpresionHojaDeRutaDAO impresionHojasRutasStatic;
 	
 	private HojaDeRutaIngresosDAO hojaRutaIngresosDAO;
 	private HojaDeRutaDAO hojaRutaDAO;
@@ -155,5 +158,10 @@ public class HojaDeRuta {
 			return false;
 		}
 		
+	}
+	
+	public ArrayList<ImpresionHojaDeRutaDTO> getDatosImpresion(){
+		impresionHojasRutasStatic = new ImpresionHojaDeRutaDAO();
+		return impresionHojasRutasStatic.find(this.hojaRuta.getId());
 	}
 }
