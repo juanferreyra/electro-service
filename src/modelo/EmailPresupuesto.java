@@ -186,7 +186,8 @@ public class EmailPresupuesto extends Thread {
 		catch (Exception e)
 		{
 			
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Email de Presupuesto, NO SE HA PODIDO ENVIAR, por favor intente mas tarde", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);	
 		}
 	}
 

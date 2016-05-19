@@ -182,8 +182,8 @@ public class EmailReparacion extends Thread  {
 		}
 		catch (Exception e)
 		{
-			
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Email de Aviso de Reparación, NO SE HA PODIDO ENVIAR, por favor intente mas tarde", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);	
 		}
 	}
 
