@@ -309,6 +309,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 							JOptionPane.INFORMATION_MESSAGE); 
 					//vacio todos los datos o muestro la impresion
 					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
+					this.ventanaHojaRuta.getBtnGuardar().setVisible(false);
 				}
 			}
 		} else if(e.getSource() == this.ventanaHojaRuta.getBtnImprimir()) {

@@ -128,7 +128,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		// modificar)
 		if (this.perfil.equals("ADMINISTRATIVO") && (estado.equals("NUEVO") || estado.equals("INFORMADO")
 				|| estado.equals("IRREPARABLE") || estado.equals("REPARADO") || estado.equals("RECHAZADO")
-				|| estado.equals("AVISO DE RETIRO") || estado.equals("RETIRADO") || estado.equals("PRESUPUESTADO"))) {// HARDCODEO
+				|| estado.equals("AVISO DE RETIRO") || estado.equals("RETIRADO") || estado.equals(""))) {// HARDCODEO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 
@@ -190,7 +190,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 1);
 				String estado = (String) this.principal.getOrdenesDeTrabajo_table()
 						.getValueAt(this.principal.getOrdenesDeTrabajo_table().getSelectedRow(), 8);
-				if (estado.equals("PRESUPUESTADO")) {
+				if (estado.equals("ASIGNADO")) {
 
 					Ingreso ing = new Ingreso();
 					ing.setId(nroIngreso);
@@ -201,7 +201,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					controladorReparacion.inicializar();
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'PRESUPUESTADO'.");
+							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'ASIGNADO'.");
 				}
 			}
 
