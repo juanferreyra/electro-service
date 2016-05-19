@@ -14,6 +14,8 @@ public class HojaDeRutaIngresosDAO {
 	
 	private static final String findList = "SELECT * FROM hojaruta_ingreso WHERE idhojaruta=? ;";
 	
+	private static final String updateEntrega = "UPDATE hojaruta_ingreso SET en_entrega=false WHERE idingreso=? AND idhojaruta=?;";
+	
 	private Conexion conexion = Conexion.getConexion();
 
 	public boolean insert(HojaDeRutaIngresosDTO hojasDeRutaIngresos) {
@@ -24,6 +26,25 @@ public class HojaDeRutaIngresosDAO {
 			
 			statement.setInt(1, hojasDeRutaIngresos.getIdHojaDeRuta());
 			statement.setInt(2, hojasDeRutaIngresos.getIdIngreso());
+
+			if (statement.executeUpdate() > 0)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return false;
+	}
+	
+	public boolean setEnEntrega(int idingreso, int idhojaruta) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(updateEntrega);
+			
+			statement.setInt(1, idingreso);
+			statement.setInt(2, idhojaruta);
 
 			if (statement.executeUpdate() > 0)
 				return true;

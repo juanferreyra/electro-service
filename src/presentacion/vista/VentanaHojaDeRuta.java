@@ -39,6 +39,7 @@ public class VentanaHojaDeRuta extends JFrame {
 	private JButton btnCancelar;
 	private JButton btnCargarHoja;
 	private JButton btnBorrarCarga;
+	private JButton btnMarcarEntregados;
 
 	@SuppressWarnings("serial")
 	public VentanaHojaDeRuta() {
@@ -219,6 +220,12 @@ public class VentanaHojaDeRuta extends JFrame {
 		btnBorrarCarga.setIcon(new ImageIcon(VentanaHojaDeRuta.class.getResource("/delete.png")));
 		btnBorrarCarga.setBounds(644, 11, 25, 25);
 		contentPane.add(btnBorrarCarga);
+		
+		btnMarcarEntregados = new JButton("Marcar Entregados");
+		btnMarcarEntregados.setIcon(new ImageIcon(VentanaHojaDeRuta.class.getResource("/tick-outline.png")));
+		btnMarcarEntregados.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 11));
+		btnMarcarEntregados.setBounds(145, 544, 211, 30);
+		contentPane.add(btnMarcarEntregados);
 
 	}
 
@@ -281,4 +288,7 @@ public class VentanaHojaDeRuta extends JFrame {
 		return btnBorrarCarga;
 	}
 	
+	public JButton getBtnMarcarEntregados() {
+		return btnMarcarEntregados;
+	}
 }

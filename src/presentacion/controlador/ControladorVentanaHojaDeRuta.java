@@ -11,13 +11,16 @@ import java.util.GregorianCalendar;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import dto.ClienteDTO;
 import dto.FleteDTO;
 import dto.HojaDeRutaIngresosDTO;
 import dto.IngresoDTO;
+import dto.IngresoLogDTO;
 import dto.UsuarioDTO;
 import modelo.HojaDeRuta;
+import persistencia.dao.IngresoLogDAO;
 import presentacion.reportes.ReporteHojaDeRuta;
 import presentacion.reportes.ReporteIngreso;
 import presentacion.vista.VentanaHojaDeRuta;
@@ -45,8 +48,10 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		this.ventanaHojaRuta.getBtnImprimir().addActionListener(this);
 		this.ventanaHojaRuta.getBtnCancelar().addActionListener(this);
 		this.ventanaHojaRuta.getBtnBorrarCarga().addActionListener(this);
+		this.ventanaHojaRuta.getBtnMarcarEntregados().addActionListener(this);
 		this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(false);
 		this.ventanaHojaRuta.getBtnImprimir().setVisible(false);
+		this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(false);
 		
 		agregarMouseListenerTabla();
 	}
@@ -105,14 +110,21 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			if(ingresos.get(i).getEnvio_default()) {
 				direccion = ingresos.get(i).getDireccion_alternativa();
 			}
+			javax.swing.JCheckBox check = new JCheckBox();
+			check.setText("En curso");
+			if(ingresos.get(i).getEstado()==11) {
+				//si el estado es 11 (entregado) entonces bloqueo el check
+				check.setEnabled(false);
+				check.setText("Entregado");
+			}
 			
 			this.cargarFila(ingresos.get(i).getId(),ingresos.get(i).getFecha_creacion(),
-							ingresos.get(i).getDescripcion(), nombreCliente, cliente.getLocalidad(), direccion, new JCheckBox());
+							ingresos.get(i).getDescripcion(), nombreCliente, cliente.getLocalidad(), direccion, check,ingresos.get(i).getEstado()==11 );
 		}
 	}
 	
 	private void cargarFila( int nro, Date fecha,
-			String producto, String cliente, String localidad, String direccion, JCheckBox estado) {
+			String producto, String cliente, String localidad, String direccion, JCheckBox estado, Boolean entregado) {
 		Object[] ingreso = new Object[7];
 		ingreso[0] = nro;
 		ingreso[1] = fecha.getTime();
@@ -130,6 +142,8 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 3);
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 4);
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 5);
+		if(entregado)
+			((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 6);
 		
 	}
 
@@ -153,26 +167,28 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 						//cambio el check
 						Object check = ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().getValueAt(seleccionado, 6);
 						JCheckBox hc = (javax.swing.JCheckBox) check;
-						JCheckBox nuevoCheck = new JCheckBox();
-						
-						if(hc.isSelected()) {
-							//seteo el check habilitado
-							nuevoCheck.setSelected(false);
-							ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().setValueAt( nuevoCheck, seleccionado, 6);
-							//saco de la lista de los seleccionados el ingreso
-							for (int i = 0; i < hojaDeRuta.getIngresosEnHoja().size(); i++) {
-								if(hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso()==nroIngreso) {
-									hojaDeRuta.getIngresosEnHoja().remove(i);
-								}
-							}
+						if(!hc.getText().equals("Entregado")) {
+							JCheckBox nuevoCheck = new JCheckBox();
 							
-						} else {
-							//seteo el check habilitado
-							nuevoCheck.setSelected(true);
-							ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().setValueAt( nuevoCheck, seleccionado, 6);
-							//ingreso de la lista de seleccionados el ingreso
-							HojaDeRutaIngresosDTO nuevo = new HojaDeRutaIngresosDTO(0, hojaDeRuta.getId(), nroIngreso, true, null);
-							hojaDeRuta.getIngresosEnHoja().add(nuevo);
+							if(hc.isSelected()) {
+								//seteo el check habilitado
+								nuevoCheck.setSelected(false);
+								ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().setValueAt( nuevoCheck, seleccionado, 6);
+								//saco de la lista de los seleccionados el ingreso
+								for (int i = 0; i < hojaDeRuta.getIngresosEnHoja().size(); i++) {
+									if(hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso()==nroIngreso) {
+										hojaDeRuta.getIngresosEnHoja().remove(i);
+									}
+								}
+								
+							} else {
+								//seteo el check habilitado
+								nuevoCheck.setSelected(true);
+								ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().setValueAt( nuevoCheck, seleccionado, 6);
+								//ingreso de la lista de seleccionados el ingreso
+								HojaDeRutaIngresosDTO nuevo = new HojaDeRutaIngresosDTO(0, hojaDeRuta.getId(), nroIngreso, true, null);
+								hojaDeRuta.getIngresosEnHoja().add(nuevo);
+							}
 						}
 					}
 				}
@@ -241,6 +257,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 					this.ventanaHojaRuta.getBtnCancelar().setText("Cerrar");
 					this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(true);
 					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
+					this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -267,6 +284,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			this.ventanaHojaRuta.getTxtfldPatente().setText("");
 			this.ventanaHojaRuta.getTxtfldTelefono().setText("");
 			this.ventanaHojaRuta.getBtnImprimir().setVisible(false);
+			this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(false);
 			
 		} else if(e.getSource() == this.ventanaHojaRuta.getBtnCancelar()) {
 			this.ventanaHojaRuta.dispose();
@@ -296,6 +314,43 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		} else if(e.getSource() == this.ventanaHojaRuta.getBtnImprimir()) {
 			ReporteHojaDeRuta reporte = new ReporteHojaDeRuta(hojaDeRuta.getDatosImpresion());
 			reporte.mostrar();
+		} else if(e.getSource() == this.ventanaHojaRuta.getBtnMarcarEntregados()) {
+			int response = JOptionPane.showConfirmDialog(null, "Esta seguro que desea cambiar las ordenes seleccionadas como Entregadas?", "Confirmar",
+			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    if (response == JOptionPane.NO_OPTION) {
+		      
+		    } else if (response == JOptionPane.YES_OPTION) {
+				try {
+					
+					TableModel tabla = this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel();
+					//recorro la lista de ingresados y los seteo como estado de entregados
+					for (int i = 0; i < tabla.getRowCount(); i++) {
+						Object check = tabla.getValueAt(i, 6);
+						JCheckBox hc = (javax.swing.JCheckBox) check;
+						if(hc.isSelected()){
+							//cambio como que no esta en entrega
+							this.hojaDeRuta.getHojaRutaIngresosDAO().setEnEntrega(
+									this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(),
+									this.hojaDeRuta.getId());
+							
+							//marco el ingreso en estado de entregado
+							IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), 11, null, usuarioLogueado.getId());
+							//ingreso el estado
+							IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+							ingresoLogDAO.insert(ingrLog);
+						}
+					}
+					this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+					this.ventanaHojaRuta.dispose();
+					
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Ocurrio un error al actualizar el estado de algunas ordenes.!", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE); 
+				}
+		    } else if (response == JOptionPane.CLOSED_OPTION) {
+		      
+		    }
+			//recorro la lista de ingresados y los seteo como estado de entregados
 		}
 	}
 }
