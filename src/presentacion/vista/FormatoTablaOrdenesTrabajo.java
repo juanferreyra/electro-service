@@ -31,6 +31,12 @@ public class FormatoTablaOrdenesTrabajo extends DefaultTableCellRenderer {
 			setBackground(Color.decode("#CEF6F5"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("IRREPARABLE")) {
 			setBackground(Color.decode("#CED8F6"));
+		} else if (String.valueOf(table.getValueAt(row, 8)).equals("INFORMADO")) {
+			setBackground(Color.decode("#F5F6CE"));
+		}else if (String.valueOf(table.getValueAt(row, 8)).equals("ACEPTADO")) {
+			setBackground(Color.decode("#CEF6E3"));
+		}else if (String.valueOf(table.getValueAt(row, 8)).equals("RECHAZADO")) {
+			setBackground(Color.decode("#F6D8CE"));
 		}
 	}
 
