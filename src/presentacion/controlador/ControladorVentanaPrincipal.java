@@ -106,7 +106,8 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					clienteDAO.find(ingresos.get(i).getIdcliente()).getNombre(),
 					(ingresos.get(i).getEnvio()) ? "SI" : "NO",
 					new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
-					nombreCompletoTecnicoAsignado, estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
+					nombreCompletoTecnicoAsignado,
+					estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
 		}
 	}
 
@@ -201,7 +202,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					controladorReparacion.inicializar();
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'ASIGNADO'.");
+							"No es posible visualizar el detalle de reparaciï¿½n. Por favor, seleccione una orden en estado 'PRESUPUESTADO'.");
 				}
 			}
 

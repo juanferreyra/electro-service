@@ -129,6 +129,7 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
 		//TODO:Deberia setear el usuario que creo el presupuesto, por ahora seteo el lodeado hasta que hagamos el ABM de usuarios
 		ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
+		this.bloquearCampos();
 	}
 
 	@Override
@@ -402,8 +403,10 @@ public class ControladorPresupuesto implements ActionListener{
 				}
 			}
 			
-			sumarTotales();
+			
 			actualizarTablaRepuestos();
+			sumarTotales();
+			sumarTotalComponentes();
 		} else {
 
 			JOptionPane.showMessageDialog(ventanaPresupuesto, "debe seleccionar fila para eliminar ", "Atencion!",
@@ -469,5 +472,24 @@ public class ControladorPresupuesto implements ActionListener{
 		ventanaPresupuesto.getBtnInformado().setVisible(false);
 		ventanaPresupuesto.getBtnAceptado().setVisible(false);
 		ventanaPresupuesto.getBtnAsignar().setVisible(false);
+	}
+	private void  bloquearCampos(){
+		
+		this.ventanaPresupuesto.getComponente_ComboBox().setVisible(false);
+		this.ventanaPresupuesto.getEliminarComponente_btn().setVisible(false);
+		this.ventanaPresupuesto.getAgregarComponente_btn().setVisible(false);
+		this.ventanaPresupuesto.getDescripcionBreve_jTextArea().setEditable(false);
+		this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().setEditable(false);
+		this.ventanaPresupuesto.getDescripcionFalla_txtArea().setEditable(false);
+		this.ventanaPresupuesto.getIncrementoCantComponente_btn().setVisible(false);
+		this.ventanaPresupuesto.getCantidad_lbl().setVisible(false);
+		this.ventanaPresupuesto.getDecrementoCantComponente_btn().setVisible(false);
+		this.ventanaPresupuesto.getAgregarComponente_btn().setVisible(false);
+		this.ventanaPresupuesto.getHorasDeTrabajo_txf().setEditable(false);
+		this.ventanaPresupuesto.getManoDeObra_txf().setEditable(false);
+		this.ventanaPresupuesto.getVencimiento_Calendario().setEnabled(false);
+		this.ventanaPresupuesto.getValorPresupuestado_txf().setEditable(false);
+		
+		
 	}
 }

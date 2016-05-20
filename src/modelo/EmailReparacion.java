@@ -58,7 +58,7 @@ public class EmailReparacion extends Thread  {
 		}
 		if (ingreso.getIngreso().getEnvio()){
 			
-			if(ingreso.getIngreso().getEnvio_default()){
+			if(!ingreso.getIngreso().getEnvio_default()){
 				
 				envio =" coordinar el env&#237;o del equipo al domicilio: " + ingreso.getCliente().getDireccion() + ". Muchas Gracias ";
 			}else {
