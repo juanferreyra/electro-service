@@ -10,8 +10,12 @@ import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class VentanaABMCliente {
+public class VentanaABMCliente extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField nombre_txt;
 	private JTextField apellido_txt;
@@ -24,6 +28,9 @@ public class VentanaABMCliente {
 	private DefaultTableModel modelClientes;
 	private String[] nombreColumnas = {"id", "Nombre", "Apellido", "Documento", "Localidad", "Direcci�n", "Tel�fono",
 			"Email" };
+	private JButton cancelar_btn;
+	private JButton guardar_btn;
+	JButton eliminarItem_btn;
 
 	public VentanaABMCliente() {
 		initialize();
@@ -104,11 +111,11 @@ public class VentanaABMCliente {
 		documento_txt.setBounds(188, 105, 394, 20);
 		frame.getContentPane().add(documento_txt);
 
-		JButton cancelar_btn = new JButton("Cancelar");
+		cancelar_btn = new JButton("Cancelar");
 		cancelar_btn.setBounds(627, 363, 89, 23);
 		frame.getContentPane().add(cancelar_btn);
 
-		JButton guardar_btn = new JButton("Guardar");
+		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(528, 363, 89, 23);
 		frame.getContentPane().add(guardar_btn);
 
@@ -120,9 +127,64 @@ public class VentanaABMCliente {
 		tablaClientes = new JTable(modelClientes);
 		clientes_scrollPane.setViewportView(tablaClientes);
 		
-		JButton eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar Item");
 		eliminarItem_btn.setBounds(397, 363, 121, 23);
 		frame.getContentPane().add(eliminarItem_btn);
 
 	}
+
+	public JTextField getNombre_txt() {
+		return nombre_txt;
+	}
+
+	public JTextField getApellido_txt() {
+		return apellido_txt;
+	}
+
+	public JTextField getLocalidad_txt() {
+		return localidad_txt;
+	}
+
+	public JTextField getDireccion_txt() {
+		return direccion_txt;
+	}
+
+	public JTextField getTelefono_txt() {
+		return telefono_txt;
+	}
+
+	public JTextField getEmail_txt() {
+		return email_txt;
+	}
+
+	public JTextField getDocumento_txt() {
+		return documento_txt;
+	}
+
+	public JTable getTablaClientes() {
+		return tablaClientes;
+	}
+
+	public DefaultTableModel getModelClientes() {
+		return modelClientes;
+	}
+
+	public JButton getCancelar_btn() {
+		return cancelar_btn;
+	}
+
+	public JButton getGuardar_btn() {
+		return guardar_btn;
+	}
+
+	public JButton getEliminarItem_btn() {
+		return eliminarItem_btn;
+	}
+
+	public String[] getNombreColumnas() {
+		return nombreColumnas;
+	}
+	
+	
+	
 }
