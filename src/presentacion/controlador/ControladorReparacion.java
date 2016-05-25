@@ -62,11 +62,25 @@ public class ControladorReparacion implements ActionListener {
 		ventanaReparacion.getComponentes_table().setModel(modelTable);
 		cargarComboComponentes();
 		setearDatosIngreso();
+		cargarMontosPresupuestos();
 
 		cargarModelo();
 		ventanaReparacion.getFinalizar_btn().setVisible(true);
 		ventanaReparacion.getCancelar_btn().setText("Cerrar");
 
+	}
+
+	private void cargarMontosPresupuestos() {
+		
+		if (this.ingreso.getIngreso().getEnvio()){
+			
+			this.ventanaReparacion.getLblMontoEnvio().setText(String.valueOf(this.ingreso.getIngreso().getMonto_envio()));
+		}else{
+			this.ventanaReparacion.getLblMontoEnvio().setText("0");
+		}
+		
+		this.ventanaReparacion.getLblMontoPresupuestado().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
+		
 	}
 
 	private void cargarModelo() {
