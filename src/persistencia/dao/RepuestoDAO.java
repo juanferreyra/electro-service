@@ -24,6 +24,37 @@ public class RepuestoDAO {
 	
 	private static final Conexion conexion = Conexion.getConexion();
 	
+	private static final String insert1 = "INSERT INTO repuesto ("
+			+ "`nombre`, `detalle`, `precio`, `stock_minimo`,now(),`idusuario`,true)"
+			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
+	
+	public boolean agregar(RepuestoDTO componente){
+		
+		PreparedStatement statement;
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(insert1);
+			statement.setInt(1,componente.getId());
+			statement.setString(2,componente.getDetalle());
+			statement.setFloat(3, componente.getPrecioUnitario());
+			statement.setInt(4,componente.getStockMinimo());
+	
+			
+			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
+				return true;
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			Conexion.cerrarConexion();
+		}
+		return false;
+		
+	}
+	
 	public boolean insert(RepuestoDTO componente)
 	{
 		PreparedStatement statement;
@@ -47,14 +78,14 @@ public class RepuestoDAO {
 		return false;
 	}
 	
-	public boolean delete(RepuestoDTO marca_a_eliminar)
+	public boolean delete(RepuestoDTO componente_a_eliminar)
 	{
 		PreparedStatement statement;
 		int chequeoUpdate=0;
 		try 
 		{
 			statement = conexion.getSQLConexion().prepareStatement(delete);
-			statement.setString(1, Integer.toString(marca_a_eliminar.getId()));
+			statement.setString(1, Integer.toString(componente_a_eliminar.getId()));
 			chequeoUpdate = statement.executeUpdate();
 			if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
 				return true;
@@ -102,7 +133,7 @@ public class RepuestoDAO {
 		return componentes;
 	}
 	
-	public boolean update(RepuestoDTO marca_a_modificar)
+	public boolean update(RepuestoDTO componente_a_modificar)
 
 	{
 		PreparedStatement statement;
@@ -110,8 +141,8 @@ public class RepuestoDAO {
 		{
 			statement = conexion.getSQLConexion().prepareStatement(update);
 
-			statement.setString(1, marca_a_modificar.getDetalle());
-			statement.setInt(2, marca_a_modificar.getId());
+			statement.setString(1, componente_a_modificar.getDetalle());
+			statement.setInt(2, componente_a_modificar.getId());
 
 			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
 				return true;

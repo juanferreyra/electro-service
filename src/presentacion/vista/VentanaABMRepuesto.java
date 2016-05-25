@@ -19,7 +19,10 @@ public class VentanaABMRepuesto extends JFrame {
 	private JTextField stockMinimo_txt;
 	private JTable tablaRepuesto;
 	private DefaultTableModel modelRepuesto;
-	private String[] nombreColumnas = { "Detalle", "Precio", "Stock Mínimo" };
+	private String[] nombreColumnas = { "id","Detalle", "Precio", "Stock Mï¿½nimo" };
+	private JButton cancelar_btn;
+	private JButton guardar_btn;
+	private JButton eliminarItem_btn;
 
 	public VentanaABMRepuesto() {
 		initialize();
@@ -63,11 +66,11 @@ public class VentanaABMRepuesto extends JFrame {
 		stockMinimo_txt.setBounds(199, 191, 383, 20);
 		getContentPane().add(stockMinimo_txt);
 
-		JButton cancelar_btn = new JButton("Cancelar");
+		cancelar_btn = new JButton("Cancelar");
 		cancelar_btn.setBounds(664, 392, 89, 23);
 		getContentPane().add(cancelar_btn);
 
-		JButton guardar_btn = new JButton("Guardar");
+		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(565, 392, 89, 23);
 		getContentPane().add(guardar_btn);
 
@@ -79,8 +82,46 @@ public class VentanaABMRepuesto extends JFrame {
 		tablaRepuesto = new JTable(modelRepuesto);
 		repuesto_scrollPane.setViewportView(tablaRepuesto);
 
-		JButton eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar Item");
 		eliminarItem_btn.setBounds(434, 392, 121, 23);
 		getContentPane().add(eliminarItem_btn);
 	}
+
+	public JTextField getDetalle_txt() {
+		return detalle_txt;
+	}
+
+	public JTextField getPrecio_txt() {
+		return precio_txt;
+	}
+
+	public JTextField getStockMinimo_txt() {
+		return stockMinimo_txt;
+	}
+
+	public JTable getTablaRepuesto() {
+		return tablaRepuesto;
+	}
+
+	public DefaultTableModel getModelRepuesto() {
+		return modelRepuesto;
+	}
+
+	public String[] getNombreColumnas() {
+		return nombreColumnas;
+	}
+
+	public JButton getCancelar_btn() {
+		return cancelar_btn;
+	}
+
+	public JButton getGuardar_btn() {
+		return guardar_btn;
+	}
+
+	public JButton getEliminarItem_btn() {
+		return eliminarItem_btn;
+	}
+	
+	
 }
