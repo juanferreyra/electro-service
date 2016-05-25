@@ -19,7 +19,7 @@ public class VentanaABMRepuesto extends JFrame {
 	private JTextField stockMinimo_txt;
 	private JTable tablaRepuesto;
 	private DefaultTableModel modelRepuesto;
-	private String[] nombreRepuesto = { "Detalle", "Precio", "Stock Mínimo" };
+	private String[] nombreColumnas = { "Detalle", "Precio", "Stock Mínimo" };
 
 	public VentanaABMRepuesto() {
 		initialize();
@@ -75,7 +75,7 @@ public class VentanaABMRepuesto extends JFrame {
 		repuesto_scrollPane.setBounds(123, 246, 459, 91);
 		getContentPane().add(repuesto_scrollPane);
 
-		modelRepuesto = new DefaultTableModel(null, nombreRepuesto);
+		modelRepuesto = new DefaultTableModel(null, nombreColumnas);
 		tablaRepuesto = new JTable(modelRepuesto);
 		repuesto_scrollPane.setViewportView(tablaRepuesto);
 
