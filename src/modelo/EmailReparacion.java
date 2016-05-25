@@ -50,12 +50,25 @@ public class EmailReparacion extends Thread  {
 		String destinatario = ingreso.getCliente().getMail();
 		String estado ="";
 		String envio ="";
+		float montoTotal = 0;
 
 		if (ventana.getReparable_CheckBox().isSelected()){
 				estado = "Reparado";
 		}else{
 			 estado = "Irreparable"; 
 		}
+		
+		if(estado.equals("Reparado")){
+
+			if(ingreso.getIngreso().getEnvio()){
+
+				montoTotal = Float.parseFloat(ventana.getLblMontoEnvio().getText()) + Float.parseFloat(ventana.getLblMontoPresupuestado().getText());
+			}else{
+				montoTotal = Float.parseFloat(ventana.getLblMontoEnvio().getText());
+			}
+		}
+			
+		
 		if (ingreso.getIngreso().getEnvio()){
 			
 			if(!ingreso.getIngreso().getEnvio_default()){
@@ -79,7 +92,7 @@ public class EmailReparacion extends Thread  {
 
 				"<p>Estimado cliente:  " + ingreso.getCliente().getNombre() + " " + ingreso.getCliente().getApellido() +" </p><br>"+
 						"<p style=text-indent:4cm > La reparaci&#243;n del producto <b>"+ingreso.ingr.getDescripcion()+"</b> " +
-						" se encuentra en estado : &nbsp;<b>" + estado + "</b></p><br> " +
+						" se encuentra en estado : &nbsp;<b>" + estado + "</b> "+ ". Recuerde que el monto total a abonar es: $ &nbsp;" + montoTotal + " </p><br> " +
 						"<p> Le solicitamos que por favor se comunique al tel&#233;fono : <b>4685 -5438</b>, para <b>" + envio + "</b></p><br>"+
 						"<p> <b>ATTE:  </b>"+usuario.getNombre()+"   "+ usuario.getApellido()+"</p>";
 		
