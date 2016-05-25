@@ -155,4 +155,9 @@ public class ClienteDAO {
 		}
 		return cliente;
 	}
+
+	public void update(ClienteDTO cliente_a_modificar) {
+		// TODO Auto-generated method stub
+		
+	}
 }

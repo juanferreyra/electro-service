@@ -22,7 +22,7 @@ public class VentanaABMCliente {
 	private JTextField documento_txt;
 	private JTable tablaClientes;
 	private DefaultTableModel modelClientes;
-	private String[] nombreColumnas = { "Nombre", "Apellido", "Documento", "Localidad", "Dirección", "Teléfono",
+	private String[] nombreColumnas = {"id", "Nombre", "Apellido", "Documento", "Localidad", "Direcciï¿½n", "Telï¿½fono",
 			"Email" };
 
 	public VentanaABMCliente() {
