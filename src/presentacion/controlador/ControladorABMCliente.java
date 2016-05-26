@@ -26,14 +26,15 @@ public class ControladorABMCliente implements ActionListener{
 	
 	
 	public void inicializar(){
+		
 		this.cliente = new Cliente();
+		
 		this.ventanaABMCliente.setVisible(true);
+		
 		cargarTablaClientes();
 	}
 
 	private void cargarTablaClientes() {
-		
-		
 		
 		this.ventanaABMCliente.getModelClientes().setRowCount(0);
 		this.ventanaABMCliente.getModelClientes().setColumnCount(0);
@@ -70,7 +71,6 @@ public class ControladorABMCliente implements ActionListener{
 		
 		VentanaABMCliente abm = new VentanaABMCliente();
 		ControladorABMCliente c = new ControladorABMCliente(abm);
-		abm.setVisible(true);
 		c.inicializar();
 		
 		

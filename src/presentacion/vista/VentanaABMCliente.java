@@ -16,7 +16,6 @@ public class VentanaABMCliente extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JFrame frame;
 	private JTextField nombre_txt;
 	private JTextField apellido_txt;
 	private JTextField localidad_txt;
@@ -30,98 +29,100 @@ public class VentanaABMCliente extends JFrame{
 			"Email" };
 	private JButton cancelar_btn;
 	private JButton guardar_btn;
-	JButton eliminarItem_btn;
+	private JButton eliminarItem_btn;
+
 
 	public VentanaABMCliente() {
+
 		initialize();
 	}
 
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 742, 435);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		
+		setBounds(100, 100, 742, 454);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 
 		JLabel title_lbl = new JLabel("Nuevo cliente");
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		title_lbl.setBounds(10, 11, 706, 14);
-		frame.getContentPane().add(title_lbl);
+		getContentPane().add(title_lbl);
 
 		JLabel nombre_lbl = new JLabel("Nombre");
 		nombre_lbl.setBounds(123, 52, 100, 14);
-		frame.getContentPane().add(nombre_lbl);
+		getContentPane().add(nombre_lbl);
 
 		nombre_txt = new JTextField();
 		nombre_txt.setBounds(188, 49, 394, 20);
-		frame.getContentPane().add(nombre_txt);
+		getContentPane().add(nombre_txt);
 		nombre_txt.setColumns(10);
 
 		JLabel apellido_lbl = new JLabel("Apellido");
 		apellido_lbl.setBounds(123, 80, 100, 14);
-		frame.getContentPane().add(apellido_lbl);
+		getContentPane().add(apellido_lbl);
 
 		apellido_txt = new JTextField();
 		apellido_txt.setColumns(10);
 		apellido_txt.setBounds(188, 77, 394, 20);
-		frame.getContentPane().add(apellido_txt);
+		getContentPane().add(apellido_txt);
 
 		JLabel localidad_lbl = new JLabel("Localidad");
 		localidad_lbl.setBounds(123, 139, 100, 14);
-		frame.getContentPane().add(localidad_lbl);
+		getContentPane().add(localidad_lbl);
 
 		localidad_txt = new JTextField();
 		localidad_txt.setColumns(10);
 		localidad_txt.setBounds(188, 136, 394, 20);
-		frame.getContentPane().add(localidad_txt);
+		getContentPane().add(localidad_txt);
 
 		JLabel direccion_lbl = new JLabel("Direcci\u00F3n");
 		direccion_lbl.setBounds(123, 167, 100, 14);
-		frame.getContentPane().add(direccion_lbl);
+		getContentPane().add(direccion_lbl);
 
 		direccion_txt = new JTextField();
 		direccion_txt.setColumns(10);
 		direccion_txt.setBounds(188, 164, 394, 20);
-		frame.getContentPane().add(direccion_txt);
+		getContentPane().add(direccion_txt);
 
 		JLabel telefono_lbl = new JLabel("Tel\u00E9fono");
 		telefono_lbl.setBounds(123, 193, 100, 14);
-		frame.getContentPane().add(telefono_lbl);
+		getContentPane().add(telefono_lbl);
 
 		telefono_txt = new JTextField();
 		telefono_txt.setColumns(10);
 		telefono_txt.setBounds(188, 190, 394, 20);
-		frame.getContentPane().add(telefono_txt);
+		getContentPane().add(telefono_txt);
 
 		JLabel email_lbl = new JLabel("E-mail");
 		email_lbl.setBounds(123, 218, 100, 14);
-		frame.getContentPane().add(email_lbl);
+		getContentPane().add(email_lbl);
 
 		email_txt = new JTextField();
 		email_txt.setColumns(10);
 		email_txt.setBounds(188, 215, 394, 20);
-		frame.getContentPane().add(email_txt);
+		getContentPane().add(email_txt);
 
 		JLabel documento_lbl = new JLabel("Documento");
 		documento_lbl.setBounds(123, 108, 100, 14);
-		frame.getContentPane().add(documento_lbl);
+		getContentPane().add(documento_lbl);
 
 		documento_txt = new JTextField();
 		documento_txt.setColumns(10);
 		documento_txt.setBounds(188, 105, 394, 20);
-		frame.getContentPane().add(documento_txt);
+		getContentPane().add(documento_txt);
 
 		cancelar_btn = new JButton("Cancelar");
 		cancelar_btn.setBounds(627, 363, 89, 23);
-		frame.getContentPane().add(cancelar_btn);
+		getContentPane().add(cancelar_btn);
 
 		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(528, 363, 89, 23);
-		frame.getContentPane().add(guardar_btn);
+		getContentPane().add(guardar_btn);
 
 		JScrollPane clientes_scrollPane = new JScrollPane();
 		clientes_scrollPane.setBounds(123, 246, 459, 91);
-		frame.getContentPane().add(clientes_scrollPane);
+		getContentPane().add(clientes_scrollPane);
 
 		modelClientes = new DefaultTableModel(null, nombreColumnas);
 		tablaClientes = new JTable(modelClientes);
@@ -129,7 +130,7 @@ public class VentanaABMCliente extends JFrame{
 		
 		eliminarItem_btn = new JButton("Eliminar Item");
 		eliminarItem_btn.setBounds(397, 363, 121, 23);
-		frame.getContentPane().add(eliminarItem_btn);
+		getContentPane().add(eliminarItem_btn);
 
 	}
 
@@ -184,7 +185,6 @@ public class VentanaABMCliente extends JFrame{
 	public String[] getNombreColumnas() {
 		return nombreColumnas;
 	}
-	
 	
 	
 }
