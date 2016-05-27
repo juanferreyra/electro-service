@@ -189,7 +189,7 @@ public class VentanaIngreso extends JFrame {
 		btnVerIngreso.setBounds(348, 428, 99, 23);
 		contentPane.add(btnVerIngreso);
 
-		otraDireccion_lbl = new JLabel("Usar otra direccion");
+		otraDireccion_lbl = new JLabel("Usar direccion alternativa");
 		otraDireccion_lbl.setBounds(147, 342, 250, 14);
 		contentPane.add(otraDireccion_lbl);
 
