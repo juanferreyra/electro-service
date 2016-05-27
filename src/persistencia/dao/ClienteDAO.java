@@ -18,6 +18,8 @@ public class ClienteDAO {
 	private static final String readall = "SELECT * FROM cliente WHERE habilitado=true";
 	private static final String find = "SELECT * FROM cliente WHERE habilitado=true AND id=?";
 	private static final String find2 = "SELECT * FROM cliente WHERE habilitado=true AND nrodoc=?";
+	private static final String update =" UPDATE cliente SET nrodoc = ?, nombre = ?, apellido = ', localidad = ?,"
+			+ " direccion = ?, telefono = ?, mail = ? WHERE id = ?;";
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<ClienteDTO> readAll() {
@@ -154,5 +156,32 @@ public class ClienteDAO {
 			Conexion.cerrarConexion();
 		}
 		return cliente;
+	}
+
+	public boolean update(ClienteDTO cliente) {
+		
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(update);
+			
+			statement.setInt(1, cliente.getNroDoc());
+			statement.setString(2, cliente.getNombre());
+			statement.setString(3, cliente.getApellido());
+			statement.setString(4, cliente.getLocalidad());
+			statement.setString(5, cliente.getDireccion());
+			statement.setString(6, cliente.getTelefono());
+			statement.setString(7, cliente.getMail());
+			statement.setInt(8, cliente.getIdusuario());
+
+			if (statement.executeUpdate() > 0)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return false;
+		
 	}
 }

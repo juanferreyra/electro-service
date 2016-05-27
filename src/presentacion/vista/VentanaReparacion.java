@@ -46,6 +46,8 @@ public class VentanaReparacion extends JFrame {
 	private JTextArea descripcionFalla_txtArea;
 	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario", "Precio Total" };
 	private JCheckBox reparable_CheckBox;
+	private JLabel lblMontoPresupuestado;
+	private JLabel lblMontoEnvio;
 
 	public VentanaReparacion() {
 
@@ -161,16 +163,14 @@ public class VentanaReparacion extends JFrame {
 		componentes_scrollPane.setViewportView(componentes_table);
 
 		JLabel descripcionFinal_lbl = new JLabel("Descripcion final:");
-		descripcionFinal_lbl.setBounds(30, 443, 156, 14);
+		descripcionFinal_lbl.setBounds(30, 473, 156, 14);
 		contentPane.add(descripcionFinal_lbl);
 		JScrollPane descripcionFinal_jScrollPane = new JScrollPane();
 		descripcionFinal_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		descripcionFinal_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionFinal_jScrollPane.setBounds(new Rectangle(10, 10, 30, 30));
-		descripcionFinal_jScrollPane.setBounds(30, 471, 669, 52);
+		descripcionFinal_jScrollPane.setBounds(30, 499, 669, 52);
 		contentPane.add(descripcionFinal_jScrollPane);
-		descripcionFinal_jTextArea = new JTextArea();
-		descripcionFinal_jScrollPane.setViewportView(descripcionFinal_jTextArea);
 
 		enviarAvisoReparacion_btn = new JButton("Enviar Aviso");
 		enviarAvisoReparacion_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/mail.png")));
@@ -192,6 +192,25 @@ public class VentanaReparacion extends JFrame {
 		reparable_CheckBox = new JCheckBox("Reparable");
 		reparable_CheckBox.setBounds(591, 40, 97, 23);
 		contentPane.add(reparable_CheckBox);
+		descripcionFinal_jTextArea = new JTextArea();
+		descripcionFinal_jTextArea.setBounds(30, 502, 651, 49);
+		contentPane.add(descripcionFinal_jTextArea);
+		
+		lblMontoPresupuestado = new JLabel("");
+		lblMontoPresupuestado.setBounds(208, 440, 146, 15);
+		contentPane.add(lblMontoPresupuestado);
+		
+		lblMontoEnvio = new JLabel("");
+		lblMontoEnvio.setBounds(422, 440, 146, 15);
+		contentPane.add(lblMontoEnvio);
+		
+		JLabel lblMontoEnvio_1 = new JLabel("Monto Envio: $ ");
+		lblMontoEnvio_1.setBounds(311, 440, 117, 15);
+		contentPane.add(lblMontoEnvio_1);
+		
+		JLabel lblMontoPresupuesto = new JLabel("Monto Presupuesto : $");
+		lblMontoPresupuesto.setBounds(30, 440, 166, 15);
+		contentPane.add(lblMontoPresupuesto);
 	}
 
 	public JButton getEnviarAvisoReparacion_btn() {
@@ -294,4 +313,11 @@ public class VentanaReparacion extends JFrame {
 		this.reparable_CheckBox = reparable_CheckBox;
 	}
 
+	public JLabel getLblMontoPresupuestado() {
+		return lblMontoPresupuestado;
+	}
+
+	public JLabel getLblMontoEnvio() {
+		return lblMontoEnvio;
+	}
 }
