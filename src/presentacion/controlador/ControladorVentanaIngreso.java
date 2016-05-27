@@ -77,6 +77,16 @@ public class ControladorVentanaIngreso implements ActionListener {
 			this.cargarVentana();
 			this.determinarVisibilidadCuadro_DireccionNueva();
 			llenarTablaCliente(ingreso.getCliente());
+			this.ventana_ingreso.getBtnAceptar().setVisible(false);
+			this.ventana_ingreso.getBtnCancelar().setText("Cerrar");
+			this.ventana_ingreso.getBtnBuscarCliente().setEnabled(false);
+			this.ventana_ingreso.getTextNombreProducto().setEditable(false);
+			this.ventana_ingreso.getTextDescripcionFalla().setEditable(false);
+			this.ventana_ingreso.getMontoEnvio().setEditable(false);
+			this.ventana_ingreso.getTxtNroCliente().setEditable(false);
+			this.ventana_ingreso.getEnvioDomicilio().setEnabled(false);
+			this.ventana_ingreso.getTxtDireccionNueva().setEditable(false);
+			this.ventana_ingreso.getDireccion_nueva().setEnabled(false);
 		} else {
 			this.ventana_ingreso.getBtnReporteDeIngreso().setVisible(false);
 			this.llenarComboMarcas();
