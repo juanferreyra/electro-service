@@ -11,16 +11,16 @@ import persistencia.conexion.Conexion;
 public class ImpresionHojaDeRutaDAO {
 	
 	private static final String readall = "SELECT h.id as idhojaruta, f.telefono as flete_telefono, f.patente as flete_patente, f.modelo as flete_modelo, f.nombre_conductor as flete_conductor, "
-									+"DATE(h.fecha_creacion) as fecha, TIME(h.fecha_creacion) as hora, i.id as nro, i.descripcion_producto as producto,  concat(c.nombre,concat('',c.apellido)) as cliente, "
-									+"c.localidad as localidad, if(i.envio_default,i.direccion_alternativa,c.direccion) as direccion, p.importe_total + i.monto_envio as importe,  if(hi.en_entrega, '', 'Entregado') as entrega_estado "
-									+"FROM hojaruta h LEFT JOIN  hojaruta_ingreso hi ON(h.id = hi.idhojaruta) LEFT JOIN   flete f ON(h.idflete = f.id) LEFT JOIN  ingreso i ON(hi.idingreso=i.id) LEFT JOIN " 
-									+"cliente c ON(i.idcliente = c.id) LEFT JOIN  presupuesto p ON(p.idingreso = i.id AND p.habilitado=true);";
+			+ "DATE(h.fecha_creacion) as fecha, TIME(h.fecha_creacion) as hora, i.id as nro, i.descripcion_producto as producto,  concat(c.nombre,concat(' ',c.apellido)) as cliente, "
+			+ " c.localidad as localidad, c.telefono, if(i.envio_default,i.direccion_alternativa,c.direccion) as direccion, p.importe_total + i.monto_envio as importe,  if(hi.en_entrega, '', 'Entregado') as entrega_estado "
+			+ "FROM hojaruta h LEFT JOIN  hojaruta_ingreso hi ON(h.id = hi.idhojaruta) LEFT JOIN   flete f ON(h.idflete = f.id) LEFT JOIN  ingreso i ON(hi.idingreso=i.id) LEFT JOIN "
+			+ "cliente c ON(i.idcliente = c.id) LEFT JOIN  presupuesto p ON(p.idingreso = i.id AND p.habilitado=true);";
 			
 	private static final String find = "SELECT h.id as idhojaruta, f.telefono as flete_telefono, f.patente as flete_patente, f.modelo as flete_modelo, f.nombre_conductor as flete_conductor, "
-									+"DATE(h.fecha_creacion) as fecha, TIME(h.fecha_creacion) as hora, i.id as nro, i.descripcion_producto as producto,  concat(c.nombre,concat('',c.apellido)) as cliente, "
-									+"c.localidad as localidad, if(i.envio_default,i.direccion_alternativa,c.direccion) as direccion, p.importe_total + i.monto_envio as importe,  if(hi.en_entrega, '', 'Entregado') as entrega_estado "
-									+"FROM hojaruta h LEFT JOIN  hojaruta_ingreso hi ON(h.id = hi.idhojaruta) LEFT JOIN   flete f ON(h.idflete = f.id) LEFT JOIN  ingreso i ON(hi.idingreso=i.id) LEFT JOIN " 
-									+"cliente c ON(i.idcliente = c.id) LEFT JOIN  presupuesto p ON(p.idingreso = i.id AND p.habilitado=true) WHERE h.id=?;";
+			+ "DATE(h.fecha_creacion) as fecha, TIME(h.fecha_creacion) as hora, i.id as nro, i.descripcion_producto as producto,  concat(c.nombre,concat(' ',c.apellido)) as cliente, "
+			+ " c.localidad as localidad, c.telefono, if(i.envio_default,i.direccion_alternativa,c.direccion) as direccion, p.importe_total + i.monto_envio as importe,  if(hi.en_entrega, '', 'Entregado') as entrega_estado "
+			+ "FROM hojaruta h LEFT JOIN  hojaruta_ingreso hi ON(h.id = hi.idhojaruta) LEFT JOIN   flete f ON(h.idflete = f.id) LEFT JOIN  ingreso i ON(hi.idingreso=i.id) LEFT JOIN "
+			+ "cliente c ON(i.idcliente = c.id) LEFT JOIN  presupuesto p ON(p.idingreso = i.id AND p.habilitado=true) WHERE h.id=?;";
 	
 	
 	private Conexion conexion = Conexion.getConexion();
@@ -48,6 +48,7 @@ public class ImpresionHojaDeRutaDAO {
 				reparacion.setProducto(resultSet.getString("producto"));
 				reparacion.setCliente(resultSet.getString("cliente"));
 				reparacion.setLocalidad(resultSet.getString("localidad"));
+				reparacion.setTelefono(resultSet.getString("telefono"));
 				reparacion.setDireccion(resultSet.getString("direccion"));
 				reparacion.setImporte(resultSet.getFloat("importe"));
 				reparacion.setEstado(resultSet.getString("entrega_estado"));
@@ -85,6 +86,7 @@ public class ImpresionHojaDeRutaDAO {
 				reparacion.setProducto(resultSet.getString("producto"));
 				reparacion.setCliente(resultSet.getString("cliente"));
 				reparacion.setLocalidad(resultSet.getString("localidad"));
+				reparacion.setTelefono(resultSet.getString("telefono"));
 				reparacion.setDireccion(resultSet.getString("direccion"));
 				reparacion.setImporte(resultSet.getFloat("importe"));
 				reparacion.setEstado(resultSet.getString("entrega_estado"));
