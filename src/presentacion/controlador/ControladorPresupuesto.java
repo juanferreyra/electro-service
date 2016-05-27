@@ -55,6 +55,7 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getBtnInformado().addActionListener(this);
 		this.ventanaPresupuesto.getBtnAceptado().addActionListener(this);
 		this.ventanaPresupuesto.getBtnAsignar().addActionListener(this);
+		this.ventanaPresupuesto.getBtnRechazado().addActionListener(this);
 	}
 	
 	public void inicializar() {
@@ -66,10 +67,7 @@ public class ControladorPresupuesto implements ActionListener{
 		ventanaPresupuesto.getComponentes_table().setModel(modelTable);
 		cargarComboComponentes();
 		cargarIngreso();
-		ventanaPresupuesto.getBtnInformado().setVisible(false);
-		ventanaPresupuesto.getBtnAceptado().setVisible(false);
-		ventanaPresupuesto.getBtnAsignar().setVisible(false);
-		//cargo el usuario
+		ocultarBotonesEstados();
 		if(presupuesto.getId()==-1) {
 			ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
 			ventanaPresupuesto.getManoDeObra_txf().setText("0");
@@ -78,7 +76,6 @@ public class ControladorPresupuesto implements ActionListener{
 			cargarModelo();
 			ventanaPresupuesto.getGuardar_btn().setVisible(false);
 			ventanaPresupuesto.getCancelar_btn().setText("Cerrar");
-			System.out.println(this.ingreso.getIngreso().getEstado());
 			if(this.ingreso.getIngreso().getEstado()==3 && (perfil.equals("ADMINISTRATIVO") || perfil.equals("JEFE"))) {
 				mostrarBotonInformado();
 			}
@@ -228,6 +225,22 @@ public class ControladorPresupuesto implements ActionListener{
 		    } else if (response == JOptionPane.CLOSED_OPTION) {
 		      
 		    }
+		} else if(e.getSource() == this.ventanaPresupuesto.getBtnRechazado()) {
+			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como rechazado por el cliente. Esta seguro?", "Confirmar",
+			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    if (response == JOptionPane.NO_OPTION) {
+		      
+		    } else if (response == JOptionPane.YES_OPTION) {
+		    	IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.ingreso.getId(), 9, null, usuarioLogueado.getId());
+				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+					//ingreso el estado
+				ingresoLogDAO.insert(ingrLog);
+				ocultarBotonesEstados();
+				
+				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+		    } else if (response == JOptionPane.CLOSED_OPTION) {
+		      
+		    }   
 		} else if(e.getSource() == this.ventanaPresupuesto.getBtnAsignar()) {
 			int response = JOptionPane.showConfirmDialog(null, "Esta seguro que desea asignarse esta tarea para realizarla?", "Confirmar",
 			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -396,13 +409,11 @@ public class ControladorPresupuesto implements ActionListener{
 			int seleccionado = ventanaPresupuesto.getComponentes_table().getSelectedRow();
 			String nombre = ventanaPresupuesto.getComponentes_table().getValueAt(seleccionado, 1).toString();
 			
-			System.out.println(nombre);
 			for (int i = 0; i < this.presupuesto.getListaDeRepuestos().size(); i++) {
 				if(this.presupuesto.getListaDeRepuestos().get(i).getDetalle().equals(nombre)) {
 					this.presupuesto.getListaDeRepuestos().remove(i);
 				}
 			}
-			
 			
 			actualizarTablaRepuestos();
 			sumarTotales();
@@ -454,24 +465,28 @@ public class ControladorPresupuesto implements ActionListener{
 		ventanaPresupuesto.getBtnInformado().setVisible(true);
 		ventanaPresupuesto.getBtnAceptado().setVisible(false);
 		ventanaPresupuesto.getBtnAsignar().setVisible(false);
+		ventanaPresupuesto.getBtnRechazado().setVisible(false);
 	}
 	
 	private void mostrarBotonAceptado() {
 		ventanaPresupuesto.getBtnInformado().setVisible(false);
 		ventanaPresupuesto.getBtnAceptado().setVisible(true);
 		ventanaPresupuesto.getBtnAsignar().setVisible(false);
+		ventanaPresupuesto.getBtnRechazado().setVisible(true);
 	}
 	
 	private void mostrarBotonAsignar() {
 		ventanaPresupuesto.getBtnInformado().setVisible(false);
 		ventanaPresupuesto.getBtnAceptado().setVisible(false);
 		ventanaPresupuesto.getBtnAsignar().setVisible(true);
+		ventanaPresupuesto.getBtnRechazado().setVisible(false);
 	}
 	
 	private void ocultarBotonesEstados() {
 		ventanaPresupuesto.getBtnInformado().setVisible(false);
 		ventanaPresupuesto.getBtnAceptado().setVisible(false);
 		ventanaPresupuesto.getBtnAsignar().setVisible(false);
+		ventanaPresupuesto.getBtnRechazado().setVisible(false);
 	}
 	private void  bloquearCampos(){
 		
