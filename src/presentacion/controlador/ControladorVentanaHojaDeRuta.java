@@ -22,7 +22,6 @@ import dto.UsuarioDTO;
 import modelo.HojaDeRuta;
 import persistencia.dao.IngresoLogDAO;
 import presentacion.reportes.ReporteHojaDeRuta;
-import presentacion.reportes.ReporteIngreso;
 import presentacion.vista.VentanaHojaDeRuta;
 
 public class ControladorVentanaHojaDeRuta implements ActionListener {
@@ -57,14 +56,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 	}
 
 	public void inicializar() {
-
-		// Calendar hoy = new GregorianCalendar();
-		// ventanaHojaRuta.getFechaIngreso_lbl().setText("Fecha: " +
-		// hoy.get(Calendar.DAY_OF_MONTH) +" / "
-		// + hoy.get(Calendar.MONTH) +" / "+ hoy.get(Calendar.YEAR));
 		ventanaHojaRuta.setVisible(true);
-		//cargo el usuario
-		
 		cargar_tablaOrdenesTrabajoReparadas();
 	}
 	
@@ -74,7 +66,6 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			this.ventanaHojaRuta.getTxtfldMovil().setText(this.hojaDeRuta.getFlete().getModelo());
 			this.ventanaHojaRuta.getTxtfldTelefono().setText(this.hojaDeRuta.getFlete().getTelefono());
 			this.ventanaHojaRuta.getTxtfldPatente().setText(this.hojaDeRuta.getFlete().getPatente());
-			
 			ArrayList<IngresoDTO> ingresos = this.hojaDeRuta.getIngresosSeleccionadosEnHoja();
 
 			ObtenerFilas(ingresos);
@@ -83,7 +74,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
-	
+
 	public void limpiar_tablaOrdenesTrabajo() {
 		int largo = ((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).getRowCount();
 
@@ -97,9 +88,11 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		ArrayList<IngresoDTO> ingresos = hojaDeRuta.getIngresosReparados();
 		ObtenerFilas(ingresos);
 	}
-
+	
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
 		limpiar_tablaOrdenesTrabajo();
+		
+		Boolean hayEntregados = false;
 		
 		for (int i = 0; i <= ingresos.size()-1; i++) {
 			//preparo el nombre del cliente
@@ -111,15 +104,24 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 				direccion = ingresos.get(i).getDireccion_alternativa();
 			}
 			javax.swing.JCheckBox check = new JCheckBox();
-			check.setText("En curso");
+			check.setText(" ");
 			if(ingresos.get(i).getEstado()==11) {
 				//si el estado es 11 (entregado) entonces bloqueo el check
 				check.setEnabled(false);
 				check.setText("Entregado");
+				hayEntregados = true;
 			}
 			
 			this.cargarFila(ingresos.get(i).getId(),ingresos.get(i).getFecha_creacion(),
 							ingresos.get(i).getDescripcion(), nombreCliente, cliente.getLocalidad(), direccion, check,ingresos.get(i).getEstado()==11 );
+		}
+		
+		if(hayEntregados) {
+			this.ventanaHojaRuta.getOrdenesDeTrabajo_table().setEnabled(false);
+			this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(false);
+		}
+		else {
+			this.ventanaHojaRuta.getOrdenesDeTrabajo_table().setEnabled(true);
 		}
 	}
 	
@@ -167,7 +169,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 						//cambio el check
 						Object check = ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().getValueAt(seleccionado, 6);
 						JCheckBox hc = (javax.swing.JCheckBox) check;
-						if(!hc.getText().equals("Entregado")) {
+						if(!hc.getText().equals("Entregado") || !hc.getText().equals("No Entregado")) {
 							JCheckBox nuevoCheck = new JCheckBox();
 							
 							if(hc.isSelected()) {
@@ -250,7 +252,6 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 				if(this.hojaDeRuta.existeHojaDeRuta(id)){
 					this.hojaDeRuta.setId(id);
 					this.hojaDeRuta.cargarVariables();
-					cargarModelo();
 					this.ventanaHojaRuta.getBtnBuscarConductor().setEnabled(false);
 					this.ventanaHojaRuta.getTxtflBuscarConductor().setEnabled(false);
 					this.ventanaHojaRuta.getBtnGuardar().setVisible(false);
@@ -258,6 +259,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 					this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(true);
 					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
 					this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(true);
+					cargarModelo();
 				} else {
 					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -336,6 +338,17 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 							
 							//marco el ingreso en estado de entregado
 							IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), 11, null, usuarioLogueado.getId());
+							//ingreso el estado
+							IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+							ingresoLogDAO.insert(ingrLog);
+						} else {
+							//cambio como que no esta en entrega
+							this.hojaDeRuta.getHojaRutaIngresosDAO().setEnEntrega(
+									this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(),
+									this.hojaDeRuta.getId());
+							
+							//marco el ingreso en estado de no entregado
+							IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), 12, null, usuarioLogueado.getId());
 							//ingreso el estado
 							IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 							ingresoLogDAO.insert(ingrLog);

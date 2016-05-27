@@ -17,6 +17,7 @@ public class ImpresionHojaDeRutaDTO {
 	public String cliente;
 	public String localidad;
 	public String direccion;
+	public String telefono;
 	public float importe;
 	public String estado;
 
@@ -146,4 +147,11 @@ public class ImpresionHojaDeRutaDTO {
 		this.hora = hora;
 	}
 	
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
 }

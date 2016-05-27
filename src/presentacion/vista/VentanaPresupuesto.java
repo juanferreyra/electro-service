@@ -53,7 +53,7 @@ public class VentanaPresupuesto extends JFrame {
 	private JButton btnAsignar;
 	private JButton btnAceptado;
 	private JButton btnInformado;
-	
+	private JButton btnRechazado;
 
 	public VentanaPresupuesto() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresupuesto.class.getResource("/calculator.png")));
@@ -67,11 +67,12 @@ public class VentanaPresupuesto extends JFrame {
 		setLocationRelativeTo(null);
 
 		fechaIngreso_lbl = new JLabel("");
-		fechaIngreso_lbl.setBounds(522, 36, 166, 14);
+		fechaIngreso_lbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		fechaIngreso_lbl.setBounds(522, 34, 166, 14);
 		contentPane.add(fechaIngreso_lbl);
 
 		JLabel fechaIngresoText_lbl = new JLabel("");
-		fechaIngresoText_lbl.setBounds(572, 11, 102, 14);
+		fechaIngresoText_lbl.setBounds(586, 11, 102, 14);
 		contentPane.add(fechaIngresoText_lbl);
 
 		JLabel titulo_lbl = new JLabel("<html><i>PRESUPUESTO</i></html>");
@@ -296,6 +297,10 @@ public class VentanaPresupuesto extends JFrame {
 		btnInformado = new JButton("Informado");
 		btnInformado.setBounds(60, 2, 116, 23);
 		contentPane.add(btnInformado);
+		
+		btnRechazado = new JButton("Rechazado");
+		btnRechazado.setBounds(418, 2, 115, 23);
+		contentPane.add(btnRechazado);
 	}
 
 	public JLabel getCantidad_lbl() {
@@ -413,4 +418,9 @@ public class VentanaPresupuesto extends JFrame {
 	public JButton getBtnInformado() {
 		return btnInformado;
 	}
+	
+	public JButton getBtnRechazado() {
+		return btnRechazado;
+	}
+
 }
