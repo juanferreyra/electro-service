@@ -20,6 +20,9 @@ public class VentanaABMMarcaProducto extends JFrame {
 	private JTable tablaMarcaProducto;
 	private DefaultTableModel modelMarcaProducto;
 	private String[] nombreColumnas = { "Detalle" };
+	private JButton cancelar_btn;
+	private JButton guardar_btn;
+	private JButton eliminarItem_btn;
 
 	public VentanaABMMarcaProducto() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,11 +32,11 @@ public class VentanaABMMarcaProducto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton cancelar_btn = new JButton("Cancelar");
+		cancelar_btn = new JButton("Cancelar");
 		cancelar_btn.setBounds(500, 252, 89, 23);
 		getContentPane().add(cancelar_btn);
 
-		JButton guardar_btn = new JButton("Guardar");
+		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(401, 252, 89, 23);
 		getContentPane().add(guardar_btn);
 
@@ -60,9 +63,41 @@ public class VentanaABMMarcaProducto extends JFrame {
 		tablaMarcaProducto = new JTable(modelMarcaProducto);
 		marcaProducto_scrollPane.setViewportView(tablaMarcaProducto);
 
-		JButton eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar Item");
 		eliminarItem_btn.setBounds(269, 252, 121, 23);
 		getContentPane().add(eliminarItem_btn);
+	}
+
+	public JTextField getDetalle_txt() {
+		return detalle_txt;
+	}
+
+	public void setDetalle_txt(JTextField detalle_txt) {
+		this.detalle_txt = detalle_txt;
+	}
+
+	public JButton getCancelar_btn() {
+		return cancelar_btn;
+	}
+
+	public void setCancelar_btn(JButton cancelar_btn) {
+		this.cancelar_btn = cancelar_btn;
+	}
+
+	public JButton getGuardar_btn() {
+		return guardar_btn;
+	}
+
+	public void setGuardar_btn(JButton guardar_btn) {
+		this.guardar_btn = guardar_btn;
+	}
+
+	public JButton getEliminarItem_btn() {
+		return eliminarItem_btn;
+	}
+
+	public void setEliminarItem_btn(JButton eliminarItem_btn) {
+		this.eliminarItem_btn = eliminarItem_btn;
 	}
 
 }
