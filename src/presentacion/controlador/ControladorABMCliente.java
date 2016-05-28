@@ -4,9 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import dto.ClienteDTO;
 import modelo.Cliente;
@@ -17,6 +21,7 @@ public class ControladorABMCliente implements ActionListener{
 	private Cliente cliente ;
 	private VentanaABMCliente ventanaABMCliente;
 	private List<ClienteDTO> clientes_en_tabla;
+	private List<JTextField> txts;
 	
 	
 	public ControladorABMCliente(VentanaABMCliente ventanaABMCliente){
@@ -34,6 +39,16 @@ public class ControladorABMCliente implements ActionListener{
 		this.cliente = new Cliente();
 
 		this.ventanaABMCliente.setVisible(true);
+		
+		this.txts = new ArrayList<JTextField>();
+		
+		txts.add(this.ventanaABMCliente.getNombre_txt());//0
+		txts.add(this.ventanaABMCliente.getApellido_txt());//1
+		txts.add(this.ventanaABMCliente.getDocumento_txt());//2
+		txts.add(this.ventanaABMCliente.getLocalidad_txt());//3
+		txts.add(this.ventanaABMCliente.getDireccion_txt());//4
+		txts.add(this.ventanaABMCliente.getTelefono_txt());//5
+		txts.add(this.ventanaABMCliente.getEmail_txt());//6
 
 		cargarTablaClientes();
 		mouseClickedOnTable();
@@ -86,13 +101,13 @@ public class ControladorABMCliente implements ActionListener{
 		
 		int filaSeleccionada = this.ventanaABMCliente.getTablaClientes().getSelectedRow();
 		
-		this.ventanaABMCliente.getNombre_txt().setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 1));
-		this.ventanaABMCliente.getApellido_txt().setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 2));
-		this.ventanaABMCliente.getDocumento_txt().setText(String.valueOf(this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 3)));
-		this.ventanaABMCliente.getLocalidad_txt().setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 4));
-		this.ventanaABMCliente.getDireccion_txt().setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 5));
-		this.ventanaABMCliente.getTelefono_txt().setText((String.valueOf(this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 6))));
-		this.ventanaABMCliente.getEmail_txt().setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 7));
+		this.txts.get(0).setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 1));
+		this.txts.get(1).setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 2));
+		this.txts.get(2).setText(String.valueOf(this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 3)));
+		this.txts.get(3).setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 4));
+		this.txts.get(4).setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 5));
+		this.txts.get(5).setText((String.valueOf(this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 6))));
+		this.txts.get(6).setText((String)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 7));
 	}
 
 
@@ -139,11 +154,11 @@ public class ControladorABMCliente implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == this.ventanaABMCliente.getCancelar_btn()){
+		if (e.getSource() == this.ventanaABMCliente.getCancelar_btn()){ // boton cancelar 
 			
 			this.ventanaABMCliente.dispose();
 			
-		}else if (e.getSource() == this.ventanaABMCliente.getEliminarItem_btn()){
+		}else if (e.getSource() == this.ventanaABMCliente.getEliminarItem_btn()){ // boton eliminar
 			
 			// si la tabla no esta vacía
 			if(this.ventanaABMCliente.getTablaClientes().getRowCount() != 0){
@@ -170,50 +185,65 @@ public class ControladorABMCliente implements ActionListener{
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 
-		}else if(e.getSource() == this.ventanaABMCliente.getGuardar_btn()){
-			
-			// si esta seleccionado de la tabla
-			if(this.ventanaABMCliente.getTablaClientes().getSelectedRow() != -1){
-				
-				int filaSeleccionada = this.ventanaABMCliente.getTablaClientes().getSelectedRow();
-				
-				validarTxts();
-				
-				cliente.modificarCliente(obtenerCliente((int)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 0)));
-				
-				limpiartxts();
-				cargarTablaClientes();
-				
-			}else{
-				
-				validarTxts();
-				
-				cliente.agregarCliente(obtenerCliente(0));
-				
-				limpiartxts();
-				cargarTablaClientes();
-				
-			}
-		
-		}
+		}else if(e.getSource() == this.ventanaABMCliente.getGuardar_btn()){ //boton guardar
 
+			// si esta seleccionado de la tabla
+			// modificar cliente
+			if(this.ventanaABMCliente.getTablaClientes().getSelectedRow() != -1){
+
+				int filaSeleccionada = this.ventanaABMCliente.getTablaClientes().getSelectedRow();
+
+				if(!isTxtsVacios()){
+
+					if(isTxtsValidos()){
+
+						cliente.modificarCliente(obtenerCliente((int)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 0)));
+
+						limpiartxts();
+						cargarTablaClientes();
+					}
+
+				}else{
+
+					JOptionPane.showMessageDialog(this.ventanaABMCliente, "NO SE PERMITERN CAMPOS VACIOS", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			}else{
+				// nuevo cliente
+
+				if (!isTxtsVacios()){
+
+					if(isTxtsValidos()){
+
+						cliente.agregarCliente(obtenerCliente(0));
+
+						limpiartxts();
+						cargarTablaClientes();
+					}
+
+				}else{
+
+					JOptionPane.showMessageDialog(this.ventanaABMCliente, "NO SE PERMITERN CAMPOS VACIOS", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			}
+		}
 	}
 	
-	
-	private ClienteDTO obtenerCliente(int id) {
-		
-		
+	private ClienteDTO obtenerCliente(int id) { // crea clienteDTO a partir de los txts
 		
 		ClienteDTO clienteDTO= new ClienteDTO(
 				
 				id,
-				Integer.parseInt(this.ventanaABMCliente.getDocumento_txt().getText()),
-				this.ventanaABMCliente.getNombre_txt().getText(),
-				this.ventanaABMCliente.getApellido_txt().getText(),
-				this.ventanaABMCliente.getLocalidad_txt().getText(),
-				this.ventanaABMCliente.getDireccion_txt().getText(),
-				this.ventanaABMCliente.getTelefono_txt().getText(),
-				this.ventanaABMCliente.getEmail_txt().getText(),
+				Integer.parseInt(this.txts.get(2).getText()),//documento
+				this.txts.get(0).getText(),// nombre
+				this.txts.get(1).getText(),//apellido
+				this.txts.get(3).getText(),// localidad
+				this.txts.get(4).getText(),// direccion
+				this.txts.get(5).getText(),// telefono
+				this.txts.get(6).getText(),// email
 				null,
 				0);
 		
@@ -223,20 +253,89 @@ public class ControladorABMCliente implements ActionListener{
 
 	private void limpiartxts() {
 		
-		this.ventanaABMCliente.getNombre_txt().setText("");
-		this.ventanaABMCliente.getApellido_txt().setText("");
-		this.ventanaABMCliente.getDocumento_txt().setText("");
-		this.ventanaABMCliente.getLocalidad_txt().setText("");
-		this.ventanaABMCliente.getDireccion_txt().setText("");
-		this.ventanaABMCliente.getTelefono_txt().setText("");
-		this.ventanaABMCliente.getEmail_txt().setText("");
-		
+		for(JTextField jt : txts){
+			jt.setText("");
+			
+		}
 	}
 	
-	private void validarTxts() {
+	private boolean isTxtsValidos() {
 		
+		boolean ret = true;
 		
+		if(!soloNumeros(this.txts.get(2).getText())){ // valida documento
+			
+			JOptionPane.showMessageDialog(this.ventanaABMCliente, "NRO DOCUMENTO MAL INGRESADO", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			return false;
+			
+		}else{
+			
+			ret = soloNumeros(this.txts.get(2).getText()); 
+		}
 		
+		if(!soloNumeros(this.txts.get(5).getText())){ //valida telefono
+
+			JOptionPane.showMessageDialog(this.ventanaABMCliente, "NRO TELEFONO MAL INGRESADO", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			return false;
+
+		}else{
+
+			ret = soloNumeros(this.txts.get(5).getText());
+		}
+		
+		if(!validarEmail(this.txts.get(6).getText())){ // valida email
+
+			JOptionPane.showMessageDialog(this.ventanaABMCliente, "EMAIL MAL INGRESADO", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			return false;
+			
+		}else{
+			
+			ret = validarEmail(this.txts.get(6).getText());
+
+		}
+
+		return ret;
+
+	}
+	
+	private boolean isTxtsVacios(){
+
+		boolean ret = false;
+
+		for(JTextField jt : txts){
+
+			if(jt.getText().isEmpty()){
+
+				ret = true;
+			}
+		}
+		return ret;
+	}
+
+	private boolean soloNumeros(String texto){
+		try { 
+			Integer.parseInt(texto); 
+			return true; 
+		} catch (Exception e) { 
+			return false; 
+		}
+	}
+
+	private boolean validarEmail (String email){
+
+		final String patternEemail = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+		// Compiles the given regular expression into a pattern.
+		Pattern pattern = Pattern.compile(patternEemail);
+
+		// Match the given input against this pattern
+		Matcher matcher = pattern.matcher(email);
+
+		return matcher.matches();
 	}
 
 
@@ -247,6 +346,7 @@ public class ControladorABMCliente implements ActionListener{
 		VentanaABMCliente abm = new VentanaABMCliente();
 		ControladorABMCliente c = new ControladorABMCliente(abm);
 		c.inicializar();
+		
 
 
 	}
