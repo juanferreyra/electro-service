@@ -59,7 +59,16 @@ public class VentanaABMMarcaProducto extends JFrame {
 		marcaProducto_scrollPane.setBounds(83, 135, 504, 91);
 		getContentPane().add(marcaProducto_scrollPane);
 
-		modelMarcaProducto = new DefaultTableModel(null, nombreColumnas);
+		modelMarcaProducto = new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int fila, int columna) {
+
+				return false;
+			}
+		};
+
 		tablaMarcaProducto = new JTable(modelMarcaProducto);
 		marcaProducto_scrollPane.setViewportView(tablaMarcaProducto);
 
@@ -98,6 +107,14 @@ public class VentanaABMMarcaProducto extends JFrame {
 
 	public void setEliminarItem_btn(JButton eliminarItem_btn) {
 		this.eliminarItem_btn = eliminarItem_btn;
+	}
+
+	public JTable getTablaMarcaProducto() {
+		return tablaMarcaProducto;
+	}
+
+	public void setTablaMarcaProducto(JTable tablaMarcaProducto) {
+		this.tablaMarcaProducto = tablaMarcaProducto;
 	}
 
 }
