@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import dto.ClienteDTO;
 import dto.RepuestoDTO;
 import modelo.Repuesto;
 import presentacion.vista.VentanaABMRepuesto;
@@ -153,7 +154,7 @@ public class ControladorABMRepuesto implements ActionListener  {
 					int id_cliente_a_eliminar = (int)this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 0);
 
 
-					this.repuesto.borrarCliente(id_cliente_a_eliminar);
+					this.repuesto.borrarRepuesto(id_cliente_a_eliminar);
 					
 					cargarTablaRepuestos();
 					limpiartxts();
@@ -199,7 +200,7 @@ public class ControladorABMRepuesto implements ActionListener  {
 
 					if(isTxtsValidos()){
 
-						repuesto.agregarCliente(obteneRepuesto(0));
+						repuesto.agregarRepuesto(obteneRepuesto(0));
 
 						limpiartxts();
 						cargarTablaRepuestos();;
@@ -216,20 +217,64 @@ public class ControladorABMRepuesto implements ActionListener  {
 
 	}
 	
-	private RepuestoDTO obteneRepuesto(int valueAt) {
-		// TODO Auto-generated method stub
-		return null;
+	private RepuestoDTO obteneRepuesto(int id) {
+		
+		RepuestoDTO repuestoDTO= new RepuestoDTO(
+				id,
+				this.txts.get(0).getText(),// detalle
+				Float.parseFloat(this.txts.get(1).getText()),//precioUniario
+				Integer.parseInt(this.txts.get(2).getText()),// StockMinimo
+				null,
+				0,
+				1);
+
+		return repuestoDTO;
 	}
 
 	private boolean isTxtsValidos() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean ret = true;
+
+		if(!soloNumeros(this.txts.get(2).getText())){ // valida StockMinimo
+
+			JOptionPane.showMessageDialog(this.ventanaABMRepuesto, "STOCK MINIMO MAL INGRESADO", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			return false;
+
+		}else{
+
+			ret = soloNumeros(this.txts.get(2).getText()); 
+		}
+
+		if(!soloFloats(this.txts.get(1).getText())){ //valida precioUnitario
+
+			JOptionPane.showMessageDialog(this.ventanaABMRepuesto, "PRECIO UNITARIO MAL INGRESADO", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			return false;
+		}else{
+			
+			ret = soloFloats(this.txts.get(1).getText());
+		}
+		
+		return ret;
 	}
 
+	
+
 	private boolean isTxtsVacios() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean ret = false;
+
+		for(JTextField jt : txts){
+
+			if(jt.getText().isEmpty()){
+
+				ret = true;
+			}
+		}
+		return ret;
 	}
+	
 
 	private void limpiartxts() {
 		
@@ -263,6 +308,24 @@ public class ControladorABMRepuesto implements ActionListener  {
 
 		ocultarColumnaId();
 
+	}
+	
+	private boolean soloNumeros(String texto){
+		try { 
+			Integer.parseInt(texto); 
+			return true; 
+		} catch (Exception e) { 
+			return false; 
+		}
+	}
+	
+	private boolean soloFloats(String texto) {
+		try { 
+			Float.parseFloat(texto); 
+			return true; 
+		} catch (Exception e) { 
+			return false; 
+		}
 	}
 	
 	public static void main(String[] args) {

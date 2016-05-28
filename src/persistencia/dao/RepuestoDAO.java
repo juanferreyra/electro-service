@@ -12,13 +12,14 @@ import persistencia.conexion.Conexion;
 public class RepuestoDAO {
 	
 	private static final String insert = "INSERT INTO repuesto ("
-			+ "`nombre`, `detalle`, `precio`, `stock_minimo`,`fecha_creacion`,`idusuario`,`habilitado`)"
-			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
+			+ "detalle, precio, stock_minimo, fecha_creacion, idusuario, habilitado)"
+			+ " VALUES (?, ?, ?, now(), ?, true); ";
+	
 	private static final String delete = "UPDATE repuesto SET habilitado='0' WHERE id = ?";
 	
 	private static final String readall = "SELECT * FROM repuesto WHERE habilitado = true;";
 	
-	private static final String update = "";
+	private static final String update = "UPDATE repuesto SET detalle = ?, precio = ?, stock_minimo = ? WHERE  id = ?;";
 	
 	private static final String find = "SELECT * FROM repuesto WHERE detalle = ? ;";
 	
@@ -61,8 +62,11 @@ public class RepuestoDAO {
 		try 
 		{
 			statement = conexion.getSQLConexion().prepareStatement(insert);
-			statement.setInt(1,componente.getId());
-			statement.setString(2,componente.getDetalle());
+			
+			statement.setString(1,componente.getDetalle());
+			statement.setFloat(2,componente.getPrecioUnitario());
+			statement.setInt(3, componente.getStockMinimo());
+			statement.setInt(4, 0);
 			
 			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
 				return true;
@@ -142,7 +146,9 @@ public class RepuestoDAO {
 			statement = conexion.getSQLConexion().prepareStatement(update);
 
 			statement.setString(1, componente_a_modificar.getDetalle());
-			statement.setInt(2, componente_a_modificar.getId());
+			statement.setFloat(2, componente_a_modificar.getPrecioUnitario());
+			statement.setInt(3, componente_a_modificar.getStockMinimo());
+			statement.setInt(4, componente_a_modificar.getId());
 
 			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
 				return true;
