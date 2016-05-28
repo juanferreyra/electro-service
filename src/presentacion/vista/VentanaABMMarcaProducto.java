@@ -44,7 +44,7 @@ public class VentanaABMMarcaProducto extends JFrame {
 		contentPane.add(detalle_lbl);
 
 		detalle_txt = new JTextField();
-		detalle_txt.setBounds(128, 73, 345, 20);
+		detalle_txt.setBounds(128, 73, 459, 20);
 		contentPane.add(detalle_txt);
 		detalle_txt.setColumns(10);
 
@@ -66,17 +66,15 @@ public class VentanaABMMarcaProducto extends JFrame {
 		marcaProducto_scrollPane.setViewportView(tablaMarcaProducto);
 
 		eliminarItem_btn = new JButton("Eliminar Item");
-		eliminarItem_btn.setBounds(273, 237, 121, 23);
+		eliminarItem_btn.setBounds(147, 237, 121, 23);
 		getContentPane().add(eliminarItem_btn);
 
-		ingresar_btn = new JButton("");
-		ingresar_btn.setIcon(new ImageIcon(VentanaABMMarcaProducto.class.getResource("/tick-outline.png")));
-		ingresar_btn.setBounds(483, 70, 47, 23);
+		ingresar_btn = new JButton("Ingresar Item");
+		ingresar_btn.setBounds(280, 237, 121, 23);
 		contentPane.add(ingresar_btn);
 
-		limpiar_btn = new JButton("");
-		limpiar_btn.setIcon(new ImageIcon(VentanaABMMarcaProducto.class.getResource("/trash.png")));
-		limpiar_btn.setBounds(540, 70, 47, 23);
+		limpiar_btn = new JButton("Limpiar");
+		limpiar_btn.setBounds(411, 237, 121, 23);
 		contentPane.add(limpiar_btn);
 	}
 

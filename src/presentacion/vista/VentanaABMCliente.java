@@ -9,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ImageIcon;
 
 public class VentanaABMCliente extends JFrame {
 
