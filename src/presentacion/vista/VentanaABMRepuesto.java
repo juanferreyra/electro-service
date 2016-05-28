@@ -19,10 +19,10 @@ public class VentanaABMRepuesto extends JFrame {
 	private JTextField stockMinimo_txt;
 	private JTable tablaRepuesto;
 	private DefaultTableModel modelRepuesto;
-	private String[] nombreColumnas = { "id","Detalle", "Precio", "Stock M�nimo" };
-	private JButton cancelar_btn;
+	private String[] nombreColumnas = { "id", "Detalle", "Precio", "Stock Minimo" };
 	private JButton guardar_btn;
 	private JButton eliminarItem_btn;
+	private JButton limpiar_btn;
 
 	public VentanaABMRepuesto() {
 		initialize();
@@ -66,12 +66,8 @@ public class VentanaABMRepuesto extends JFrame {
 		stockMinimo_txt.setBounds(199, 191, 383, 20);
 		getContentPane().add(stockMinimo_txt);
 
-		cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(664, 392, 89, 23);
-		getContentPane().add(cancelar_btn);
-
-		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(565, 392, 89, 23);
+		guardar_btn = new JButton("Ingresar Item");
+		guardar_btn.setBounds(317, 348, 121, 23);
 		getContentPane().add(guardar_btn);
 
 		JScrollPane repuesto_scrollPane = new JScrollPane();
@@ -83,8 +79,12 @@ public class VentanaABMRepuesto extends JFrame {
 		repuesto_scrollPane.setViewportView(tablaRepuesto);
 
 		eliminarItem_btn = new JButton("Eliminar Item");
-		eliminarItem_btn.setBounds(434, 392, 121, 23);
+		eliminarItem_btn.setBounds(186, 348, 121, 23);
 		getContentPane().add(eliminarItem_btn);
+
+		limpiar_btn = new JButton("Limpiar");
+		limpiar_btn.setBounds(448, 348, 121, 23);
+		getContentPane().add(limpiar_btn);
 	}
 
 	public JTextField getDetalle_txt() {
@@ -111,10 +111,6 @@ public class VentanaABMRepuesto extends JFrame {
 		return nombreColumnas;
 	}
 
-	public JButton getCancelar_btn() {
-		return cancelar_btn;
-	}
-
 	public JButton getGuardar_btn() {
 		return guardar_btn;
 	}
@@ -122,6 +118,13 @@ public class VentanaABMRepuesto extends JFrame {
 	public JButton getEliminarItem_btn() {
 		return eliminarItem_btn;
 	}
-	
-	
+
+	public JButton getLimpiar_btn() {
+		return limpiar_btn;
+	}
+
+	public void setLimpiar_btn(JButton limpiar_btn) {
+		this.limpiar_btn = limpiar_btn;
+	}
+
 }
