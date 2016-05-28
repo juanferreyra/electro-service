@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.MarcaDTO;
@@ -17,22 +18,39 @@ public class ControladorABMMarcaProducto implements ActionListener {
 
 	public ControladorABMMarcaProducto(VentanaABMMarcaProducto ventanaABMProducto) {
 		this.ventanaABMMarcaProducto = ventanaABMProducto;
-		this.ventanaABMMarcaProducto.getCancelar_btn().addActionListener(this);
 		this.ventanaABMMarcaProducto.getEliminarItem_btn().addActionListener(this);
-		this.ventanaABMMarcaProducto.getGuardar_btn().addActionListener(this);
+		this.ventanaABMMarcaProducto.getIngresar_btn().addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == this.ventanaABMMarcaProducto.getCancelar_btn()) {
-			this.ventanaABMMarcaProducto.dispose();
-		} else if (e.getSource() == this.ventanaABMMarcaProducto.getEliminarItem_btn()) {
-
-		} else if (e.getSource() == this.ventanaABMMarcaProducto.getGuardar_btn()) {
-
+		if (e.getSource() == this.ventanaABMMarcaProducto.getEliminarItem_btn()) {
+			if (this.ventanaABMMarcaProducto.getTablaMarcaProducto().getSelectedRow() >= 0) {
+				int fila = this.ventanaABMMarcaProducto.getTablaMarcaProducto().getSelectedRow();
+				String marca = (String) this.ventanaABMMarcaProducto.getTablaMarcaProducto().getValueAt(fila, 0);
+				eliminarMarcaProducto(marca);
+			}
+		} else if (e.getSource() == this.ventanaABMMarcaProducto.getIngresar_btn()) {
+			if (this.ventanaABMMarcaProducto.getDetalle_txt().getText() != "") {
+				ingresarMarcaProducto(this.ventanaABMMarcaProducto.getDetalle_txt().getText());
+				this.ventanaABMMarcaProducto.getDetalle_txt().setText("");
+			} else {
+				JOptionPane.showMessageDialog(this.ventanaABMMarcaProducto,
+						"El detalle ingresado no es válido. Por favor, vuelva a intentarlo.");
+			}
 		}
 
+	}
+
+	private void eliminarMarcaProducto(String marca) {
+		this.marcaDAO.delete(this.marcaDAO.findByDetalle(marca));
+		cargarTablaMarcaProducto();
+	}
+
+	private void ingresarMarcaProducto(String marca) {
+		this.marcaDAO.insert(new MarcaDTO(marca, 0));
+		cargarTablaMarcaProducto();
 	}
 
 	private void inicializar() {

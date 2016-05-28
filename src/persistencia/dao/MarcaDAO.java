@@ -10,140 +10,142 @@ import java.util.List;
 import persistencia.conexion.Conexion;
 import dto.MarcaDTO;
 
-public class MarcaDAO
-{
-		
-		private static final String insert = "INSERT INTO marca_producto ("
-				+ "`detalle`, `fecha_creacion`, `idusuario`, `habilitado`)"
-				+ " VALUES (?, now(), ?, true); ";
-		private static final String delete = "UPDATE marca_producto SET habilitado='0' WHERE id = ?";
-		private static final String readall = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true;";
-		private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
-		private static final String find = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true AND id = ?;";
-		private static Conexion conexion = Conexion.getConexion();
-		
-		public boolean insert(MarcaDTO marca)
+public class MarcaDAO {
+
+	private static final String insert = "INSERT INTO marca_producto ("
+			+ "`detalle`, `fecha_creacion`, `idusuario`, `habilitado`)" + " VALUES (?, now(), ?, true); ";
+	private static final String delete = "UPDATE marca_producto SET habilitado='0' WHERE id = ?";
+	private static final String readall = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true;";
+	private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
+	private static final String find = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true AND id = ?;";
+	private static final String findByDetalle = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true AND detalle = ?;";
+	private static Conexion conexion = Conexion.getConexion();
+
+	public boolean insert(MarcaDTO marca) {
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(insert);
+			statement.setString(1, marca.getDetalle());
+			statement.setInt(2, marca.getIdusuario());
+
+			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally // Se ejecuta siempre
 		{
-			PreparedStatement statement;
-			try 
-			{
-				statement = conexion.getSQLConexion().prepareStatement(insert);
-				statement.setString(1, marca.getDetalle());
-				statement.setInt(2, marca.getIdusuario());
-				
-				if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
-					return true;
-			}
-			catch (SQLException e) 
-			{
-				e.printStackTrace();
-			}
-			finally //Se ejecuta siempre
-			{
-				Conexion.cerrarConexion();
-			}
-			return false;
+			Conexion.cerrarConexion();
 		}
-		
-		public boolean delete(MarcaDTO marca_a_eliminar)
+		return false;
+	}
+
+	public boolean delete(MarcaDTO marca_a_eliminar) {
+		PreparedStatement statement;
+		int chequeoUpdate = 0;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(delete);
+			statement.setString(1, Integer.toString(marca_a_eliminar.getId()));
+			chequeoUpdate = statement.executeUpdate();
+			if (chequeoUpdate > 0) // Si se ejecut� devuelvo true
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally // Se ejecuta siempre
 		{
-			PreparedStatement statement;
-			int chequeoUpdate=0;
-			try 
-			{
-				statement = conexion.getSQLConexion().prepareStatement(delete);
-				statement.setString(1, Integer.toString(marca_a_eliminar.getId()));
-				chequeoUpdate = statement.executeUpdate();
-				if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
-					return true;
-			} 
-			catch (SQLException e) 
-			{
-				e.printStackTrace();
-			}
-			finally //Se ejecuta siempre
-			{
-				Conexion.cerrarConexion();
-			}
-			return false;
+			Conexion.cerrarConexion();
 		}
-		
-		public List<MarcaDTO> readAll()
+		return false;
+	}
+
+	public List<MarcaDTO> readAll() {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<MarcaDTO> marcas = new ArrayList<MarcaDTO>();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readall);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				marcas.add(new MarcaDTO(resultSet.getInt("id"), resultSet.getString("detalle"),
+						resultSet.getInt("idusuario")));
+			}
+		} catch (SQLException e) {
+			System.out.println("hubo un error");
+			e.printStackTrace();
+		} finally // Se ejecuta siempre
 		{
-			PreparedStatement statement;
-			ResultSet resultSet; //Guarda el resultado de la query
-			ArrayList<MarcaDTO> marcas = new ArrayList<MarcaDTO>();
-			try
-			{
-				statement = conexion.getSQLConexion().prepareStatement(readall);
-				resultSet = statement.executeQuery();
-				
-				while(resultSet.next())
-				{
-					marcas.add(new MarcaDTO(resultSet.getInt("id"), resultSet.getString("detalle"),resultSet.getInt("idusuario")));
-				}
-			}
-			catch (SQLException e) 
-			{
-				System.out.println("hubo un error");
-				e.printStackTrace();
-			}
-			finally //Se ejecuta siempre
-			{
-				Conexion.cerrarConexion();
-			}
-			
-			return marcas;
+			Conexion.cerrarConexion();
 		}
-		
-		public boolean update (MarcaDTO marca_a_modificar)
 
+		return marcas;
+	}
+
+	public boolean update(MarcaDTO marca_a_modificar)
+
+	{
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(update);
+
+			statement.setString(1, marca_a_modificar.getDetalle());
+			statement.setInt(2, marca_a_modificar.getId());
+
+			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally // Se ejecuta siempre
 		{
-			PreparedStatement statement;
-			try 
-			{
-				statement = conexion.getSQLConexion().prepareStatement(update);
-
-				statement.setString(1, marca_a_modificar.getDetalle());
-				statement.setInt(2, marca_a_modificar.getId());
-
-				if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
-					return true;
-			} 
-			catch (SQLException e) 
-			{
-				e.printStackTrace();
-			}
-			finally //Se ejecuta siempre 
-			{
-				Conexion.cerrarConexion();
-			}
-			return false;
+			Conexion.cerrarConexion();
 		}
+		return false;
+	}
 
-		public MarcaDTO find(int idmarca) {
-			
-			conexion = Conexion.getConexion();
-			PreparedStatement statement;
-			ResultSet resultSet;
-			MarcaDTO marca = null;
+	public MarcaDTO find(int idmarca) {
 
-			try {
-				statement = conexion.getSQLConexion().prepareStatement(find);
-				statement.setInt(1, idmarca);
-				resultSet = statement.executeQuery();
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		MarcaDTO marca = null;
 
-				while (resultSet.next()) {
-					marca = new MarcaDTO(resultSet.getInt("id"),
-							resultSet.getString("detalle"),
-							resultSet.getInt("idusuario"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				Conexion.cerrarConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(find);
+			statement.setInt(1, idmarca);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				marca = new MarcaDTO(resultSet.getInt("id"), resultSet.getString("detalle"),
+						resultSet.getInt("idusuario"));
 			}
-			return marca;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
 		}
+		return marca;
+	}
+
+	public MarcaDTO findByDetalle(String detalle) {
+
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		MarcaDTO marca = null;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(findByDetalle);
+			statement.setString(1, detalle);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				marca = new MarcaDTO(resultSet.getInt("id"), resultSet.getString("detalle"),
+						resultSet.getInt("idusuario"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return marca;
+	}
 }
-
