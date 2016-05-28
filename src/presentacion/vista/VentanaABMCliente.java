@@ -9,12 +9,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ImageIcon;
 
-public class VentanaABMCliente extends JFrame{
+public class VentanaABMCliente extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField nombre_txt;
 	private JTextField apellido_txt;
@@ -25,12 +23,11 @@ public class VentanaABMCliente extends JFrame{
 	private JTextField documento_txt;
 	private JTable tablaClientes;
 	private DefaultTableModel modelClientes;
-	private String[] nombreColumnas = {"id", "Nombre", "Apellido", "Documento", "Localidad", "Direcci�n", "Tel�fono",
+	private String[] nombreColumnas = { "id", "Nombre", "Apellido", "Documento", "Localidad", "Direccion", "Telefono",
 			"Email" };
-	private JButton cancelar_btn;
 	private JButton guardar_btn;
 	private JButton eliminarItem_btn;
-
+	private JButton limpiar_btn;
 
 	public VentanaABMCliente() {
 
@@ -38,9 +35,9 @@ public class VentanaABMCliente extends JFrame{
 	}
 
 	private void initialize() {
-		
+
 		setBounds(100, 100, 742, 454);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 
 		JLabel title_lbl = new JLabel("Nuevo cliente");
@@ -112,25 +109,25 @@ public class VentanaABMCliente extends JFrame{
 		documento_txt.setBounds(188, 105, 394, 20);
 		getContentPane().add(documento_txt);
 
-		cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(619, 363, 97, 23);
-		getContentPane().add(cancelar_btn);
-
-		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(498, 363, 109, 23);
+		guardar_btn = new JButton("Ingresar Item");
+		guardar_btn.setBounds(285, 382, 139, 23);
 		getContentPane().add(guardar_btn);
 
 		JScrollPane clientes_scrollPane = new JScrollPane();
-		clientes_scrollPane.setBounds(123, 246, 459, 91);
+		clientes_scrollPane.setBounds(123, 280, 459, 91);
 		getContentPane().add(clientes_scrollPane);
 
 		modelClientes = new DefaultTableModel(null, nombreColumnas);
 		tablaClientes = new JTable(modelClientes);
 		clientes_scrollPane.setViewportView(tablaClientes);
-		
+
 		eliminarItem_btn = new JButton("Eliminar Item");
-		eliminarItem_btn.setBounds(347, 363, 139, 23);
+		eliminarItem_btn.setBounds(123, 382, 139, 23);
 		getContentPane().add(eliminarItem_btn);
+
+		limpiar_btn = new JButton("Limpiar");
+		limpiar_btn.setBounds(443, 382, 139, 23);
+		getContentPane().add(limpiar_btn);
 
 	}
 
@@ -170,10 +167,6 @@ public class VentanaABMCliente extends JFrame{
 		return modelClientes;
 	}
 
-	public JButton getCancelar_btn() {
-		return cancelar_btn;
-	}
-
 	public JButton getGuardar_btn() {
 		return guardar_btn;
 	}
@@ -185,6 +178,13 @@ public class VentanaABMCliente extends JFrame{
 	public String[] getNombreColumnas() {
 		return nombreColumnas;
 	}
-	
-	
+
+	public JButton getLimpiar_btn() {
+		return limpiar_btn;
+	}
+
+	public void setLimpiar_btn(JButton limpiar_btn) {
+		this.limpiar_btn = limpiar_btn;
+	}
+
 }
