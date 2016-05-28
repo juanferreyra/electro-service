@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,7 +34,7 @@ public class ControladorABMRepuesto implements ActionListener  {
 	
 	public void iniciar(){
 		
-		repuesto = new Repuesto();
+		this.repuesto = new Repuesto();
 		
 		cargarTabla();
 		
@@ -131,15 +132,138 @@ public class ControladorABMRepuesto implements ActionListener  {
 		ocultarColumnaId();	
 	}
 
+	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == this.ventanaABMRepuesto.getCancelar_btn()){ // boton cancelar 
 
 			this.ventanaABMRepuesto.dispose();
+
+		}else if (e.getSource() == this.ventanaABMRepuesto.getEliminarItem_btn()){ // boton eliminar
+
+			// si la tabla no esta vacía
+			if(this.ventanaABMRepuesto.getTablaRepuesto().getRowCount() != 0){
+
+				// si se seleccionó una fila
+				if(this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow() != -1){
+
+					int filaSeleccionada = this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow();
+					int id_cliente_a_eliminar = (int)this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 0);
+
+
+					this.repuesto.borrarCliente(id_cliente_a_eliminar);
+					
+					cargarTablaRepuestos();
+					limpiartxts();
+
+				}else{
+
+					JOptionPane.showMessageDialog(this.ventanaABMRepuesto, "Debe seleccionar un  a eliminar", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			}else{
+
+				JOptionPane.showMessageDialog(this.ventanaABMRepuesto, "No hay Repuestos a eliminar", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		}else if(e.getSource() == this.ventanaABMRepuesto.getGuardar_btn()){ //boton guardar
+
+			// si esta seleccionado de la tabla
+			// modificar cliente
+			if(this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow() != -1){
+
+				int filaSeleccionada = this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow();
+
+				if(!isTxtsVacios()){
+
+					if(isTxtsValidos()){
+
+						repuesto.modificarRepuesto(obteneRepuesto((int)this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 0)));
+
+						limpiartxts();
+						cargarTablaRepuestos();
+					}
+
+				}else{
+
+					JOptionPane.showMessageDialog(this.ventanaABMRepuesto, "NO SE PERMITERN CAMPOS VACIOS", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			}else{
+				// nuevo cliente
+
+				if (!isTxtsVacios()){
+
+					if(isTxtsValidos()){
+
+						repuesto.agregarCliente(obteneRepuesto(0));
+
+						limpiartxts();
+						cargarTablaRepuestos();;
+					}
+
+				}else{
+
+					JOptionPane.showMessageDialog(this.ventanaABMRepuesto, "NO SE PERMITERN CAMPOS VACIOS", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+
+			}
 		}
 
+	}
+	
+	private RepuestoDTO obteneRepuesto(int valueAt) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private boolean isTxtsValidos() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private boolean isTxtsVacios() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private void limpiartxts() {
+		
+		for(JTextField jt : txts){
+			jt.setText("");
+			
 		}
+		
+	}
+
+	private void cargarTablaRepuestos() {
+
+		this.ventanaABMRepuesto.getModelRepuesto().setRowCount(0);
+		this.ventanaABMRepuesto.getModelRepuesto().setColumnCount(0);
+		this.ventanaABMRepuesto.getModelRepuesto().setColumnIdentifiers(this.ventanaABMRepuesto.getNombreColumnas());
+
+		this.repuestos_en_tabla = repuesto.obtenerRepuestos();
+
+
+		for (int i = 0; i < this.repuestos_en_tabla.size(); i ++)
+		{
+
+			Object[] fila = {this.repuestos_en_tabla.get(i).getId(), 
+					this.repuestos_en_tabla.get(i).getDetalle(), 
+					this.repuestos_en_tabla.get(i).getPrecioUnitario(),
+					this.repuestos_en_tabla.get(i).getStockMinimo()};
+
+
+			this.ventanaABMRepuesto.getModelRepuesto().addRow(fila);
+		}
+
+		ocultarColumnaId();
+
+	}
 	
 	public static void main(String[] args) {
 		
