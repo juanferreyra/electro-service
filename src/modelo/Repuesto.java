@@ -15,11 +15,11 @@ public class Repuesto {
 		
 	}
 	
-	public void agregarCliente(RepuestoDTO nuevoComponente) {
+	public void agregarRepuesto(RepuestoDTO nuevoComponente) {
 		repuestoDAO.insert(nuevoComponente);
 	}
 
-	public void borrarCliente(int id_componente_a_eliminar) {
+	public void borrarRepuesto(int id_componente_a_eliminar) {
 		repuestoDAO.delete(id_componente_a_eliminar);
 	}
 	
