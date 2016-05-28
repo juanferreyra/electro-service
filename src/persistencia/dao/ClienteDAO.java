@@ -52,13 +52,13 @@ public class ClienteDAO {
 		return clientes;
 	}
 
-	public boolean delete(ClienteDTO cliente_a_eliminar) {
+	public boolean delete(int id_cliente_a_eliminar) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		int chequeoUpdate = 0;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(delete);
-			statement.setString(1, Integer.toString(cliente_a_eliminar.getId()));
+			statement.setString(1, Integer.toString(id_cliente_a_eliminar));
 			chequeoUpdate = statement.executeUpdate();
 			if (chequeoUpdate > 0)
 				return true;

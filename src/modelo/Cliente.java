@@ -20,8 +20,8 @@ public class Cliente {
 		clienteDAO.insert(nuevoCliente);
 	}
 
-	public void borrarCliente(ClienteDTO cliente_a_eliminar) {
-		clienteDAO.delete(cliente_a_eliminar);
+	public void borrarCliente(int id_cliente_a_eliminar) {
+		clienteDAO.delete(id_cliente_a_eliminar);
 	}
 	
 	public List<ClienteDTO> obtenerClientes() {

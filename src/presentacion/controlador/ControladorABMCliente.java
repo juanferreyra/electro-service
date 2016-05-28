@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import dto.ClienteDTO;
 import modelo.Cliente;
 import presentacion.vista.VentanaABMCliente;
@@ -141,13 +143,53 @@ public class ControladorABMCliente implements ActionListener{
 			
 			this.ventanaABMCliente.dispose();
 			
+		}else if (e.getSource() == this.ventanaABMCliente.getEliminarItem_btn()){
+			
+			// si la tabla no esta vacía
+			if(this.ventanaABMCliente.getTablaClientes().getRowCount() != 0){
+
+				// si se seleccionó una fila
+				if(this.ventanaABMCliente.getTablaClientes().getSelectedRow() != -1){
+
+					int filaSeleccionada = this.ventanaABMCliente.getTablaClientes().getSelectedRow();
+					int id_cliente_a_eliminar = (int)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 0);
+
+
+					cliente.borrarCliente(id_cliente_a_eliminar);
+					cargarTablaClientes();
+					limpiartxts();
+
+				}else{
+
+					JOptionPane.showMessageDialog(this.ventanaABMCliente, "Debe seleccionar un cliente a eliminar", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			}else{
+				
+				JOptionPane.showMessageDialog(this.ventanaABMCliente, "No hay clientes a eliminar", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+
 		}
-		
+
 		
 
 	}
 	
 	
+
+	private void limpiartxts() {
+		
+		this.ventanaABMCliente.getNombre_txt().setText("");
+		this.ventanaABMCliente.getApellido_txt().setText("");
+		this.ventanaABMCliente.getDocumento_txt().setText("");
+		this.ventanaABMCliente.getLocalidad_txt().setText("");
+		this.ventanaABMCliente.getDireccion_txt().setText("");
+		this.ventanaABMCliente.getTelefono_txt().setText("");
+		this.ventanaABMCliente.getEmail_txt().setText("");
+		
+	}
+
 
 	public static void main(String[] args) {
 
