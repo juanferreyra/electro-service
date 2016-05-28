@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.Font;
-import javax.swing.ImageIcon;
 
 public class VentanaABMMarcaProducto extends JFrame {
 
