@@ -2,8 +2,12 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import dto.RepuestoDTO;
@@ -16,6 +20,7 @@ public class ControladorABMRepuesto implements ActionListener  {
 	private Repuesto repuesto;
 	private List<RepuestoDTO> repuestos_en_tabla;
 	private DefaultTableModel modelTable = new DefaultTableModel();
+	private List<JTextField> txts;
 	
 	public ControladorABMRepuesto(VentanaABMRepuesto ventanaABMRepuesto) {
 		
@@ -29,13 +34,69 @@ public class ControladorABMRepuesto implements ActionListener  {
 	public void iniciar(){
 		
 		repuesto = new Repuesto();
+		
 		cargarTabla();
-		ocultarColumnaId();
+		
 		this.ventanaABMRepuesto.setVisible(true);
 		
+		this.txts = new ArrayList<JTextField>();
+		
+		txts.add(this.ventanaABMRepuesto.getDetalle_txt());//0
+		txts.add(this.ventanaABMRepuesto.getPrecio_txt());//1
+		txts.add(this.ventanaABMRepuesto.getStockMinimo_txt());//2
+		
+		mouseClickedOnTable();
+	}
+
+	private void mouseClickedOnTable() {
+		
+		this.ventanaABMRepuesto.getTablaRepuesto().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// 1 es igual a boton izquierdo del mouse
+				if(arg0.getButton() == 1 ){
+					cargartxts();	
+				}
+			}
+		});
+	}
+	
+	private void cargartxts() {
+		
+		int filaSeleccionada = this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow();
+
+		this.txts.get(0).setText((String)this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 1));
+		this.txts.get(1).setText(String.valueOf(this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 2)));
+		this.txts.get(2).setText(String.valueOf(this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 3)));
 		
 		
 	}
+
 
 	private void ocultarColumnaId() {
 		
@@ -67,12 +128,19 @@ public class ControladorABMRepuesto implements ActionListener  {
 			
 		}
 		
+		ocultarColumnaId();	
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-	}
+
+		if (e.getSource() == this.ventanaABMRepuesto.getCancelar_btn()){ // boton cancelar 
+
+			this.ventanaABMRepuesto.dispose();
+		}
+
+		}
+	
 	public static void main(String[] args) {
 		
 		VentanaABMRepuesto abm = new VentanaABMRepuesto();

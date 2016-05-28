@@ -78,14 +78,14 @@ public class RepuestoDAO {
 		return false;
 	}
 	
-	public boolean delete(RepuestoDTO componente_a_eliminar)
+	public boolean delete(int id_componente_a_eliminar)
 	{
 		PreparedStatement statement;
 		int chequeoUpdate=0;
 		try 
 		{
 			statement = conexion.getSQLConexion().prepareStatement(delete);
-			statement.setString(1, Integer.toString(componente_a_eliminar.getId()));
+			statement.setString(1, Integer.toString(id_componente_a_eliminar));
 			chequeoUpdate = statement.executeUpdate();
 			if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
 				return true;
