@@ -170,13 +170,56 @@ public class ControladorABMCliente implements ActionListener{
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 
-		}
-
+		}else if(e.getSource() == this.ventanaABMCliente.getGuardar_btn()){
+			
+			// si esta seleccionado de la tabla
+			if(this.ventanaABMCliente.getTablaClientes().getSelectedRow() != -1){
+				
+				int filaSeleccionada = this.ventanaABMCliente.getTablaClientes().getSelectedRow();
+				
+				validarTxts();
+				
+				cliente.modificarCliente(obtenerCliente((int)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 0)));
+				
+				limpiartxts();
+				cargarTablaClientes();
+				
+			}else{
+				
+				validarTxts();
+				
+				cliente.agregarCliente(obtenerCliente(0));
+				
+				limpiartxts();
+				cargarTablaClientes();
+				
+			}
 		
+		}
 
 	}
 	
 	
+	private ClienteDTO obtenerCliente(int id) {
+		
+		
+		
+		ClienteDTO clienteDTO= new ClienteDTO(
+				
+				id,
+				Integer.parseInt(this.ventanaABMCliente.getDocumento_txt().getText()),
+				this.ventanaABMCliente.getNombre_txt().getText(),
+				this.ventanaABMCliente.getApellido_txt().getText(),
+				this.ventanaABMCliente.getLocalidad_txt().getText(),
+				this.ventanaABMCliente.getDireccion_txt().getText(),
+				this.ventanaABMCliente.getTelefono_txt().getText(),
+				this.ventanaABMCliente.getEmail_txt().getText(),
+				null,
+				0);
+		
+		return clienteDTO;
+	}
+
 
 	private void limpiartxts() {
 		
@@ -189,6 +232,14 @@ public class ControladorABMCliente implements ActionListener{
 		this.ventanaABMCliente.getEmail_txt().setText("");
 		
 	}
+	
+	private void validarTxts() {
+		
+		
+		
+	}
+
+
 
 
 	public static void main(String[] args) {
