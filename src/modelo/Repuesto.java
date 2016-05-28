@@ -19,8 +19,8 @@ public class Repuesto {
 		repuestoDAO.insert(nuevoComponente);
 	}
 
-	public void borrarCliente(RepuestoDTO componente_a_eliminar) {
-		repuestoDAO.delete(componente_a_eliminar);
+	public void borrarCliente(int id_componente_a_eliminar) {
+		repuestoDAO.delete(id_componente_a_eliminar);
 	}
 	
 	public List<RepuestoDTO> obtenerRepuestos() {
