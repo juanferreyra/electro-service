@@ -12,13 +12,14 @@ import persistencia.conexion.Conexion;
 public class ClienteDAO {
 
 	private static final String insert = "INSERT INTO cliente("
-			+ "`nrodoc`, `nombre`, `apellido`, `localidad`, `direccion`, `telefono`, `mail`, `fecha_creacion`, `idusuario`) "
-			+ "VALUES (?, ?, ?, ?, ?', ?, ?, ?, now(), ?);";
+			+ "nrodoc, nombre, apellido, localidad, direccion, telefono, mail, fecha_creacion, idusuario, habilitado) "
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, now(), ?, true);";
+	
 	private static final String delete = "UPDATE cliente SET habilitado=false WHERE id= ?;";
 	private static final String readall = "SELECT * FROM cliente WHERE habilitado=true";
 	private static final String find = "SELECT * FROM cliente WHERE habilitado=true AND id=?";
 	private static final String find2 = "SELECT * FROM cliente WHERE habilitado=true AND nrodoc=?";
-	private static final String update =" UPDATE cliente SET nrodoc = ?, nombre = ?, apellido = ', localidad = ?,"
+	private static final String update =" UPDATE cliente SET nrodoc = ?, nombre = ?, apellido = ?, localidad = ?,"
 			+ " direccion = ?, telefono = ?, mail = ? WHERE id = ?;";
 	private Conexion conexion = Conexion.getConexion();
 
@@ -52,13 +53,13 @@ public class ClienteDAO {
 		return clientes;
 	}
 
-	public boolean delete(ClienteDTO cliente_a_eliminar) {
+	public boolean delete(int id_cliente_a_eliminar) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		int chequeoUpdate = 0;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(delete);
-			statement.setString(1, Integer.toString(cliente_a_eliminar.getId()));
+			statement.setString(1, Integer.toString(id_cliente_a_eliminar));
 			chequeoUpdate = statement.executeUpdate();
 			if (chequeoUpdate > 0)
 				return true;
@@ -83,8 +84,7 @@ public class ClienteDAO {
 			statement.setString(5, cliente.getDireccion());
 			statement.setString(6, cliente.getTelefono());
 			statement.setString(7, cliente.getMail());
-			statement.setDate(8, (Date) cliente.getFecha_creacion());
-			statement.setInt(9, cliente.getIdusuario());
+			statement.setInt(8, 0);
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -172,7 +172,8 @@ public class ClienteDAO {
 			statement.setString(5, cliente.getDireccion());
 			statement.setString(6, cliente.getTelefono());
 			statement.setString(7, cliente.getMail());
-			statement.setInt(8, cliente.getIdusuario());
+			statement.setInt(8, cliente.getId());
+	
 
 			if (statement.executeUpdate() > 0)
 				return true;
