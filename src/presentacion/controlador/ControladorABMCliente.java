@@ -134,11 +134,9 @@ public class ControladorABMCliente implements ActionListener{
 
 			this.ventanaABMCliente.getModelClientes().addRow(fila);
 			
-			ocultarColumnaId();
-
+			
 		}
-
-
+		ocultarColumnaId();
 	}
 
 	private void ocultarColumnaId() {
@@ -170,7 +168,7 @@ public class ControladorABMCliente implements ActionListener{
 					int id_cliente_a_eliminar = (int)this.ventanaABMCliente.getModelClientes().getValueAt(filaSeleccionada, 0);
 
 
-					cliente.borrarCliente(id_cliente_a_eliminar);
+					this.cliente.borrarCliente(id_cliente_a_eliminar);
 					cargarTablaClientes();
 					limpiartxts();
 
