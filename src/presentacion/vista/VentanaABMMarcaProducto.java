@@ -23,6 +23,7 @@ public class VentanaABMMarcaProducto extends JFrame {
 	private String[] nombreColumnas = { "Detalle" };
 	private JButton eliminarItem_btn;
 	private JButton ingresar_btn;
+	private JButton limpiar_btn;
 
 	public VentanaABMMarcaProducto() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -32,7 +33,7 @@ public class VentanaABMMarcaProducto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel title_lbl = new JLabel("Nuevo marca de producto");
+		JLabel title_lbl = new JLabel("Nueva marca de producto");
 		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		title_lbl.setBounds(10, 11, 622, 14);
@@ -43,7 +44,7 @@ public class VentanaABMMarcaProducto extends JFrame {
 		contentPane.add(detalle_lbl);
 
 		detalle_txt = new JTextField();
-		detalle_txt.setBounds(128, 73, 404, 20);
+		detalle_txt.setBounds(128, 73, 345, 20);
 		contentPane.add(detalle_txt);
 		detalle_txt.setColumns(10);
 
@@ -70,8 +71,13 @@ public class VentanaABMMarcaProducto extends JFrame {
 
 		ingresar_btn = new JButton("");
 		ingresar_btn.setIcon(new ImageIcon(VentanaABMMarcaProducto.class.getResource("/tick-outline.png")));
-		ingresar_btn.setBounds(542, 72, 47, 23);
+		ingresar_btn.setBounds(483, 70, 47, 23);
 		contentPane.add(ingresar_btn);
+
+		limpiar_btn = new JButton("");
+		limpiar_btn.setIcon(new ImageIcon(VentanaABMMarcaProducto.class.getResource("/trash.png")));
+		limpiar_btn.setBounds(540, 70, 47, 23);
+		contentPane.add(limpiar_btn);
 	}
 
 	public JTextField getDetalle_txt() {
@@ -105,4 +111,13 @@ public class VentanaABMMarcaProducto extends JFrame {
 	public void setIngresar_btn(JButton ingresar_btn) {
 		this.ingresar_btn = ingresar_btn;
 	}
+
+	public JButton getLimpiar_btn() {
+		return limpiar_btn;
+	}
+
+	public void setLimpiar_btn(JButton limpiar_btn) {
+		this.limpiar_btn = limpiar_btn;
+	}
+
 }
