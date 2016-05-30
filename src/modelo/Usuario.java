@@ -17,12 +17,12 @@ public class Usuario {
 	}
 
 	
-	public void agregarUsuario(UsuarioDTO nuevoCliente) {
+	public void agregarUsuario(UsuarioDTO nuevoUsuario) {
 		
-		usuarioDAO.insert(nuevoCliente);
+		usuarioDAO.insert(nuevoUsuario);
 	}
 
-	public void borrarCliente(int id_usuario_a_eliminar) {
+	public void borrarUsuario(int id_usuario_a_eliminar) {
 		
 		usuarioDAO.delete(id_usuario_a_eliminar);
 	}

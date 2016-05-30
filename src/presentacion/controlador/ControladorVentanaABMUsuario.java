@@ -7,10 +7,11 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dto.ClienteDTO;
 import dto.PerfilDTO;
+import dto.RepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.Usuario;
 import presentacion.vista.VentanaABMUsuario;
@@ -27,7 +28,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 	public ControladorVentanaABMUsuario( VentanaABMUsuario ventanaABMUsuario) {
 		
 		this.ventanaABMUsuario = ventanaABMUsuario;
-		this.ventanaABMUsuario.getCancelar_btn().addActionListener(this);
+		this.ventanaABMUsuario.getLimpiar_btn().addActionListener(this);
 		this.ventanaABMUsuario.getEliminarItem_btn().addActionListener(this);
 		this.ventanaABMUsuario.getGuardar_btn().addActionListener(this);
 	}
@@ -56,7 +57,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		this.perfiles_en_combo = this.usuario.obtenerPerfiles();
 		for (int i = 0; i < this.perfiles_en_combo.size(); i++)
 		{
-				this.ventanaABMUsuario.getPerfil_comboBox().addItem(this.perfiles_en_combo.get(i).getId()+ " _ " + 
+				this.ventanaABMUsuario.getPerfil_comboBox().addItem(this.perfiles_en_combo.get(i).getId()+ " " + 
 		this.perfiles_en_combo.get(i).getPerfil());
 		}
 		
@@ -151,15 +152,138 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		if (e.getSource() == this.ventanaABMUsuario.getLimpiar_btn()) {
+
+			this.limpiartxts();
+			this.ventanaABMUsuario.getTablaUsuario().clearSelection();
+			
+		} else if (e.getSource() == this.ventanaABMUsuario.getEliminarItem_btn()) {
+
+			// si la tabla no esta vacia
+			if (this.ventanaABMUsuario.getTablaUsuario().getRowCount() != 0) {
+
+				// si se selecciona una fila
+				if (this.ventanaABMUsuario.getTablaUsuario().getSelectedRow() != -1) {
+
+					int filaSeleccionada = this.ventanaABMUsuario.getTablaUsuario().getSelectedRow();
+					int id_cliente_a_eliminar = (int) this.ventanaABMUsuario.getModelUsuario()
+							.getValueAt(filaSeleccionada, 0);
+
+					this.usuario.borrarUsuario(id_cliente_a_eliminar);
+
+					cargarTablaUsuarios();;
+					limpiartxts();
+
+				} else {
+
+					JOptionPane.showMessageDialog(this.ventanaABMUsuario, "Debe seleccionar uno  a eliminar");
+				}
+			} else {
+
+				JOptionPane.showMessageDialog(this.ventanaABMUsuario, "No hay Usuarios a eliminar");
+			}
+				
+		} else if (e.getSource() == this.ventanaABMUsuario.getGuardar_btn()) {
+
+			// si esta seleccionado de la tabla
+			// modificar cliente
+			if (this.ventanaABMUsuario.getTablaUsuario().getSelectedRow() != -1) {
+
+				int filaSeleccionada = this.ventanaABMUsuario.getTablaUsuario().getSelectedRow();
+
+				if (!isTxtsVacios()) {
+
+
+					usuario.modificarUsuario(obteneUsuario(
+							(int) this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 0)));
+
+					limpiartxts();
+					cargarTablaUsuarios();
+
+				} else {
+
+					JOptionPane.showMessageDialog(this.ventanaABMUsuario,
+							"No se permiten campos vacios. Vuelva a intentarlo.");
+				}
+
+			} else {
+				// nuevo cliente
+
+
+				if (!isTxtsVacios()) {
+
+					usuario.agregarUsuario((obteneUsuario(0)));
+
+					limpiartxts();
+					cargarTablaUsuarios();
+
+
+				} else {
+
+					JOptionPane.showMessageDialog(this.ventanaABMUsuario,
+							"No se permiten campos vacios. Vuelva a intentarlo.");
+				}
+			}
+		}
+
+	}
+
+	
+	private UsuarioDTO obteneUsuario(int id) {
+		
+		UsuarioDTO usuarioDTO = new UsuarioDTO(
+				id,
+				this.txts.get(0).getText(), // nombre
+				this.txts.get(1).getText(), // apellido
+				this.txts.get(2).getText(), // password
+				obtenerIdPerfil());
+
+		return usuarioDTO;
 		
 	}
+
 	
+	private int obtenerIdPerfil() {
+		
+		String idPerfil = (String)this.ventanaABMUsuario.getPerfil_comboBox().getSelectedItem();
+		String [] array = idPerfil.split(" ");
+		String ret = array[0];
+		int id = Integer.parseInt(ret);
+		return id;
+		
+	}
+
+	private boolean isTxtsVacios() {
+		
+		boolean ret = false;
+
+		for (JTextField jt : this.txts) {
+
+			if (jt.getText().isEmpty()) {
+
+				ret = true;
+			}
+		}
+		return ret;
+	}
+
+	private void limpiartxts() {
+
+		for (JTextField jt : txts) {
+			jt.setText("");
+
+		}
+
+		
+	}
+
 	public static void main(String[] args) {
 		VentanaABMUsuario abm = new VentanaABMUsuario();
 		ControladorVentanaABMUsuario c = new ControladorVentanaABMUsuario(abm);
 		c.inicializar();
 		
 	}
+
 
 }

@@ -20,7 +20,7 @@ public class UsuarioDAO {
 	
 	private static final String ALLPerfil ="SELECT * FROM 20161_service_g2.perfil ;";
 	
-	private static final String insert = "NSERT INTO usuario (nombre, apellido, password, idperfil, habilitado, fecha_creacion)"
+	private static final String insert = "INSERT INTO usuario (nombre, apellido, password, idperfil, habilitado, fecha_creacion)"
 			+ " VALUES (?, ?, ?, ?, true, now());";
 	
 	private static final String delete = "UPDATE usuario SET habilitado='0' WHERE id = ?";
@@ -57,15 +57,57 @@ public class UsuarioDAO {
 		return usuario;
 	}
 
-	public void insert(UsuarioDTO nuevoCliente) {
-		// TODO Auto-generated method stub
+	public boolean insert(UsuarioDTO nuevoCliente) {
+		
+		PreparedStatement statement;
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(insert);
+			statement.setString(1,nuevoCliente.getNombre());
+			statement.setString(2, nuevoCliente.getApellido());
+			statement.setString(3,nuevoCliente.getPassword());
+			statement.setInt(4,nuevoCliente.getIdperfil());
+	
+			
+			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
+				return true;
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			Conexion.cerrarConexion();
+		}
+		return false;
+		
 		
 	}
 
-	public void delete(int id_usuario_a_eliminar) {
-		// TODO Auto-generated method stub
+	public boolean delete(int id_usuario_a_eliminar) {
 		
+		PreparedStatement statement;
+		int chequeoUpdate=0;
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(delete);
+			statement.setString(1, Integer.toString(id_usuario_a_eliminar));
+			chequeoUpdate = statement.executeUpdate();
+			if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
+				return true;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			Conexion.cerrarConexion();
+		}
+		return false;
 	}
+		
 
 	public List<UsuarioDTO> readAll() {
 		
@@ -98,9 +140,30 @@ public class UsuarioDAO {
 		return usuarios;
 	}
 
-	public void update(UsuarioDTO cliente_a_modificar) {
-		// TODO Auto-generated method stub
-		
+	public boolean update(UsuarioDTO usuario_a_modificar) {
+		PreparedStatement statement;
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(update);
+
+			statement.setString(1, usuario_a_modificar.getNombre());
+			statement.setString(2, usuario_a_modificar.getApellido());
+			statement.setString(3, usuario_a_modificar.getPassword());
+			statement.setInt(4, usuario_a_modificar.getIdperfil());
+			statement.setInt(5, usuario_a_modificar.getId());
+
+			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
+				return true;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre 
+		{
+			Conexion.cerrarConexion();
+		}
+		return false;
 	}
 
 	public PerfilDTO buscarPerfil(int id) {

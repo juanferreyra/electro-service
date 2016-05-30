@@ -25,7 +25,7 @@ public class VentanaABMUsuario extends JFrame {
 	private DefaultTableModel modelUsuario;
 	private String[] nombreColumnas = { "id","Nombre", "Apellido", "Perfil" };
 	private JComboBox <String> perfil_comboBox ;
-	private JButton cancelar_btn;
+	private JButton limpiar_btn;
 	private JButton guardar_btn;
 	private JButton eliminarItem_btn;
 
@@ -77,9 +77,9 @@ public class VentanaABMUsuario extends JFrame {
 		title_lbl.setBounds(34, 24, 712, 14);
 		contentPane.add(title_lbl);
 
-		cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(664, 392, 89, 23);
-		getContentPane().add(cancelar_btn);
+		limpiar_btn = new JButton("Limpiar");
+		limpiar_btn.setBounds(664, 392, 89, 23);
+		getContentPane().add(limpiar_btn);
 
 		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(565, 392, 89, 23);
@@ -126,8 +126,8 @@ public class VentanaABMUsuario extends JFrame {
 		return perfil_comboBox;
 	}
 
-	public JButton getCancelar_btn() {
-		return cancelar_btn;
+	public JButton getLimpiar_btn() {
+		return limpiar_btn;
 	}
 
 	public JButton getGuardar_btn() {
