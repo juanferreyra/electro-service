@@ -32,7 +32,7 @@ public class ControladorVentanaLogin implements ActionListener {
 			if (this.login.getUsuario_txf().getText().equals("admin")
 					& (this.login.getContrasena_txf().getText().equals("admin"))) {
 
-				PerfilDTO perf1 = new PerfilDTO("ADMINISTRATIVO");
+				PerfilDTO perf1 = new PerfilDTO(0,"ADMINISTRATIVO");
 				UsuarioDTO user1 = new UsuarioDTO(1, "ROBERTO", "CARLOS", "admin", perf1);
 				
 				this.login.setVisible(false);
@@ -44,7 +44,7 @@ public class ControladorVentanaLogin implements ActionListener {
 
 				
 
-				PerfilDTO perf2 = new PerfilDTO("TECNICO");
+				PerfilDTO perf2 = new PerfilDTO(1,"TECNICO");
 				UsuarioDTO user2 = new UsuarioDTO(2, "OSCAR", "PINTOS", "tecnico", perf2);
 
 				this.login.setVisible(false);
@@ -55,7 +55,7 @@ public class ControladorVentanaLogin implements ActionListener {
 					& (this.login.getContrasena_txf().getText().equals("jefe"))) {
 
 
-				PerfilDTO perf3 = new PerfilDTO("JEFE");
+				PerfilDTO perf3 = new PerfilDTO(2,"JEFE");
 				UsuarioDTO user3 = new UsuarioDTO(3, "JOAQUIN", "TELECHEA", "jefe", perf3);
 				
 				this.login.setVisible(false);
