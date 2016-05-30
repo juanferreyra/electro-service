@@ -3,7 +3,9 @@ package persistencia.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import dto.ClienteDTO;
 import dto.UsuarioDTO;
 import persistencia.conexion.Conexion;
 
@@ -35,6 +37,26 @@ public class UsuarioDAO {
 			Conexion.cerrarConexion();
 		}
 		return usuario;
+	}
+
+	public void insert(UsuarioDTO nuevoCliente) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void delete(int id_usuario_a_eliminar) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<UsuarioDTO> readAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void update(UsuarioDTO cliente_a_modificar) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

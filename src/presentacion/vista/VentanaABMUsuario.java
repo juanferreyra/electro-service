@@ -24,6 +24,10 @@ public class VentanaABMUsuario extends JFrame {
 	private JTable tablaUsuario;
 	private DefaultTableModel modelUsuario;
 	private String[] nombreColumnas = { "Nombre", "Apellido", "Perfil" };
+	private JComboBox <String> perfil_comboBox ;
+	private JButton cancelar_btn;
+	private JButton guardar_btn;
+	private JButton eliminarItem_btn;
 
 	public VentanaABMUsuario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +67,7 @@ public class VentanaABMUsuario extends JFrame {
 		lblPerfil.setBounds(123, 199, 71, 14);
 		contentPane.add(lblPerfil);
 
-		JComboBox perfil_comboBox = new JComboBox();
+		perfil_comboBox = new JComboBox();
 		perfil_comboBox.setBounds(190, 193, 392, 20);
 		contentPane.add(perfil_comboBox);
 
@@ -73,11 +77,11 @@ public class VentanaABMUsuario extends JFrame {
 		title_lbl.setBounds(34, 24, 712, 14);
 		contentPane.add(title_lbl);
 
-		JButton cancelar_btn = new JButton("Cancelar");
+		cancelar_btn = new JButton("Cancelar");
 		cancelar_btn.setBounds(664, 392, 89, 23);
 		getContentPane().add(cancelar_btn);
 
-		JButton guardar_btn = new JButton("Guardar");
+		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(565, 392, 89, 23);
 		getContentPane().add(guardar_btn);
 
@@ -89,8 +93,50 @@ public class VentanaABMUsuario extends JFrame {
 		tablaUsuario = new JTable(modelUsuario);
 		repuesto_scrollPane.setViewportView(tablaUsuario);
 
-		JButton eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar Item");
 		eliminarItem_btn.setBounds(434, 392, 121, 23);
 		getContentPane().add(eliminarItem_btn);
 	}
+
+	public JTextField getNombre_txt() {
+		return nombre_txt;
+	}
+
+	public JTextField getApellido_txt() {
+		return apellido_txt;
+	}
+
+	public JPasswordField getPass_txt() {
+		return pass_txt;
+	}
+
+	public JTable getTablaUsuario() {
+		return tablaUsuario;
+	}
+
+	public DefaultTableModel getModelUsuario() {
+		return modelUsuario;
+	}
+
+	public String[] getNombreColumnas() {
+		return nombreColumnas;
+	}
+
+	public JComboBox<String> getPerfil_comboBox() {
+		return perfil_comboBox;
+	}
+
+	public JButton getCancelar_btn() {
+		return cancelar_btn;
+	}
+
+	public JButton getGuardar_btn() {
+		return guardar_btn;
+	}
+
+	public JButton getEliminarItem_btn() {
+		return eliminarItem_btn;
+	}
+	
+	
 }
