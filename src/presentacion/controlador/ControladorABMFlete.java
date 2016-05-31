@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.JTextComponent;
 
+import com.toedter.calendar.JDateChooser;
+
 import dto.FleteDTO;
 import persistencia.dao.FleteDAO;
 import presentacion.vista.VentanaABMFlete;
@@ -118,14 +120,14 @@ public class ControladorABMFlete implements ActionListener {
 
 		this.ventanaABMFlete.setVisible(true);
 
-		this.txts = new ArrayList<Object>();
+		txts = new ArrayList<Object>();
 
 		txts.add(this.ventanaABMFlete.getNombre_txf());// 0
 		txts.add(this.ventanaABMFlete.getDocumento_txf());// 1
 		txts.add(this.ventanaABMFlete.getModeloTransporte_txf());// 2
 		txts.add(this.ventanaABMFlete.getPatenteTransporte_txf());// 3
 		txts.add(this.ventanaABMFlete.getTelefono_txf());// 4
-		txts.add(this.ventanaABMFlete.getDateChooser().getDate());// 5
+		txts.add(this.ventanaABMFlete.getDateChooser());// 5
 
 		cargarTablaFlete();
 		mouseClickedOnTable();
@@ -135,9 +137,9 @@ public class ControladorABMFlete implements ActionListener {
 	private void mouseClickedOnTable() {
 		this.ventanaABMFlete.getTablaFlete().addMouseListener(new MouseListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mouseClicked(MouseEvent e) {
 				// 1 es igual a boton izquierdo del mouse
-				if (arg0.getButton() == 1) {
+				if (e.getButton() == 1) {
 					cargartxts();
 				}
 
@@ -168,18 +170,19 @@ public class ControladorABMFlete implements ActionListener {
 	private void cargartxts() {
 		int filaSeleccionada = this.ventanaABMFlete.getTablaFlete().getSelectedRow();
 
-		((JTextComponent) this.txts.get(0))
+		((JTextField) this.txts.get(0))
 				.setText((String) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 0));
-		((JTextComponent) this.txts.get(1))
-				.setText((String) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 1));
-		((JTextComponent) this.txts.get(2))
+		((JTextField) this.txts.get(1))
+				.setText("" + this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 1));
+		((JTextField) this.txts.get(2))
 				.setText((String) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 2));
-		((JTextComponent) this.txts.get(3))
+		((JTextField) this.txts.get(3))
 				.setText((String) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 3));
-		((JTextComponent) this.txts.get(4))
+		((JTextField) this.txts.get(4))
 				.setText((String) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 4));
-		((JTextComponent) this.txts.get(5))
-				.setText((String) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 5));
+		((JDateChooser) this.txts.get(5))
+				.setDate((Date) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 5));
+
 	}
 
 	private void ObtenerFilas(ArrayList<FleteDTO> fletes) {
