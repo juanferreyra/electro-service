@@ -21,7 +21,7 @@ public class MarcaDAO {
 	private static final String findByDetalle = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true AND detalle = ?;";
 	
 	private static final String buscarMarcasPorIdProveedor =" SELECT m.id , m.detalle FROM 20161_service_g2.marca_producto m "
-			+ "left join 20161_service_g2.proveedor_marca pm  on (m.id = pm.idmarca) where pm.idproveedor = 1  ; ";
+			+ "left join 20161_service_g2.proveedor_marca pm  on (m.id = pm.idmarca) where pm.idproveedor = ?  ; ";
 	
 	private static Conexion conexion = Conexion.getConexion();
 
@@ -86,10 +86,12 @@ public class MarcaDAO {
 	
 	public List<MarcaDTO> buscarMarcasPorIdProvedor(int idProveedor) {
 		PreparedStatement statement;
+		
 		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<MarcaDTO> marcas = new ArrayList<MarcaDTO>();
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(buscarMarcasPorIdProveedor);
+			statement.setInt(1, idProveedor);
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
