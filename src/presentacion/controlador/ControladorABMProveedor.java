@@ -13,6 +13,7 @@ import dto.ClienteDTO;
 import dto.MarcaDTO;
 import dto.ProveedorDTO;
 import modelo.Cliente;
+import modelo.Marca;
 import modelo.Proveedor;
 import persistencia.dao.MarcaDAO;
 import presentacion.vista.VentanaABMProveedor;
@@ -25,7 +26,7 @@ public class ControladorABMProveedor implements ActionListener{
 	private List<ProveedorDTO> proveedores_en_tabla;
 	private List<JTextField> txts;
 	private List<MarcaDTO>marcas_en_tabla;
-	private MarcaDAO marca;
+
 	
 	public ControladorABMProveedor(VentanaABMProveedor ventanaABMProveedor) {
 		
@@ -39,7 +40,6 @@ public class ControladorABMProveedor implements ActionListener{
 	public void inicializar() {
 
 		this.proveedor = new Proveedor();
-		this.marca = new MarcaDAO();
 
 		this.ventanaABMProveedor.setVisible(true);
 
@@ -153,7 +153,7 @@ public class ControladorABMProveedor implements ActionListener{
 		this.ventanaABMProveedor.getModelMarcas().setColumnCount(0);
 		this.ventanaABMProveedor.getModelMarcas().setColumnIdentifiers(this.ventanaABMProveedor.getNombreColumnasMarcas());
 
-		this.marcas_en_tabla = marca.buscarMarcasPorIdProvedor((int)this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
+		this.marcas_en_tabla = proveedor.obtenerMarcasDelProveedor((int)this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
 
 		for (int i = 0; i < this.marcas_en_tabla.size(); i++) {
 

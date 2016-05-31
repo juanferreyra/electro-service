@@ -84,7 +84,7 @@ public class MarcaDAO {
 		return marcas;
 	}
 	
-	public List<MarcaDTO> buscarMarcasPorIdProvedor(int idProveedor) {
+	public ArrayList<MarcaDTO> buscarMarcasPorIdProvedor(int idProveedor) {
 		PreparedStatement statement;
 		
 		ResultSet resultSet; // Guarda el resultado de la query
