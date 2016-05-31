@@ -48,6 +48,8 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		cargarCombo();
 		mouseClickedOnTable();
 		
+		this.ventanaABMUsuario.getPerfil_comboBox().setSelectedIndex(-1);
+		
 	}
 	
 	
@@ -108,6 +110,13 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		this.txts.get(0).setText((String) this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 1));
 		this.txts.get(1).setText(String.valueOf(this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 2)));
 		this.txts.get(2).setText(String.valueOf(this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 3)));
+		
+		// carga de combo
+		PerfilDTO perfilSeleccionado = new PerfilDTO(obtenerPerfil((int)this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 4))); 
+		
+		this.ventanaABMUsuario.getPerfil_comboBox().setSelectedItem(perfilSeleccionado.getId() +" "+ perfilSeleccionado.getPerfil());
+		
+		
 
 	}
 
@@ -124,15 +133,25 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 			Object[] fila = { this.clientes_en_tabla.get(i).getId(),
 					this.clientes_en_tabla.get(i).getNombre(),
 					this.clientes_en_tabla.get(i).getApellido(),
-					buscarPefil(this.clientes_en_tabla.get(i).getIdperfil())} ;
+					buscarPefil(this.clientes_en_tabla.get(i).getIdperfil()),
+					this.clientes_en_tabla.get(i).getIdperfil()} ;
 
 			this.ventanaABMUsuario.getModelUsuario().addRow(fila);
 
 		}
 
 		ocultarColumnaId();
+		ocultarColumnaIdPerfil();
 		
 	}
+	
+	private PerfilDTO obtenerPerfil(int index) {
+
+		PerfilDTO perfil = usuario.buscarPerfil(index);
+
+		return perfil;
+	}
+
 
 	private String buscarPefil(int index) {
 		
@@ -147,6 +166,15 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		this.ventanaABMUsuario.getTablaUsuario().getColumnModel().getColumn(0).setMinWidth(0);
 		this.ventanaABMUsuario.getTablaUsuario().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
 		this.ventanaABMUsuario.getTablaUsuario().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+		
+	}
+	
+	private void ocultarColumnaIdPerfil() {
+		
+		this.ventanaABMUsuario.getTablaUsuario().getColumnModel().getColumn(4).setMaxWidth(0);
+		this.ventanaABMUsuario.getTablaUsuario().getColumnModel().getColumn(4).setMinWidth(0);
+		this.ventanaABMUsuario.getTablaUsuario().getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
+		this.ventanaABMUsuario.getTablaUsuario().getTableHeader().getColumnModel().getColumn(4).setMinWidth(0);
 		
 	}
 
@@ -274,6 +302,8 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 			jt.setText("");
 
 		}
+		
+		this.ventanaABMUsuario.getPerfil_comboBox().setSelectedIndex(-1);
 
 		
 	}

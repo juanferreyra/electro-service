@@ -23,7 +23,7 @@ public class VentanaABMUsuario extends JFrame {
 	private JPasswordField pass_txt;
 	private JTable tablaUsuario;
 	private DefaultTableModel modelUsuario;
-	private String[] nombreColumnas = { "id","Nombre", "Apellido", "Perfil" };
+	private String[] nombreColumnas = { "id","Nombre", "Apellido", "Perfil", "idPerfil" };
 	private JComboBox <String> perfil_comboBox ;
 	private JButton limpiar_btn;
 	private JButton guardar_btn;
