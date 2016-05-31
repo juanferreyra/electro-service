@@ -168,7 +168,8 @@ public class ControladorABMCliente implements ActionListener {
 
 			this.limpiartxts();
 			this.ventanaABMCliente.getTablaClientes().clearSelection();
-		} else if (e.getSource() == this.ventanaABMCliente.getGuardar_btn()) {
+			
+		} else if (e.getSource() == this.ventanaABMCliente.getGuardar_btn()) {// boton guardar
 
 			// si esta seleccionado de la tabla
 			// modificar cliente
@@ -190,7 +191,7 @@ public class ControladorABMCliente implements ActionListener {
 				} else {
 
 					JOptionPane.showMessageDialog(this.ventanaABMCliente,
-							"No se permiten campos vacíos. Por favor, vuelva a intentarlo.");
+							"No se permiten campos vacï¿½os. Por favor, vuelva a intentarlo.");
 				}
 
 			} else {
@@ -209,7 +210,7 @@ public class ControladorABMCliente implements ActionListener {
 				} else {
 
 					JOptionPane.showMessageDialog(this.ventanaABMCliente,
-							"No se permiten campos vacíos. Por favor, vuelva a intentarlo.");
+							"No se permiten campos vacï¿½os. Por favor, vuelva a intentarlo.");
 				}
 
 			}
