@@ -19,6 +19,10 @@ public class MarcaDAO {
 	private static final String update = "UPDATE marca_producto SET detalle = ?  WHERE id = ? ;";
 	private static final String find = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true AND id = ?;";
 	private static final String findByDetalle = "SELECT id, detalle, idusuario FROM marca_producto WHERE habilitado = true AND detalle = ?;";
+	
+	private static final String buscarMarcasPorIdProveedor =" SELECT m.id , m.detalle FROM 20161_service_g2.marca_producto m "
+			+ "left join 20161_service_g2.proveedor_marca pm  on (m.id = pm.idmarca) where pm.idproveedor = 1  ; ";
+	
 	private static Conexion conexion = Conexion.getConexion();
 
 	public boolean insert(MarcaDTO marca) {
@@ -68,6 +72,28 @@ public class MarcaDAO {
 			while (resultSet.next()) {
 				marcas.add(new MarcaDTO(resultSet.getInt("id"), resultSet.getString("detalle"),
 						resultSet.getInt("idusuario")));
+			}
+		} catch (SQLException e) {
+			System.out.println("hubo un error");
+			e.printStackTrace();
+		} finally // Se ejecuta siempre
+		{
+			Conexion.cerrarConexion();
+		}
+
+		return marcas;
+	}
+	
+	public List<MarcaDTO> buscarMarcasPorIdProvedor(int idProveedor) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<MarcaDTO> marcas = new ArrayList<MarcaDTO>();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(buscarMarcasPorIdProveedor);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				marcas.add(new MarcaDTO(resultSet.getInt("id"), resultSet.getString("detalle"),1));
 			}
 		} catch (SQLException e) {
 			System.out.println("hubo un error");

@@ -37,6 +37,9 @@ public class VentanaABMProveedor extends JFrame{
 	
 	
 	public VentanaABMProveedor() {
+		
+		setBounds(100, 100, 820, 706);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		JLabel proveedor_lbl = new JLabel("Proveedores");
@@ -223,6 +226,12 @@ public class VentanaABMProveedor extends JFrame{
 	public JButton getLimpiar_btn() {
 		return limpiar_btn;
 	}
+
+
+	public JTable getTablaProveedores() {
+		return tablaProveedores;
+	}
+	
 
 	
 	
