@@ -1,6 +1,6 @@
 package dto;
 
-public class ItemPresupuestoRepuestoDTO {
+public class ItemRepuestoDTO {
 	private int id;
 	private int idrepuesto;
 	private String detalle;
@@ -8,7 +8,7 @@ public class ItemPresupuestoRepuestoDTO {
 	private Float precioUnitario;
 	private Float precio;
 	
-	public ItemPresupuestoRepuestoDTO(int id ,int idrepuesto,String detalle ,int cantidad ,Float precioUnitario ,Float precio ) {
+	public ItemRepuestoDTO(int id ,int idrepuesto,String detalle ,int cantidad ,Float precioUnitario ,Float precio ) {
 		this.id = id;
 		this.idrepuesto = idrepuesto;
 		this.detalle = detalle;
