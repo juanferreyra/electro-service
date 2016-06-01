@@ -11,11 +11,11 @@ import persistencia.conexion.Conexion;
 
 public class FleteDAO {
 	private static final String insert = "INSERT INTO flete (`nrodoc`, `nombre_conductor`, `modelo`, `patente`, `telefono`, `vto_licencia`, "
-			+ "`fecha_creacion`, `idusuario`, `habilitado`)" + " VALUES (?, ?, ?, ?, ?, now(), now(), ?, '1'); ";
+			+ "`fecha_creacion`, `idusuario`, `habilitado`)" + " VALUES (?, ?, ?, ?, ?, ?, now(), ?, '1'); ";
 	private static final String readall = "SELECT * FROM flete WHERE habilitado=true";
 	private static final String find = "SELECT * FROM flete WHERE habilitado=true AND id=?";
 	private static final String findDNI = "SELECT * FROM flete WHERE habilitado=true AND nrodoc=?";
-	private static final String update = "UPDATE flete SET nrodoc = ? AND nombre_conductor= ? AND modelo= ? AND patente= ? AND telefono= ? AND vto_licencia= ? AND fecha_creacion=now() AND idusuario=0 AND habilitado=1  WHERE id = ? ;";
+	private static final String update = "UPDATE flete SET nrodoc = ? AND nombre_conductor= ? AND modelo= ? AND patente= ? AND telefono= ? AND vto_licencia= ? AND fecha_creacion=now() AND idusuario=? AND habilitado=1  WHERE id = ? ;";
 	private static final String delete = "UPDATE flete SET habilitado='0' WHERE id = ?";
 
 	private Conexion conexion = Conexion.getConexion();
@@ -50,11 +50,13 @@ public class FleteDAO {
 			statement.setString(3, flete_a_modificar.getModelo());
 			statement.setString(4, flete_a_modificar.getPatente());
 			statement.setString(5, flete_a_modificar.getTelefono());
-			statement.setDate(6, (Date) flete_a_modificar.getVtoLicencia());
-			statement.setInt(2, flete_a_modificar.getId());
+			statement.setDate(6, (Date) new java.sql.Date(flete_a_modificar.getVtoLicencia().getTime()));
+			statement.setInt(7, flete_a_modificar.getIdusuario());
+			statement.setInt(8, flete_a_modificar.getId());
 
-			if (statement.executeUpdate() > 0) // Si se ejecuta devuelvo true
+			if (statement.executeUpdate() > 0) { // Si se ejecuta devuelvo true
 				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally // Se ejecuta siempre
@@ -99,9 +101,8 @@ public class FleteDAO {
 			statement.setString(3, flete.getModelo());
 			statement.setString(4, flete.getPatente());
 			statement.setString(5, flete.getTelefono());
-			statement.setDate(6, (Date) flete.getVtoLicencia());
-			statement.setDate(7, (Date) flete.getFecha_creacion());
-			statement.setInt(8, flete.getIdusuario());
+			statement.setDate(6, (Date) new java.sql.Date(flete.getVtoLicencia().getTime()));
+			statement.setInt(7, flete.getIdusuario());
 
 			if (statement.executeUpdate() > 0)
 				return true;

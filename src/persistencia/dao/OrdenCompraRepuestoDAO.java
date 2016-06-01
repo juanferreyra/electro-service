@@ -5,28 +5,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import dto.ItemRepuestoDTO;
-import dto.PresupuestoRepuestoDTO;
+import dto.OrdenCompraRepuestoDTO;
 import persistencia.conexion.Conexion;
 
-public class PresupuestoRepuestoDAO {
+public class OrdenCompraRepuestoDAO {
 	
-	private static final String insert = "INSERT INTO presupuesto_repuestos (id,idpresupuesto,idrepuesto,"
-			+ "cantidad,fecha_creacion,habilitado) VALUES (?,?,?,?,now(),true)";
+	private static final String insert = "INSERT INTO orden_compra_repuestos (idorden_compra,idrepuesto,"
+			+ "cantidad,precio_unitario,fecha_creacion,habilitado) VALUES (?,?,?,?,now(),true);";
 	
-	private static final String find = "SELECT pr.id, pr.idrepuesto, r.detalle, pr.cantidad, r.precio, pr.cantidad * r.precio as total FROM presupuesto_repuestos pr LEFT JOIN repuesto r ON(pr.idrepuesto = r.id) WHERE pr.idpresupuesto = ? AND pr.habilitado=true;";
+	private static final String find = "SELECT ocr.id, ocr.idrepuesto, r.detalle, ocr.cantidad, r.precio, "
+			+ "ocr.cantidad * r.precio AS totalFROM orden_compra_repuestos ocr LEFT JOIN repuesto r ON "
+			+ "(ocr.idrepuesto = r.id) WHERE ocr.idorden_compra = ? AND ocr.habilitado = TRUE;";
 	
 	private Conexion conexion = Conexion.getConexion();
 
-	public boolean insert(PresupuestoRepuestoDTO presupuestoRepuesto) {
+	public boolean insert(OrdenCompraRepuestoDTO OrdenCompraRepuestoDTO) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
-			
-			statement.setInt(1, presupuestoRepuesto.getId());
-			statement.setInt(2, presupuestoRepuesto.getIdPresupuesto());
-			statement.setInt(3, presupuestoRepuesto.getIdComponente());
-			statement.setInt(4, presupuestoRepuesto.getCantidad());
+			statement.setInt(1, OrdenCompraRepuestoDTO.getIdOrdenCompra());
+			statement.setInt(2, OrdenCompraRepuestoDTO.getIdComponente());
+			statement.setInt(3, OrdenCompraRepuestoDTO.getCantidad());
+			statement.setFloat(4, OrdenCompraRepuestoDTO.getPrecio_unitario());
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -42,7 +43,7 @@ public class PresupuestoRepuestoDAO {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
-		ArrayList<ItemRepuestoDTO> presupuestoRepuesto = new ArrayList<ItemRepuestoDTO>();
+		ArrayList<ItemRepuestoDTO> ordenCompraRepuesto = new ArrayList<ItemRepuestoDTO>();
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(find);
@@ -50,7 +51,7 @@ public class PresupuestoRepuestoDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				presupuestoRepuesto.add(new ItemRepuestoDTO(
+				ordenCompraRepuesto.add(new ItemRepuestoDTO(
 						resultSet.getInt("id"),
 						resultSet.getInt("idrepuesto"),
 						resultSet.getString("detalle"),
@@ -63,7 +64,7 @@ public class PresupuestoRepuestoDAO {
 		} finally {
 			Conexion.cerrarConexion();
 		}
-		return presupuestoRepuesto;
+		return ordenCompraRepuesto;
 	}
 
 }

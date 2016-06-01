@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.IngresoLogDTO;
-import dto.ItemPresupuestoRepuestoDTO;
+import dto.ItemRepuestoDTO;
 import dto.RepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.EmailReparacion;
@@ -202,7 +202,7 @@ public class ControladorReparacion implements ActionListener {
 		int cantidad = Integer.parseInt(ventanaReparacion.getCantidad_lbl().getText());
 		RepuestoDTO resp = presupuesto
 				.buscarRepuesto((String) this.ventanaReparacion.getComponente_ComboBox().getSelectedItem());
-		ItemPresupuestoRepuestoDTO itemRepuesto = new ItemPresupuestoRepuestoDTO(-1, resp.getId(), resp.getDetalle(),
+		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1, resp.getId(), resp.getDetalle(),
 				cantidad, resp.getPrecioUnitario(), resp.getPrecioUnitario() * cantidad);
 		// me fijo si existe en la tabla
 		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
@@ -223,7 +223,7 @@ public class ControladorReparacion implements ActionListener {
 		modelTable = new DefaultTableModel();
 		modelTable.setColumnIdentifiers(ventanaReparacion.getComponentes_nombreColumnas());
 
-		List<ItemPresupuestoRepuestoDTO> repuestosAgregados = presupuesto.getListaDeRepuestos();
+		List<ItemRepuestoDTO> repuestosAgregados = presupuesto.getListaDeRepuestos();
 
 		for (int i = 0; i < repuestosAgregados.size(); i++) {
 			Object[] fila = { repuestosAgregados.get(i).getId(), repuestosAgregados.get(i).getDetalle(),

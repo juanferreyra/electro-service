@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dto.RepuestoDTO;
 import dto.IngresoLogDTO;
-import dto.ItemPresupuestoRepuestoDTO;
+import dto.ItemRepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.EmailPresupuesto;
 import modelo.Ingreso;
@@ -387,7 +387,7 @@ public class ControladorPresupuesto implements ActionListener{
 		modelTable = new DefaultTableModel();
 		modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
 		 
-		List<ItemPresupuestoRepuestoDTO> repuestosAgregados = presupuesto.getListaDeRepuestos();
+		List<ItemRepuestoDTO> repuestosAgregados = presupuesto.getListaDeRepuestos();
 		
 		for(int i = 0; i < repuestosAgregados.size(); i++){
 			Object[] fila = {repuestosAgregados.get(i).getId(),repuestosAgregados.get(i).getDetalle(),
@@ -432,7 +432,7 @@ public class ControladorPresupuesto implements ActionListener{
 		//agrego el repuesto al objeto Presupuesto con su lista
 		int cantidad = Integer.parseInt(ventanaPresupuesto.getCantidad_lbl().getText());
 		RepuestoDTO resp = presupuesto.buscarRepuesto((String) this.ventanaPresupuesto.getComponente_ComboBox().getSelectedItem());
-		ItemPresupuestoRepuestoDTO itemRepuesto = new ItemPresupuestoRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, resp.getPrecioUnitario(),resp.getPrecioUnitario() * cantidad);
+		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, resp.getPrecioUnitario(),resp.getPrecioUnitario() * cantidad);
 		//me fijo si existe en la tabla
 		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
 			if(presupuesto.getListaDeRepuestos().get(i).getDetalle().equals(resp.getDetalle())) {
