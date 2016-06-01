@@ -32,5 +32,28 @@ public class Proveedor {
 		return marcaDAO.buscarMarcasPorIdProvedor(id_proveedor);
 		
 	}
+	
+	public void borrarProveedor(int id_proveedor) {
+		proveedorDAO.borrarProveedor(id_proveedor);
+		
+	}
+	
+	public void AgregarProveedor(ProveedorDTO nuevo_proveedor){
+		proveedorDAO.insert(nuevo_proveedor);
+	}
+
+
+
+	public void modificarProveedor(ProveedorDTO Proveedor_a_modificar) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	public void agregarCliente(ProveedorDTO obtenerProveedor) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

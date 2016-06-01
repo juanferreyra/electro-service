@@ -6,16 +6,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import dto.ClienteDTO;
 import dto.MarcaDTO;
 import dto.ProveedorDTO;
-import modelo.Cliente;
-import modelo.Marca;
 import modelo.Proveedor;
-import persistencia.dao.MarcaDAO;
 import presentacion.vista.VentanaABMProveedor;
 
 
@@ -172,17 +171,206 @@ public class ControladorABMProveedor implements ActionListener{
 		
 		
 	}
-
-
 	
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource() == this.ventanaABMProveedor.getLimpiar_btn()){// boton limpiar
+
+			this.limpiartxts();
+			this.ventanaABMProveedor.getTablaProveedores().clearSelection();
+			vaciarTablaMarcas();
+
+		}else if (e.getSource() == this.ventanaABMProveedor.getEliminarItem_btn()) {// boton eliminar
+
+			// si la tabla no esta vacia
+			if (this.ventanaABMProveedor.getTablaProveedores().getRowCount() != 0) {
+
+				// si se selecciona una fila
+				if (this.ventanaABMProveedor.getTablaProveedores().getSelectedRow() != -1) {
+
+					int filaSeleccionada = this.ventanaABMProveedor.getTablaProveedores().getSelectedRow();
+					int id_cliente_a_eliminar = (int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0);
+
+					this.proveedor.borrarProveedor(id_cliente_a_eliminar);
+					cargarTablaProveedores();;
+					limpiartxts();
+					vaciarTablaMarcas();
+
+				} else {
+
+					JOptionPane.showMessageDialog(this.ventanaABMProveedor, "Debe seleccionar un proveedor a eliminar",
+							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+				}
+			} else {
+
+				JOptionPane.showMessageDialog(this.ventanaABMProveedor, "No hay proveedores a eliminar", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} else if (e.getSource() == this.ventanaABMProveedor.getGuardar_btn()) {// boton guardar
+
+			// si esta seleccionado de la tabla
+			// modificar provvedor
+			if (this.ventanaABMProveedor.getTablaProveedores().getSelectedRow() != -1) {
+
+				int filaSeleccionada = this.ventanaABMProveedor.getTablaProveedores().getSelectedRow();
+
+				if (!isTxtsVacios()) {
+
+					if (isTxtsValidos()) {
+
+						proveedor.modificarProveedor(obtenerProveedor(
+								(int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0)));
+
+						limpiartxts();
+						cargarTablaProveedores();
+						vaciarTablaMarcas();
+						
+					}
+
+				} else {
+
+					JOptionPane.showMessageDialog(this.ventanaABMProveedor,
+							"No se permiten campos vacios. Por favor, vuelva a intentarlo.");
+				}
+
+			} else {
+				// nuevo cliente
+
+				if (!isTxtsVacios()) {
+
+					if (isTxtsValidos()) {
+
+						proveedor.agregarCliente(obtenerProveedor(0));
+
+						limpiartxts();
+						cargarTablaProveedores();
+						vaciarTablaMarcas();
+					}
+
+				} else {
+
+					JOptionPane.showMessageDialog(this.ventanaABMProveedor,
+							"No se permiten campos vacios. Por favor, vuelva a intentarlo.");
+				}
+
+			}
+		}
+
+	}
+	
+	private ProveedorDTO obtenerProveedor(int valueAt) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private boolean isTxtsValidos() {
+		
+		boolean ret = true;
+
+		if (!soloNumeros(this.txts.get(1).getText())) { // valida cuit
+
+			JOptionPane.showMessageDialog(this.ventanaABMProveedor,
+					"Disculpe, has ingresado un nro de cuit incorrecto.");
+			return false;
+
+		} else {
+
+			ret = soloNumeros(this.txts.get(1).getText());
+		}
+
+		if (!validarEmail(this.txts.get(3).getText())) { // valida email
+
+			JOptionPane.showMessageDialog(this.ventanaABMProveedor, "Disculpe, has ingresado EMAIL incorrecto.");
+			return false;
+
+		} else {
+
+			ret = validarEmail(this.txts.get(3).getText());
+
+		}
+		
+		if (!validarEmail(this.txts.get(6).getText())) { // valida email Contacto
+
+			JOptionPane.showMessageDialog(this.ventanaABMProveedor, "Disculpe, has ingresado EMAIL CONTACTO incorrecto.");
+			return false;
+
+		} else {
+
+			ret = validarEmail(this.txts.get(6).getText());
+
+		}
+		
+		if (!validarEmail(this.txts.get(7).getText())) { // valida email pedido
+
+			JOptionPane.showMessageDialog(this.ventanaABMProveedor, "Disculpe, has ingresado EMAIL PEDIDO incorrecto.");
+			return false;
+
+		} else {
+
+			ret = validarEmail(this.txts.get(7).getText());
+
+		}
+		
+
+		return ret;
+
+	}
+
+	private boolean isTxtsVacios() {
+
+		boolean ret = false;
+
+		for (JTextField jt : txts) {
+
+			if (jt.getText().isEmpty()) {
+
+				ret = true;
+			}
+		}
+		return ret;
+	}
+
+	private void vaciarTablaMarcas() {
+		
+		for(int i = this.ventanaABMProveedor.getModelMarcas().getRowCount() - 1; i >= 0; i --){
+			this.ventanaABMProveedor.getModelMarcas().removeRow(i);
+			
+		}
+		
+	}
+
+	private void limpiartxts() {
+		
+		for (JTextField jt : txts) {
+			jt.setText("");
+		}
 		
 	}
 	
+	private boolean soloNumeros(String texto) {
+		try {
+			Integer.parseInt(texto);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	private boolean validarEmail(String email) {
+
+		final String patternEemail = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+		// Compiles the given regular expression into a pattern.
+		Pattern pattern = Pattern.compile(patternEemail);
+
+		// Match the given input against this pattern
+		Matcher matcher = pattern.matcher(email);
+
+		return matcher.matches();
+	}
+
 	public static void main(String[] args) {
 		VentanaABMProveedor abm = new VentanaABMProveedor();
 		ControladorABMProveedor c =new ControladorABMProveedor(abm);
