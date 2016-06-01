@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.JTextComponent;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -39,13 +37,16 @@ public class ControladorABMFlete implements ActionListener {
 			if (this.ventanaABMFlete.getTablaFlete().getSelectedRow() >= 0) {
 				int fila = this.ventanaABMFlete.getTablaFlete().getSelectedRow();
 				eliminarFlete(fila);
+				this.limpiartxts();
+				this.ventanaABMFlete.getTablaFlete().clearSelection();
 			}
 		} else if (e.getSource() == this.ventanaABMFlete.getGuardar_btn()) {
 			if (!this.ventanaABMFlete.getNombre_txf().getText().equals("")
 					&& !this.ventanaABMFlete.getDocumento_txf().equals("")
 					&& !this.ventanaABMFlete.getModeloTransporte_txf().equals("")
 					&& !this.ventanaABMFlete.getPatenteTransporte_txf().equals("")
-					&& !this.ventanaABMFlete.getTelefono_txf().equals("")) {
+					&& !this.ventanaABMFlete.getTelefono_txf().equals("")
+					&& this.ventanaABMFlete.getDateChooser().getDate() != null) {
 				// Si esta seleccionado, modificar
 				if (this.ventanaABMFlete.getTablaFlete().getSelectedRow() >= 0) {
 
@@ -62,7 +63,6 @@ public class ControladorABMFlete implements ActionListener {
 					flete.setVtoLicencia(this.ventanaABMFlete.getDateChooser().getDate());
 
 					fleteDAO.update(flete);
-					this.limpiartxts();
 					cargarTablaFlete();
 
 				} else {
@@ -74,16 +74,16 @@ public class ControladorABMFlete implements ActionListener {
 							this.ventanaABMFlete.getDateChooser().getDate());
 				}
 				this.limpiartxts();
-			} else if (e.getSource() == this.ventanaABMFlete.getLimpiar_btn()) {
-				limpiartxts();
 				this.ventanaABMFlete.getTablaFlete().clearSelection();
 			}
+		} else if (e.getSource() == this.ventanaABMFlete.getLimpiar_btn()) {
+			limpiartxts();
+			this.ventanaABMFlete.getTablaFlete().clearSelection();
 		}
 	}
 
 	private void ingresarFlete(String nombre, int documento, String modelo, String patente, String telefono,
 			Date vto_licencia) {
-
 		this.fleteDAO.insert(new FleteDTO(documento, nombre, modelo, patente, telefono, vto_licencia));
 		cargarTablaFlete();
 	}
@@ -95,9 +95,13 @@ public class ControladorABMFlete implements ActionListener {
 	}
 
 	private void limpiartxts() {
-
 		for (Object jt : txts) {
-			((JTextComponent) jt).setText("");
+			if (jt.getClass() == JTextField.class) {
+
+				((JTextField) jt).setText("");
+			} else {
+				((JDateChooser) jt).setDate(null);
+			}
 
 		}
 	}
