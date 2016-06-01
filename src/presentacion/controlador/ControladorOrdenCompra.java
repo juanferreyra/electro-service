@@ -14,23 +14,23 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import dto.RepuestoDTO;
-import dto.ItemPresupuestoRepuestoDTO;
+import dto.ItemRepuestoDTO;
+import dto.PerfilDTO;
 import dto.UsuarioDTO;
-import modelo.Ingreso;
-import modelo.Presupuesto;
+import modelo.OrdenCompra;
 import presentacion.vista.VentanaOrdenCompra;
-import presentacion.vista.VentanaPresupuesto;
 
 public class ControladorOrdenCompra implements ActionListener{
 	
 	private VentanaOrdenCompra ventanaOrdenCompra;
-	private Presupuesto presupuesto;
+	private OrdenCompra ordenCompra;
 	private UsuarioDTO usuarioLogueado;
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private Integer cantidad = 0;
@@ -38,23 +38,23 @@ public class ControladorOrdenCompra implements ActionListener{
 	@SuppressWarnings("unused")
 	private String perfil;
 	
-	public ControladorOrdenCompra( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso,
-			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
+	public ControladorOrdenCompra( VentanaOrdenCompra VentanaOrdenCompra, UsuarioDTO usuario) {
 		this.usuarioLogueado = usuario;
 		this.perfil = usuario.getPerfilDTO().getPerfil();
+		this.ventanaOrdenCompra = VentanaOrdenCompra;
 	}
 	
 	public void inicializar() {
 		ventanaOrdenCompra.setVisible(true);
 		ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
-		cargarComboComponentes();
 	}
 
-	private void cargarComboComponentes() {
+	private void cargarComboComponentes(int idproveedor) {
 		
-		for (RepuestoDTO c : presupuesto.obtenerRepuestos()){
+		//TODO::aca cargaria los repuestos dependiendo de las marcas del proveedor
+		/*for (RepuestoDTO c : ordenCompra.obtenerRepuestos()){
 			this.ventanaOrdenCompra.getComponente_ComboBox().addItem(c.getDetalle());
-		}
+		}*/
 	}
 	
 	@SuppressWarnings("unused")
@@ -138,8 +138,8 @@ public class ControladorOrdenCompra implements ActionListener{
 			
 		}else{
 			
-			this.presupuesto.getPresupuesto().setImporteTotal(Float.parseFloat(this.ventanaOrdenCompra.getValorPresupuestado_txf().getText()));
-			this.presupuesto.getPresupuesto().setIdUsuario(this.usuarioLogueado.getId());
+			this.ordenCompra.getOrdenCompraDTO().setImporte_total(Float.parseFloat(this.ventanaOrdenCompra.getValorPresupuestado_txf().getText()));
+			this.ordenCompra.getOrdenCompraDTO().setIdusuario(this.usuarioLogueado.getId());
 			//TODO aca deberia guardar la orden de compra y mostrar el boton de imprimir
 		}
 	}
@@ -176,7 +176,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		modelTable = new DefaultTableModel();
 		modelTable.setColumnIdentifiers(ventanaOrdenCompra.getComponentes_nombreColumnas());
 		 
-		List<ItemPresupuestoRepuestoDTO> repuestosAgregados = presupuesto.getListaDeRepuestos();
+		ArrayList<ItemRepuestoDTO> repuestosAgregados = ordenCompra.getListaDeRepuestos();
 		
 		for(int i = 0; i < repuestosAgregados.size(); i++){
 			Object[] fila = {repuestosAgregados.get(i).getId(),repuestosAgregados.get(i).getDetalle(),
@@ -198,9 +198,9 @@ public class ControladorOrdenCompra implements ActionListener{
 			int seleccionado = ventanaOrdenCompra.getComponentes_table().getSelectedRow();
 			String nombre = ventanaOrdenCompra.getComponentes_table().getValueAt(seleccionado, 1).toString();
 			
-			for (int i = 0; i < this.presupuesto.getListaDeRepuestos().size(); i++) {
-				if(this.presupuesto.getListaDeRepuestos().get(i).getDetalle().equals(nombre)) {
-					this.presupuesto.getListaDeRepuestos().remove(i);
+			for (int i = 0; i < this.ordenCompra.getListaDeRepuestos().size(); i++) {
+				if(this.ordenCompra.getListaDeRepuestos().get(i).getDetalle().equals(nombre)) {
+					this.ordenCompra.getListaDeRepuestos().remove(i);
 				}
 			}
 			
@@ -219,21 +219,28 @@ public class ControladorOrdenCompra implements ActionListener{
 		Boolean existe = false;
 		//agrego el repuesto al objeto Presupuesto con su lista
 		int cantidad = Integer.parseInt(ventanaOrdenCompra.getCantidad_lbl().getText());
-		RepuestoDTO resp = presupuesto.buscarRepuesto((String) this.ventanaOrdenCompra.getComponente_ComboBox().getSelectedItem());
-		ItemPresupuestoRepuestoDTO itemRepuesto = new ItemPresupuestoRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, resp.getPrecioUnitario(),resp.getPrecioUnitario() * cantidad);
+		RepuestoDTO resp = ordenCompra.buscarRepuesto((String) this.ventanaOrdenCompra.getComponente_ComboBox().getSelectedItem());
+		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, resp.getPrecioUnitario(),resp.getPrecioUnitario() * cantidad);
 		//me fijo si existe en la tabla
-		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
-			if(presupuesto.getListaDeRepuestos().get(i).getDetalle().equals(resp.getDetalle())) {
+		for (int i = 0; i < ordenCompra.getListaDeRepuestos().size(); i++) {
+			if(ordenCompra.getListaDeRepuestos().get(i).getDetalle().equals(resp.getDetalle())) {
 				existe = true;
-				this.presupuesto.getListaDeRepuestos().get(i).sumarCantidad(cantidad);
-				this.presupuesto.getListaDeRepuestos().get(i).sumarTotal(resp.getPrecioUnitario() * cantidad);
+				this.ordenCompra.getListaDeRepuestos().get(i).sumarCantidad(cantidad);
+				this.ordenCompra.getListaDeRepuestos().get(i).sumarTotal(resp.getPrecioUnitario() * cantidad);
 			}
 		}
 		if(!existe) {
-			presupuesto.addRepuestoListaDeComponentes(itemRepuesto);
+			ordenCompra.addRepuestoListaDeComponentes(itemRepuesto);
 		}
 		//actualizo la tabla de repuestos
 		actualizarTablaRepuestos();
+	}
+	
+	public static void main(String[] args) {
+		PerfilDTO perf1 = new PerfilDTO(0,"ADMINISTRATIVO");
+		UsuarioDTO user1 = new UsuarioDTO(1, "ROBERTO", "CARLOS", "admin", perf1);
+		ControladorOrdenCompra a = new ControladorOrdenCompra(new VentanaOrdenCompra(), user1);
+		a.inicializar();
 	}
 
 

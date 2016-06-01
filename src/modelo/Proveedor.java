@@ -44,16 +44,10 @@ public class Proveedor {
 
 
 
-	public void modificarProveedor(ProveedorDTO Proveedor_a_modificar) {
-		// TODO Auto-generated method stub
+	public void modificarProveedor(ProveedorDTO proveedor_a_modificar) {
+		proveedorDAO.editarProveedor(proveedor_a_modificar);
 		
 	}
 
-
-
-	public void agregarCliente(ProveedorDTO obtenerProveedor) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
