@@ -13,7 +13,7 @@ public class ProveedorDAO {
 	
 	private static final String insert = "INSERT INTO proveedor (razon_social, cuit, direccion, mail, contacto_nombre, contacto_telefono,"
 			+ " contacto_mail, mail_para_pedidos, fecha_creacion, idusuario, habilitado)"
-			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, now(), 1, true);";
+			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, now(),? , true);";
 	
 	private static final String delete = "DELETE FROM `20161_service_g2`.`proveedor` WHERE `id`= ?;;";
 	
@@ -23,8 +23,9 @@ public class ProveedorDAO {
 	
 	private static final String find2 = "SELECT * FROM cliente WHERE habilitado=true AND nrodoc=?";
 	
-	private static final String update =" UPDATE cliente SET nrodoc = ?, nombre = ?, apellido = ?, localidad = ?,"
-			+ " direccion = ?, telefono = ?, mail = ? WHERE id = ?;";
+	private static final String update = "UPDATE proveedor SET razon_social = ?, cuit = ?, direccion = ?"
+			+ ", mail = ?, contacto_nombre = ?, contacto_telefono = ?, contacto_mail = ?, mail_para_pedidos = ?,"
+			+ " fecha_creacion = now(), idusuario = ?,  habilitado = true WHERE id = ?; ";
 	
 	private Conexion conexion = Conexion.getConexion();
 
@@ -103,6 +104,36 @@ public class ProveedorDAO {
 			Conexion.cerrarConexion();
 		}
 		return false;
+	}
+
+	public boolean editarProveedor(ProveedorDTO proveedor_a_modificar) {
+		
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(update);
+			
+			statement.setString(1, proveedor_a_modificar.getRazonSocial());
+			statement.setInt(2, proveedor_a_modificar.getCuit());
+			statement.setString(3, proveedor_a_modificar.getDireccion());
+			statement.setString(4, proveedor_a_modificar.getEmail());
+			statement.setString(5, proveedor_a_modificar.getNombreContacto());
+			statement.setString(6, proveedor_a_modificar.getTelefonoContacto());
+			statement.setString(7, proveedor_a_modificar.getEmailContacto());
+			statement.setString(8, proveedor_a_modificar.getEmailPedidos());
+			statement.setInt(9, 1);
+			statement.setInt(10, proveedor_a_modificar.getId());
+	
+
+			if (statement.executeUpdate() > 0)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return false;
+		
 	}
 
 }
