@@ -1,30 +1,18 @@
 package presentacion.controlador;
 
-/*
- * Razón Social: Alfanumérico 50 caracteres.
- * CUIT: 12 caracteres, solo numérico.
- * Dirección: 60 caracteres alfanuméricos.
- * Mail: (mail general de la empresa) control de formato válido. (si se complica desestimar el control)
- * Contacto:(Nombre del contacto) 40 caracteres alfanumérico.
- * Teléfono contacto: 50 caracteres alfanuméricos ( alfanumérico por si quiere ingresar interno o alguna acotación como barras y demás)
- * Email Contacto:  control de formato válido. (si se complica desestimar el control)
- * Email Pedido:(De acá hay que tomar el email para enviar el pedido).
- * Marcas: Una lista de las marcas. que será otra tabla que relaciona ProveedorID con InsumoID.
- */
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import dto.RepuestoDTO;
 import dto.ItemRepuestoDTO;
 import dto.PerfilDTO;
+import dto.ProveedorDTO;
 import dto.UsuarioDTO;
 import modelo.OrdenCompra;
+import persistencia.dao.ProveedorDAO;
+import presentacion.vista.VentanaABMProveedor;
 import presentacion.vista.VentanaOrdenCompra;
 
 public class ControladorOrdenCompra implements ActionListener{
@@ -39,9 +27,21 @@ public class ControladorOrdenCompra implements ActionListener{
 	private String perfil;
 	
 	public ControladorOrdenCompra( VentanaOrdenCompra VentanaOrdenCompra, UsuarioDTO usuario) {
+		this.ventanaOrdenCompra = VentanaOrdenCompra;
 		this.usuarioLogueado = usuario;
 		this.perfil = usuario.getPerfilDTO().getPerfil();
-		this.ventanaOrdenCompra = VentanaOrdenCompra;
+		this.ordenCompra = new OrdenCompra();
+		
+		this.ventanaOrdenCompra.getBtnCancelada().addActionListener(this);
+		this.ventanaOrdenCompra.getBtnRecibido().addActionListener(this);
+		this.ventanaOrdenCompra.getAgregarComponente_btn().addActionListener(this);
+		this.ventanaOrdenCompra.getCancelar_btn().addActionListener(this);
+		this.ventanaOrdenCompra.getDecrementoCantComponente_btn().addActionListener(this);
+		this.ventanaOrdenCompra.getIncrementoCantComponente_btn().addActionListener(this);
+		this.ventanaOrdenCompra.getEliminarComponente_btn().addActionListener(this);
+		this.ventanaOrdenCompra.getGuardar_btn().addActionListener(this);
+		this.ventanaOrdenCompra.getBtnBuscarProveedor().addActionListener(this);
+		this.ventanaOrdenCompra.getBtnVerProveedores().addActionListener(this);
 	}
 	
 	public void inicializar() {
@@ -49,12 +49,10 @@ public class ControladorOrdenCompra implements ActionListener{
 		ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
 	}
 
-	private void cargarComboComponentes(int idproveedor) {
-		
-		//TODO::aca cargaria los repuestos dependiendo de las marcas del proveedor
-		/*for (RepuestoDTO c : ordenCompra.obtenerRepuestos()){
+	private void cargarComboComponentes() {
+		for (RepuestoDTO c : ordenCompra.obtenerRepuestos()){
 			this.ventanaOrdenCompra.getComponente_ComboBox().addItem(c.getDetalle());
-		}*/
+		}
 	}
 	
 	@SuppressWarnings("unused")
@@ -98,26 +96,28 @@ public class ControladorOrdenCompra implements ActionListener{
 			this.ventanaOrdenCompra.dispose();
 			
 		}else if(e.getSource() == this.ventanaOrdenCompra.getBtnRecibido()) {
-			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como Informado al cliente.<br> Esta seguro?", "Confirmar",
+			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como Recibido la orden de compra. Realmente esta seguro?", "Confirmar",
 		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		    if (response == JOptionPane.NO_OPTION) {
 		      
 		    } else if (response == JOptionPane.YES_OPTION) {
-		    		//TODO: agrego la orden de trabajo en estado recibida
+		    	//TODO: agrego la orden de trabajo en estado recibida
 		    } else if (response == JOptionPane.CLOSED_OPTION) {
-		      
+		    	
 		    }
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnCancelada()) {
-			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como aceptado por el cliente. Esta seguro?", "Confirmar",
+			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como cancelada . Realmente esta seguro?", "Confirmar",
 			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		    if (response == JOptionPane.NO_OPTION) {
 		      
 		    } else if (response == JOptionPane.YES_OPTION) {
 		    		
-					//TODO: agrego la orden de compra en estado cancelado
+				//TODO: agrego la orden de compra en estado cancelado
 		    } else if (response == JOptionPane.CLOSED_OPTION) {
 		      
 		    }
+		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnBuscarProveedor()) {
+			buscarProveedor();
 		}
     }
 
@@ -236,13 +236,55 @@ public class ControladorOrdenCompra implements ActionListener{
 		actualizarTablaRepuestos();
 	}
 	
+	private void buscarProveedor() {
+		String textoingresado = this.ventanaOrdenCompra.getTxtfldNroProveedor().getText();
+		if (textoingresado == null || textoingresado.equals("")) {
+			JOptionPane.showMessageDialog(this.ventanaOrdenCompra, "Por favor, ingrese un número de proveedor.", null,
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			try {
+				int nroproveedor = Integer.parseInt(textoingresado);
+				
+				ProveedorDAO cdao = this.ordenCompra.getProveedorDAO();
+				ProveedorDTO cdto = cdao.find(nroproveedor);
+				if (cdto == null) {
+					int response = JOptionPane.showConfirmDialog(null, "El proveedor buscado no existe desea buscarlo y/o crear uno nuevo?", "Atencion",
+					        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				    if (response == JOptionPane.NO_OPTION) {
+				      
+				    } else if (response == JOptionPane.YES_OPTION) {
+				    	
+				    	VentanaABMProveedor ventanaABMProveedor = new VentanaABMProveedor();
+						ControladorABMProveedor cp = new ControladorABMProveedor(ventanaABMProveedor);
+				    	cp.inicializar();
+				    	
+				    } else if (response == JOptionPane.CLOSED_OPTION) {
+				      
+				    }
+				} else {
+					ordenCompra.setProveedorDTO(cdto);
+					ordenCompra.actualizarListaMarcas();
+					cargarProveedor(cdto);
+					cargarComboComponentes();
+				}
+			} catch (NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(this.ventanaOrdenCompra,
+						"El número de proveedor es incorrecto, vuelva a intentarlo. ", null,
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+	}
+	
+	private void cargarProveedor(ProveedorDTO cdto) {
+		this.ventanaOrdenCompra.getNombreRazonSocialTexto_lbl().setText(cdto.getRazonSocial());
+		this.ventanaOrdenCompra.getDireccionTexto_lbl().setText(cdto.getDireccion());
+		this.ventanaOrdenCompra.getMailTexto_lbl().setText(cdto.getEmail());
+	}
+
 	public static void main(String[] args) {
 		PerfilDTO perf1 = new PerfilDTO(0,"ADMINISTRATIVO");
 		UsuarioDTO user1 = new UsuarioDTO(1, "ROBERTO", "CARLOS", "admin", perf1);
 		ControladorOrdenCompra a = new ControladorOrdenCompra(new VentanaOrdenCompra(), user1);
 		a.inicializar();
 	}
-
-
-
 }

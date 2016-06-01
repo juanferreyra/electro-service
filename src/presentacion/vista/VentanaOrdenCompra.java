@@ -37,7 +37,9 @@ public class VentanaOrdenCompra extends JFrame {
 	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario", "Precio Total" };
 	private JButton btnCancelada;
 	private JButton btnRecibido;
-	private JTextField textField;
+	private JTextField txtfldNroProveedor;
+	private JButton btnBuscarProveedor;
+	private JButton btnVerProveedores;
 
 	public VentanaOrdenCompra() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaOrdenCompra.class.getResource("/calculator.png")));
@@ -165,22 +167,30 @@ public class VentanaOrdenCompra extends JFrame {
 		guardar_btn.setBounds(444, 618, 118, 23);
 		contentPane.add(guardar_btn);
 		
-		JButton btnBuscarProveedor = new JButton("");
+		btnBuscarProveedor = new JButton("");
 		btnBuscarProveedor.setToolTipText("Buscar proveedor");
 		btnBuscarProveedor.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/search.png")));
 		btnBuscarProveedor.setBounds(30, 49, 23, 23);
 		contentPane.add(btnBuscarProveedor);
 		
-		textField = new JTextField();
-		textField.setBounds(60, 50, 155, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtfldNroProveedor = new JTextField();
+		txtfldNroProveedor.setBounds(60, 50, 155, 20);
+		contentPane.add(txtfldNroProveedor);
+		txtfldNroProveedor.setColumns(10);
 		
-		JButton button = new JButton("");
-		button.setToolTipText("Ver Proveedores Ingresados");
-		button.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/eye-outline.png")));
-		button.setBounds(220, 49, 23, 23);
-		contentPane.add(button);
+		btnVerProveedores = new JButton("");
+		btnVerProveedores.setToolTipText("Ver Proveedores Ingresados");
+		btnVerProveedores.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/eye-outline.png")));
+		btnVerProveedores.setBounds(220, 49, 23, 23);
+		contentPane.add(btnVerProveedores);
+	}
+
+	public JTextField getTxtfldNroProveedor() {
+		return txtfldNroProveedor;
+	}
+
+	public JButton getBtnVerProveedores() {
+		return btnVerProveedores;
 	}
 
 	public JLabel getCantidad_lbl() {
@@ -246,4 +256,17 @@ public class VentanaOrdenCompra extends JFrame {
 	public JButton getBtnRecibido() {
 		return btnRecibido;
 	}
+
+	public JButton getBtnBuscarProveedor() {
+		return btnBuscarProveedor;
+	}
+	
+	public JLabel getDireccionTexto_lbl() {
+		return direccionTexto_lbl;
+	}
+	
+	public JLabel getMailTexto_lbl() {
+		return mailTexto_lbl;
+	}
+	
 }

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.MarcaDTO;
 import dto.RepuestoDTO;
 import persistencia.conexion.Conexion;
 
@@ -28,6 +29,8 @@ public class RepuestoDAO {
 	private static final String insert1 = "INSERT INTO repuesto ("
 			+ "`nombre`, `detalle`, `precio`, `stock_minimo`,now(),`idusuario`,true)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
+	
+	private static String readAllInMarcas = "SELECT * FROM repuesto WHERE habilitado = true ";
 	
 	public boolean agregar(RepuestoDTO componente){
 		
@@ -195,5 +198,49 @@ public class RepuestoDAO {
 		}
 		
 		return componente;
+	}
+	
+	public ArrayList<RepuestoDTO> readAllInMarca(ArrayList<MarcaDTO> marcas)
+	{
+		String where = "";
+		
+		for (int i = 0; i < marcas.size(); i++) {
+			if(i==0) {
+				where += " AND idmarca = "+marcas.get(i).getId();
+			}else {
+				where += " OR idmarca = "+marcas.get(i).getId();
+			}
+		}
+		
+		readAllInMarcas+=where;
+		
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		ArrayList<RepuestoDTO> componentes = new ArrayList<RepuestoDTO>();
+		try
+		{
+			statement = conexion.getSQLConexion().prepareStatement(readAllInMarcas);
+			resultSet = statement.executeQuery();
+
+			
+			while(resultSet.next())
+			{
+				componentes.add(new RepuestoDTO(resultSet.getInt("id"),
+						resultSet.getString("detalle"),resultSet.getFloat("precio"),
+						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario"),resultSet.getInt("habilitado")));
+			}
+		}
+		catch (SQLException e) 
+		{
+			System.out.println("hubo un error");
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			Conexion.cerrarConexion();
+		}
+		
+		return componentes;
 	}
 }
