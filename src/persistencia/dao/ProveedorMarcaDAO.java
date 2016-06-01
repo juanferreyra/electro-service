@@ -18,6 +18,8 @@ public class ProveedorMarcaDAO {
 	
 	private static final String delete = "DELETE FROM proveedor_marca  WHERE idproveedor = ?;"; 
 	
+	private static final String deleteItem = "DELETE FROM proveedor_marca WHERE idproveedor = ? AND idmarca = ?;";
+	
 	private static final String contarIdProveedor = "SELECT count(*) FROM proveedor_marca where idproveedor = ?;"; 
 	
 	private Conexion conexion = Conexion.getConexion();
@@ -66,6 +68,26 @@ public class ProveedorMarcaDAO {
 		}
 		return presupuestoRepuesto;
 	}
+	public boolean deleteItem(int idProveedor, int idMarca) {
+
+		PreparedStatement statement;
+		int chequeoUpdate = 0;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(deleteItem);
+			statement.setInt(1, idProveedor);
+			statement.setInt(2, idMarca);
+			chequeoUpdate = statement.executeUpdate();
+			if (chequeoUpdate > 0) // Si se ejecut� devuelvo true
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally // Se ejecuta siempre
+		{
+			Conexion.cerrarConexion();
+		}
+		return false;
+	}
 	
 	public boolean delete(int id) {
 		
@@ -113,7 +135,6 @@ public class ProveedorMarcaDAO {
 	public void borrarTodos(int id ){
 		
 		int loop = contarIdProveedor(id);
-		System.out.println(id);
 		
 		for(int i = 0; i < loop; i ++){
 			

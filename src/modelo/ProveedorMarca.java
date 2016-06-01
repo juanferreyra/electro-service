@@ -22,5 +22,9 @@ public class ProveedorMarca {
 		proveedorMarca.delete(idproveedor);
 	}
 	
+	public void borrarMarca(int idProveedor, int idMarca){
+		proveedorMarca.deleteItem(idProveedor, idMarca);
+	}
+	
 
 }
