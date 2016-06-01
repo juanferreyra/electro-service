@@ -55,6 +55,7 @@ public class ControladorABMProveedor implements ActionListener{
 		
 		cargarTablaProveedores();	
 		mouseClickedOnTable();
+		ocultarIdMarcas();
 
 	}
 	
@@ -161,17 +162,18 @@ public class ControladorABMProveedor implements ActionListener{
 			this.ventanaABMProveedor.getModelMarcas().addRow(fila);
 
 		}
-		// oculta columna id marca
-		this.ventanaABMProveedor.getTablaMarcas().getColumnModel().getColumn(0).setMaxWidth(0);
-		this.ventanaABMProveedor.getTablaMarcas().getColumnModel().getColumn(0).setMinWidth(0);
-		this.ventanaABMProveedor.getTablaMarcas().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
-		this.ventanaABMProveedor.getTablaMarcas().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
-		
-		
-		
-		
+		ocultarIdMarcas();
 	}
 	
+	private void ocultarIdMarcas() {
+		
+		// oculta columna id marca
+				this.ventanaABMProveedor.getTablaMarcas().getColumnModel().getColumn(0).setMaxWidth(0);
+				this.ventanaABMProveedor.getTablaMarcas().getColumnModel().getColumn(0).setMinWidth(0);
+				this.ventanaABMProveedor.getTablaMarcas().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+				this.ventanaABMProveedor.getTablaMarcas().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
