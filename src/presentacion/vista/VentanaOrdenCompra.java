@@ -37,6 +37,7 @@ public class VentanaOrdenCompra extends JFrame {
 	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario", "Precio Total" };
 	private JButton btnCancelada;
 	private JButton btnRecibido;
+	private JTextField textField;
 
 	public VentanaOrdenCompra() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaOrdenCompra.class.getResource("/calculator.png")));
@@ -58,36 +59,36 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(btnRecibido);
 
 		JLabel titulo_lbl = new JLabel("<html><i>ORDEN DE COMPRA</i></html>");
-		titulo_lbl.setBounds(30, 34, 332, 14);
+		titulo_lbl.setBounds(34, 15, 332, 14);
 		contentPane.add(titulo_lbl);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(30, 53, 658, 7);
+		separator.setBounds(30, 45, 658, 7);
 		separator.setForeground(Color.BLUE);
 		contentPane.add(separator);
 
 		JLabel razonsocial_lbl = new JLabel("<html><i>Razón Social:</i></html>");
-		razonsocial_lbl.setBounds(30, 54, 116, 26);
+		razonsocial_lbl.setBounds(30, 71, 116, 26);
 		contentPane.add(razonsocial_lbl);
 
 		razonsocialTexto_lbl = new JLabel("");
-		razonsocialTexto_lbl.setBounds(123, 54, 565, 26);
+		razonsocialTexto_lbl.setBounds(123, 71, 565, 26);
 		contentPane.add(razonsocialTexto_lbl);
 
 		JLabel direccion_lbl = new JLabel("<html><i>Dirección:</i></html>");
-		direccion_lbl.setBounds(30, 82, 116, 26);
+		direccion_lbl.setBounds(30, 99, 116, 26);
 		contentPane.add(direccion_lbl);
 
 		direccionTexto_lbl = new JLabel("");
-		direccionTexto_lbl.setBounds(123, 82, 184, 26);
+		direccionTexto_lbl.setBounds(123, 99, 184, 26);
 		contentPane.add(direccionTexto_lbl);
 
 		JLabel mail_lbl = new JLabel("<html><i> Mail:</i></html>");
-		mail_lbl.setBounds(317, 82, 116, 26);
+		mail_lbl.setBounds(317, 99, 116, 26);
 		contentPane.add(mail_lbl);
 
 		mailTexto_lbl = new JLabel("");
-		mailTexto_lbl.setBounds(402, 82, 286, 26);
+		mailTexto_lbl.setBounds(402, 99, 286, 26);
 		contentPane.add(mailTexto_lbl);
 
 		JSeparator separator_2 = new JSeparator();
@@ -163,6 +164,23 @@ public class VentanaOrdenCompra extends JFrame {
 		guardar_btn = new JButton("Guardar");
 		guardar_btn.setBounds(444, 618, 118, 23);
 		contentPane.add(guardar_btn);
+		
+		JButton btnBuscarProveedor = new JButton("");
+		btnBuscarProveedor.setToolTipText("Buscar proveedor");
+		btnBuscarProveedor.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/search.png")));
+		btnBuscarProveedor.setBounds(30, 49, 23, 23);
+		contentPane.add(btnBuscarProveedor);
+		
+		textField = new JTextField();
+		textField.setBounds(60, 50, 155, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JButton button = new JButton("");
+		button.setToolTipText("Ver Proveedores Ingresados");
+		button.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/eye-outline.png")));
+		button.setBounds(220, 49, 23, 23);
+		contentPane.add(button);
 	}
 
 	public JLabel getCantidad_lbl() {
