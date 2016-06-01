@@ -132,7 +132,7 @@ public class ControladorABMProveedor implements ActionListener{
 			this.ventanaABMProveedor.getModelProveedores().addRow(fila);
 
 		}
-		ocultarColumnaId();
+		//ocultarColumnaId();
 		
 	}
 	
