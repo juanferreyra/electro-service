@@ -16,14 +16,14 @@ public class Marca {
 		
 	}
 	
-	public void agregarRepuesto(MarcaDTO nuevoComponente) {
+	public void agregarMarca(MarcaDTO nuevoComponente) {
 		marcaDAO.insert(nuevoComponente);
 	}
 
-	public void borrarRepuesto(int id_componente_a_eliminar) {
+	public void borrarMarca(int id_componente_a_eliminar) {
 	}
 	
-	public List<MarcaDTO> obtenerRepuestos() {
+	public List<MarcaDTO> obtenerMarcas() {
 		return marcaDAO.readAll();		
 	}
 	

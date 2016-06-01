@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class VentanaABMProveedor extends JFrame{
 	
@@ -34,16 +35,18 @@ public class VentanaABMProveedor extends JFrame{
 	private JButton eliminarItem_btn;
 	private JButton guardar_btn;
 	private JButton limpiar_btn;
+	private JButton eliminarMarca;
+	private JComboBox<String> agregarMarca_jcmbox;
 	
 	
 	public VentanaABMProveedor() {
 		
-		setBounds(100, 100, 820, 706);
+		setBounds(100, 100, 887, 705);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		JLabel proveedor_lbl = new JLabel("Proveedores");
-		proveedor_lbl.setBounds(302, 23, 122, 15);
+		proveedor_lbl.setBounds(213, 24, 122, 15);
 		getContentPane().add(proveedor_lbl);
 		
 		JLabel RazonSocial_lbl = new JLabel("Razon Social");
@@ -51,7 +54,7 @@ public class VentanaABMProveedor extends JFrame{
 		getContentPane().add(RazonSocial_lbl);
 		
 		razonSocial_txt = new JTextField();
-		razonSocial_txt.setBounds(151, 59, 364, 19);
+		razonSocial_txt.setBounds(151, 59, 271, 19);
 		getContentPane().add(razonSocial_txt);
 		razonSocial_txt.setColumns(10);
 		
@@ -61,7 +64,7 @@ public class VentanaABMProveedor extends JFrame{
 		
 		cuit_txt = new JTextField();
 		cuit_txt.setColumns(10);
-		cuit_txt.setBounds(151, 85, 364, 19);
+		cuit_txt.setBounds(151, 85, 271, 19);
 		getContentPane().add(cuit_txt);
 		
 		JLabel lblDireccion = new JLabel("Direccion");
@@ -70,7 +73,7 @@ public class VentanaABMProveedor extends JFrame{
 		
 		direccion_txt = new JTextField();
 		direccion_txt.setColumns(10);
-		direccion_txt.setBounds(151, 114, 364, 19);
+		direccion_txt.setBounds(151, 114, 271, 19);
 		getContentPane().add(direccion_txt);
 		
 		JLabel lblEmail = new JLabel("Email");
@@ -79,7 +82,7 @@ public class VentanaABMProveedor extends JFrame{
 		
 		email_txt = new JTextField();
 		email_txt.setColumns(10);
-		email_txt.setBounds(151, 143, 364, 19);
+		email_txt.setBounds(151, 143, 271, 19);
 		getContentPane().add(email_txt);
 		
 		JLabel lblNombreContacto = new JLabel("Nombre Contacto");
@@ -88,7 +91,7 @@ public class VentanaABMProveedor extends JFrame{
 		
 		nombreContacto_txt = new JTextField();
 		nombreContacto_txt.setColumns(10);
-		nombreContacto_txt.setBounds(151, 170, 364, 19);
+		nombreContacto_txt.setBounds(151, 170, 271, 19);
 		getContentPane().add(nombreContacto_txt);
 		
 		JLabel lblTelefonoContacto = new JLabel("Telefono Contacto");
@@ -97,7 +100,7 @@ public class VentanaABMProveedor extends JFrame{
 		
 		telefonoContacto_txt = new JTextField();
 		telefonoContacto_txt.setColumns(10);
-		telefonoContacto_txt.setBounds(151, 201, 364, 19);
+		telefonoContacto_txt.setBounds(151, 201, 271, 19);
 		getContentPane().add(telefonoContacto_txt);
 		
 		JLabel lblEmailContacto = new JLabel("Email Contacto");
@@ -106,7 +109,7 @@ public class VentanaABMProveedor extends JFrame{
 		
 		emailContacto_txt = new JTextField();
 		emailContacto_txt.setColumns(10);
-		emailContacto_txt.setBounds(151, 226, 364, 19);
+		emailContacto_txt.setBounds(151, 226, 271, 19);
 		getContentPane().add(emailContacto_txt);
 		
 		JLabel lblEmailPedidos = new JLabel("Email Pedidos");
@@ -115,11 +118,11 @@ public class VentanaABMProveedor extends JFrame{
 		
 		emailPedidos_txt = new JTextField();
 		emailPedidos_txt.setColumns(10);
-		emailPedidos_txt.setBounds(151, 255, 364, 19);
+		emailPedidos_txt.setBounds(151, 255, 271, 19);
 		getContentPane().add(emailPedidos_txt);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(39, 340, 717, 215);
+		scrollPane.setBounds(25, 340, 800, 215);
 		getContentPane().add(scrollPane);
 		
 		modelProveedores = new DefaultTableModel(null, nombreColumnas);
@@ -127,7 +130,7 @@ public class VentanaABMProveedor extends JFrame{
 		scrollPane.setViewportView(tablaProveedores);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(579, 60, 185, 222);
+		scrollPane_1.setBounds(469, 50, 185, 222);
 		getContentPane().add(scrollPane_1);
 		
 		modelMarcas = new DefaultTableModel(null, nombreColumnasMarcas);
@@ -135,16 +138,32 @@ public class VentanaABMProveedor extends JFrame{
 		scrollPane_1.setViewportView(tablaMarcas);
 		
 		eliminarItem_btn = new JButton("Eliminar Item");
-		eliminarItem_btn.setBounds(364, 620, 117, 25);
+		eliminarItem_btn.setBounds(469, 620, 117, 25);
 		getContentPane().add(eliminarItem_btn);
 		
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(504, 620, 117, 25);
+		guardar_btn.setBounds(598, 620, 117, 25);
 		getContentPane().add(guardar_btn);
 		
 		limpiar_btn = new JButton("Limpiar");
-		limpiar_btn.setBounds(644, 620, 117, 25);
+		limpiar_btn.setBounds(734, 620, 117, 25);
 		getContentPane().add(limpiar_btn);
+		
+		agregarMarca_jcmbox = new JComboBox<String>();
+		agregarMarca_jcmbox.setBounds(689, 61, 162, 24);
+		getContentPane().add(agregarMarca_jcmbox);
+		
+		eliminarMarca = new JButton("Eliminar Marca");
+		eliminarMarca.setBounds(689, 223, 162, 25);
+		getContentPane().add(eliminarMarca);
+		
+		JLabel lblMarcas = new JLabel("Marcas");
+		lblMarcas.setBounds(532, 24, 122, 15);
+		getContentPane().add(lblMarcas);
+		
+		JLabel lblAgregarMarca = new JLabel("Agregar Marca");
+		lblAgregarMarca.setBounds(716, 40, 122, 15);
+		getContentPane().add(lblAgregarMarca);
 	}
 
 
@@ -231,8 +250,15 @@ public class VentanaABMProveedor extends JFrame{
 	public JTable getTablaProveedores() {
 		return tablaProveedores;
 	}
-	
 
-	
+
+	public JButton getEliminarMarca() {
+		return eliminarMarca;
+	}
+
+
+	public JComboBox<String> getAgregarMarca_jcmbox() {
+		return agregarMarca_jcmbox;
+	}
 	
 }
