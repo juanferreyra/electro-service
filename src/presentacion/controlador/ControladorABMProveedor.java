@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import dto.MarcaDTO;
 import dto.ProveedorDTO;
 import modelo.Proveedor;
+import modelo.ProveedorMarca;
 import presentacion.vista.VentanaABMProveedor;
 
 
@@ -25,6 +26,7 @@ public class ControladorABMProveedor implements ActionListener{
 	private List<ProveedorDTO> proveedores_en_tabla;
 	private List<JTextField> txts;
 	private List<MarcaDTO>marcas_en_tabla;
+	private ProveedorMarca proveedorMarca;
 
 	
 	public ControladorABMProveedor(VentanaABMProveedor ventanaABMProveedor) {
@@ -39,6 +41,8 @@ public class ControladorABMProveedor implements ActionListener{
 	public void inicializar() {
 
 		this.proveedor = new Proveedor();
+		
+		this.proveedorMarca = new ProveedorMarca();
 
 		this.ventanaABMProveedor.setVisible(true);
 
@@ -192,9 +196,13 @@ public class ControladorABMProveedor implements ActionListener{
 				if (this.ventanaABMProveedor.getTablaProveedores().getSelectedRow() != -1) {
 
 					int filaSeleccionada = this.ventanaABMProveedor.getTablaProveedores().getSelectedRow();
-					int id_cliente_a_eliminar = (int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0);
-
-					this.proveedor.borrarProveedor(id_cliente_a_eliminar);
+					int id_proveedor_a_eliminar = (int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0);
+					
+					//elimino las marcas asociadas al proveedor a eliminar
+					this.proveedorMarca.borrarTodos(id_proveedor_a_eliminar);
+					
+					// elimino el proveedor
+					this.proveedor.borrarProveedor(id_proveedor_a_eliminar);
 					cargarTablaProveedores();;
 					limpiartxts();
 					vaciarTablaMarcas();

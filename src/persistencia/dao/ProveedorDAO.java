@@ -13,11 +13,11 @@ public class ProveedorDAO {
 			+ " contacto_mail, mail_para_pedidos, fecha_creacion, idusuario, habilitado)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, now(),? , true);";
 	
-	private static final String delete = "DELETE FROM proveedor WHERE `id`= ?;;";
+	private static final String delete = "UPDATE proveedor SET habilitado ='0' WHERE id = ?;";
 	
-	private static final String readall = "SELECT * FROM proveedor WHERE habilitado = true";
+	private static final String readall = "SELECT * FROM proveedor WHERE habilitado = true;";
 	
-	private static final String find = "SELECT * FROM proveedor WHERE habilitado=true AND id = ?";
+	private static final String find = "SELECT * FROM proveedor WHERE habilitado=true AND id = ?;";
 	
 	private static final String update = "UPDATE proveedor SET razon_social = ?, cuit = ?, direccion = ?"
 			+ ", mail = ?, contacto_nombre = ?, contacto_telefono = ?, contacto_mail = ?, mail_para_pedidos = ?,"

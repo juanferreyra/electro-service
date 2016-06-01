@@ -16,7 +16,9 @@ public class ProveedorMarcaDAO {
 	private static final String find = "SELECT m.id , m.detalle FROM marca_producto m left join proveedor_marca pm"
 			+ "on (m.id = pm.idmarca) where pm.idproveedor = ? ";
 	
-	private static final String delete = "DELETE FROM proveedor_marca  WHERE id = ?;"; 
+	private static final String delete = "DELETE FROM proveedor_marca  WHERE idproveedor = ?;"; 
+	
+	private static final String contarIdProveedor = "SELECT count(*) FROM proveedor_marca where idproveedor = ?;"; 
 	
 	private Conexion conexion = Conexion.getConexion();
 
@@ -77,10 +79,46 @@ public class ProveedorMarcaDAO {
 				return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			
 		} finally // Se ejecuta siempre
 		{
 			Conexion.cerrarConexion();
 		}
 		return false;
+	}
+	
+	public int contarIdProveedor(int id){
+		
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		int ret = 0;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(contarIdProveedor);
+			statement.setInt(1, id);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+						ret = resultSet.getInt("count(*)");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return ret;
+	}
+	
+	public void borrarTodos(int id ){
+		
+		int loop = contarIdProveedor(id);
+		System.out.println(id);
+		
+		for(int i = 0; i < loop; i ++){
+			
+			delete(id);
+		}
+		
 	}
 }
