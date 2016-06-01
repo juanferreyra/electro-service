@@ -241,7 +241,7 @@ public class ControladorABMProveedor implements ActionListener{
 
 					if (isTxtsValidos()) {
 
-						proveedor.agregarCliente(obtenerProveedor(0));
+						proveedor.AgregarProveedor(obtenerProveedor(0));
 
 						limpiartxts();
 						cargarTablaProveedores();
@@ -259,9 +259,21 @@ public class ControladorABMProveedor implements ActionListener{
 
 	}
 	
-	private ProveedorDTO obtenerProveedor(int valueAt) {
-		// TODO Auto-generated method stub
-		return null;
+	private ProveedorDTO obtenerProveedor(int id) {
+		
+		ProveedorDTO proveedorDTO = new ProveedorDTO(
+				id,
+				this.txts.get(0).getText(), // razon social
+				Integer.parseInt(this.txts.get(1).getText()), // cuit
+				this.txts.get(2).getText(), // direccion
+				this.txts.get(3).getText(), // email
+				this.txts.get(4).getText(), // nombre contacto
+				this.txts.get(5).getText(), // telefono contacto
+				this.txts.get(6).getText(), // email contacto
+				this.txts.get(7).getText(), // email pedido
+				 1);
+
+		return proveedorDTO;
 	}
 
 	private boolean isTxtsValidos() {

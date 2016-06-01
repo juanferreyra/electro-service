@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,6 +40,7 @@ public class ControladorABMFlete implements ActionListener {
 				eliminarFlete(fila);
 				this.limpiartxts();
 				this.ventanaABMFlete.getTablaFlete().clearSelection();
+
 			}
 		} else if (e.getSource() == this.ventanaABMFlete.getGuardar_btn()) {
 			if (!this.ventanaABMFlete.getNombre_txf().getText().equals("")
@@ -55,30 +57,80 @@ public class ControladorABMFlete implements ActionListener {
 					FleteDTO flete = fleteDAO
 							.findPorNrodoc((int) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 1));
 
-					flete.setNombre((this.ventanaABMFlete.getNombre_txf().getText()));
-					flete.setNroDoc(Integer.parseInt(this.ventanaABMFlete.getDocumento_txf().getText()));
-					flete.setModelo(this.ventanaABMFlete.getModeloTransporte_txf().getText());
-					flete.setPatente(this.ventanaABMFlete.getPatenteTransporte_txf().getText());
-					flete.setTelefono(this.ventanaABMFlete.getTelefono_txf().getText());
-					flete.setVtoLicencia(this.ventanaABMFlete.getDateChooser().getDate());
+					if (isTxtsValidos()) {
+						flete.setNombre((this.ventanaABMFlete.getNombre_txf().getText()));
+						flete.setNroDoc(Integer.parseInt(this.ventanaABMFlete.getDocumento_txf().getText()));
+						flete.setModelo(this.ventanaABMFlete.getModeloTransporte_txf().getText());
+						flete.setPatente(this.ventanaABMFlete.getPatenteTransporte_txf().getText());
+						flete.setTelefono(this.ventanaABMFlete.getTelefono_txf().getText());
+						flete.setVtoLicencia(this.ventanaABMFlete.getDateChooser().getDate());
 
-					fleteDAO.update(flete);
-					cargarTablaFlete();
+						fleteDAO.update(flete);
+						cargarTablaFlete();
+					}
 
 				} else {
-					ingresarFlete(this.ventanaABMFlete.getNombre_txf().getText(),
-							Integer.parseInt(this.ventanaABMFlete.getDocumento_txf().getText()),
-							this.ventanaABMFlete.getModeloTransporte_txf().getText(),
-							this.ventanaABMFlete.getPatenteTransporte_txf().getText(),
-							this.ventanaABMFlete.getTelefono_txf().getText(),
-							this.ventanaABMFlete.getDateChooser().getDate());
+					if (isTxtsValidos()) {
+
+						ingresarFlete(this.ventanaABMFlete.getNombre_txf().getText(),
+								Integer.parseInt(this.ventanaABMFlete.getDocumento_txf().getText()),
+								this.ventanaABMFlete.getModeloTransporte_txf().getText(),
+								this.ventanaABMFlete.getPatenteTransporte_txf().getText(),
+								this.ventanaABMFlete.getTelefono_txf().getText(),
+								this.ventanaABMFlete.getDateChooser().getDate());
+						this.limpiartxts();
+						this.ventanaABMFlete.getTablaFlete().clearSelection();
+					}
 				}
-				this.limpiartxts();
-				this.ventanaABMFlete.getTablaFlete().clearSelection();
+
+			} else {// Si existe algun campo vacio
+				JOptionPane.showMessageDialog(this.ventanaABMFlete,
+						"Disculpe, has ingresado campos vacios. Complete los campos faltantes.");
 			}
 		} else if (e.getSource() == this.ventanaABMFlete.getLimpiar_btn()) {
 			limpiartxts();
 			this.ventanaABMFlete.getTablaFlete().clearSelection();
+		}
+	}
+
+	private boolean isTxtsValidos() {
+
+		boolean ret = true;
+
+		if (!soloNumeros(this.ventanaABMFlete.getDocumento_txf().getText())) { // valida
+																				// documento
+
+			JOptionPane.showMessageDialog(this.ventanaABMFlete,
+					"Disculpe, has ingresado un nro de documento incorrecto.");
+			return false;
+
+		} else {
+
+			ret = ret && soloNumeros(this.ventanaABMFlete.getDocumento_txf().getText());
+		}
+
+		if (!soloNumeros(this.ventanaABMFlete.getTelefono_txf().getText())) { // valida
+																				// telefono
+
+			JOptionPane.showMessageDialog(this.ventanaABMFlete,
+					"Disculpe, has ingresado un nro de telefono incorrecto.");
+			return false;
+
+		} else {
+
+			ret = ret && soloNumeros(this.ventanaABMFlete.getTelefono_txf().getText());
+		}
+
+		return ret;
+
+	}
+
+	private boolean soloNumeros(String texto) {
+		try {
+			Integer.parseInt(texto);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 
@@ -178,6 +230,7 @@ public class ControladorABMFlete implements ActionListener {
 				.setText((String) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 0));
 		((JTextField) this.txts.get(1))
 				.setText("" + this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 1));
+
 		((JTextField) this.txts.get(2))
 				.setText((String) this.ventanaABMFlete.getTablaFlete().getValueAt(filaSeleccionada, 2));
 		((JTextField) this.txts.get(3))
