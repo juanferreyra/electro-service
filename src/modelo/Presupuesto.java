@@ -5,7 +5,7 @@ import java.util.List;
 import dto.RepuestoDTO;
 import dto.IngresoDTO;
 import dto.IngresoLogDTO;
-import dto.ItemPresupuestoRepuestoDTO;
+import dto.ItemRepuestoDTO;
 import dto.PresupuestoDTO;
 import dto.PresupuestoRepuestoDTO;
 import persistencia.dao.RepuestoDAO;
@@ -18,7 +18,7 @@ public class Presupuesto
 	private int id;
 	private IngresoDTO ingreso;
 	private PresupuestoDTO presupuesto;
-	private ArrayList<ItemPresupuestoRepuestoDTO> listaDeRepuestos;
+	private ArrayList<ItemRepuestoDTO> listaDeRepuestos;
 	
 	private PresupuestoDAO presupuestoDAO;
 	private PresupuestoRepuestoDAO presupuestoRepuestoDAO;
@@ -39,7 +39,7 @@ public class Presupuesto
 			listaDeRepuestos = obtenerItemsRepuestos(id);
 		} catch (Exception e) {
 			id = -1;
-			listaDeRepuestos = new ArrayList<ItemPresupuestoRepuestoDTO>();
+			listaDeRepuestos = new ArrayList<ItemRepuestoDTO>();
 		}
 	}
 
@@ -104,7 +104,7 @@ public class Presupuesto
 	}
 
 	//Funciones Repuestos
-	public ArrayList<ItemPresupuestoRepuestoDTO> obtenerItemsRepuestos(int id) {
+	public ArrayList<ItemRepuestoDTO> obtenerItemsRepuestos(int id) {
            return presupuestoRepuestoDAO.readAll(id);
 	}
 	
@@ -116,7 +116,7 @@ public class Presupuesto
 		return repuestoDAO.readAll();		
 	}
 	
-	public List<ItemPresupuestoRepuestoDTO> getListaDeRepuestos() {
+	public List<ItemRepuestoDTO> getListaDeRepuestos() {
 		return listaDeRepuestos;
 	}
 	
@@ -124,7 +124,7 @@ public class Presupuesto
 		repuestoDAO.insert(nuevoComponente);
 	}
 	
-	public void addRepuestoListaDeComponentes(ItemPresupuestoRepuestoDTO resp) {
+	public void addRepuestoListaDeComponentes(ItemRepuestoDTO resp) {
 		listaDeRepuestos.add(resp);
 	}
 }
