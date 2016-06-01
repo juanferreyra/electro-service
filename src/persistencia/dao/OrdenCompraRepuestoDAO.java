@@ -14,7 +14,7 @@ public class OrdenCompraRepuestoDAO {
 			+ "cantidad,precio_unitario,fecha_creacion,habilitado) VALUES (?,?,?,?,now(),true);";
 	
 	private static final String find = "SELECT ocr.id, ocr.idrepuesto, r.detalle, ocr.cantidad, r.precio, "
-			+ "ocr.cantidad * r.precio AS totalFROM orden_compra_repuestos ocr LEFT JOIN repuesto r ON "
+			+ "ocr.cantidad * r.precio AS total FROM orden_compra_repuestos ocr LEFT JOIN repuesto r ON "
 			+ "(ocr.idrepuesto = r.id) WHERE ocr.idorden_compra = ? AND ocr.habilitado = TRUE;";
 	
 	private Conexion conexion = Conexion.getConexion();

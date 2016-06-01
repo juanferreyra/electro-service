@@ -211,7 +211,7 @@ CREATE TABLE `ingreso_log` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +220,7 @@ CREATE TABLE `ingreso_log` (
 
 LOCK TABLES `ingreso_log` WRITE;
 /*!40000 ALTER TABLE `ingreso_log` DISABLE KEYS */;
-INSERT INTO `ingreso_log` VALUES (29,7,3,'2016-05-15 21:39:05',3,1),(30,8,1,'2016-05-15 22:22:46',0,1),(31,8,3,'2016-05-15 22:23:40',3,1),(32,9,1,'2016-05-16 18:39:11',0,1),(33,9,3,'2016-05-16 18:40:04',3,1),(34,10,1,'2016-05-16 19:12:47',0,1),(35,10,7,'2016-05-16 19:13:16',3,1),(36,11,1,'2016-05-16 19:35:47',0,1),(37,11,7,'2016-05-16 19:36:12',3,1),(38,12,1,'2016-05-16 22:42:15',0,1),(39,12,7,'2016-05-16 22:42:59',3,1),(40,7,4,'2016-05-17 00:23:31',3,1),(41,7,5,'2016-05-17 00:32:37',3,1),(42,7,8,'2016-05-17 00:32:43',3,1),(43,10,4,'2016-05-17 00:40:27',1,1),(44,10,5,'2016-05-17 00:40:34',1,1),(45,10,7,'2016-05-17 00:41:08',2,1),(46,12,4,'2016-05-17 00:41:29',3,1),(47,12,5,'2016-05-17 00:41:32',3,1),(48,12,8,'2016-05-17 00:41:34',3,1),(49,13,1,'2016-05-17 00:42:01',0,1),(50,8,4,'2016-05-17 13:57:21',3,1),(51,8,5,'2016-05-17 13:57:23',3,1),(52,8,7,'2016-05-17 13:57:26',3,1),(53,9,4,'2016-05-17 13:57:35',3,1),(54,9,5,'2016-05-17 13:57:38',3,1),(55,9,7,'2016-05-17 13:57:42',3,1),(56,14,1,'2016-05-17 13:58:29',0,1),(57,14,3,'2016-05-17 13:59:15',3,1),(58,14,4,'2016-05-17 14:00:23',3,1),(59,14,5,'2016-05-17 14:00:30',3,1),(60,14,8,'2016-05-17 14:00:34',3,1),(61,13,3,'2016-05-18 17:50:29',3,1),(62,13,4,'2016-05-18 17:50:38',3,1),(63,13,5,'2016-05-18 17:50:53',3,1),(64,13,6,'2016-05-18 17:50:58',3,1),(65,15,1,'2016-05-18 18:17:29',0,1),(66,16,1,'2016-05-18 18:23:40',0,1),(67,17,1,'2016-05-18 18:25:44',0,1),(68,18,1,'2016-05-18 18:26:33',0,1),(69,18,3,'2016-05-18 18:27:12',3,1),(70,18,4,'2016-05-18 18:27:24',3,1),(71,18,5,'2016-05-18 18:27:29',3,1),(72,18,6,'2016-05-18 18:27:32',3,1),(73,18,7,'2016-05-18 18:28:53',3,1),(74,16,3,'2016-05-18 18:31:14',3,1),(75,16,4,'2016-05-18 18:32:28',3,1),(76,16,5,'2016-05-18 18:32:30',3,1),(77,16,6,'2016-05-18 18:32:32',3,1),(78,19,1,'2016-05-18 21:44:15',0,1),(95,20,1,'2016-05-18 23:03:21',0,1),(96,20,3,'2016-05-18 23:06:40',3,1),(97,20,4,'2016-05-18 23:06:52',3,1),(98,20,5,'2016-05-18 23:06:56',3,1),(99,20,6,'2016-05-18 23:06:59',3,1),(100,20,7,'2016-05-18 23:26:29',3,1),(102,21,1,'2016-05-18 23:32:05',0,1),(103,19,3,'2016-05-27 00:13:46',3,1),(104,19,4,'2016-05-27 00:13:56',3,1),(135,7,11,'2016-05-27 02:09:27',3,1),(136,11,11,'2016-05-27 02:09:27',3,1),(137,10,11,'2016-05-27 02:09:27',3,1),(138,9,11,'2016-05-27 02:09:27',3,1),(139,12,11,'2016-05-27 02:09:27',3,1),(140,8,11,'2016-05-27 02:09:27',3,1),(141,14,12,'2016-05-27 02:09:27',3,1),(142,18,12,'2016-05-27 02:09:27',3,1),(143,14,11,'2016-05-27 02:17:33',3,1),(144,18,11,'2016-05-27 02:17:33',3,1),(145,20,12,'2016-05-27 02:17:33',3,1);
+INSERT INTO `ingreso_log` VALUES (29,7,3,'2016-05-15 21:39:05',3,1),(30,8,1,'2016-05-15 22:22:46',0,1),(31,8,3,'2016-05-15 22:23:40',3,1),(32,9,1,'2016-05-16 18:39:11',0,1),(33,9,3,'2016-05-16 18:40:04',3,1),(34,10,1,'2016-05-16 19:12:47',0,1),(36,11,1,'2016-05-16 19:35:47',0,1),(38,12,1,'2016-05-16 22:42:15',0,1),(40,7,4,'2016-05-17 00:23:31',3,1),(41,7,5,'2016-05-17 00:32:37',3,1),(43,10,4,'2016-05-17 00:40:27',1,1),(44,10,5,'2016-05-17 00:40:34',1,1),(46,12,4,'2016-05-17 00:41:29',3,1),(47,12,5,'2016-05-17 00:41:32',3,1),(49,13,1,'2016-05-17 00:42:01',0,1),(50,8,4,'2016-05-17 13:57:21',3,1),(51,8,5,'2016-05-17 13:57:23',3,1),(53,9,4,'2016-05-17 13:57:35',3,1),(54,9,5,'2016-05-17 13:57:38',3,1),(56,14,1,'2016-05-17 13:58:29',0,1),(57,14,3,'2016-05-17 13:59:15',3,1),(58,14,4,'2016-05-17 14:00:23',3,1),(59,14,5,'2016-05-17 14:00:30',3,1),(61,13,3,'2016-05-18 17:50:29',3,1),(62,13,4,'2016-05-18 17:50:38',3,1),(63,13,5,'2016-05-18 17:50:53',3,1),(65,15,1,'2016-05-18 18:17:29',0,1),(66,16,1,'2016-05-18 18:23:40',0,1),(67,17,1,'2016-05-18 18:25:44',0,1),(68,18,1,'2016-05-18 18:26:33',0,1),(69,18,3,'2016-05-18 18:27:12',3,1),(70,18,4,'2016-05-18 18:27:24',3,1),(71,18,5,'2016-05-18 18:27:29',3,1),(74,16,3,'2016-05-18 18:31:14',3,1),(75,16,4,'2016-05-18 18:32:28',3,1),(76,16,5,'2016-05-18 18:32:30',3,1),(78,19,1,'2016-05-18 21:44:15',0,1),(95,20,1,'2016-05-18 23:03:21',0,1),(96,20,3,'2016-05-18 23:06:40',3,1),(97,20,4,'2016-05-18 23:06:52',3,1),(98,20,5,'2016-05-18 23:06:56',3,1),(102,21,1,'2016-05-18 23:32:05',0,1),(103,19,3,'2016-05-27 00:13:46',3,1),(104,19,4,'2016-05-27 00:13:56',3,1),(141,14,12,'2016-05-27 02:09:27',3,1);
 /*!40000 ALTER TABLE `ingreso_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,6 +249,65 @@ LOCK TABLES `marca_producto` WRITE;
 /*!40000 ALTER TABLE `marca_producto` DISABLE KEYS */;
 INSERT INTO `marca_producto` VALUES (0,'MOTOROLA','2016-04-30 01:53:08',0,1),(1,'SANYO','2016-04-29 23:58:10',0,1),(2,'SAMSUNG','2016-04-29 23:58:10',0,1),(3,'EXO','2016-04-29 23:58:10',0,1);
 /*!40000 ALTER TABLE `marca_producto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orden_compra`
+--
+
+DROP TABLE IF EXISTS `orden_compra`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `orden_compra` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idproveedor` int(11) DEFAULT NULL,
+  `importe_total` float DEFAULT NULL,
+  `importe_validado` float DEFAULT NULL,
+  `idusuario` int(11) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  `habilitado` tinyint(1) DEFAULT NULL,
+  `estado` enum('NUEVA','RECIBIDA','CANCELADA') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orden_compra`
+--
+
+LOCK TABLES `orden_compra` WRITE;
+/*!40000 ALTER TABLE `orden_compra` DISABLE KEYS */;
+INSERT INTO `orden_compra` VALUES (1,2,4050,NULL,1,'2016-06-01 17:03:36',1,'NUEVA'),(2,2,168815,NULL,1,'2016-06-01 17:05:40',1,'NUEVA'),(3,1,5400,NULL,1,'2016-06-01 17:08:19',1,'RECIBIDA'),(4,1,810325,NULL,1,'2016-06-01 18:32:00',1,'CANCELADA'),(5,1,168815,NULL,1,'2016-06-01 19:46:34',1,'NUEVA');
+/*!40000 ALTER TABLE `orden_compra` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orden_compra_repuestos`
+--
+
+DROP TABLE IF EXISTS `orden_compra_repuestos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `orden_compra_repuestos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idorden_compra` int(11) DEFAULT NULL,
+  `idrepuesto` int(11) DEFAULT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `precio_unitario` float DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  `habilitado` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orden_compra_repuestos`
+--
+
+LOCK TABLES `orden_compra_repuestos` WRITE;
+/*!40000 ALTER TABLE `orden_compra_repuestos` DISABLE KEYS */;
+INSERT INTO `orden_compra_repuestos` VALUES (1,1,1,4,1350,'2016-06-01 17:01:42',1),(2,1,1,4,1350,'2016-06-01 17:01:54',1),(3,1,1,3,1350,'2016-06-01 17:03:36',1),(4,2,1,6,1350,'2016-06-01 17:05:40',1),(5,2,2,5,32143,'2016-06-01 17:05:40',1),(6,3,1,4,1350,'2016-06-01 17:08:19',1),(7,4,1,5,1350,'2016-06-01 18:32:00',1),(8,4,2,25,32143,'2016-06-01 18:32:00',1),(9,5,2,5,32143,'2016-06-01 19:46:34',1),(10,5,1,6,1350,'2016-06-01 19:46:34',1);
+/*!40000 ALTER TABLE `orden_compra_repuestos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -408,7 +467,7 @@ CREATE TABLE `proveedor` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +476,7 @@ CREATE TABLE `proveedor` (
 
 LOCK TABLES `proveedor` WRITE;
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
-INSERT INTO `proveedor` VALUES (1,'TECNOSUR',234356565,'Esmeralda 2411','tecnos@gmail.com','Ramiro Fleita','153424241','fleitram@gmail.com','tecnos_pedidos@gmail.com','2016-05-31 00:21:06',1,1);
+INSERT INTO `proveedor` VALUES (1,'TECNOSUR',234356565,'Esmeralda 2411','tecnos@gmail.com','Ramiro Fleita','153424241','fleitram@gmail.com','tecnos_pedidos@gmail.com','2016-05-31 00:21:06',1,1),(2,'CENTRO TECNO',423143251,'Guayaquil 4342','centrotecno@gmail.com','Esteban Flores','1523515215432','esteban@gmail.com','pedidos@gmail.com','2016-06-01 16:06:36',1,1);
 /*!40000 ALTER TABLE `proveedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -529,7 +588,7 @@ CREATE TABLE `repuesto` (
 
 LOCK TABLES `repuesto` WRITE;
 /*!40000 ALTER TABLE `repuesto` DISABLE KEYS */;
-INSERT INTO `repuesto` VALUES (1,'Botonera Galaxy S3',1350,5,NULL,'2016-04-30 00:05:20',0,1),(2,'Modulo Pantalla',32143,4,NULL,'2016-04-30 00:05:20',0,1),(3,'Teclado p3',300,3,NULL,'2016-05-29 00:29:08',0,1);
+INSERT INTO `repuesto` VALUES (1,'Botonera Galaxy S3',1350,5,0,'2016-04-30 00:05:20',0,1),(2,'Modulo Pantalla',32143,4,2,'2016-04-30 00:05:20',0,1),(3,'Teclado p3',300,3,1,'2016-05-29 00:29:08',0,1);
 /*!40000 ALTER TABLE `repuesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -598,4 +657,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-31  0:23:00
+-- Dump completed on 2016-06-01 20:54:46

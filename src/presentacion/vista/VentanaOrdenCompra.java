@@ -40,6 +40,9 @@ public class VentanaOrdenCompra extends JFrame {
 	private JTextField txtfldNroProveedor;
 	private JButton btnBuscarProveedor;
 	private JButton btnVerProveedores;
+	private JTextField txtfldCargarOrden;
+	private JButton btnCargarOrden;
+	private JButton BtnVaciarVentanaOrden;
 
 	public VentanaOrdenCompra() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaOrdenCompra.class.getResource("/calculator.png")));
@@ -183,6 +186,40 @@ public class VentanaOrdenCompra extends JFrame {
 		btnVerProveedores.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/eye-outline.png")));
 		btnVerProveedores.setBounds(220, 49, 23, 23);
 		contentPane.add(btnVerProveedores);
+		
+		JLabel label = new JLabel("Cargar:");
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		label.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 11));
+		label.setBounds(494, 12, 70, 23);
+		contentPane.add(label);
+		
+		txtfldCargarOrden = new JTextField();
+		txtfldCargarOrden.setToolTipText("Ingresar el Nro de hoja de ruta");
+		txtfldCargarOrden.setColumns(10);
+		txtfldCargarOrden.setBounds(572, 12, 86, 23);
+		contentPane.add(txtfldCargarOrden);
+		
+		btnCargarOrden = new JButton("");
+		btnCargarOrden.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/download.png")));
+		btnCargarOrden.setBounds(661, 11, 25, 25);
+		contentPane.add(btnCargarOrden);
+		
+		BtnVaciarVentanaOrden = new JButton("");
+		BtnVaciarVentanaOrden.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/delete.png")));
+		BtnVaciarVentanaOrden.setBounds(694, 11, 25, 25);
+		contentPane.add(BtnVaciarVentanaOrden);
+	}
+
+	public JTextField getTxtfldCargarOrden() {
+		return txtfldCargarOrden;
+	}
+
+	public JButton getBtnVaciarVentanaOrden() {
+		return BtnVaciarVentanaOrden;
+	}
+
+	public JButton getBtnCargarOrden() {
+		return btnCargarOrden;
 	}
 
 	public JTextField getTxtfldNroProveedor() {
@@ -268,5 +305,4 @@ public class VentanaOrdenCompra extends JFrame {
 	public JLabel getMailTexto_lbl() {
 		return mailTexto_lbl;
 	}
-	
 }
