@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import dto.ItemPresupuestoRepuestoDTO;
+import dto.ItemRepuestoDTO;
 import dto.PresupuestoRepuestoDTO;
 import persistencia.conexion.Conexion;
 
@@ -38,11 +38,11 @@ public class PresupuestoRepuestoDAO {
 		return false;
 	}
 
-	public ArrayList<ItemPresupuestoRepuestoDTO> readAll(int id) {
+	public ArrayList<ItemRepuestoDTO> readAll(int id) {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
-		ArrayList<ItemPresupuestoRepuestoDTO> presupuestoRepuesto = new ArrayList<ItemPresupuestoRepuestoDTO>();
+		ArrayList<ItemRepuestoDTO> presupuestoRepuesto = new ArrayList<ItemRepuestoDTO>();
 
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(find);
@@ -50,7 +50,7 @@ public class PresupuestoRepuestoDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				presupuestoRepuesto.add(new ItemPresupuestoRepuestoDTO(
+				presupuestoRepuesto.add(new ItemRepuestoDTO(
 						resultSet.getInt("id"),
 						resultSet.getInt("idrepuesto"),
 						resultSet.getString("detalle"),
