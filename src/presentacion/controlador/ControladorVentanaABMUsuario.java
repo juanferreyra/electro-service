@@ -33,7 +33,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		this.ventanaABMUsuario.getGuardar_btn().addActionListener(this);
 	}
 	
-	private void inicializar(){
+	public void inicializar(){
 		
 		this.usuario = new Usuario();
 		this.ventanaABMUsuario.setVisible(true);
@@ -308,12 +308,12 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		
 	}
 
-	public static void main(String[] args) {
-		VentanaABMUsuario abm = new VentanaABMUsuario();
-		ControladorVentanaABMUsuario c = new ControladorVentanaABMUsuario(abm);
-		c.inicializar();
-		
-	}
+//	public static void main(String[] args) {
+//		VentanaABMUsuario abm = new VentanaABMUsuario();
+//		ControladorVentanaABMUsuario c = new ControladorVentanaABMUsuario(abm);
+//		c.inicializar();
+//		
+//	}
 
 
 }

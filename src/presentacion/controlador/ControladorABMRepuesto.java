@@ -33,7 +33,7 @@ public class ControladorABMRepuesto implements ActionListener {
 
 	}
 
-	public void iniciar() {
+	public void inicializar() {
 
 		this.repuesto = new Repuesto();
 
@@ -308,12 +308,12 @@ public class ControladorABMRepuesto implements ActionListener {
 		}
 	}
 
-	public static void main(String[] args) {
-
-		VentanaABMRepuesto abm = new VentanaABMRepuesto();
-		ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
-		c.iniciar();
-
-	}
+	// public static void main(String[] args) {
+	//
+	// VentanaABMRepuesto abm = new VentanaABMRepuesto();
+	// ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
+	// c.iniciar();
+	//
+	// }
 
 }

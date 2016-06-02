@@ -26,6 +26,10 @@ import javax.swing.table.TableCellRenderer;
 import presentacion.controlador.ControladorABMCliente;
 import presentacion.controlador.ControladorABMFlete;
 import presentacion.controlador.ControladorABMMarcaProducto;
+import presentacion.controlador.ControladorABMProveedor;
+import presentacion.controlador.ControladorABMRepuesto;
+import presentacion.controlador.ControladorABMTipoProducto;
+import presentacion.controlador.ControladorVentanaABMUsuario;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -68,7 +72,7 @@ public class VentanaPrincipal extends JFrame {
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 1028, 50);
 
-		JMenu crearABM = new JMenu("Crear ABM");
+		JMenu crearABM = new JMenu("ABM");
 		menuBar.add(crearABM);
 
 		JMenuItem ABMCliente = new JMenuItem("ABM Cliente");
@@ -100,6 +104,46 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 		crearABM.add(ABMMarcaProducto);
+
+		JMenuItem ABMProveedor = new JMenuItem("ABM Proveedor");
+		ABMProveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMProveedor abm = new VentanaABMProveedor();
+				ControladorABMProveedor c = new ControladorABMProveedor(abm);
+				c.inicializar();
+			}
+		});
+		crearABM.add(ABMProveedor);
+
+		JMenuItem ABMRepuesto = new JMenuItem("ABM Repuesto");
+		ABMRepuesto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMRepuesto abm = new VentanaABMRepuesto();
+				ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
+				c.inicializar();
+			}
+		});
+		crearABM.add(ABMRepuesto);
+
+		JMenuItem ABMUsuario = new JMenuItem("ABM Usuario");
+		ABMUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMUsuario abm = new VentanaABMUsuario();
+				ControladorVentanaABMUsuario c = new ControladorVentanaABMUsuario(abm);
+				c.inicializar();
+			}
+		});
+		crearABM.add(ABMUsuario);
+
+		JMenuItem ABMTipoProducto = new JMenuItem("ABMTipoProducto");
+		ABMTipoProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMTipoProducto abm = new VentanaABMTipoProducto();
+				ControladorABMTipoProducto c = new ControladorABMTipoProducto(abm);
+				c.inicializar();
+			}
+		});
+		crearABM.add(ABMTipoProducto);
 
 		JLabel labelLOGO = new JLabel("");
 		labelLOGO.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));

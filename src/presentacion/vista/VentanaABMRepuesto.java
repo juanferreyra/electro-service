@@ -30,7 +30,7 @@ public class VentanaABMRepuesto extends JFrame {
 
 	private void initialize() {
 		setBounds(100, 100, 779, 464);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 
 		JLabel title_lbl = new JLabel("Nuevo repuesto");

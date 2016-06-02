@@ -485,10 +485,10 @@ public class ControladorABMProveedor implements ActionListener{
 		return matcher.matches();
 	}
 
-	public static void main(String[] args) {
-		VentanaABMProveedor abm = new VentanaABMProveedor();
-		ControladorABMProveedor c =new ControladorABMProveedor(abm);
-		c.inicializar();
-	}
+	// public static void main(String[] args) {
+	// VentanaABMProveedor abm = new VentanaABMProveedor();
+	// ControladorABMProveedor c =new ControladorABMProveedor(abm);
+	// c.inicializar();
+	// }
 
 }
