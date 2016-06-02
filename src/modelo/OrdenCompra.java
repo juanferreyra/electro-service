@@ -6,6 +6,7 @@ import java.util.List;
 import dto.ItemRepuestoDTO;
 import dto.MarcaDTO;
 import dto.OrdenCompraDTO;
+import dto.OrdenCompraRepuestoDTO;
 import dto.ProveedorDTO;
 import dto.RepuestoDTO;
 import persistencia.dao.MarcaDAO;
@@ -33,6 +34,10 @@ public class OrdenCompra {
 		ordenCompraRepuestoDAO = new OrdenCompraRepuestoDAO();
 		repuestoDAO = new RepuestoDAO();
 		marcaDAO = new MarcaDAO();
+		
+		ordenCompraDTO = new OrdenCompraDTO();
+		ordenCompraDTO.setId(-1);
+		proveedorDTO = null;
 		listaRepuestos = new ArrayList<ItemRepuestoDTO>();
 		listaMarcasProveedor = new ArrayList<MarcaDTO>();
 	}
@@ -89,5 +94,44 @@ public class OrdenCompra {
 
 	public List<RepuestoDTO> obtenerRepuestos() {
 		return repuestoDAO.readAllInMarca(listaMarcasProveedor);
+	}
+
+	public Boolean crearOrdenCompra() {
+		try {
+			int idOrden = ordenCompraDAO.getNextId();
+			ordenCompraDTO.setId(idOrden);
+			for (int i = 0; i < listaRepuestos.size(); i++) {
+				OrdenCompraRepuestoDTO orden = new OrdenCompraRepuestoDTO(0, idOrden,  listaRepuestos.get(i).getIdrepuesto(), listaRepuestos.get(i).getCantidad(), listaRepuestos.get(i).getPrecioUnitario(), null, true);
+				ordenCompraRepuestoDAO.insert(orden);
+			}
+			
+			ordenCompraDTO.setIdproveedor(proveedorDTO.getId());
+			ordenCompraDAO.insert(this.ordenCompraDTO);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean existeOrdenCompra(int id) {
+		if(ordenCompraDAO.find(id) == null) {
+			return false;	
+		}
+		return true;
+	}
+	
+	
+	public void cargarVariables() {
+		if(ordenCompraDTO.getId()!=-1) {
+			int id = ordenCompraDTO.getId();
+			ordenCompraDTO = ordenCompraDAO.find(id);
+			proveedorDTO = proveedorDAO.find(ordenCompraDTO.getIdproveedor());
+			listaRepuestos = ordenCompraRepuestoDAO.readAll(id);
+		}
+	}
+	
+	public void actualizarEstado(String estado) {
+		ordenCompraDAO.updateEstado(estado,ordenCompraDTO.getId());
 	}
 }

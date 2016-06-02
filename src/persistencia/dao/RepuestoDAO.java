@@ -30,8 +30,6 @@ public class RepuestoDAO {
 			+ "`nombre`, `detalle`, `precio`, `stock_minimo`,now(),`idusuario`,true)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
 	
-	private static String readAllInMarcas = "SELECT * FROM repuesto WHERE habilitado = true ";
-	
 	public boolean agregar(RepuestoDTO componente){
 		
 		PreparedStatement statement;
@@ -202,17 +200,20 @@ public class RepuestoDAO {
 	
 	public ArrayList<RepuestoDTO> readAllInMarca(ArrayList<MarcaDTO> marcas)
 	{
-		String where = "";
+		if(marcas.size()==0)
+		{
+			return new ArrayList<RepuestoDTO>();
+		}
+		
+		String readAllInMarcas = "SELECT * FROM repuesto WHERE habilitado = true ";
 		
 		for (int i = 0; i < marcas.size(); i++) {
 			if(i==0) {
-				where += " AND idmarca = "+marcas.get(i).getId();
+				readAllInMarcas += " AND idmarca = "+marcas.get(i).getId();
 			}else {
-				where += " OR idmarca = "+marcas.get(i).getId();
+				readAllInMarcas += " OR idmarca = "+marcas.get(i).getId();
 			}
 		}
-		
-		readAllInMarcas+=where;
 		
 		PreparedStatement statement;
 		ResultSet resultSet; //Guarda el resultado de la query

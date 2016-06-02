@@ -21,7 +21,7 @@ public class ControladorOrdenCompra implements ActionListener{
 	private OrdenCompra ordenCompra;
 	private UsuarioDTO usuarioLogueado;
 	private DefaultTableModel modelTable = new DefaultTableModel();
-	private Integer cantidad = 0;
+	private Integer cantidad = 1;
 	private float suma = 0;
 	@SuppressWarnings("unused")
 	private String perfil;
@@ -42,23 +42,49 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getGuardar_btn().addActionListener(this);
 		this.ventanaOrdenCompra.getBtnBuscarProveedor().addActionListener(this);
 		this.ventanaOrdenCompra.getBtnVerProveedores().addActionListener(this);
+		this.ventanaOrdenCompra.getBtnCargarOrden().addActionListener(this);
+		this.ventanaOrdenCompra.getBtnVaciarVentanaOrden().addActionListener(this);
 	}
 	
 	public void inicializar() {
 		ventanaOrdenCompra.setVisible(true);
+		ventanaOrdenCompra.getBtnVaciarVentanaOrden().setVisible(false);
+		this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
+		this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
 		ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
 	}
 
 	private void cargarComboComponentes() {
+		this.ventanaOrdenCompra.getComponente_ComboBox().removeAllItems();
+		
 		for (RepuestoDTO c : ordenCompra.obtenerRepuestos()){
 			this.ventanaOrdenCompra.getComponente_ComboBox().addItem(c.getDetalle());
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	private void cargarModelo()
-	{
-		//TODO:Deberia setear todos los campos si se carga una
+	private void cargarModelo() {
+		ordenCompra.cargarVariables();
+		cargarProveedor(ordenCompra.getProveedorDTO());
+		actualizarTablaRepuestos();
+		this.ventanaOrdenCompra.getValorPresupuestado_txf().setText(String.valueOf( ordenCompra.getOrdenCompraDTO().getImporte_total()));
+		
+		if(!ordenCompra.getOrdenCompraDTO().getEstado().equals("NUEVA")) {
+			this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
+			this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
+		} else {
+			this.ventanaOrdenCompra.getBtnCancelada().setVisible(true);
+			this.ventanaOrdenCompra.getBtnRecibido().setVisible(true);
+		}
+		
+		this.ventanaOrdenCompra.getBtnBuscarProveedor().setEnabled(false);
+		this.ventanaOrdenCompra.getAgregarComponente_btn().setEnabled(false);
+		this.ventanaOrdenCompra.getBtnVerProveedores().setEnabled(false);
+		this.ventanaOrdenCompra.getGuardar_btn().setVisible(false);
+		this.ventanaOrdenCompra.getCancelar_btn().setText("Cerrar");
+		this.ventanaOrdenCompra.getIncrementoCantComponente_btn().setEnabled(false);
+		this.ventanaOrdenCompra.getDecrementoCantComponente_btn().setEnabled(false);
+		this.ventanaOrdenCompra.getEliminarComponente_btn().setEnabled(false);
+		this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(false);
 	}
 
 	@Override
@@ -78,30 +104,41 @@ public class ControladorOrdenCompra implements ActionListener{
 			}
 			
 		}else if(e.getSource() == this.ventanaOrdenCompra.getAgregarComponente_btn()){
-			 
+			if(this.ventanaOrdenCompra.getComponente_ComboBox().getSelectedIndex()!= -1) {
 				agregarRepuestoATabla();
 				ocultarColumnaId();
 				sumarTotales();
+			} else {
 
+				JOptionPane.showMessageDialog(ventanaOrdenCompra, "No puede agregar sin seleccionar un repuesto ", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
 		}else if(e.getSource() == this.ventanaOrdenCompra.getEliminarComponente_btn()){
 			
 			eliminarRepuestoDeTabla();
 			
 		}else if(e.getSource() == this.ventanaOrdenCompra.getGuardar_btn()){
-			//TODO: logica para guardar la orden de compra
+			
 			validarCampos();
+			this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
+			this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
 			
 		}else if (e.getSource() == this.ventanaOrdenCompra.getCancelar_btn()){
 		
 			this.ventanaOrdenCompra.dispose();
 			
 		}else if(e.getSource() == this.ventanaOrdenCompra.getBtnRecibido()) {
+			
 			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como Recibido la orden de compra. Realmente esta seguro?", "Confirmar",
 		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		    if (response == JOptionPane.NO_OPTION) {
 		      
 		    } else if (response == JOptionPane.YES_OPTION) {
-		    	//TODO: agrego la orden de trabajo en estado recibida
+		    	
+		    	ordenCompra.actualizarEstado("RECIBIDA");
+		    	this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
+				this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
+		    	
 		    } else if (response == JOptionPane.CLOSED_OPTION) {
 		    	
 		    }
@@ -111,13 +148,51 @@ public class ControladorOrdenCompra implements ActionListener{
 		    if (response == JOptionPane.NO_OPTION) {
 		      
 		    } else if (response == JOptionPane.YES_OPTION) {
-		    		
-				//TODO: agrego la orden de compra en estado cancelado
+		    	
+		    	ordenCompra.actualizarEstado("CANCELADA");
+		    	this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
+				this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
+		    	
 		    } else if (response == JOptionPane.CLOSED_OPTION) {
 		      
 		    }
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnBuscarProveedor()) {
 			buscarProveedor();
+		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnVerProveedores()) {
+			VentanaABMProveedor ventanaABMProveedor = new VentanaABMProveedor();
+			ControladorABMProveedor cp = new ControladorABMProveedor(ventanaABMProveedor);
+	    	cp.inicializar();
+		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnCargarOrden()) {
+			String nroOrdenString = this.ventanaOrdenCompra.getTxtfldCargarOrden().getText();
+			try {
+				int nroOrden = Integer.parseInt(nroOrdenString);
+				
+				if(ordenCompra.existeOrdenCompra(nroOrden)){
+					ordenCompra.getOrdenCompraDTO().setId(nroOrden);
+					cargarModelo();
+					this.ventanaOrdenCompra.getBtnVaciarVentanaOrden().setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(ventanaOrdenCompra, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			} catch (NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(this.ventanaOrdenCompra,
+						"El número de proveedor es incorrecto, vuelva a intentarlo. ", null,
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnVaciarVentanaOrden()) {
+			
+			vaciarCampos();
+			this.ventanaOrdenCompra.getBtnVaciarVentanaOrden().setVisible(false);
+			this.ventanaOrdenCompra.getBtnBuscarProveedor().setEnabled(true);
+			this.ventanaOrdenCompra.getAgregarComponente_btn().setEnabled(true);
+			this.ventanaOrdenCompra.getBtnVerProveedores().setEnabled(true);
+			this.ventanaOrdenCompra.getGuardar_btn().setVisible(true);
+			this.ventanaOrdenCompra.getCancelar_btn().setText("Cancelar");
+			this.ventanaOrdenCompra.getIncrementoCantComponente_btn().setEnabled(true);
+			this.ventanaOrdenCompra.getDecrementoCantComponente_btn().setEnabled(true);
+			this.ventanaOrdenCompra.getEliminarComponente_btn().setEnabled(true);
+			this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(true);
 		}
     }
 
@@ -133,37 +208,30 @@ public class ControladorOrdenCompra implements ActionListener{
 		
 		if(this.ventanaOrdenCompra.getComponentes_table().getRowCount() == 0){
 
-			JOptionPane.showMessageDialog(ventanaOrdenCompra, "Campo NO INGRESADO COMPONENTES AL PRESUPUESTO  no puede estar vacio ", "Atencion!",
+			JOptionPane.showMessageDialog(ventanaOrdenCompra, "Dele al menos ingresar un repuesto a la orden de compra para continuar! ", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);
 			
-		}else{
+		} else if(this.ventanaOrdenCompra.getNombreRazonSocialTexto_lbl().equals("")) {
 			
-			this.ordenCompra.getOrdenCompraDTO().setImporte_total(Float.parseFloat(this.ventanaOrdenCompra.getValorPresupuestado_txf().getText()));
-			this.ordenCompra.getOrdenCompraDTO().setIdusuario(this.usuarioLogueado.getId());
-			//TODO aca deberia guardar la orden de compra y mostrar el boton de imprimir
+			JOptionPane.showMessageDialog(ventanaOrdenCompra, "Debe ingresar un proveedor para continuar ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+		} else {
+			ordenCompra.getOrdenCompraDTO().setImporte_total(Float.parseFloat(this.ventanaOrdenCompra.getValorPresupuestado_txf().getText()));
+			ordenCompra.getOrdenCompraDTO().setIdusuario(this.usuarioLogueado.getId());
+			
+			Boolean guardo = ordenCompra.crearOrdenCompra();
+			if(guardo) {
+				JOptionPane.showMessageDialog(ventanaOrdenCompra, "Orden de compra Nro "+ordenCompra.getOrdenCompraDTO().getId()+" creada correctamente!", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+				vaciarCampos();
+			} else {
+				JOptionPane.showMessageDialog(ventanaOrdenCompra, "Ocurrio un error al guardar! Por favor verifique los datos ingresados o recomience la orden. Gracias", "Atencion!",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	private boolean soloNumeros(String texto){
-		try { 
-			Integer.parseInt(texto); 
-			return true; 
-		} catch (Exception e) { 
-			return false; 
-		}
-	}
-	
-	@SuppressWarnings("unused")
-	private boolean soloFloat(String texto) {
-		try {
-			Float.parseFloat(texto);
-			return true;
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-	}
-
 	private void sumarTotales() {
 		suma = 0;
 		for (int i = 0 ; i < ventanaOrdenCompra.getComponentes_table().getRowCount(); i++){
@@ -245,28 +313,22 @@ public class ControladorOrdenCompra implements ActionListener{
 			try {
 				int nroproveedor = Integer.parseInt(textoingresado);
 				
-				ProveedorDAO cdao = this.ordenCompra.getProveedorDAO();
-				ProveedorDTO cdto = cdao.find(nroproveedor);
-				if (cdto == null) {
-					int response = JOptionPane.showConfirmDialog(null, "El proveedor buscado no existe desea buscarlo y/o crear uno nuevo?", "Atencion",
+				if(this.ventanaOrdenCompra.getComponentes_table().getRowCount() > 0) {
+					int response = JOptionPane.showConfirmDialog(null, "Hay repuestos cargados. Si carga un proveedor nuevo se borraran los repuestos ingresados. Esta seguro de continuar la busqueda?", "Atencion",
 					        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				    if (response == JOptionPane.NO_OPTION) {
 				      
 				    } else if (response == JOptionPane.YES_OPTION) {
 				    	
-				    	VentanaABMProveedor ventanaABMProveedor = new VentanaABMProveedor();
-						ControladorABMProveedor cp = new ControladorABMProveedor(ventanaABMProveedor);
-				    	cp.inicializar();
+				    	verificarYCargarProveedor(nroproveedor);
 				    	
 				    } else if (response == JOptionPane.CLOSED_OPTION) {
 				      
 				    }
 				} else {
-					ordenCompra.setProveedorDTO(cdto);
-					ordenCompra.actualizarListaMarcas();
-					cargarProveedor(cdto);
-					cargarComboComponentes();
+					verificarYCargarProveedor(nroproveedor);
 				}
+			
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(this.ventanaOrdenCompra,
 						"El número de proveedor es incorrecto, vuelva a intentarlo. ", null,
@@ -275,10 +337,49 @@ public class ControladorOrdenCompra implements ActionListener{
 		}
 	}
 	
+	private void verificarYCargarProveedor(int nroproveedor) {
+		
+		ProveedorDAO cdao = this.ordenCompra.getProveedorDAO();
+		ProveedorDTO cdto = cdao.find(nroproveedor);
+		
+		
+		if (cdto == null) {
+			int response2 = JOptionPane.showConfirmDialog(null, "El proveedor buscado no existe desea buscarlo y/o crear uno nuevo?", "Atencion",
+			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		    if (response2 == JOptionPane.NO_OPTION) {
+		      
+		    } else if (response2 == JOptionPane.YES_OPTION) {
+		    	
+		    	VentanaABMProveedor ventanaABMProveedor = new VentanaABMProveedor();
+				ControladorABMProveedor cp = new ControladorABMProveedor(ventanaABMProveedor);
+		    	cp.inicializar();
+		    	
+		    } else if (response2 == JOptionPane.CLOSED_OPTION) {
+		      
+		    }
+		} else {
+			vaciarCampos();
+			ordenCompra.setProveedorDTO(cdto);
+			cargarProveedor(cdto);
+			ordenCompra.actualizarListaMarcas();
+			cargarComboComponentes();
+		}
+	}
+	
 	private void cargarProveedor(ProveedorDTO cdto) {
 		this.ventanaOrdenCompra.getNombreRazonSocialTexto_lbl().setText(cdto.getRazonSocial());
 		this.ventanaOrdenCompra.getDireccionTexto_lbl().setText(cdto.getDireccion());
 		this.ventanaOrdenCompra.getMailTexto_lbl().setText(cdto.getEmail());
+	}
+	
+	private void vaciarCampos() {
+		this.ventanaOrdenCompra.getComponente_ComboBox().removeAllItems();
+		this.ventanaOrdenCompra.getNombreRazonSocialTexto_lbl().setText("");
+		this.ventanaOrdenCompra.getDireccionTexto_lbl().setText("");
+		this.ventanaOrdenCompra.getMailTexto_lbl().setText("");
+		this.ventanaOrdenCompra.getValorPresupuestado_txf().setText("");
+		this.ordenCompra = new OrdenCompra();
+		actualizarTablaRepuestos();
 	}
 
 	public static void main(String[] args) {

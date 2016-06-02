@@ -11,6 +11,7 @@ public class OrdenCompraDTO {
 	private int idusuario;
 	private Date fecha_creacion;
 	private String hora_creacion;
+	private String estado;
 	
 	public OrdenCompraDTO() {
 		
@@ -70,6 +71,14 @@ public class OrdenCompraDTO {
 
 	public void setImporte_validado(float importe_validado) {
 		this.importe_validado = importe_validado;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 }

@@ -9,17 +9,19 @@ import persistencia.conexion.Conexion;
 
 public class OrdenCompraDAO {
 
-	private static final String insert = "INSERT INTO orden_compra(`idproveedor`, `importe_total`, `idusuario`, `fecha_creacion`, `habilitado`) VALUES (?, ?, ?, now(), true);";
+	private static final String insert = "INSERT INTO orden_compra(`idproveedor`, `importe_total`, `idusuario`, `fecha_creacion`, `habilitado`,`estado`) VALUES (?, ?, ?, now(), true,'NUEVA');";
 
 	//TODO:private static final String updateImporte = "";
 	
-	private static final String readall = "SELECT id, idproveedor, idusuario, "
-			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion "
+	private static final String readall = "SELECT id, idproveedor, idusuario, importe_total, importe_validado, "
+			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion ,estado "
 			+ "FROM orden_compra WHERE habilitado=true;";
 	
-	private static final String find =  "SELECT id, idproveedor, idusuario, "
-			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion "
+	private static final String find =  "SELECT id, idproveedor, idusuario, importe_total, importe_validado, "
+			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion , estado "
 			+ "FROM orden_compra WHERE habilitado=true AND id= ? ;";
+	
+	private static final String updateEstado = "UPDATE orden_compra SET `estado`=? WHERE `id`= ? ;";
 	
 	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'orden_compra';";
 	
@@ -47,6 +49,7 @@ public class OrdenCompraDAO {
 				orden.setIdusuario(resultSet.getInt("idusuario"));
 				orden.setFecha_creacion(fecha_creacion);
 				orden.setHora_creacion(resultSet.getString("hora_creacion"));
+				orden.setEstado(resultSet.getString("estado"));
 				
 				presupuestos.add(orden);
 			}
@@ -66,10 +69,31 @@ public class OrdenCompraDAO {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 
 			statement.setInt(1, orden.getIdproveedor());
-			statement.setInt(2, orden.getIdusuario());
+			statement.setFloat(2, orden.getImporte_total());
+			statement.setInt(3, orden.getIdusuario());
 			
 			if (statement.executeUpdate() > 0)
 				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return false;
+	}
+	
+	public boolean updateEstado(String estado,int id) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(updateEstado);
+
+			statement.setString(1, estado);
+			statement.setInt(2, id);
+			
+			if (statement.executeUpdate() > 0)
+				return true;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -101,6 +125,7 @@ public class OrdenCompraDAO {
 				orden.setIdusuario(resultSet.getInt("idusuario"));
 				orden.setFecha_creacion(fecha_creacion);
 				orden.setHora_creacion(resultSet.getString("hora_creacion"));
+				orden.setEstado(resultSet.getString("estado"));
 			}
 			
 		} catch (

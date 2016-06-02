@@ -1,8 +1,6 @@
 package modelo;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import dto.MarcaDTO;
 import dto.ProveedorDTO;
 import persistencia.dao.MarcaDAO;
