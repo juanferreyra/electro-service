@@ -2,8 +2,6 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -33,6 +31,7 @@ public class ControladorABMProveedor implements ActionListener{
 	private List<MarcaDTO>marcas_en_tabla;
 	private ProveedorMarca proveedorMarca;
 	private List<MarcaDTO> marcasCombo;
+	private List<MarcaDTO> marcasCombo1;
 
 	
 	public ControladorABMProveedor(VentanaABMProveedor ventanaABMProveedor) {
@@ -117,12 +116,51 @@ public class ControladorABMProveedor implements ActionListener{
 				if (arg0.getButton() == 1) {
 					cargartxts();
 					cargarTablaMarcas();
-
+					vaciarComboMarcas();
+					cargarComboMarcasProveedorSeleccionado();
 				}
-
 			}
 		});
 		
+	}
+	
+	private void vaciarComboMarcas() {
+		
+		this.ventanaABMProveedor.getAgregarMarca_jcmbox().removeAllItems();
+	}
+	
+	private void cargarComboMarcasProveedorSeleccionado() {
+		
+		this.marcasCombo1 = marca.obtenerMarcas();
+		
+		for(int i = 0; i < this.marcasCombo1.size(); i++){
+			
+			if(!isMarcaAgregadaEnTabla(this.marcasCombo.get(i).getId() + " " + this.marcasCombo.get(i).getDetalle())){
+				
+			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(
+					this.marcasCombo.get(i).getId() + " " + this.marcasCombo.get(i).getDetalle());
+			}
+		}
+		
+	}
+
+	private boolean isMarcaAgregadaEnTabla(String marca) {
+		
+		// recupero id 
+		String item = marca;
+		String [] array = item.split(" ");
+		
+		String  idMarca = array[0];
+		int id = Integer.parseInt(idMarca);
+		
+		for (int i = 0; i < this.ventanaABMProveedor.getTablaMarcas().getRowCount(); i++){
+			
+			if(this.ventanaABMProveedor.getModelMarcas().getValueAt(i, 0).equals(id)){
+				
+				 return true;
+			}
+		}
+		return false;
 	}
 
 	private void cargartxts() {
@@ -163,6 +201,7 @@ public class ControladorABMProveedor implements ActionListener{
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private void ocultarColumnaId() {
 		
 		this.ventanaABMProveedor.getTablaProveedores().getColumnModel().getColumn(0).setMaxWidth(0);
@@ -210,6 +249,9 @@ public class ControladorABMProveedor implements ActionListener{
 			this.limpiartxts();
 			this.ventanaABMProveedor.getTablaProveedores().clearSelection();
 			vaciarTablaMarcas();
+			vaciarComboMarcas();
+			cargarComboMarcas();
+			
 
 		}else if (e.getSource() == this.ventanaABMProveedor.getEliminarItem_btn()) {// boton eliminar
 
@@ -319,6 +361,10 @@ public class ControladorABMProveedor implements ActionListener{
 					int fila = this.ventanaABMProveedor.getTablaMarcas().getSelectedRow();
 					this.ventanaABMProveedor.getModelMarcas().removeRow(fila);
 					
+					vaciarComboMarcas();
+					cargarComboMarcasProveedorSeleccionado();
+					
+					
 				}
 
 			}else{
@@ -330,19 +376,26 @@ public class ControladorABMProveedor implements ActionListener{
 
 		}else if(e.getSource() == this.ventanaABMProveedor.getAgregarMarca()){// agrega marca a la tabla marcas
 			
-			// obtengo id y detalle 
-			String item = (String)ventanaABMProveedor.getAgregarMarca_jcmbox().getSelectedItem();
-			String [] array = item.split(" ");
-			
-			String  idMarca = array[0];
-			String  detalle = array [1];
-			
-			int id = Integer.parseInt(idMarca);
-			
-			
-			Object[] fila = {id,detalle};
-			
-			ventanaABMProveedor.getModelMarcas().addRow(fila);
+			// si el combo no esta vacio	
+			if(this.ventanaABMProveedor.getAgregarMarca_jcmbox().getItemCount() != 0){
+
+				// obtengo id y detalle 
+				String item = (String)ventanaABMProveedor.getAgregarMarca_jcmbox().getSelectedItem();
+				String [] array = item.split(" ");
+
+				String  idMarca = array[0];
+				String  detalle = array [1];
+
+				int id = Integer.parseInt(idMarca);
+
+
+				Object[] fila = {id,detalle};
+
+				ventanaABMProveedor.getModelMarcas().addRow(fila);
+
+				vaciarComboMarcas();
+				cargarComboMarcasProveedorSeleccionado();
+			}
 		}
 	}
 	
@@ -485,10 +538,10 @@ public class ControladorABMProveedor implements ActionListener{
 		return matcher.matches();
 	}
 
-	// public static void main(String[] args) {
-	// VentanaABMProveedor abm = new VentanaABMProveedor();
-	// ControladorABMProveedor c =new ControladorABMProveedor(abm);
-	// c.inicializar();
-	// }
+	public static void main(String[] args) {
+	VentanaABMProveedor abm = new VentanaABMProveedor();
+	ControladorABMProveedor c =new ControladorABMProveedor(abm);
+	 c.inicializar();
+	}
 
 }
