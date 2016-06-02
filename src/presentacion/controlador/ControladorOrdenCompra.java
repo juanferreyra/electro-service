@@ -12,6 +12,7 @@ import dto.ProveedorDTO;
 import dto.UsuarioDTO;
 import modelo.OrdenCompra;
 import persistencia.dao.ProveedorDAO;
+import presentacion.reportes.ReporteOrdenCompra;
 import presentacion.vista.VentanaABMProveedor;
 import presentacion.vista.VentanaOrdenCompra;
 
@@ -44,6 +45,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getBtnVerProveedores().addActionListener(this);
 		this.ventanaOrdenCompra.getBtnCargarOrden().addActionListener(this);
 		this.ventanaOrdenCompra.getBtnVaciarVentanaOrden().addActionListener(this);
+		this.ventanaOrdenCompra.getBtnImprimir().addActionListener(this);
 	}
 	
 	public void inicializar() {
@@ -51,6 +53,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		ventanaOrdenCompra.getBtnVaciarVentanaOrden().setVisible(false);
 		this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
 		this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
+		this.ventanaOrdenCompra.getBtnImprimir().setVisible(false);
 		ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
 	}
 
@@ -85,6 +88,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getDecrementoCantComponente_btn().setEnabled(false);
 		this.ventanaOrdenCompra.getEliminarComponente_btn().setEnabled(false);
 		this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(false);
+		this.ventanaOrdenCompra.getBtnImprimir().setVisible(true);
 	}
 
 	@Override
@@ -193,6 +197,10 @@ public class ControladorOrdenCompra implements ActionListener{
 			this.ventanaOrdenCompra.getDecrementoCantComponente_btn().setEnabled(true);
 			this.ventanaOrdenCompra.getEliminarComponente_btn().setEnabled(true);
 			this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(true);
+			this.ventanaOrdenCompra.getBtnImprimir().setVisible(false);
+		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnImprimir()) {
+			ReporteOrdenCompra reporte = new ReporteOrdenCompra(ordenCompra.getDatosImpresion());
+			reporte.mostrar();
 		}
     }
 

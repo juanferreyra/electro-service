@@ -43,6 +43,7 @@ public class VentanaOrdenCompra extends JFrame {
 	private JTextField txtfldCargarOrden;
 	private JButton btnCargarOrden;
 	private JButton BtnVaciarVentanaOrden;
+	private JButton btnImprimir;
 
 	public VentanaOrdenCompra() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaOrdenCompra.class.getResource("/calculator.png")));
@@ -163,11 +164,11 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(monto_pedido_lbl);
 
 		cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(577, 618, 117, 23);
+		cancelar_btn.setBounds(608, 618, 90, 23);
 		contentPane.add(cancelar_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(444, 618, 118, 23);
+		guardar_btn.setBounds(512, 618, 90, 23);
 		contentPane.add(guardar_btn);
 		
 		btnBuscarProveedor = new JButton("");
@@ -208,6 +209,15 @@ public class VentanaOrdenCompra extends JFrame {
 		BtnVaciarVentanaOrden.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/delete.png")));
 		BtnVaciarVentanaOrden.setBounds(694, 11, 25, 25);
 		contentPane.add(BtnVaciarVentanaOrden);
+		
+		btnImprimir = new JButton("Imprimir");
+		btnImprimir.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/printer.png")));
+		btnImprimir.setBounds(353, 617, 139, 23);
+		contentPane.add(btnImprimir);
+	}
+
+	public JButton getBtnImprimir() {
+		return btnImprimir;
 	}
 
 	public JTextField getTxtfldCargarOrden() {

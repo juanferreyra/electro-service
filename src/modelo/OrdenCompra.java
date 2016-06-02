@@ -2,13 +2,14 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import dto.ImpresionOrdenCompraDTO;
 import dto.ItemRepuestoDTO;
 import dto.MarcaDTO;
 import dto.OrdenCompraDTO;
 import dto.OrdenCompraRepuestoDTO;
 import dto.ProveedorDTO;
 import dto.RepuestoDTO;
+import persistencia.dao.ImpresionOrdenCompraDAO;
 import persistencia.dao.MarcaDAO;
 import persistencia.dao.OrdenCompraDAO;
 import persistencia.dao.OrdenCompraRepuestoDAO;
@@ -21,6 +22,8 @@ public class OrdenCompra {
 	private ArrayList<ItemRepuestoDTO> listaRepuestos;
 	private ProveedorDTO proveedorDTO;
 	private ArrayList<MarcaDTO> listaMarcasProveedor;
+	
+	private static ImpresionOrdenCompraDAO impresionOrdenCompraStatic;
 	
 	private ProveedorDAO proveedorDAO;
 	private OrdenCompraDAO ordenCompraDAO;
@@ -134,4 +137,10 @@ public class OrdenCompra {
 	public void actualizarEstado(String estado) {
 		ordenCompraDAO.updateEstado(estado,ordenCompraDTO.getId());
 	}
+	
+	public ArrayList<ImpresionOrdenCompraDTO> getDatosImpresion(){
+		impresionOrdenCompraStatic = new ImpresionOrdenCompraDAO();
+		return impresionOrdenCompraStatic.find(ordenCompraDTO.getId());
+	}
+	
 }
