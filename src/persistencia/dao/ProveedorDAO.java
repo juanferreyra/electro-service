@@ -23,6 +23,8 @@ public class ProveedorDAO {
 			+ ", mail = ?, contacto_nombre = ?, contacto_telefono = ?, contacto_mail = ?, mail_para_pedidos = ?,"
 			+ " fecha_creacion = now(), idusuario = ?,  habilitado = true WHERE id = ?; ";
 	
+	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'proveedor';";
+	
 	private Conexion conexion = Conexion.getConexion();
 
 	public ArrayList<ProveedorDTO> readAll() {
@@ -163,5 +165,26 @@ public class ProveedorDAO {
 		}
 		
 		return false;
+	}
+	public int getNextId() {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		int clave = 0;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(nextId);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				clave = resultSet.getInt("siguiente");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		clave -= 1;
+		return clave ;
 	}
 }

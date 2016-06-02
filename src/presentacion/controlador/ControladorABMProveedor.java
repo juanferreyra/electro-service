@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import javax.swing.JTextField;
 
 import dto.MarcaDTO;
 import dto.ProveedorDTO;
+import dto.ProveedorMarcaDTO;
 import modelo.Marca;
 import modelo.Proveedor;
 import modelo.ProveedorMarca;
@@ -39,7 +42,8 @@ public class ControladorABMProveedor implements ActionListener{
 		this.ventanaABMProveedor.getLimpiar_btn().addActionListener(this);
 		this.ventanaABMProveedor.getGuardar_btn().addActionListener(this);
 		this.ventanaABMProveedor.getEliminarMarca().addActionListener(this);
-		
+		this.ventanaABMProveedor.getAgregarMarca().addActionListener(this);
+
 	}
 	
 	public void inicializar() {
@@ -70,7 +74,7 @@ public class ControladorABMProveedor implements ActionListener{
 
 	}
 	
-	
+
 
 	private void cargarComboMarcas() {
 		
@@ -78,11 +82,9 @@ public class ControladorABMProveedor implements ActionListener{
 		
 		for(int i = 0; i < this.marcasCombo.size(); i++){
 			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(
-					this.marcasCombo.get(i).getId() + " " + this.marcasCombo.get(i).getDetalle() );
-			
+					this.marcasCombo.get(i).getId() + " " + this.marcasCombo.get(i).getDetalle() );	
 		}
 		
-		this.ventanaABMProveedor.getAgregarMarca_jcmbox().setSelectedIndex(-1);
 	}
 
 	private void mouseClickedOnTable() {
@@ -177,7 +179,8 @@ public class ControladorABMProveedor implements ActionListener{
 		this.ventanaABMProveedor.getModelMarcas().setColumnCount(0);
 		this.ventanaABMProveedor.getModelMarcas().setColumnIdentifiers(this.ventanaABMProveedor.getNombreColumnasMarcas());
 
-		this.marcas_en_tabla = proveedor.obtenerMarcasDelProveedor((int)this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
+		this.marcas_en_tabla = proveedor.obtenerMarcasDelProveedor(
+				(int)this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
 
 		for (int i = 0; i < this.marcas_en_tabla.size(); i++) {
 
@@ -240,7 +243,7 @@ public class ControladorABMProveedor implements ActionListener{
 		} else if (e.getSource() == this.ventanaABMProveedor.getGuardar_btn()) {// boton guardar
 
 			// si esta seleccionado de la tabla
-			// modificar provvedor
+			// modificar proveedor
 			if (this.ventanaABMProveedor.getTablaProveedores().getSelectedRow() != -1) {
 
 				int filaSeleccionada = this.ventanaABMProveedor.getTablaProveedores().getSelectedRow();
@@ -248,12 +251,15 @@ public class ControladorABMProveedor implements ActionListener{
 				if (!isTxtsVacios()) {
 
 					if (isTxtsValidos()) {
-
+						// guarda el proveedor
 						proveedor.modificarProveedor(obtenerProveedor(
 								(int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0)));
-
 						limpiartxts();
 						cargarTablaProveedores();
+						
+						// guarda las marcas del proveedor y le paso el id del proveedor seleccionado
+						insertarMarcasDelProveedor((int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
+						
 						vaciarTablaMarcas();
 						
 					}
@@ -261,20 +267,25 @@ public class ControladorABMProveedor implements ActionListener{
 				} else {
 
 					JOptionPane.showMessageDialog(this.ventanaABMProveedor,
-							"No se permiten campos vacios. Por favor, vuelva a intentarlo.");
+							"No se permiten campos vacios. Por favor, vuelva a intentarlo.","Atencion!",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			} else {
-				// nuevo cliente
+				// nuevo Proveedor
 
 				if (!isTxtsVacios()) {
 
 					if (isTxtsValidos()) {
-
+						// agrega proveedor nuevo
 						proveedor.AgregarProveedor(obtenerProveedor(0));
 
 						limpiartxts();
 						cargarTablaProveedores();
+						
+						// guarda las marcas del proveedor y le paso el id del proveedor nuevo
+						insertarMarcasDelProveedor(proveedor.ultimaIdProveedor());
+						
 						vaciarTablaMarcas();
 					}
 
@@ -317,10 +328,40 @@ public class ControladorABMProveedor implements ActionListener{
 					}
 				}
 			}
+			
+		}else if(e.getSource() == this.ventanaABMProveedor.getAgregarMarca()){// agrega marca a la tabla marcas
+			
+			// obtengo id y detalle 
+			String item = (String)ventanaABMProveedor.getAgregarMarca_jcmbox().getSelectedItem();
+			String [] array = item.split(" ");
+			
+			String  idMarca = array[0];
+			String  detalle = array [1];
+			
+			int id = Integer.parseInt(idMarca);
+			
+			
+			Object[] fila = {id,detalle};
+			
+			ventanaABMProveedor.getModelMarcas().addRow(fila);
 		}
-
 	}
 	
+	private void insertarMarcasDelProveedor(int idProveedor) {
+		
+		for(int i = 0; i < this.ventanaABMProveedor.getTablaMarcas().getRowCount(); i++){
+			
+			ProveedorMarcaDTO proveedorMarca = new ProveedorMarcaDTO(0,idProveedor,
+					(int)this.ventanaABMProveedor.getTablaMarcas().getModel().getValueAt(i, 0));
+			
+			this.proveedorMarca.agregar(proveedorMarca);
+		
+		}
+		
+		
+		
+	}
+
 	private ProveedorDTO obtenerProveedor(int id) {
 		
 		ProveedorDTO proveedorDTO = new ProveedorDTO(

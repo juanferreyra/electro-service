@@ -30,9 +30,8 @@ public class ProveedorMarcaDAO {
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 			
-			statement.setInt(1, proveedorMarca.getId());
-			statement.setInt(2, proveedorMarca.getIdProveedor());
-			statement.setInt(3, proveedorMarca.getIdMarca());
+			statement.setInt(1, proveedorMarca.getIdProveedor());
+			statement.setInt(2, proveedorMarca.getIdMarca());
 
 			if (statement.executeUpdate() > 0)
 				return true;

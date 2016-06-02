@@ -1,5 +1,6 @@
 package modelo;
 
+import dto.ProveedorMarcaDTO;
 import persistencia.dao.ProveedorMarcaDAO;
 
 public class ProveedorMarca {
@@ -24,6 +25,12 @@ public class ProveedorMarca {
 	
 	public void borrarMarca(int idProveedor, int idMarca){
 		proveedorMarca.deleteItem(idProveedor, idMarca);
+	}
+	
+	public void agregar(ProveedorMarcaDTO ProveedorMarca){
+		
+		proveedorMarca.insert(ProveedorMarca);
+		
 	}
 	
 
