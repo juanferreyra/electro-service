@@ -84,6 +84,7 @@ public class ControladorABMProveedor implements ActionListener{
 			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(
 					this.marcasCombo.get(i).getId() + " " + this.marcasCombo.get(i).getDetalle() );	
 		}
+		this.ventanaABMProveedor.getAgregarMarca_jcmbox().setSelectedIndex(0);
 		
 	}
 
@@ -257,10 +258,15 @@ public class ControladorABMProveedor implements ActionListener{
 						limpiartxts();
 						cargarTablaProveedores();
 						
+						
+						// borro todas las marcas del proveedor de la base
+						proveedorMarca.borrarTodos((int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
+						
 						// guarda las marcas del proveedor y le paso el id del proveedor seleccionado
 						insertarMarcasDelProveedor((int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
 						
 						vaciarTablaMarcas();
+						cargarComboMarcas();
 						
 					}
 
@@ -287,6 +293,7 @@ public class ControladorABMProveedor implements ActionListener{
 						insertarMarcasDelProveedor(proveedor.ultimaIdProveedor());
 						
 						vaciarTablaMarcas();
+						cargarComboMarcas();
 					}
 
 				} else {
@@ -298,37 +305,29 @@ public class ControladorABMProveedor implements ActionListener{
 			}
 			
 		}else if(e.getSource() == this.ventanaABMProveedor.getEliminarMarca()){ // boton eliminar marca
-			
+
 			// si la tabla marcas no esta vacia
 			if(this.ventanaABMProveedor.getTablaMarcas().getRowCount() != 0){
 
-				// si no selecciono un proveedor
-				if (this.ventanaABMProveedor.getTablaProveedores().getSelectedRow() == -1){
+				// si no selecciono una marca
+				if (this.ventanaABMProveedor.getTablaMarcas().getSelectedRow() == -1){
 
 					JOptionPane.showMessageDialog(this.ventanaABMProveedor,
-							"Debe seleccionar un proveedor para ver sus marcas ofrecidas");
+							"Debe seleccionar una marca para eliminar");
 				}else{
 
-					// si esta seleccionado en la tabla marcas
-					if (this.ventanaABMProveedor.getTablaMarcas().getSelectedRow() != -1) {
-
-						int filaSeleccionada = this.ventanaABMProveedor.getTablaProveedores().getSelectedRow();
-						int filaSeleccionadaMarca = this.ventanaABMProveedor.getTablaMarcas().getSelectedRow();
-
-						int idProveedor =(int)this.ventanaABMProveedor.getTablaProveedores().getModel().getValueAt(filaSeleccionada, 0);
-						int idMarca = (int)this.ventanaABMProveedor.getTablaMarcas().getModel().getValueAt(filaSeleccionadaMarca, 0);
-
-						proveedorMarca.borrarMarca(idProveedor, idMarca);
-						cargarTablaMarcas();
-
-					}else{
-
-						JOptionPane.showMessageDialog(this.ventanaABMProveedor,
-								"Debe seleccionar una marca a eliminar.");
-					}
+					int fila = this.ventanaABMProveedor.getTablaMarcas().getSelectedRow();
+					this.ventanaABMProveedor.getModelMarcas().removeRow(fila);
+					
 				}
+
+			}else{
+
+				JOptionPane.showMessageDialog(this.ventanaABMProveedor,
+						"no hay marcas para eliminar.");
 			}
-			
+
+
 		}else if(e.getSource() == this.ventanaABMProveedor.getAgregarMarca()){// agrega marca a la tabla marcas
 			
 			// obtengo id y detalle 
