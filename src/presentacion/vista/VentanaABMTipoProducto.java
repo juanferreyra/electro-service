@@ -20,6 +20,9 @@ public class VentanaABMTipoProducto extends JFrame {
 	private JTable tablaTipoProducto;
 	private DefaultTableModel modelTipoProducto;
 	private String[] nombreColumnas = { "Detalle" };
+	private JButton eliminarItem_btn;
+	private JButton ingresar_btn;
+	private JButton limpiar_btn;
 
 	public VentanaABMTipoProducto() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,13 +32,13 @@ public class VentanaABMTipoProducto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(500, 252, 89, 23);
-		getContentPane().add(cancelar_btn);
+		limpiar_btn = new JButton("Limpiar");
+		limpiar_btn.setBounds(500, 252, 89, 23);
+		getContentPane().add(limpiar_btn);
 
-		JButton guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(401, 252, 89, 23);
-		getContentPane().add(guardar_btn);
+		ingresar_btn = new JButton("Ingresar Item");
+		ingresar_btn.setBounds(401, 252, 89, 23);
+		getContentPane().add(ingresar_btn);
 
 		JLabel title_lbl = new JLabel("Nuevo tipo de producto");
 		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -60,9 +63,49 @@ public class VentanaABMTipoProducto extends JFrame {
 		tablaTipoProducto = new JTable(modelTipoProducto);
 		tipoProducto_scrollPane.setViewportView(tablaTipoProducto);
 
-		JButton eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar Item");
 		eliminarItem_btn.setBounds(269, 252, 121, 23);
 		getContentPane().add(eliminarItem_btn);
+	}
+
+	public JButton getEliminarItem_btn() {
+		return eliminarItem_btn;
+	}
+
+	public void setEliminarItem_btn(JButton eliminarItem_btn) {
+		this.eliminarItem_btn = eliminarItem_btn;
+	}
+
+	public JButton getIngresar_btn() {
+		return ingresar_btn;
+	}
+
+	public void setIngresar_btn(JButton ingresar_btn) {
+		this.ingresar_btn = ingresar_btn;
+	}
+
+	public JButton getLimpiar_btn() {
+		return limpiar_btn;
+	}
+
+	public void setLimpiar_btn(JButton limpiar_btn) {
+		this.limpiar_btn = limpiar_btn;
+	}
+
+	public JTable getTablaTipoProducto() {
+		return tablaTipoProducto;
+	}
+
+	public void setTablaTipoProducto(JTable tablaTipoProducto) {
+		this.tablaTipoProducto = tablaTipoProducto;
+	}
+
+	public JTextField getDetalle_txt() {
+		return detalle_txt;
+	}
+
+	public void setDetalle_txt(JTextField detalle_txt) {
+		this.detalle_txt = detalle_txt;
 	}
 
 }
