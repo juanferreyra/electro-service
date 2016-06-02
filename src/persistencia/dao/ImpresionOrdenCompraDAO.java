@@ -9,21 +9,21 @@ import persistencia.conexion.Conexion;
 
 public class ImpresionOrdenCompraDAO {
 	
-	private static final String readall = "SELECT oc.id as orden_id, oc.importe_total as orden_importe, date(oc.fecha_creacion) as orden_fecha, "
-			+ " time(oc.fecha_creacion) as orden_hora, oc.estado as orden_estado, p.razon_social as proveedor_razonSocial,  p.cuit as proveedor_cuit,"
+	private static final String readall = "SELECT oc.id as orden_id, oc.importe_total as orden_importe, DATE(oc.fecha_creacion) as orden_fecha, "
+			+ " TIME(oc.fecha_creacion) as orden_hora, oc.estado as orden_estado, p.razon_social as proveedor_razonSocial,  p.cuit as proveedor_cuit,"
 			+ " p.direccion as proveedor_direccion, p.mail as proveedor_mail, p.contacto_nombre as proveedor_nombreContacto, p.contacto_telefono as proveedor_telefonoContacto,"
 			+ " p.contacto_mail as proveedor_emailContacto, p.mail_para_pedidos as proveedor_emailPedidos, r.detalle as resp_nombre, ocr.cantidad as resp_cantidad,"
 			+ " ocr.precio_unitario as resp_preciounitario, ocr.precio_unitario * ocr.cantidad as resp_preciototal, m.detalle as resp_marca"
 			+ " FROM orden_compra oc LEFT JOIN orden_compra_repuestos ocr ON(ocr.idorden_compra=oc.id) LEFT JOIN repuesto r ON(ocr.idrepuesto=r.id) LEFT JOIN"
-			+ " proveedor p ON(p.id=oc.idproveedor) LEFT JOIN marca_producto m ON(m.id)";
+			+ " proveedor p ON(p.id=oc.idproveedor) LEFT JOIN marca_producto m ON(m.id=r.idmarca) WHERE oc.habilitado=true; ";
 			
-	private static final String find = "SELECT oc.id as orden_id, oc.importe_total as orden_importe, date(oc.fecha_creacion) as orden_fecha, "
-			+ " time(oc.fecha_creacion) as orden_hora, oc.estado as orden_estado, p.razon_social as proveedor_razonSocial,  p.cuit as proveedor_cuit,"
+	private static final String find = "SELECT oc.id as orden_id, oc.importe_total as orden_importe, DATE(oc.fecha_creacion) as orden_fecha, "
+			+ " TIME(oc.fecha_creacion) as orden_hora, oc.estado as orden_estado, p.razon_social as proveedor_razonSocial,  p.cuit as proveedor_cuit,"
 			+ " p.direccion as proveedor_direccion, p.mail as proveedor_mail, p.contacto_nombre as proveedor_nombreContacto, p.contacto_telefono as proveedor_telefonoContacto,"
 			+ " p.contacto_mail as proveedor_emailContacto, p.mail_para_pedidos as proveedor_emailPedidos, r.detalle as resp_nombre, ocr.cantidad as resp_cantidad,"
 			+ " ocr.precio_unitario as resp_preciounitario, ocr.precio_unitario * ocr.cantidad as resp_preciototal, m.detalle as resp_marca"
 			+ " FROM orden_compra oc LEFT JOIN orden_compra_repuestos ocr ON(ocr.idorden_compra=oc.id) LEFT JOIN repuesto r ON(ocr.idrepuesto=r.id) LEFT JOIN"
-			+ " proveedor p ON(p.id=oc.idproveedor) LEFT JOIN marca_producto m ON(m.id) WHERE oc.id = ? AND oc.habilitado=true;";
+			+ " proveedor p ON(p.id=oc.idproveedor) LEFT JOIN marca_producto m ON(m.id=r.idmarca) WHERE oc.id = ? AND oc.habilitado=true;";
 	
 	
 	private Conexion conexion = Conexion.getConexion();
@@ -39,12 +39,12 @@ public class ImpresionOrdenCompraDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				java.util.Date orden_fecha = new java.util.Date(resultSet.getDate("orden_fecha").getTime());
+				//java.util.Date orden_fecha = new java.util.Date(resultSet.getDate("orden_fecha").getTime());
 				
 				ImpresionOrdenCompraDTO orden = new ImpresionOrdenCompraDTO();
 				orden.setOrden_id(resultSet.getInt("orden_id"));
 				orden.setOrden_importe(resultSet.getFloat("orden_importe"));
-				orden.setOrden_fecha(orden_fecha);
+				orden.setOrden_fecha(resultSet.getDate("orden_fecha"));
 				orden.setOrden_hora(resultSet.getString("orden_hora"));
 				orden.setOrden_estado(resultSet.getString("orden_estado"));
 				orden.setProveedor_razonSocial(resultSet.getString("proveedor_razonSocial"));
@@ -83,12 +83,12 @@ public class ImpresionOrdenCompraDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				java.util.Date orden_fecha = new java.util.Date(resultSet.getDate("orden_fecha").getTime());
+				//java.util.Date orden_fecha = new java.util.Date(resultSet.getDate("orden_fecha").getTime());
 				
 				ImpresionOrdenCompraDTO orden = new ImpresionOrdenCompraDTO();
 				orden.setOrden_id(resultSet.getInt("orden_id"));
 				orden.setOrden_importe(resultSet.getFloat("orden_importe"));
-				orden.setOrden_fecha(orden_fecha);
+				orden.setOrden_fecha(resultSet.getDate("orden_fecha"));
 				orden.setOrden_hora(resultSet.getString("orden_hora"));
 				orden.setOrden_estado(resultSet.getString("orden_estado"));
 				orden.setProveedor_razonSocial(resultSet.getString("proveedor_razonSocial"));

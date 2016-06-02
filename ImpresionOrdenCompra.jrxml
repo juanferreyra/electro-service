@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-06-01T23:39:05 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ImpresionIngreso" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="12a0abd7-5c3f-4ef0-bf9e-b71189e32dec">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="electroServ_OrdenCompra"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="orden_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[orden_id]]></fieldDescription>
+	</field>
+	<field name="proveedor_razonSocial" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_razonSocial]]></fieldDescription>
+	</field>
+	<field name="resp_preciototal" class="java.lang.Float">
+		<fieldDescription><![CDATA[resp_preciototal]]></fieldDescription>
+	</field>
+	<field name="orden_fecha" class="java.util.Date">
+		<fieldDescription><![CDATA[orden_fecha]]></fieldDescription>
+	</field>
+	<field name="proveedor_email" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_email]]></fieldDescription>
+	</field>
+	<field name="resp_marca" class="java.lang.String">
+		<fieldDescription><![CDATA[resp_marca]]></fieldDescription>
+	</field>
+	<field name="resp_preciounitario" class="java.lang.Float">
+		<fieldDescription><![CDATA[resp_preciounitario]]></fieldDescription>
+	</field>
+	<field name="proveedor_direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_direccion]]></fieldDescription>
+	</field>
+	<field name="proveedor_emailPedidos" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_emailPedidos]]></fieldDescription>
+	</field>
+	<field name="orden_importe" class="java.lang.Float">
+		<fieldDescription><![CDATA[orden_importe]]></fieldDescription>
+	</field>
+	<field name="orden_hora" class="java.lang.String">
+		<fieldDescription><![CDATA[orden_hora]]></fieldDescription>
+	</field>
+	<field name="proveedor_telefonoContacto" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_telefonoContacto]]></fieldDescription>
+	</field>
+	<field name="orden_estado" class="java.lang.String">
+		<fieldDescription><![CDATA[orden_estado]]></fieldDescription>
+	</field>
+	<field name="proveedor_cuit" class="java.lang.Integer">
+		<fieldDescription><![CDATA[proveedor_cuit]]></fieldDescription>
+	</field>
+	<field name="proveedor_nombreContacto" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_nombreContacto]]></fieldDescription>
+	</field>
+	<field name="resp_cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[resp_cantidad]]></fieldDescription>
+	</field>
+	<field name="proveedor_emailContacto" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_emailContacto]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="resp_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[resp_nombre]]></fieldDescription>
+	</field>
+	<group name="marcas">
+		<groupExpression><![CDATA[$F{resp_marca}]]></groupExpression>
+		<groupHeader>
+			<band height="53">
+				<staticText>
+					<reportElement x="20" y="3" width="80" height="20" uuid="6a2b3467-de1f-4f1d-ad4b-762266ee2356"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI Semibold" size="9" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Marca]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="100" y="3" width="130" height="20" uuid="0d3a4148-91f8-4a49-bd14-ab9260d497d0"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Monospaced" size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{resp_marca}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="390" y="31" width="113" height="20" uuid="8df40ab2-d4bf-41ec-b0a9-c3284d8ea555">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI Semibold" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Valor Item]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="31" width="167" height="20" uuid="5ed62e1c-3a56-4802-92ca-fd9e15250e6a"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI Semibold" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Repuesto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="267" y="31" width="51" height="20" uuid="09484fb5-9851-414c-86df-14064e34faa4"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI Semibold" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cant]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="318" y="31" width="72" height="20" uuid="d9be9785-fbf5-4fce-8eb1-3bd5f35d3ffe"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Segoe UI Semibold" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Precio Unitario]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<pageHeader>
+		<band height="227">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="350" y="117" width="232" height="20" uuid="b96fd677-ec23-476a-81fa-7ead8949f5ca"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha: "+$F{orden_fecha}+" "+$F{orden_hora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="137" width="248" height="20" forecolor="#525252" uuid="730a8d6b-b0ac-4db6-bf2f-562f0c1674df">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Razon Social: "+$F{proveedor_razonSocial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="160" width="205" height="20" forecolor="#525252" uuid="bf5d6480-dd56-4da9-9b73-08ac14598c11"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Direccion: "+$F{proveedor_direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="160" width="109" height="20" forecolor="#525252" uuid="de746f13-5d54-4a53-8f7b-b62900de5f9a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cuit: "+$F{proveedor_cuit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="203" width="150" height="20" forecolor="#525252" uuid="7e8c307f-0678-40b0-b9fe-8f08dd11bd76"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Telefono: "+$F{proveedor_telefonoContacto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="138" width="70" height="19" uuid="bae059bf-e772-45ec-870b-40a7cc13e5f1"/>
+				<textElement textAlignment="Left">
+					<font fontName="Segoe UI Semibold"/>
+				</textElement>
+				<text><![CDATA[Proveedor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="20" y="202" width="250" height="1" uuid="f9ac1149-dc3c-45e2-8cfb-65a56ce4abf5"/>
+			</line>
+			<line>
+				<reportElement x="20" y="157" width="318" height="1" uuid="340595a1-c7ba-49d3-999e-8c34a08e8d0b"/>
+			</line>
+			<staticText>
+				<reportElement x="20" y="185" width="70" height="16" uuid="2bdbaf21-d55d-4eab-a9ba-aae8df9c11ba"/>
+				<textElement textAlignment="Left">
+					<font fontName="Segoe UI Semibold" size="8"/>
+				</textElement>
+				<text><![CDATA[Datos Conctacto]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="183" width="180" height="20" forecolor="#525252" uuid="b5089073-c77b-4053-9ac3-4809f791bdf9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nombre: "+$F{proveedor_nombreContacto} ]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="203" width="150" height="20" forecolor="#525252" uuid="4b6dfb68-c180-4ef2-b391-93d746f0b139"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Email: "+$F{proveedor_emailContacto}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="15" y="8" width="568" height="109" forecolor="#FFFFFF" backcolor="#77767E" uuid="04e182c5-4cdf-4c94-aff7-5c3920e574cc"/>
+			</rectangle>
+			<image>
+				<reportElement mode="Opaque" x="20" y="13" width="178" height="100" forecolor="rgba(255, 255, 255, 0.0)" backcolor="rgba(255, 255, 255, 0.99215686)" uuid="f8b24f87-2c66-4fba-a6b4-7f1c1feec07a"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="419" y="8" width="154" height="20" forecolor="#FFFFFF" uuid="661378ad-3204-4d7f-aec8-8aaa8354c452"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Microsoft New Tai Lue" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Orden de Compra Nº "+$F{orden_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="228" y="41" width="343" height="60" forecolor="#FFFFFF" uuid="8d62a5b7-6b49-4ea2-b861-d4d5a5b84261"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Segoe UI Semibold" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Orden de Compra]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="20" y="5" width="158" height="19" uuid="6d840d38-e553-4b22-b783-db2391a162c8"/>
+				<textElement textAlignment="Left">
+					<font fontName="Segoe UI Semibold"/>
+				</textElement>
+				<text><![CDATA[Repuestos Solicitados]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="267" y="0" width="51" height="20" uuid="31db70ba-fea5-4a89-92f7-81f3a87b71b0">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resp_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="0" width="113" height="20" uuid="92ce46d8-d04f-45c3-b733-fb212cd35031"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resp_preciototal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="167" height="20" uuid="a2c36c3b-f1f0-401c-8471-369b9ca3d5f6"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resp_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="0" width="72" height="20" uuid="4a82425b-222e-43a0-889e-f3e862927c07">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monospaced" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resp_preciounitario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="380" y="10" width="160" height="20" forecolor="#525252" uuid="01c5a030-63e3-4561-85fd-5885d067af4f"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#525252"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#525252"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#525252"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#525252"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Importe $"+$F{orden_importe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="37">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="395" y="10" width="190" height="20" uuid="5f6b98a4-060f-4e2d-bd7b-9db93d4869e9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
