@@ -8,7 +8,9 @@ import javax.swing.ScrollPaneConstants;
 
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
@@ -20,9 +22,16 @@ import java.awt.Rectangle;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import presentacion.controlador.ControladorABMCliente;
+import presentacion.controlador.ControladorABMFlete;
+import presentacion.controlador.ControladorABMMarcaProducto;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -58,6 +67,39 @@ public class VentanaPrincipal extends JFrame {
 
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 1028, 50);
+
+		JMenu crearABM = new JMenu("Crear ABM");
+		menuBar.add(crearABM);
+
+		JMenuItem ABMCliente = new JMenuItem("ABM Cliente");
+		ABMCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMCliente abm = new VentanaABMCliente();
+				ControladorABMCliente c = new ControladorABMCliente(abm);
+				c.inicializar();
+			}
+		});
+		crearABM.add(ABMCliente);
+
+		JMenuItem ABMFlete = new JMenuItem("ABM Flete");
+		ABMFlete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMFlete abm = new VentanaABMFlete();
+				ControladorABMFlete c = new ControladorABMFlete(abm);
+				c.inicializar();
+			}
+		});
+		crearABM.add(ABMFlete);
+
+		JMenuItem ABMMarcaProducto = new JMenuItem("ABM Marca Producto");
+		ABMMarcaProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMMarcaProducto abm = new VentanaABMMarcaProducto();
+				ControladorABMMarcaProducto c = new ControladorABMMarcaProducto(abm);
+				c.inicializar();
+			}
+		});
+		crearABM.add(ABMMarcaProducto);
 
 		JLabel labelLOGO = new JLabel("");
 		labelLOGO.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
@@ -132,18 +174,18 @@ public class VentanaPrincipal extends JFrame {
 
 		presupuestar_btn = new JButton("<html>Presupuestar</html>");
 		presupuestar_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/th-list-outline.png")));
-		presupuestar_btn.setBounds(587, 474,  158, 36);
+		presupuestar_btn.setBounds(587, 474, 158, 36);
 		panelDeBotones.add(presupuestar_btn);
 
 		reparacion_btn = new JButton("Finalizar Reparaci\u00F3n");
 		reparacion_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/spanner.png")));
-		reparacion_btn.setBounds(881, 474,  158, 36);
+		reparacion_btn.setBounds(881, 474, 158, 36);
 		panelDeBotones.add(reparacion_btn);
-		
+
 		btnElaborarHojaDe = new JButton("Elaborar Hoja de Ruta");
 		btnElaborarHojaDe.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/edit.png")));
 		panelDeBotones.add(btnElaborarHojaDe);
-		
+
 		btnOrdenDeCompra = new JButton("Elaborar Orden de Compra");
 		btnOrdenDeCompra.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/upload.png")));
 		panelDeBotones.add(btnOrdenDeCompra);

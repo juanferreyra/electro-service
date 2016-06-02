@@ -172,7 +172,7 @@ public class ControladorABMFlete implements ActionListener {
 		cargarTablaFlete();
 	}
 
-	private void inicializar() {
+	public void inicializar() {
 
 		this.ventanaABMFlete.setVisible(true);
 
@@ -277,11 +277,11 @@ public class ControladorABMFlete implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-
-		VentanaABMFlete abm = new VentanaABMFlete();
-		ControladorABMFlete c = new ControladorABMFlete(abm);
-		c.inicializar();
-
-	}
+//	public static void main(String[] args) {
+//
+//		VentanaABMFlete abm = new VentanaABMFlete();
+//		ControladorABMFlete c = new ControladorABMFlete(abm);
+//		c.inicializar();
+//
+//	}
 }

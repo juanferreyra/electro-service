@@ -320,12 +320,12 @@ public class ControladorABMCliente implements ActionListener {
 		return matcher.matches();
 	}
 
-	public static void main(String[] args) {
-
-		VentanaABMCliente abm = new VentanaABMCliente();
-		ControladorABMCliente c = new ControladorABMCliente(abm);
-		c.inicializar();
-
-	}
+//	public static void main(String[] args) {
+//
+//		VentanaABMCliente abm = new VentanaABMCliente();
+//		ControladorABMCliente c = new ControladorABMCliente(abm);
+//		c.inicializar();
+//
+//	}
 
 }

@@ -86,7 +86,7 @@ public class ControladorABMMarcaProducto implements ActionListener {
 		cargarTablaMarcaProducto();
 	}
 
-	private void inicializar() {
+	public void inicializar() {
 
 		this.ventanaABMMarcaProducto.setVisible(true);
 
@@ -176,11 +176,11 @@ public class ControladorABMMarcaProducto implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
-
-		VentanaABMMarcaProducto abm = new VentanaABMMarcaProducto();
-		ControladorABMMarcaProducto c = new ControladorABMMarcaProducto(abm);
-		c.inicializar();
-
-	}
+	// public static void main(String[] args) {
+	//
+	// VentanaABMMarcaProducto abm = new VentanaABMMarcaProducto();
+	// ControladorABMMarcaProducto c = new ControladorABMMarcaProducto(abm);
+	// c.inicializar();
+	//
+	// }
 }
