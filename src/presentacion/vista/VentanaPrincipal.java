@@ -35,6 +35,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnElaborarHojaDe;
 	private JMenuBar menuBar;
 	private FormatoTablaOrdenesTrabajo formatoTabla;
+	private JButton btnOrdenDeCompra;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
@@ -142,6 +143,10 @@ public class VentanaPrincipal extends JFrame {
 		btnElaborarHojaDe = new JButton("Elaborar Hoja de Ruta");
 		btnElaborarHojaDe.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/edit.png")));
 		panelDeBotones.add(btnElaborarHojaDe);
+		
+		btnOrdenDeCompra = new JButton("Elaborar Orden de Compra");
+		btnOrdenDeCompra.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/upload.png")));
+		panelDeBotones.add(btnOrdenDeCompra);
 
 	}
 
@@ -155,6 +160,10 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setCellRenderer(formatoTabla);
 		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setCellRenderer(formatoTabla);
 
+	}
+
+	public JButton getBtnOrdenDeCompra() {
+		return btnOrdenDeCompra;
 	}
 
 	public JButton getIngresarProducto_btn() {

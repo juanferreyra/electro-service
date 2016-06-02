@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
 import dto.ItemRepuestoDTO;
-import dto.PerfilDTO;
 import dto.ProveedorDTO;
 import dto.UsuarioDTO;
 import modelo.OrdenCompra;
@@ -388,12 +387,5 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getValorPresupuestado_txf().setText("");
 		this.ordenCompra = new OrdenCompra();
 		actualizarTablaRepuestos();
-	}
-
-	public static void main(String[] args) {
-		PerfilDTO perf1 = new PerfilDTO(0,"ADMINISTRATIVO");
-		UsuarioDTO user1 = new UsuarioDTO(1, "ROBERTO", "CARLOS", "admin", perf1);
-		ControladorOrdenCompra a = new ControladorOrdenCompra(new VentanaOrdenCompra(), user1);
-		a.inicializar();
 	}
 }

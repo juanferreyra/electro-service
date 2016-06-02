@@ -7,12 +7,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import dto.IngresoDTO;
 import dto.UsuarioDTO;
 import modelo.Ingreso;
@@ -22,6 +20,7 @@ import persistencia.dao.IngresoDAO;
 import persistencia.dao.UsuarioDAO;
 import presentacion.vista.VentanaHojaDeRuta;
 import presentacion.vista.VentanaIngreso;
+import presentacion.vista.VentanaOrdenCompra;
 import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaPrincipal;
 import presentacion.vista.VentanaReparacion;
@@ -44,6 +43,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getPresupuestar_btn().addActionListener(this);
 		this.principal.getReparacion_btn().addActionListener(this);
 		this.principal.getBtnElaborarHojaDe().addActionListener(this);
+		this.principal.getBtnOrdenDeCompra().addActionListener(this);
 		this.perfil = usuario.getPerfilDTO().getPerfil();
 		this.agregarMouseListenerTabla(this);
 	}
@@ -68,6 +68,8 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		} else if (this.perfil.equals("TECNICO")) {
 			// Visualizacion modo tecnico
 			this.principal.getIngresarProducto_btn().setVisible(false);
+			this.principal.getBtnElaborarHojaDe().setVisible(false);
+			this.principal.getBtnOrdenDeCompra().setVisible(false);
 			this.principal.setVisible(true);
 
 		} else {
@@ -210,6 +212,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			ControladorVentanaHojaDeRuta hojaruta = new ControladorVentanaHojaDeRuta(new VentanaHojaDeRuta(), this,
 					usuarioLogueado);
 			hojaruta.inicializar();
+		} else if (e.getSource()== this.principal.getBtnOrdenDeCompra()) {
+			ControladorOrdenCompra a = new ControladorOrdenCompra(new VentanaOrdenCompra(), usuarioLogueado);
+			a.inicializar();
 		}
 	}
 
