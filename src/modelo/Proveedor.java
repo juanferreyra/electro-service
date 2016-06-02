@@ -46,6 +46,9 @@ public class Proveedor {
 		proveedorDAO.editarProveedor(proveedor_a_modificar);
 		
 	}
+	public int ultimaIdProveedor(){
+		return proveedorDAO.getNextId();
+	}
 
 
 }

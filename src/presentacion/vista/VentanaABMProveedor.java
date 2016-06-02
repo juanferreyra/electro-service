@@ -37,6 +37,7 @@ public class VentanaABMProveedor extends JFrame{
 	private JButton limpiar_btn;
 	private JButton eliminarMarca;
 	private JComboBox<String> agregarMarca_jcmbox;
+	private JButton agregarMarca;
 	
 	
 	public VentanaABMProveedor() {
@@ -161,9 +162,9 @@ public class VentanaABMProveedor extends JFrame{
 		lblMarcas.setBounds(532, 24, 122, 15);
 		getContentPane().add(lblMarcas);
 		
-		JLabel lblAgregarMarca = new JLabel("Agregar Marca");
-		lblAgregarMarca.setBounds(716, 40, 122, 15);
-		getContentPane().add(lblAgregarMarca);
+		agregarMarca = new JButton("Agregar Marca");
+		agregarMarca.setBounds(689, 167, 162, 25);
+		getContentPane().add(agregarMarca);
 	}
 
 
@@ -259,6 +260,11 @@ public class VentanaABMProveedor extends JFrame{
 
 	public JComboBox<String> getAgregarMarca_jcmbox() {
 		return agregarMarca_jcmbox;
+	}
+
+
+	public JButton getAgregarMarca() {
+		return agregarMarca;
 	}
 	
 }
