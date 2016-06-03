@@ -44,12 +44,13 @@ public class VentanaOrdenCompra extends JFrame {
 	private JButton btnCargarOrden;
 	private JButton BtnVaciarVentanaOrden;
 	private JButton btnImprimir;
+	private JButton btnEnviarEmial;
 
 	public VentanaOrdenCompra() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaOrdenCompra.class.getResource("/calculator.png")));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 745, 700);
+		setBounds(100, 100, 736, 777);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
@@ -73,7 +74,7 @@ public class VentanaOrdenCompra extends JFrame {
 		separator.setForeground(Color.BLUE);
 		contentPane.add(separator);
 
-		JLabel razonsocial_lbl = new JLabel("<html><i>Razón Social:</i></html>");
+		JLabel razonsocial_lbl = new JLabel("<html><i>Razï¿½n Social:</i></html>");
 		razonsocial_lbl.setBounds(30, 71, 116, 26);
 		contentPane.add(razonsocial_lbl);
 
@@ -81,7 +82,7 @@ public class VentanaOrdenCompra extends JFrame {
 		razonsocialTexto_lbl.setBounds(123, 71, 565, 26);
 		contentPane.add(razonsocialTexto_lbl);
 
-		JLabel direccion_lbl = new JLabel("<html><i>Dirección:</i></html>");
+		JLabel direccion_lbl = new JLabel("<html><i>Direcciï¿½n:</i></html>");
 		direccion_lbl.setBounds(30, 99, 116, 26);
 		contentPane.add(direccion_lbl);
 
@@ -164,11 +165,11 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(monto_pedido_lbl);
 
 		cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(608, 618, 90, 23);
+		cancelar_btn.setBounds(598, 688, 90, 23);
 		contentPane.add(cancelar_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(512, 618, 90, 23);
+		guardar_btn.setBounds(494, 688, 90, 23);
 		contentPane.add(guardar_btn);
 		
 		btnBuscarProveedor = new JButton("");
@@ -212,8 +213,12 @@ public class VentanaOrdenCompra extends JFrame {
 		
 		btnImprimir = new JButton("Imprimir");
 		btnImprimir.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/printer.png")));
-		btnImprimir.setBounds(353, 617, 139, 23);
+		btnImprimir.setBounds(179, 688, 139, 23);
 		contentPane.add(btnImprimir);
+		
+		btnEnviarEmial = new JButton("Enviar Emial");
+		btnEnviarEmial.setBounds(348, 688, 127, 23);
+		contentPane.add(btnEnviarEmial);
 	}
 
 	public JButton getBtnImprimir() {
@@ -315,4 +320,9 @@ public class VentanaOrdenCompra extends JFrame {
 	public JLabel getMailTexto_lbl() {
 		return mailTexto_lbl;
 	}
+
+	public JButton getBtnEnviarEmial() {
+		return btnEnviarEmial;
+	}
+	
 }

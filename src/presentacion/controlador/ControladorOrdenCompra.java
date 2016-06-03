@@ -9,6 +9,7 @@ import dto.RepuestoDTO;
 import dto.ItemRepuestoDTO;
 import dto.ProveedorDTO;
 import dto.UsuarioDTO;
+import modelo.EmailOrdenDeCompra;
 import modelo.OrdenCompra;
 import persistencia.dao.ProveedorDAO;
 import presentacion.reportes.ReporteOrdenCompra;
@@ -45,6 +46,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getBtnCargarOrden().addActionListener(this);
 		this.ventanaOrdenCompra.getBtnVaciarVentanaOrden().addActionListener(this);
 		this.ventanaOrdenCompra.getBtnImprimir().addActionListener(this);
+		this.ventanaOrdenCompra.getBtnEnviarEmial().addActionListener(this);
 	}
 	
 	public void inicializar() {
@@ -180,7 +182,7 @@ public class ControladorOrdenCompra implements ActionListener{
 				}
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(this.ventanaOrdenCompra,
-						"El número de proveedor es incorrecto, vuelva a intentarlo. ", null,
+						"El nï¿½mero de proveedor es incorrecto, vuelva a intentarlo. ", null,
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnVaciarVentanaOrden()) {
@@ -197,9 +199,17 @@ public class ControladorOrdenCompra implements ActionListener{
 			this.ventanaOrdenCompra.getEliminarComponente_btn().setEnabled(true);
 			this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(true);
 			this.ventanaOrdenCompra.getBtnImprimir().setVisible(false);
+			
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnImprimir()) {
+			
 			ReporteOrdenCompra reporte = new ReporteOrdenCompra(ordenCompra.getDatosImpresion());
 			reporte.mostrar();
+			
+		}else if(e.getSource() == this.ventanaOrdenCompra.getBtnEnviarEmial()){
+			
+			EmailOrdenDeCompra emailOrdenDeCompra = new EmailOrdenDeCompra(usuarioLogueado, this.ventanaOrdenCompra);
+			emailOrdenDeCompra.start();
+			
 		}
     }
 
@@ -314,7 +324,7 @@ public class ControladorOrdenCompra implements ActionListener{
 	private void buscarProveedor() {
 		String textoingresado = this.ventanaOrdenCompra.getTxtfldNroProveedor().getText();
 		if (textoingresado == null || textoingresado.equals("")) {
-			JOptionPane.showMessageDialog(this.ventanaOrdenCompra, "Por favor, ingrese un número de proveedor.", null,
+			JOptionPane.showMessageDialog(this.ventanaOrdenCompra, "Por favor, ingrese un nï¿½mero de proveedor.", null,
 					JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			try {
@@ -338,7 +348,7 @@ public class ControladorOrdenCompra implements ActionListener{
 			
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(this.ventanaOrdenCompra,
-						"El número de proveedor es incorrecto, vuelva a intentarlo. ", null,
+						"El nï¿½mero de proveedor es incorrecto, vuelva a intentarlo. ", null,
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
@@ -376,7 +386,7 @@ public class ControladorOrdenCompra implements ActionListener{
 	private void cargarProveedor(ProveedorDTO cdto) {
 		this.ventanaOrdenCompra.getNombreRazonSocialTexto_lbl().setText(cdto.getRazonSocial());
 		this.ventanaOrdenCompra.getDireccionTexto_lbl().setText(cdto.getDireccion());
-		this.ventanaOrdenCompra.getMailTexto_lbl().setText(cdto.getEmail());
+		this.ventanaOrdenCompra.getMailTexto_lbl().setText(cdto.getEmailPedidos());
 	}
 	
 	private void vaciarCampos() {
