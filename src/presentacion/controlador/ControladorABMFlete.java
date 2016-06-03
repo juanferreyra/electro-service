@@ -67,6 +67,8 @@ public class ControladorABMFlete implements ActionListener {
 
 						fleteDAO.update(flete);
 						cargarTablaFlete();
+						this.limpiartxts();
+						this.ventanaABMFlete.getTablaFlete().clearSelection();
 					}
 
 				} else {
@@ -277,11 +279,11 @@ public class ControladorABMFlete implements ActionListener {
 
 	}
 
-//	public static void main(String[] args) {
-//
-//		VentanaABMFlete abm = new VentanaABMFlete();
-//		ControladorABMFlete c = new ControladorABMFlete(abm);
-//		c.inicializar();
-//
-//	}
+	public static void main(String[] args) {
+
+		VentanaABMFlete abm = new VentanaABMFlete();
+		ControladorABMFlete c = new ControladorABMFlete(abm);
+		c.inicializar();
+
+	}
 }
