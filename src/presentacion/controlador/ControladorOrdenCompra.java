@@ -55,6 +55,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
 		this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
 		this.ventanaOrdenCompra.getBtnImprimir().setVisible(false);
+		this.ventanaOrdenCompra.getBtnEnviarEmial().setVisible(false);
 		ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
 	}
 
@@ -90,6 +91,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getEliminarComponente_btn().setEnabled(false);
 		this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(false);
 		this.ventanaOrdenCompra.getBtnImprimir().setVisible(true);
+		this.ventanaOrdenCompra.getBtnEnviarEmial().setVisible(true);
 	}
 
 	@Override
@@ -199,6 +201,7 @@ public class ControladorOrdenCompra implements ActionListener{
 			this.ventanaOrdenCompra.getEliminarComponente_btn().setEnabled(true);
 			this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(true);
 			this.ventanaOrdenCompra.getBtnImprimir().setVisible(false);
+			this.ventanaOrdenCompra.getBtnEnviarEmial().setVisible(false);
 			
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnImprimir()) {
 			
