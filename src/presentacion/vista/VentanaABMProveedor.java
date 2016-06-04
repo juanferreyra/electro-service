@@ -28,7 +28,7 @@ public class VentanaABMProveedor extends JFrame{
 	private JTable tablaProveedores;
 	private DefaultTableModel modelProveedores;
 	private DefaultTableModel modelMarcas;
-	private String[] nombreColumnas = { "id","Razon Social", "Nro Cuit", "Direccion", "Email",
+	private String[] nombreColumnas = { "Nro Proveedor","Razon Social", "Nro Cuit", "Direccion", "Email",
 			"Nombre Contacto", "Telefono Contacto", "Email Contacto", "Email Pedidos" };
 	private JTable tablaMarcas;
 	private String[] nombreColumnasMarcas={"id", "Detalle"};
@@ -38,6 +38,7 @@ public class VentanaABMProveedor extends JFrame{
 	private JButton eliminarMarca;
 	private JComboBox<String> agregarMarca_jcmbox;
 	private JButton agregarMarca;
+	private JButton btnMarcaNueva;
 	
 	
 	public VentanaABMProveedor() {
@@ -165,6 +166,10 @@ public class VentanaABMProveedor extends JFrame{
 		agregarMarca = new JButton("Agregar Marca");
 		agregarMarca.setBounds(689, 167, 162, 25);
 		getContentPane().add(agregarMarca);
+		
+		btnMarcaNueva = new JButton("Marca Nueva");
+		btnMarcaNueva.setBounds(689, 111, 162, 25);
+		getContentPane().add(btnMarcaNueva);
 	}
 
 
@@ -265,6 +270,11 @@ public class VentanaABMProveedor extends JFrame{
 
 	public JButton getAgregarMarca() {
 		return agregarMarca;
+	}
+
+
+	public JButton getBtnMarcaNueva() {
+		return btnMarcaNueva;
 	}
 	
 }

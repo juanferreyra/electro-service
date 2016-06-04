@@ -34,4 +34,9 @@ public class Marca {
 		
 	}
 
+	public int obtenerIdMarca(String detalle) {
+		return marcaDAO.buscarIdMarca(detalle);
+		
+	}
+
 }
