@@ -2,6 +2,7 @@ package presentacion.vista;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -15,6 +16,7 @@ public class FormatoTablaOrdenesTrabajo extends DefaultTableCellRenderer {
 
 		// Formato de colores de filas segun estado.
 		aplicarColorFilas(table, value, selected, focused, row, column);
+		
 
 		super.getTableCellRendererComponent(table, value, selected, focused, row, column);
 		return this;
