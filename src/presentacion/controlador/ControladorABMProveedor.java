@@ -4,8 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -74,39 +78,9 @@ public class ControladorABMProveedor implements ActionListener{
 		cargarTablaProveedores();	
 		mouseClickedOnTable();
 		ocultarIdMarcas();
-		mouseClickOnComboMarcas();
 
 	}
 	
-
-
-	private void mouseClickOnComboMarcas() {
-		
-		this.ventanaABMProveedor.getAgregarMarca_jcmbox().addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-				if(ventanaABMProveedor.getTablaProveedores().getSelectedRow() == -1){
-					
-					vaciarComboMarcas();
-					cargarComboMarcas();
-					
-				}else{
-					
-					vaciarComboMarcas();
-					cargarComboMarcasProveedorSeleccionado();
-				}
-			}
-		});
-		
-	}
 
 	private void cargarComboMarcas() {
 		
@@ -422,7 +396,53 @@ public class ControladorABMProveedor implements ActionListener{
 			VentanaABMMarcaProducto ventana = new VentanaABMMarcaProducto();
 			ControladorABMMarcaProducto marca = new ControladorABMMarcaProducto(ventana);
 			marca.inicializar();
+			ventana.addWindowListener(new WindowListener() {
+				
+				@Override
+				public void windowOpened(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowClosing(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowClosed(WindowEvent e) {
+					vaciarComboMarcas();
+					cargarComboMarcas();
+					
+				}
+				
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 		}
+				
 	}
 	
 	private int obtenerIdMarca(String detalle) {
