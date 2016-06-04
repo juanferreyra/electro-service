@@ -7,11 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.JTextComponent;
-
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -19,7 +15,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import java.awt.Rectangle;
-import java.util.Vector;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;

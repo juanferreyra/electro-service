@@ -6,12 +6,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 import dto.PerfilDTO;
-import dto.RepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.Usuario;
 import presentacion.vista.VentanaABMUsuario;
@@ -40,9 +37,10 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		
 		this.txts = new ArrayList<JTextField>();
 		
-		txts.add(this.ventanaABMUsuario.getNombre_txt());//0
-		txts.add(this.ventanaABMUsuario.getApellido_txt());//1
-		txts.add(this.ventanaABMUsuario.getPass_txt());//2
+		txts.add(this.ventanaABMUsuario.getNick_txt());//0
+		txts.add(this.ventanaABMUsuario.getNombre_txt());//1
+		txts.add(this.ventanaABMUsuario.getApellido_txt());//2
+		txts.add(this.ventanaABMUsuario.getPass_txt());//3
 		
 		cargarTablaUsuarios();
 		cargarCombo();
@@ -106,13 +104,14 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 	private void cargartxts() {
 		
 		int filaSeleccionada = this.ventanaABMUsuario.getTablaUsuario().getSelectedRow();
-
+		
 		this.txts.get(0).setText((String) this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 1));
 		this.txts.get(1).setText(String.valueOf(this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 2)));
 		this.txts.get(2).setText(String.valueOf(this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 3)));
+		this.txts.get(3).setText(String.valueOf(this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 4)));
 		
 		// carga de combo
-		PerfilDTO perfilSeleccionado = new PerfilDTO(obtenerPerfil((int)this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 4))); 
+		PerfilDTO perfilSeleccionado = new PerfilDTO(obtenerPerfil((int)this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 5))); 
 		
 		this.ventanaABMUsuario.getPerfil_comboBox().setSelectedItem(perfilSeleccionado.getId() +" "+ perfilSeleccionado.getPerfil());
 		
@@ -131,6 +130,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		for (int i = 0; i < this.clientes_en_tabla.size(); i++) {
 
 			Object[] fila = { this.clientes_en_tabla.get(i).getId(),
+					this.clientes_en_tabla.get(i).getNick(),
 					this.clientes_en_tabla.get(i).getNombre(),
 					this.clientes_en_tabla.get(i).getApellido(),
 					buscarPefil(this.clientes_en_tabla.get(i).getIdperfil()),
@@ -262,9 +262,10 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		
 		UsuarioDTO usuarioDTO = new UsuarioDTO(
 				id,
-				this.txts.get(0).getText(), // nombre
-				this.txts.get(1).getText(), // apellido
-				this.txts.get(2).getText(), // password
+				this.txts.get(0).getText(),// nick
+				this.txts.get(1).getText(), // nombre
+				this.txts.get(2).getText(), // apellido
+				this.txts.get(3).getText(), // password
 				obtenerIdPerfil());
 
 		return usuarioDTO;
@@ -308,12 +309,12 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		
 	}
 
-//	public static void main(String[] args) {
-//		VentanaABMUsuario abm = new VentanaABMUsuario();
-//		ControladorVentanaABMUsuario c = new ControladorVentanaABMUsuario(abm);
-//		c.inicializar();
-//		
-//	}
+	public static void main(String[] args) {
+		VentanaABMUsuario abm = new VentanaABMUsuario();
+		ControladorVentanaABMUsuario c = new ControladorVentanaABMUsuario(abm);
+		c.inicializar();
+		
+	}
 
 
 }

@@ -28,7 +28,6 @@ import presentacion.vista.VentanaReparacion;
 public class ControladorVentanaPrincipal implements ActionListener {
 
 	private VentanaPrincipal principal;
-	private String perfil;
 	private IngresoDAO ingresoDAO;
 	private ClienteDAO clienteDAO;
 	private EstadoDAO estadoDAO;
@@ -44,7 +43,6 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getReparacion_btn().addActionListener(this);
 		this.principal.getBtnElaborarHojaDe().addActionListener(this);
 		this.principal.getBtnOrdenDeCompra().addActionListener(this);
-		this.perfil = usuario.getPerfilDTO().getPerfil();
 		this.agregarMouseListenerTabla(this);
 	}
 
@@ -59,22 +57,24 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	private void adecuarVentanaPrincipal() {
 
-		if (this.perfil.equals("ADMINISTRATIVO")) {
+		if (this.usuarioLogueado.getIdperfil()==2) {
 			// Visualizacion modo administrativo
 			this.principal.getPresupuestar_btn().setVisible(false);
 			this.principal.getReparacion_btn().setVisible(false);
 			this.principal.setVisible(true);
 
-		} else if (this.perfil.equals("TECNICO")) {
+		} else if (this.usuarioLogueado.getIdperfil()==3) {
 			// Visualizacion modo tecnico
 			this.principal.getIngresarProducto_btn().setVisible(false);
 			this.principal.getBtnElaborarHojaDe().setVisible(false);
 			this.principal.getBtnOrdenDeCompra().setVisible(false);
 			this.principal.setVisible(true);
 
-		} else {
+		} else if(this.usuarioLogueado.getIdperfil()==1){
 			// Visualizacion modo jefe/admin
 			this.principal.setVisible(true);
+		} else {
+			
 		}
 	}
 
@@ -129,17 +129,17 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		// Agrego fila solo en caso de que lo permita el perfil (hardcodeo luego
 		// modificar)
-		if (this.perfil.equals("ADMINISTRATIVO") && (estado.equals("NUEVO") || estado.equals("INFORMADO")
+		if (this.usuarioLogueado.getIdperfil()==2 && (estado.equals("NUEVO") || estado.equals("INFORMADO")
 				|| estado.equals("IRREPARABLE") || estado.equals("REPARADO") || estado.equals("RECHAZADO")
 				|| estado.equals("AVISO DE RETIRO") || estado.equals("RETIRADO") || estado.equals(""))) {// HARDCODEO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 
-		} else if (this.perfil.equals("TECNICO") && (estado.equals("NUEVO") || estado.equals("ACEPTADO")
+		} else if (this.usuarioLogueado.getIdperfil()==3 && (estado.equals("NUEVO") || estado.equals("ACEPTADO")
 				|| estado.equals("EN REPARACION") || estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO"))) {// HARDCODEO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
-		} else if (this.perfil.equals("JEFE")) {
+		} else if (this.usuarioLogueado.getIdperfil()==1) {
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 		}
 
@@ -204,7 +204,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					controladorReparacion.inicializar();
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"No es posible visualizar el detalle de reparaci�n. Por favor, seleccione una orden en estado 'PRESUPUESTADO'.");
+							"No es posible visualizar el detalle de reparaci�n. Por favor, seleccione una orden en estado 'ASIGNADO'.");
 				}
 			}
 
