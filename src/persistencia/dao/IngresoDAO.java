@@ -37,13 +37,13 @@ public class IngresoDAO {
 			+ "(hi.en_entrega=false OR hi.en_entrega IS NULL) group by i.id;";
 	private Conexion conexion = Conexion.getConexion();
 
-	public boolean update(int insumoId, int estado) { //Le inserta el nuevo estado.
+	public boolean update(int ingresoId, int estado) { //Le inserta el nuevo estado.
 															
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(updateStatus);
-			statement.setInt(1, insumoId);
-			statement.setInt(2, estado);
+			statement.setInt(1, estado);
+			statement.setInt(2, ingresoId);
 
 			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
 				return true;

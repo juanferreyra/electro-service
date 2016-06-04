@@ -86,7 +86,7 @@ public class Ingreso {
 	}
 	
 	public Boolean actualizarEstado(int insumoId, int estado){
-		
+
 		return ingreso.update(insumoId, estado);
 	}
 	
