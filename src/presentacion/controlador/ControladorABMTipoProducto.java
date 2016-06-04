@@ -51,12 +51,12 @@ public class ControladorABMTipoProducto implements ActionListener {
 					TipoProductoDTO tipo = tipoProductoDAO.findByDetalle((String) this.ventanaABMTipoProducto
 							.getTablaTipoProducto().getValueAt(filaSeleccionada, 0));
 					tipo.setDetalle(this.ventanaABMTipoProducto.getDetalle_txt().getText());
-					 tipoProductoDAO.update(tipo);
+					tipoProductoDAO.update(tipo);
 					limpiartxts();
 					cargarTablaTipoProducto();
 
 				} else {
-					ingresarMarcaProducto(this.ventanaABMTipoProducto.getDetalle_txt().getText());
+					ingresarTipoProducto(this.ventanaABMTipoProducto.getDetalle_txt().getText());
 
 				}
 				this.ventanaABMTipoProducto.getDetalle_txt().setText("");
@@ -87,8 +87,9 @@ public class ControladorABMTipoProducto implements ActionListener {
 		cargarTablaTipoProducto();
 	}
 
-	private void ingresarMarcaProducto(String marca) {
-		// this.tipoProductoDAO.insert(new MarcaDTO(marca, 0));
+	private void ingresarTipoProducto(String tipo) {
+		this.tipoProductoDAO.insert(new TipoProductoDTO(tipo, 0));// HARDCODEO
+																	// USUARIO
 		cargarTablaTipoProducto();
 	}
 
@@ -182,12 +183,12 @@ public class ControladorABMTipoProducto implements ActionListener {
 
 	}
 
-//	public static void main(String[] args) {
-//
-//		VentanaABMTipoProducto abm = new VentanaABMTipoProducto();
-//		ControladorABMTipoProducto c = new ControladorABMTipoProducto(abm);
-//		c.inicializar();
-//
-//	}
+	// public static void main(String[] args) {
+	//
+	// VentanaABMTipoProducto abm = new VentanaABMTipoProducto();
+	// ControladorABMTipoProducto c = new ControladorABMTipoProducto(abm);
+	// c.inicializar();
+	//
+	// }
 
 }

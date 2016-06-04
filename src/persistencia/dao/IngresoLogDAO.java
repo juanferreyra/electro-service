@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.ItemIngresoLogDTO;
+import modelo.Ingreso;
 import dto.IngresoLogDTO;
 import persistencia.conexion.Conexion;
 
@@ -31,8 +32,12 @@ public class IngresoLogDAO {
 			statement.setInt(2, ingreso_log.getIdestado());
 			statement.setInt(3, ingreso_log.getIdusuario());
 			
-			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
-				return true;
+			Ingreso ingreso = new Ingreso();
+			if(statement.executeUpdate() > 0){
+				ingreso.actualizarEstado(ingreso_log.getIdingreso(), ingreso_log.getIdestado());
+				return true; //Si se ejecut� devuelvo true
+			}
+				
 		}
 		catch (SQLException e) 
 		{

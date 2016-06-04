@@ -18,7 +18,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Rectangle;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -30,12 +29,15 @@ import presentacion.controlador.ControladorABMProveedor;
 import presentacion.controlador.ControladorABMRepuesto;
 import presentacion.controlador.ControladorABMTipoProducto;
 import presentacion.controlador.ControladorVentanaABMUsuario;
+import presentacion.controlador.ControladorVentanaStock;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.TitledBorder;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -49,31 +51,40 @@ public class VentanaPrincipal extends JFrame {
 	private JMenuBar menuBar;
 	private FormatoTablaOrdenesTrabajo formatoTabla;
 	private JButton btnOrdenDeCompra;
+	private JLabel avisoFaltanteLabel;
+	private JPanel panelAviso;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1044, 546);
 		setMinimumSize(new Dimension(1046, 546));
 
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout());
 
-		JPanel contenedorPanelArriba = new JPanel(new BorderLayout());
-		FlowLayout flowPanelArriba = new FlowLayout();
-		JPanel subpanelArriba = new JPanel(flowPanelArriba);
-		subpanelArriba.setBackground(Color.WHITE);
-		subpanelArriba.setForeground(Color.WHITE);
+		setContentPane(contentPane);
 
+		// MENU PRINCIPAL
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 1028, 50);
 
-		JMenu crearABM = new JMenu("ABM");
-		menuBar.add(crearABM);
+		JMenu ABMsMenu = new JMenu("ABM");
+		menuBar.add(ABMsMenu);
+		JMenu stockMenu = new JMenu("Stock");
+		menuBar.add(stockMenu);
+		JMenuItem stockItem = new JMenuItem("Control de stock");
+		stockItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaStock stock = new VentanaStock();
+				ControladorVentanaStock c = new ControladorVentanaStock(stock);
+				c.inicializar();
+			}
+		});
+		stockMenu.add(stockItem);
 
 		JMenuItem ABMCliente = new JMenuItem("ABM Cliente");
 		ABMCliente.addActionListener(new ActionListener() {
@@ -83,7 +94,7 @@ public class VentanaPrincipal extends JFrame {
 				c.inicializar();
 			}
 		});
-		crearABM.add(ABMCliente);
+		ABMsMenu.add(ABMCliente);
 
 		JMenuItem ABMFlete = new JMenuItem("ABM Flete");
 		ABMFlete.addActionListener(new ActionListener() {
@@ -93,7 +104,7 @@ public class VentanaPrincipal extends JFrame {
 				c.inicializar();
 			}
 		});
-		crearABM.add(ABMFlete);
+		ABMsMenu.add(ABMFlete);
 
 		JMenuItem ABMMarcaProducto = new JMenuItem("ABM Marca Producto");
 		ABMMarcaProducto.addActionListener(new ActionListener() {
@@ -103,7 +114,7 @@ public class VentanaPrincipal extends JFrame {
 				c.inicializar();
 			}
 		});
-		crearABM.add(ABMMarcaProducto);
+		ABMsMenu.add(ABMMarcaProducto);
 
 		JMenuItem ABMProveedor = new JMenuItem("ABM Proveedor");
 		ABMProveedor.addActionListener(new ActionListener() {
@@ -113,7 +124,7 @@ public class VentanaPrincipal extends JFrame {
 				c.inicializar();
 			}
 		});
-		crearABM.add(ABMProveedor);
+		ABMsMenu.add(ABMProveedor);
 
 		JMenuItem ABMRepuesto = new JMenuItem("ABM Repuesto");
 		ABMRepuesto.addActionListener(new ActionListener() {
@@ -123,7 +134,7 @@ public class VentanaPrincipal extends JFrame {
 				c.inicializar();
 			}
 		});
-		crearABM.add(ABMRepuesto);
+		ABMsMenu.add(ABMRepuesto);
 
 		JMenuItem ABMUsuario = new JMenuItem("ABM Usuario");
 		ABMUsuario.addActionListener(new ActionListener() {
@@ -133,7 +144,7 @@ public class VentanaPrincipal extends JFrame {
 				c.inicializar();
 			}
 		});
-		crearABM.add(ABMUsuario);
+		ABMsMenu.add(ABMUsuario);
 
 		JMenuItem ABMTipoProducto = new JMenuItem("ABMTipoProducto");
 		ABMTipoProducto.addActionListener(new ActionListener() {
@@ -143,19 +154,24 @@ public class VentanaPrincipal extends JFrame {
 				c.inicializar();
 			}
 		});
-		crearABM.add(ABMTipoProducto);
+		ABMsMenu.add(ABMTipoProducto);
+		// FIN MENU PRINCIPAL
 
 		JLabel labelLOGO = new JLabel("");
 		labelLOGO.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
-		labelLOGO.setBounds(10, 11, 240, 140);
 
 		JLabel ordenesDeTrabajo_lbl = new JLabel("<html>\u00D3rdenes de Trabajo</html>");
-		ordenesDeTrabajo_lbl.setBounds(10, 43, 1005, 36);
-		ordenesDeTrabajo_lbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 22));
+		ordenesDeTrabajo_lbl.setForeground(new Color(105, 105, 105));
+		ordenesDeTrabajo_lbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 26));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
+		JPanel contenedorPanelArriba = new JPanel(new BorderLayout());
+		FlowLayout flowPanelArriba = new FlowLayout();
 		flowPanelArriba.setAlignment(FlowLayout.LEADING);
 
+		JPanel subpanelArriba = new JPanel(flowPanelArriba);
+		subpanelArriba.setBackground(Color.WHITE);
+		subpanelArriba.setForeground(Color.WHITE);
 		subpanelArriba.add(labelLOGO);
 		subpanelArriba.add(ordenesDeTrabajo_lbl);
 
@@ -166,10 +182,12 @@ public class VentanaPrincipal extends JFrame {
 		// TABLA PRINCIPAL DEL SISTEMA
 
 		ordenesDeTrabajo_table = new JTable();
+		ordenesDeTrabajo_table.setForeground(Color.DARK_GRAY);
+		ordenesDeTrabajo_table.setFont(new Font("Arial", Font.PLAIN, 18));
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número", "Fecha",
-				"Producto", "Cliente", "Envío", "", "Técnico Asignado", "Estado" }) {
+		DefaultTableModel modeloOrdenesTrabajo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número",
+				"Fecha", "Producto", "Cliente", "Envío", "", "Técnico Asignado", "Estado" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { JLabel.class, Integer.class, String.class, String.class, String.class,
 					String.class, JLabel.class, String.class, String.class };
@@ -185,7 +203,9 @@ public class VentanaPrincipal extends JFrame {
 				return false;
 			}
 		};
-		ordenesDeTrabajo_table.setModel(modelo);
+		ordenesDeTrabajo_table.setRowHeight(30);
+
+		ordenesDeTrabajo_table.setModel(modeloOrdenesTrabajo);
 
 		setearPropiedadesDeTabla();
 
@@ -197,15 +217,34 @@ public class VentanaPrincipal extends JFrame {
 			}
 		});
 
-		ordenesDeTrabajo_table.setBounds(new Rectangle(0, 0, 992, 301));
-
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
 		ordenesDeTrabajo_scrollPane.add(ordenesDeTrabajo_table);
 		ordenesDeTrabajo_scrollPane.setViewportView(ordenesDeTrabajo_table);
-		contentPane.add(ordenesDeTrabajo_scrollPane, BorderLayout.CENTER);
+
+		// LABEL DE AVISO DE FALTANTE
+
+		panelAviso = new JPanel();
+		panelAviso.setMaximumSize(new Dimension(2000, 50));
+		avisoFaltanteLabel = new JLabel(
+				"\u00A1 Atenci\u00F3n !  Se han terminado los repuestos de botones WTG negros.");// HARDCODEO
+		avisoFaltanteLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelAviso.add(avisoFaltanteLabel);
+		this.actualizarAvisoFaltante();
+
+		// AGREGO LABEL AVISO FALTANTE Y TABLA ORDENES DE TRABAJO EN UN PANEL
+		// CENTRAL
+		JPanel contenedorCentral = new JPanel();
+		contenedorCentral.setLayout(new BoxLayout(contenedorCentral, BoxLayout.PAGE_AXIS));
+
+		contenedorCentral.add(panelAviso);
+		contenedorCentral.add(ordenesDeTrabajo_scrollPane);
+
+		contentPane.add(contenedorCentral, BorderLayout.CENTER);
+
+		// FIN CONTENEDOR CENTRAL
 
 		JPanel panelDeBotones = new JPanel(new FlowLayout());
 		panelDeBotones.setBackground(Color.WHITE);
@@ -234,6 +273,11 @@ public class VentanaPrincipal extends JFrame {
 		btnOrdenDeCompra.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/upload.png")));
 		panelDeBotones.add(btnOrdenDeCompra);
 
+	}
+
+	private void actualizarAvisoFaltante() {
+		panelAviso.setBackground(Color.decode("#F6D8CE"));
+		panelAviso.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	}
 
 	private void setearPropiedadesDeTabla() {
@@ -274,6 +318,14 @@ public class VentanaPrincipal extends JFrame {
 
 	public JButton getBtnElaborarHojaDe() {
 		return btnElaborarHojaDe;
+	}
+
+	public String getAvisoFaltanteLabel() {
+		return avisoFaltanteLabel.getText();
+	}
+
+	public void setAvisoFaltanteLabel(String aviso) {
+		this.avisoFaltanteLabel.setText(aviso);
 	}
 
 }

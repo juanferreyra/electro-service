@@ -1,13 +1,17 @@
 package dto;
 
 public class TipoProductoDTO {
-	
+
 	private int id;
 	private String detalle;
 	private int idusuario;
-	
-	
-	public TipoProductoDTO(int id, String detalle, int idusuario){
+
+	public TipoProductoDTO(String detalle, int idusuario) {
+		this.detalle = detalle;
+		this.idusuario = idusuario;
+	}
+
+	public TipoProductoDTO(int id, String detalle, int idusuario) {
 		this.id = id;
 		this.detalle = detalle;
 		this.idusuario = idusuario;
@@ -28,12 +32,12 @@ public class TipoProductoDTO {
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	
-	public void setIdUsuario(int idusuario){
+
+	public void setIdUsuario(int idusuario) {
 		this.idusuario = idusuario;
 	}
-	
-	public int getIdUsuario(){
+
+	public int getIdUsuario() {
 		return this.idusuario;
 	}
 }

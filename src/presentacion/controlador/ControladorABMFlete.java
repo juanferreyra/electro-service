@@ -67,6 +67,8 @@ public class ControladorABMFlete implements ActionListener {
 
 						fleteDAO.update(flete);
 						cargarTablaFlete();
+						this.limpiartxts();
+						this.ventanaABMFlete.getTablaFlete().clearSelection();
 					}
 
 				} else {

@@ -15,7 +15,7 @@ public class FleteDAO {
 	private static final String readall = "SELECT * FROM flete WHERE habilitado=true";
 	private static final String find = "SELECT * FROM flete WHERE habilitado=true AND id=?";
 	private static final String findDNI = "SELECT * FROM flete WHERE habilitado=true AND nrodoc=?";
-	private static final String update = "UPDATE flete SET nrodoc = ? AND nombre_conductor= ? AND modelo= ? AND patente= ? AND telefono= ? AND vto_licencia= ? AND fecha_creacion=now() AND idusuario=? AND habilitado=1  WHERE id = ? ;";
+	private static final String update = "UPDATE flete SET nrodoc = ? , nombre_conductor= ? , modelo= ? , patente= ? , telefono= ? , vto_licencia= ? , fecha_creacion=now() , idusuario=? , habilitado=1  WHERE id = ? ;";
 	private static final String delete = "UPDATE flete SET habilitado='0' WHERE id = ?";
 
 	private Conexion conexion = Conexion.getConexion();

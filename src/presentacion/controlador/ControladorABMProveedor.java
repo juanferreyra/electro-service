@@ -2,8 +2,14 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -18,6 +24,7 @@ import dto.ProveedorMarcaDTO;
 import modelo.Marca;
 import modelo.Proveedor;
 import modelo.ProveedorMarca;
+import presentacion.vista.VentanaABMMarcaProducto;
 import presentacion.vista.VentanaABMProveedor;
 
 
@@ -42,6 +49,7 @@ public class ControladorABMProveedor implements ActionListener{
 		this.ventanaABMProveedor.getGuardar_btn().addActionListener(this);
 		this.ventanaABMProveedor.getEliminarMarca().addActionListener(this);
 		this.ventanaABMProveedor.getAgregarMarca().addActionListener(this);
+		this.ventanaABMProveedor.getBtnMarcaNueva().addActionListener(this);
 
 	}
 	
@@ -74,14 +82,12 @@ public class ControladorABMProveedor implements ActionListener{
 	}
 	
 
-
 	private void cargarComboMarcas() {
 		
 		this.marcasCombo = marca.obtenerMarcas();
 		
 		for(int i = 0; i < this.marcasCombo.size(); i++){
-			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(
-					this.marcasCombo.get(i).getId() + " " + this.marcasCombo.get(i).getDetalle() );	
+			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem( this.marcasCombo.get(i).getDetalle() );	
 		}
 		this.ventanaABMProveedor.getAgregarMarca_jcmbox().setSelectedIndex(0);
 		
@@ -129,16 +135,16 @@ public class ControladorABMProveedor implements ActionListener{
 		this.ventanaABMProveedor.getAgregarMarca_jcmbox().removeAllItems();
 	}
 	
+	
 	private void cargarComboMarcasProveedorSeleccionado() {
 		
 		this.marcasCombo1 = marca.obtenerMarcas();
 		
 		for(int i = 0; i < this.marcasCombo1.size(); i++){
 			
-			if(!isMarcaAgregadaEnTabla(this.marcasCombo.get(i).getId() + " " + this.marcasCombo.get(i).getDetalle())){
+			if(!isMarcaAgregadaEnTabla(this.marcasCombo.get(i).getDetalle())){
 				
-			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(
-					this.marcasCombo.get(i).getId() + " " + this.marcasCombo.get(i).getDetalle());
+			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(this.marcasCombo.get(i).getDetalle());
 			}
 		}
 		
@@ -146,16 +152,9 @@ public class ControladorABMProveedor implements ActionListener{
 
 	private boolean isMarcaAgregadaEnTabla(String marca) {
 		
-		// recupero id 
-		String item = marca;
-		String [] array = item.split(" ");
-		
-		String  idMarca = array[0];
-		int id = Integer.parseInt(idMarca);
-		
 		for (int i = 0; i < this.ventanaABMProveedor.getTablaMarcas().getRowCount(); i++){
 			
-			if(this.ventanaABMProveedor.getModelMarcas().getValueAt(i, 0).equals(id)){
+			if(this.ventanaABMProveedor.getModelMarcas().getValueAt(i, 1).equals(marca)){
 				
 				 return true;
 			}
@@ -380,25 +379,77 @@ public class ControladorABMProveedor implements ActionListener{
 			if(this.ventanaABMProveedor.getAgregarMarca_jcmbox().getItemCount() != 0){
 
 				// obtengo id y detalle 
-				String item = (String)ventanaABMProveedor.getAgregarMarca_jcmbox().getSelectedItem();
-				String [] array = item.split(" ");
-
-				String  idMarca = array[0];
-				String  detalle = array [1];
-
-				int id = Integer.parseInt(idMarca);
+				String detalle = (String)ventanaABMProveedor.getAgregarMarca_jcmbox().getSelectedItem();
+				
+				int idMarca = obtenerIdMarca(detalle);
 
 
-				Object[] fila = {id,detalle};
+				Object[] fila = {idMarca,detalle};
 
 				ventanaABMProveedor.getModelMarcas().addRow(fila);
 
 				vaciarComboMarcas();
 				cargarComboMarcasProveedorSeleccionado();
 			}
+		}else if(e.getSource() == this.ventanaABMProveedor.getBtnMarcaNueva()){ // marca nueva
+			
+			VentanaABMMarcaProducto ventana = new VentanaABMMarcaProducto();
+			ControladorABMMarcaProducto marca = new ControladorABMMarcaProducto(ventana);
+			marca.inicializar();
+			ventana.addWindowListener(new WindowListener() {
+				
+				@Override
+				public void windowOpened(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowClosing(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowClosed(WindowEvent e) {
+					vaciarComboMarcas();
+					cargarComboMarcas();
+					
+				}
+				
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 		}
+				
 	}
 	
+	private int obtenerIdMarca(String detalle) {
+		
+		return marca.obtenerIdMarca(detalle);
+	}
+
 	private void insertarMarcasDelProveedor(int idProveedor) {
 		
 		for(int i = 0; i < this.ventanaABMProveedor.getTablaMarcas().getRowCount(); i++){
