@@ -85,6 +85,11 @@ public class Ingreso {
 		return ingreso;
 	}
 	
+	public Boolean actualizarEstado(int insumoId, int estado){
+		
+		return ingreso.update(insumoId, estado);
+	}
+	
 	public IngresoDTO getIngreso() {
 		return ingr;
 	}
