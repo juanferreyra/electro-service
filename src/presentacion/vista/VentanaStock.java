@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.awt.Rectangle;
 
 import javax.swing.JButton;
 
@@ -32,6 +31,7 @@ public class VentanaStock extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setVisible(true);
 
 		JLabel lblControlDeStock = new JLabel("Control de Stock");
 		lblControlDeStock.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -79,7 +79,7 @@ public class VentanaStock extends JFrame {
 		contentPane.add(ordenesDeTrabajo_scrollPane, BorderLayout.CENTER);
 
 		generarOC_btn = new JButton("Generar orden de compra");
-		generarOC_btn.setBounds(254, 395, 170, 23);
+		generarOC_btn.setBounds(234, 395, 209, 23);
 		contentPane.add(generarOC_btn);
 
 	}
