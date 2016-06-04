@@ -31,8 +31,10 @@ public class IngresoLogDAO {
 			statement.setInt(2, ingreso_log.getIdestado());
 			statement.setInt(3, ingreso_log.getIdusuario());
 			
-			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
-				return true;
+			if(statement.executeUpdate() > 0){
+				return true; //Si se ejecut� devuelvo true
+			}
+				
 		}
 		catch (SQLException e) 
 		{
