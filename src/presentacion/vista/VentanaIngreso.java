@@ -48,7 +48,7 @@ public class VentanaIngreso extends JFrame {
 	public VentanaIngreso() {
 
 		super();
-		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaIngreso.class.getResource("/edit.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 700, 500);

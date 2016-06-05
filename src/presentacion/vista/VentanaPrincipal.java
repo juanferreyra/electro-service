@@ -18,6 +18,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -53,16 +54,23 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnOrdenDeCompra;
 	private JLabel avisoFaltanteLabel;
 	private JPanel panelAviso;
+	private JMenu _sistema;
+	private JMenu _contabilidad;
+	private JMenu _gestion;
+	private JMenu _reporte;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
+
+		setTitle("::: ELECTRO R SRL. ::: Software para Servicios Electrónicos");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
+
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1044, 546);
 		setMinimumSize(new Dimension(1046, 546));
 
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout());
 
@@ -70,109 +78,41 @@ public class VentanaPrincipal extends JFrame {
 
 		// MENU PRINCIPAL
 		menuBar = new JMenuBar();
+		menuBar.setBorder(null);
+		menuBar.setMinimumSize(new Dimension(0, 0));
+		menuBar.setMaximumSize(new Dimension(0, 0));
+		menuBar.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		menuBar.setBounds(0, 0, 1028, 50);
 
-		JMenu ABMsMenu = new JMenu("ABM");
-		menuBar.add(ABMsMenu);
-		JMenu stockMenu = new JMenu("Stock");
-		menuBar.add(stockMenu);
-		JMenuItem stockItem = new JMenuItem("Control de stock");
-		stockItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaStock stock = new VentanaStock();
-				ControladorVentanaStock c = new ControladorVentanaStock(stock);
-				c.inicializar();
-			}
-		});
-		stockMenu.add(stockItem);
+		_sistema = new JMenu("Sistema");
+		menuBar.add(_sistema);
+		cargarItemsDeSistema();
 
-		JMenuItem ABMCliente = new JMenuItem("ABM Cliente");
-		ABMCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaABMCliente abm = new VentanaABMCliente();
-				ControladorABMCliente c = new ControladorABMCliente(abm);
-				c.inicializar();
-			}
-		});
-		ABMsMenu.add(ABMCliente);
+		_gestion = new JMenu("Gestión de Datos");
+		menuBar.add(_gestion);
+		cargarItemsDeGestion();
 
-		JMenuItem ABMFlete = new JMenuItem("ABM Flete");
-		ABMFlete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaABMFlete abm = new VentanaABMFlete();
-				ControladorABMFlete c = new ControladorABMFlete(abm);
-				c.inicializar();
-			}
-		});
-		ABMsMenu.add(ABMFlete);
+		_contabilidad = new JMenu("Contabilidad");
+		menuBar.add(_contabilidad);
+		cargarItemsContabilidad();
 
-		JMenuItem ABMMarcaProducto = new JMenuItem("ABM Marca Producto");
-		ABMMarcaProducto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaABMMarcaProducto abm = new VentanaABMMarcaProducto();
-				ControladorABMMarcaProducto c = new ControladorABMMarcaProducto(abm);
-				c.inicializar();
-			}
-		});
-		ABMsMenu.add(ABMMarcaProducto);
+		_reporte = new JMenu("Reportes");
+		menuBar.add(_reporte);
+		cargarItemsReporte();
 
-		JMenuItem ABMProveedor = new JMenuItem("ABM Proveedor");
-		ABMProveedor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaABMProveedor abm = new VentanaABMProveedor();
-				ControladorABMProveedor c = new ControladorABMProveedor(abm);
-				c.inicializar();
-			}
-		});
-		ABMsMenu.add(ABMProveedor);
-
-		JMenuItem ABMRepuesto = new JMenuItem("ABM Repuesto");
-		ABMRepuesto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaABMRepuesto abm = new VentanaABMRepuesto();
-				ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
-				c.inicializar();
-			}
-		});
-		ABMsMenu.add(ABMRepuesto);
-
-		JMenuItem ABMUsuario = new JMenuItem("ABM Usuario");
-		ABMUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaABMUsuario abm = new VentanaABMUsuario();
-				ControladorVentanaABMUsuario c = new ControladorVentanaABMUsuario(abm);
-				c.inicializar();
-			}
-		});
-		ABMsMenu.add(ABMUsuario);
-
-		JMenuItem ABMTipoProducto = new JMenuItem("ABMTipoProducto");
-		ABMTipoProducto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaABMTipoProducto abm = new VentanaABMTipoProducto();
-				ControladorABMTipoProducto c = new ControladorABMTipoProducto(abm);
-				c.inicializar();
-			}
-		});
-		ABMsMenu.add(ABMTipoProducto);
-		// FIN MENU PRINCIPAL
-
-		JLabel labelLOGO = new JLabel("");
-		labelLOGO.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/logo.png")));
+		// FIN MENU
 
 		JLabel ordenesDeTrabajo_lbl = new JLabel("<html>\u00D3rdenes de Trabajo</html>");
+		ordenesDeTrabajo_lbl.setMinimumSize(new Dimension(1000, 50));
 		ordenesDeTrabajo_lbl.setForeground(new Color(105, 105, 105));
-		ordenesDeTrabajo_lbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 26));
+		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel contenedorPanelArriba = new JPanel(new BorderLayout());
-		FlowLayout flowPanelArriba = new FlowLayout();
-		flowPanelArriba.setAlignment(FlowLayout.LEADING);
 
-		JPanel subpanelArriba = new JPanel(flowPanelArriba);
+		JPanel subpanelArriba = new JPanel();
 		subpanelArriba.setBackground(Color.WHITE);
 		subpanelArriba.setForeground(Color.WHITE);
-		subpanelArriba.add(labelLOGO);
 		subpanelArriba.add(ordenesDeTrabajo_lbl);
 
 		contenedorPanelArriba.add(subpanelArriba, BorderLayout.SOUTH);
@@ -183,7 +123,7 @@ public class VentanaPrincipal extends JFrame {
 
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setForeground(Color.DARK_GRAY);
-		ordenesDeTrabajo_table.setFont(new Font("Arial", Font.PLAIN, 18));
+		ordenesDeTrabajo_table.setFont(new Font("Arial", Font.PLAIN, 17));
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
 		DefaultTableModel modeloOrdenesTrabajo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número",
@@ -213,6 +153,11 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean selected,
 					boolean focused, int row, int column) {
+
+				if (value.getClass() == JLabel.class) {
+					((JLabel) value).setBackground(Color.red);
+				}
+
 				return (Component) value;
 			}
 		});
@@ -272,6 +217,170 @@ public class VentanaPrincipal extends JFrame {
 		btnOrdenDeCompra = new JButton("Elaborar Orden de Compra");
 		btnOrdenDeCompra.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/upload.png")));
 		panelDeBotones.add(btnOrdenDeCompra);
+
+	}
+
+	private void cargarItemsReporte() {
+		JMenu estadisticos = new JMenu("Generar Reporte Estadístico");
+		_reporte.add(estadisticos);
+
+		JMenuItem venta = new JMenuItem("De ventas por fecha");
+		venta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Abrir reporte ventas por fecha
+			}
+		});
+		estadisticos.add(venta);
+
+		JMenuItem reparado = new JMenuItem("De reparaciones");
+		reparado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Abrir reporte reparaciones
+			}
+		});
+		estadisticos.add(reparado);
+
+		JMenuItem masInsumido = new JMenuItem("De repuestos más insumidos");
+		masInsumido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Abrir reporte repuestos mas insumidos
+			}
+		});
+		estadisticos.add(masInsumido);
+		_reporte.addSeparator();
+	}
+
+	private void cargarItemsContabilidad() {
+
+		JMenuItem stock = new JMenuItem("Control de Stock");
+		stock.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaStock stock = new VentanaStock();
+				ControladorVentanaStock c = new ControladorVentanaStock(stock);
+				c.inicializar();
+			}
+		});
+		_contabilidad.add(stock);
+
+		JMenuItem ordenCompra = new JMenuItem("Generar Orden de Compra");
+		ordenCompra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// VentanaOrdenCompra ventanaOdenCompra = new
+				// VentanaOrdenCompra();
+				// ControladorOrdenCompra c = new
+				// ControladorOrdenCompra(ventanaOdenCompra,usuario);
+				// c.inicializar();
+			}
+		});
+		_contabilidad.add(ordenCompra);
+		_contabilidad.addSeparator();
+	}
+
+	private void cargarItemsDeGestion() {
+		// PERSONAS
+		JMenu personas = new JMenu("Gestionar Persona");
+		_gestion.add(personas);
+
+		JMenuItem cliente = new JMenuItem("Cliente");
+		cliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMCliente abm = new VentanaABMCliente();
+				ControladorABMCliente c = new ControladorABMCliente(abm);
+				c.inicializar();
+			}
+		});
+		personas.add(cliente);
+
+		JMenuItem fletero = new JMenuItem("Fletero");
+		fletero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMFlete abm = new VentanaABMFlete();
+				ControladorABMFlete c = new ControladorABMFlete(abm);
+				c.inicializar();
+			}
+		});
+		personas.add(fletero);
+
+		JMenuItem proveedor = new JMenuItem("Proveedor");
+		proveedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMProveedor abm = new VentanaABMProveedor();
+				ControladorABMProveedor c = new ControladorABMProveedor(abm);
+				c.inicializar();
+			}
+		});
+		personas.add(proveedor);
+
+		JMenuItem usuario = new JMenuItem("Usuario");
+		usuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMUsuario abm = new VentanaABMUsuario();
+				ControladorVentanaABMUsuario c = new ControladorVentanaABMUsuario(abm);
+				c.inicializar();
+			}
+		});
+		personas.add(usuario);
+
+		// PRODUCTOS
+		JMenu productos = new JMenu("Gestionar Producto");
+		_gestion.add(productos);
+
+		JMenuItem marca = new JMenuItem("Marca");
+		marca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMMarcaProducto abm = new VentanaABMMarcaProducto();
+				ControladorABMMarcaProducto c = new ControladorABMMarcaProducto(abm);
+				c.inicializar();
+			}
+		});
+		productos.add(marca);
+
+		JMenuItem tipo = new JMenuItem("Tipo");
+		tipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMTipoProducto abm = new VentanaABMTipoProducto();
+				ControladorABMTipoProducto c = new ControladorABMTipoProducto(abm);
+				c.inicializar();
+			}
+		});
+		productos.add(tipo);
+
+		// REPUESTOS
+		JMenuItem repuestos = new JMenuItem("Gestionar Repuesto");
+		repuestos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaABMRepuesto abm = new VentanaABMRepuesto();
+				ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
+				c.inicializar();
+			}
+		});
+		_gestion.add(repuestos);
+		_gestion.addSeparator();
+
+	}
+
+	private void cargarItemsDeSistema() {
+		JMenuItem ayuda = new JMenuItem("Ayuda");
+		_sistema.add(ayuda);
+
+		JMenu backup = new JMenu("Generar Backup de Datos");
+		_sistema.add(backup);
+
+		JMenuItem _export = new JMenuItem("Exportar Datos");
+		backup.add(_export);
+		JMenuItem _import = new JMenuItem("Importar Datos");
+		backup.add(_import);
+
+		_sistema.addSeparator();
+
+		JMenuItem salir = new JMenuItem("Salir");
+		salir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				System.exit(0);
+			}
+		});
+		_sistema.add(salir);
+		_sistema.addSeparator();
 
 	}
 

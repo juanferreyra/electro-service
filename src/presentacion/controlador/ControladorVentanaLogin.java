@@ -2,18 +2,15 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JOptionPane;
-
 import dto.UsuarioDTO;
 import modelo.Usuario;
 import presentacion.vista.VentanaLogin;
-import presentacion.vista.VentanaPrincipal;
+import presentacion.vista.VentanaPresentacion;
 
 public class ControladorVentanaLogin implements ActionListener {
 
 	private VentanaLogin login;
-	private ControladorVentanaPrincipal controladorVentanaPrincipal;
 	private Usuario usuario;
 
 	public ControladorVentanaLogin() {
@@ -44,8 +41,8 @@ public class ControladorVentanaLogin implements ActionListener {
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					this.login.setVisible(false);
-					controladorVentanaPrincipal = new ControladorVentanaPrincipal(new VentanaPrincipal(),user);
-					controladorVentanaPrincipal.iniciar();
+					VentanaPresentacion presentacion = new VentanaPresentacion(user);
+					presentacion.start();
 				}
 			}
 		}
