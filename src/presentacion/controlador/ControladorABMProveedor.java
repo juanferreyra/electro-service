@@ -430,9 +430,18 @@ public class ControladorABMProveedor implements ActionListener{
 				
 				@Override
 				public void windowClosed(WindowEvent e) {
-					vaciarComboMarcas();
-					cargarComboMarcas();
 					
+					if(ventanaABMProveedor.getTablaMarcas().getSelectedRow() != -1){
+						
+						vaciarComboMarcas();
+						cargarComboMarcas();
+						
+					}else{
+						
+						vaciarComboMarcas();
+						cargarComboMarcasProveedorSeleccionado();
+
+					}
 				}
 				
 				@Override
