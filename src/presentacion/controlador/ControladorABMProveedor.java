@@ -143,9 +143,9 @@ public class ControladorABMProveedor implements ActionListener{
 		
 		for(int i = 0; i < this.marcasCombo1.size(); i++){
 			
-			if(!isMarcaAgregadaEnTabla(this.marcasCombo.get(i).getDetalle())){
+			if(!isMarcaAgregadaEnTabla(this.marcasCombo1.get(i).getDetalle())){
 				
-			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(this.marcasCombo.get(i).getDetalle());
+			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(this.marcasCombo1.get(i).getDetalle());
 			}
 		}
 		
@@ -441,6 +441,7 @@ public class ControladorABMProveedor implements ActionListener{
 				
 				@Override
 				public void windowClosed(WindowEvent e) {
+					System.out.println("cerró ventana");
 					
 					if(ventanaABMProveedor.getTablaMarcas().getSelectedRow() != -1){
 						

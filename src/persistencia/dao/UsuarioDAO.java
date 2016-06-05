@@ -26,7 +26,7 @@ public class UsuarioDAO {
 	
 	private static final String readall = "SELECT id, nick, nombre, apellido, password, idperfil  FROM usuario WHERE habilitado = true;";
 	
-	private static final String update = "UPDATE usuario SET nombre = ?, apellido = ?, password = ?, idperfil = ?"
+	private static final String update = "UPDATE usuario SET nick = ?,nombre = ?, apellido = ?, password = ?, idperfil = ?"
 			+ " WHERE id = ?;";
 	
 	private Conexion conexion = Conexion.getConexion();
@@ -146,12 +146,13 @@ public class UsuarioDAO {
 		try 
 		{
 			statement = conexion.getSQLConexion().prepareStatement(update);
-
-			statement.setString(1, usuario_a_modificar.getNombre());
-			statement.setString(2, usuario_a_modificar.getApellido());
-			statement.setString(3, usuario_a_modificar.getPassword());
-			statement.setInt(4, usuario_a_modificar.getIdperfil());
-			statement.setInt(5, usuario_a_modificar.getId());
+			
+			statement.setString(1, usuario_a_modificar.getNick());
+			statement.setString(2, usuario_a_modificar.getNombre());
+			statement.setString(3, usuario_a_modificar.getApellido());
+			statement.setString(4, usuario_a_modificar.getPassword());
+			statement.setInt(5, usuario_a_modificar.getIdperfil());
+			statement.setInt(6, usuario_a_modificar.getId());
 
 			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
 				return true;
