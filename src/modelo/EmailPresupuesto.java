@@ -142,7 +142,7 @@ public class EmailPresupuesto extends Thread {
 			// Se compone la parte del texto
 			BodyPart texto = new MimeBodyPart();
 						
-			texto.setContent("<font color=red> <h1 align=center>Electro Service</font></h1></font> <br>" +
+			texto.setContent("<font color=red> <h1 align=center>Electro R S.R.L.</font></h1></font> <br>" +
 							"<p align=center>Darregueyra 3896,Los Polvorines, Malvinas Argentinas, Buenos Aires<br></p>" +
 					        "<font color=Navy><h3 align=center>Tel&#233;fono: 4685 -5438  </h3></font> <br>" +
 					        mensaje, "text/html");

@@ -108,11 +108,14 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 	private void cargartxts() {
 		
 		int filaSeleccionada = this.ventanaABMUsuario.getTablaUsuario().getSelectedRow();
+	
+		UsuarioDTO usuarioSeleccionado = usuario.obtenerUsuario((String) this.ventanaABMUsuario.getModelUsuario()
+				.getValueAt(filaSeleccionada, 1));
 		
 		this.txts.get(0).setText((String) this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 1));
 		this.txts.get(1).setText(String.valueOf(this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 2)));
 		this.txts.get(2).setText(String.valueOf(this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 3)));
-		this.txts.get(3).setText(String.valueOf(this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 4)));
+		this.txts.get(3).setText(usuarioSeleccionado.getPassword());
 		
 		// carga de combo
 		PerfilDTO perfilSeleccionado = new PerfilDTO(obtenerPerfil((int)this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 5))); 

@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JSpinner;
 
 public class VentanaABMCliente extends JFrame {
 
@@ -139,6 +140,10 @@ public class VentanaABMCliente extends JFrame {
 		limpiar_btn = new JButton("Limpiar");
 		limpiar_btn.setBounds(443, 382, 139, 23);
 		getContentPane().add(limpiar_btn);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(34, 78, 49, 20);
+		getContentPane().add(spinner);
 
 	}
 
@@ -197,5 +202,4 @@ public class VentanaABMCliente extends JFrame {
 	public void setLimpiar_btn(JButton limpiar_btn) {
 		this.limpiar_btn = limpiar_btn;
 	}
-
 }
