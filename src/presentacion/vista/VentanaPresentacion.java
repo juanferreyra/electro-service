@@ -16,7 +16,7 @@ import java.awt.Rectangle;
 public class VentanaPresentacion extends Thread {
 
 	private JFrame frame;
-	private int retardoInicial = 3000;
+	private int retardoInicial = 1000;
 	private ControladorVentanaPrincipal controladorVentanaPrincipal;
 
 	@Override
@@ -41,6 +41,7 @@ public class VentanaPresentacion extends Thread {
 
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
+
 	}
 
 	/**
@@ -48,6 +49,7 @@ public class VentanaPresentacion extends Thread {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 981, 523);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
