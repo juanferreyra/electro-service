@@ -140,10 +140,6 @@ public class VentanaABMCliente extends JFrame {
 		limpiar_btn = new JButton("Limpiar");
 		limpiar_btn.setBounds(443, 382, 139, 23);
 		getContentPane().add(limpiar_btn);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(34, 78, 49, 20);
-		getContentPane().add(spinner);
 
 	}
 
