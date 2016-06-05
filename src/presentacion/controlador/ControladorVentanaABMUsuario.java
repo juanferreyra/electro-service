@@ -142,6 +142,14 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 
 			this.ventanaABMUsuario.getModelUsuario().addRow(fila);
 			
+			((DefaultTableModel) this.ventanaABMUsuario.getTablaUsuario().getModel()).isCellEditable(i, 0);
+			((DefaultTableModel) this.ventanaABMUsuario.getTablaUsuario().getModel()).isCellEditable(i, 1);
+			((DefaultTableModel) this.ventanaABMUsuario.getTablaUsuario().getModel()).isCellEditable(i, 2);
+			((DefaultTableModel) this.ventanaABMUsuario.getTablaUsuario().getModel()).isCellEditable(i, 3);
+			((DefaultTableModel) this.ventanaABMUsuario.getTablaUsuario().getModel()).isCellEditable(i, 4);
+			((DefaultTableModel) this.ventanaABMUsuario.getTablaUsuario().getModel()).isCellEditable(i, 5);
+			
+			
 			
 		}
 

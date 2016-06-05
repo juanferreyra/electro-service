@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import dto.MarcaDTO;
 import dto.ProveedorDTO;
@@ -194,7 +195,17 @@ public class ControladorABMProveedor implements ActionListener{
 					this.proveedores_en_tabla.get(i).getEmailPedidos()};
 
 			this.ventanaABMProveedor.getModelProveedores().addRow(fila);
-
+			
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 0);
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 1);
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 2);
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 3);
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 4);
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 5);
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 6);
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 7);
+			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 8);
+			
 		}
 		//ocultarColumnaId();
 		

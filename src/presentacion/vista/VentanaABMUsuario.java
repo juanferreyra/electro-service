@@ -99,7 +99,19 @@ public class VentanaABMUsuario extends JFrame {
 		repuesto_scrollPane.setBounds(123, 246, 459, 91);
 		getContentPane().add(repuesto_scrollPane);
 
-		modelUsuario = new DefaultTableModel(null, nombreColumnas);
+		modelUsuario = new DefaultTableModel(null, nombreColumnas){
+
+		/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+		@Override
+		public boolean isCellEditable(int fila, int columna) {
+
+			return false;
+		}
+	};
 		tablaUsuario = new JTable(modelUsuario);
 		repuesto_scrollPane.setViewportView(tablaUsuario);
 
