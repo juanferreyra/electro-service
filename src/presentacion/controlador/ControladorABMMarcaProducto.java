@@ -54,11 +54,14 @@ public class ControladorABMMarcaProducto implements ActionListener {
 
 				} else {
 					ingresarMarcaProducto(this.ventanaABMMarcaProducto.getDetalle_txt().getText());
+					limpiartxts();
+					cargarTablaMarcaProducto();
+					
 				}
 
 			} else {
 				JOptionPane.showMessageDialog(this.ventanaABMMarcaProducto,
-						"El detalle ingresado no es válido. Por favor, vuelva a intentarlo.");
+						"El detalle ingresado no es vï¿½lido. Por favor, vuelva a intentarlo.");
 			}
 
 			this.ventanaABMMarcaProducto.getDetalle_txt().setText("");

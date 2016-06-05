@@ -32,9 +32,9 @@ public class Usuario {
 		return usuarioDAO.readAll();		
 	}
 	
-	public void  modificarUsuario(UsuarioDTO cliente_a_modificar) {
+	public void  modificarUsuario(UsuarioDTO usuario_a_modificar) {
 		
-		usuarioDAO.update(cliente_a_modificar);
+		usuarioDAO.update(usuario_a_modificar);
 		
 	}
 	public PerfilDTO buscarPerfil(int id_perfil){
@@ -45,5 +45,17 @@ public class Usuario {
 	public List<PerfilDTO> obtenerPerfiles() {
 
 		return usuarioDAO.todosLosPerfiles();		
+	}
+	
+	public Boolean existeUsuario(String nick){
+		
+		return usuarioDAO.findNick(nick)!=null;
+
+	}
+	
+	public UsuarioDTO obtenerUsuario(String nick) {
+		
+		return usuarioDAO.findNick(nick);
+		
 	}
 }

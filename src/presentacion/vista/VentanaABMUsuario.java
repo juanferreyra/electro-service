@@ -23,11 +23,12 @@ public class VentanaABMUsuario extends JFrame {
 	private JPasswordField pass_txt;
 	private JTable tablaUsuario;
 	private DefaultTableModel modelUsuario;
-	private String[] nombreColumnas = { "id","Nombre", "Apellido", "Perfil", "idPerfil" };
+	private String[] nombreColumnas = { "id","Nick","Nombre", "Apellido", "Perfil", "idPerfil" };
 	private JComboBox <String> perfil_comboBox ;
 	private JButton limpiar_btn;
 	private JButton guardar_btn;
 	private JButton eliminarItem_btn;
+	private JTextField nick_txt;
 
 	public VentanaABMUsuario() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,9 +37,13 @@ public class VentanaABMUsuario extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
+		JLabel nick_lbl = new JLabel("Nick");
+		nick_lbl.setBounds(123, 62, 71, 14);
+		contentPane.add(nick_lbl);
+		
 		JLabel nombre_lbl = new JLabel("Nombre");
-		nombre_lbl.setBounds(123, 82, 71, 14);
+		nombre_lbl.setBounds(123, 95, 71, 14);
 		contentPane.add(nombre_lbl);
 
 		JLabel apellido_lbl = new JLabel("Apellido");
@@ -46,28 +51,33 @@ public class VentanaABMUsuario extends JFrame {
 		contentPane.add(apellido_lbl);
 
 		JLabel pass_lbl = new JLabel("Contrase\u00F1a");
-		pass_lbl.setBounds(123, 163, 71, 14);
+		pass_lbl.setBounds(123, 145, 71, 14);
 		contentPane.add(pass_lbl);
+		
+		nick_txt = new JTextField();
+		nick_txt.setBounds(190, 59, 392, 20);
+		contentPane.add(nick_txt);
+		nick_txt.setColumns(10);
 
 		nombre_txt = new JTextField();
-		nombre_txt.setBounds(190, 76, 392, 20);
+		nombre_txt.setBounds(190, 89, 392, 20);
 		contentPane.add(nombre_txt);
 		nombre_txt.setColumns(10);
 
 		apellido_txt = new JTextField();
 		apellido_txt.setColumns(10);
-		apellido_txt.setBounds(190, 114, 392, 20);
+		apellido_txt.setBounds(190, 117, 392, 20);
 		contentPane.add(apellido_txt);
 
 		pass_txt = new JPasswordField();
-		pass_txt.setBounds(190, 157, 392, 20);
+		pass_txt.setBounds(190, 145, 392, 20);
 		contentPane.add(pass_txt);
 
 		JLabel lblPerfil = new JLabel("Perfil");
 		lblPerfil.setBounds(123, 199, 71, 14);
 		contentPane.add(lblPerfil);
 
-		perfil_comboBox = new JComboBox();
+		perfil_comboBox = new JComboBox<String>();
 		perfil_comboBox.setBounds(190, 193, 392, 20);
 		contentPane.add(perfil_comboBox);
 
@@ -89,13 +99,29 @@ public class VentanaABMUsuario extends JFrame {
 		repuesto_scrollPane.setBounds(123, 246, 459, 91);
 		getContentPane().add(repuesto_scrollPane);
 
-		modelUsuario = new DefaultTableModel(null, nombreColumnas);
+		modelUsuario = new DefaultTableModel(null, nombreColumnas){
+
+		/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+		@Override
+		public boolean isCellEditable(int fila, int columna) {
+
+			return false;
+		}
+	};
 		tablaUsuario = new JTable(modelUsuario);
 		repuesto_scrollPane.setViewportView(tablaUsuario);
 
 		eliminarItem_btn = new JButton("Eliminar Item");
 		eliminarItem_btn.setBounds(434, 392, 121, 23);
 		getContentPane().add(eliminarItem_btn);
+	}
+
+	public JTextField getNick_txt() {
+		return nick_txt;
 	}
 
 	public JTextField getNombre_txt() {

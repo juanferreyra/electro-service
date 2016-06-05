@@ -15,25 +15,45 @@ public class IngresoDAO {
 			+ " VALUES ( ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, true)";
 	private static final String delete = "UPDATE ingreso SET habilitado='0' WHERE id= ?;";
 	private static final String readall = "SELECT i.id, i.idcliente, i.descripcion_producto, i.idmarca, i.idtipo_producto, i.descripcion_falla, "
-										   + "i.envio, i.envio_default, i.direccion_alternativa, i.monto_envio, (SELECT il.idestado FROM ingreso_log il WHERE il.idingreso=i.id order by il.id desc limit 1) as estado,  "
-										   + "i.fecha_creacion, i.idusuario, i.habilitado, i.tecnico_asignado "
-										   + "FROM ingreso i WHERE i.habilitado=true";
+			+ "i.envio, i.envio_default, i.direccion_alternativa, i.monto_envio, (SELECT il.idestado FROM ingreso_log il WHERE il.idingreso=i.id order by il.id desc limit 1) as estado,  "
+			+ "i.fecha_creacion, i.idusuario, i.habilitado, i.tecnico_asignado "
+			+ "FROM ingreso i WHERE i.habilitado=true";
 	private static final String find = "SELECT i.id, i.idcliente, i.descripcion_producto, i.idmarca, i.idtipo_producto, i.descripcion_falla, "
-										   + "i.envio, i.envio_default, i.direccion_alternativa, i.monto_envio, (SELECT il.idestado FROM ingreso_log il WHERE il.idingreso=i.id order by il.id desc limit 1) as estado,  "
-										   + "i.fecha_creacion, i.idusuario, i.habilitado, i.tecnico_asignado "
-										   + "FROM ingreso i WHERE i.habilitado=true AND i.id = ?";
+			+ "i.envio, i.envio_default, i.direccion_alternativa, i.monto_envio, (SELECT il.idestado FROM ingreso_log il WHERE il.idingreso=i.id order by il.id desc limit 1) as estado,  "
+			+ "i.fecha_creacion, i.idusuario, i.habilitado, i.tecnico_asignado "
+			+ "FROM ingreso i WHERE i.habilitado=true AND i.id = ?";
 	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'ingreso';";
 	@SuppressWarnings("unused")
-	private static final String paraEnviar ="SELECT * FROM ingresos WHERE estado = '10' and envio=true";
-	
+	private static final String paraEnviar = "SELECT * FROM ingresos WHERE estado = '10' and envio=true";
+
+	private static final String updateStatus = "UPDATE ingreso SET estado = ? WHERE Id = ? ;";
+
 	private static final String findReparados = "SELECT  i.id, i.idcliente,  i.descripcion_producto, i.idmarca, i.idtipo_producto, i.descripcion_falla, i.envio, "
-												+ "i.envio_default, i.direccion_alternativa, i.monto_envio, log.estado, i.fecha_creacion, i.idusuario, i.habilitado, "
-												+ "i.tecnico_asignado, hi.idhojaruta FROM ingreso i LEFT JOIN (SELECT  il.idingreso, (SELECT idestado FROM "
-												+ "ingreso_log WHERE idingreso = il.idingreso ORDER BY id desc limit 1) as estado FROM ingreso_log il GROUP BY il.idingreso) "
-												+ "log ON (i.id = log.idingreso) LEFT JOIN hojaruta_ingreso hi on(i.id = hi.idingreso AND hi.en_entrega=true) "
-												+ "WHERE i.habilitado = TRUE AND (log.estado = 7 OR log.estado = 8 OR log.estado = 9 OR log.estado=12)AND i.envio = true  AND  "
-												+ "(hi.en_entrega=false OR hi.en_entrega IS NULL) group by i.id;";
+			+ "i.envio_default, i.direccion_alternativa, i.monto_envio, log.estado, i.fecha_creacion, i.idusuario, i.habilitado, "
+			+ "i.tecnico_asignado, hi.idhojaruta FROM ingreso i LEFT JOIN (SELECT  il.idingreso, (SELECT idestado FROM "
+			+ "ingreso_log WHERE idingreso = il.idingreso ORDER BY id desc limit 1) as estado FROM ingreso_log il GROUP BY il.idingreso) "
+			+ "log ON (i.id = log.idingreso) LEFT JOIN hojaruta_ingreso hi on(i.id = hi.idingreso AND hi.en_entrega=true) "
+			+ "WHERE i.habilitado = TRUE AND (log.estado = 7 OR log.estado = 8 OR log.estado = 9 OR log.estado=12)AND i.envio = true  AND  "
+			+ "(hi.en_entrega=false OR hi.en_entrega IS NULL) group by i.id;";
 	private Conexion conexion = Conexion.getConexion();
+
+	public boolean update(int ingresoId, int estado) { //Le inserta el nuevo estado.
+															
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(updateStatus);
+			statement.setInt(1, estado);
+			statement.setInt(2, ingresoId);
+
+			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { // Se ejecuta siempre
+			Conexion.cerrarConexion();
+		}
+		return false;
+	}
 
 	public ArrayList<IngresoDTO> readAll() {
 		conexion = Conexion.getConexion();
@@ -185,7 +205,7 @@ public class IngresoDAO {
 		}
 		return ingresos;
 	}
-	
+
 	public ArrayList<IngresoDTO> readReparadosNoReparados() {
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
