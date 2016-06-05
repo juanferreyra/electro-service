@@ -1,6 +1,7 @@
 
 package presentacion.controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -10,6 +11,7 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import dto.IngresoDTO;
 import dto.UsuarioDTO;
@@ -275,4 +277,15 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			}
 		});
 	}
+
+	// private void actualizarAvisoFaltante() {
+	// String[] dato = { "Holisss", "Chau", "Hola", "chau" };
+	// ((DefaultTableModel) table_avisoFaltante.getModel()).addRow(dato);
+	// // Atenci\u00F3n ! Se han terminado los repuestos de botones WTG
+	// // negros.")
+	// panelAviso.setBackground(Color.WHITE);
+	// panelAviso.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+	// TitledBorder.TOP, null, null));
+	// }
+
 }

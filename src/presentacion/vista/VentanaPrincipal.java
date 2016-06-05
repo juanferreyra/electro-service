@@ -187,7 +187,6 @@ public class VentanaPrincipal extends JFrame {
 
 			@Override
 			public boolean isCellEditable(int fila, int columna) {
-
 				return false;
 			}
 		};
@@ -202,8 +201,6 @@ public class VentanaPrincipal extends JFrame {
 		panelAviso.add(table_avisoFaltante);
 
 		panelAviso.setViewportView(table_avisoFaltante);
-
-		this.actualizarAvisoFaltante();
 
 		// AGREGO LABEL AVISO FALTANTE Y TABLA ORDENES DE TRABAJO EN UN PANEL
 		// CENTRAL
@@ -414,15 +411,6 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
-	private void actualizarAvisoFaltante() {
-		String[] dato = { "Holisss", "Chau", "Hola", "chau" };
-		((DefaultTableModel) table_avisoFaltante.getModel()).addRow(dato);
-		// Atenci\u00F3n ! Se han terminado los repuestos de botones WTG
-		// negros.")
-		panelAviso.setBackground(Color.WHITE);
-		panelAviso.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-	}
-
 	private void setearPropiedadesDeTabla() {
 		ordenesDeTrabajo_table.getColumnModel().getColumn(0).setMaxWidth(10);
 		ordenesDeTrabajo_table.getColumnModel().getColumn(6).setMaxWidth(10);
@@ -463,20 +451,20 @@ public class VentanaPrincipal extends JFrame {
 		return btnElaborarHojaDe;
 	}
 
-	public JTable getTable_AvisoFaltante() {
-		return table_avisoFaltante;
-	}
-
-	public void setTableAvisoFaltante(JTable table_avisoFaltante) {
-		this.table_avisoFaltante = table_avisoFaltante;
-	}
-
 	public JMenuItem getDeslogueo() {
 		return deslogueo;
 	}
 
 	public void setDeslogueo(JMenuItem deslogueo) {
 		this.deslogueo = deslogueo;
+	}
+
+	public JTable getTable_avisoFaltante() {
+		return table_avisoFaltante;
+	}
+
+	public void setTable_avisoFaltante(JTable table_avisoFaltante) {
+		this.table_avisoFaltante = table_avisoFaltante;
 	}
 
 }
