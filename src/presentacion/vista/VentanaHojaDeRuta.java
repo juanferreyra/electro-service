@@ -21,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaHojaDeRuta extends JFrame {
 
@@ -40,6 +42,7 @@ public class VentanaHojaDeRuta extends JFrame {
 	private JButton btnCargarHoja;
 	private JButton btnBorrarCarga;
 	private JButton btnMarcarEntregados;
+	private JButton crearFletero_btn;
 
 	@SuppressWarnings("serial")
 	public VentanaHojaDeRuta() {
@@ -226,7 +229,16 @@ public class VentanaHojaDeRuta extends JFrame {
 		btnMarcarEntregados.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 11));
 		btnMarcarEntregados.setBounds(145, 544, 211, 30);
 		contentPane.add(btnMarcarEntregados);
+		
+		crearFletero_btn = new JButton("");
+		crearFletero_btn.setIcon(new ImageIcon(VentanaHojaDeRuta.class.getResource("/user-add.png")));
+		crearFletero_btn.setBounds(403, 55, 33, 20);
+		contentPane.add(crearFletero_btn);
 
+	}
+
+	public JButton getCrearFletero_btn() {
+		return crearFletero_btn;
 	}
 
 	private void setearPropiedadesDeTabla() {
