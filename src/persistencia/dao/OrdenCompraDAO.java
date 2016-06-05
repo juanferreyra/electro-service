@@ -13,11 +13,11 @@ public class OrdenCompraDAO {
 
 	//TODO:private static final String updateImporte = "";
 	
-	private static final String readall = "SELECT id, idproveedor, idusuario, importe_total, importe_validado, "
+	private static final String readall = "SELECT id, idproveedor, idusuario, importe_total, "
 			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion ,estado "
 			+ "FROM orden_compra WHERE habilitado=true;";
 	
-	private static final String find =  "SELECT id, idproveedor, idusuario, importe_total, importe_validado, "
+	private static final String find =  "SELECT id, idproveedor, idusuario, importe_total, "
 			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion , estado "
 			+ "FROM orden_compra WHERE habilitado=true AND id= ? ;";
 	
@@ -121,7 +121,6 @@ public class OrdenCompraDAO {
 				orden.setId(resultSet.getInt("id"));
 				orden.setIdproveedor(resultSet.getInt("idproveedor"));
 				orden.setImporte_total(resultSet.getFloat("importe_total"));
-				orden.setImporte_validado(resultSet.getFloat("importe_validado"));
 				orden.setIdusuario(resultSet.getInt("idusuario"));
 				orden.setFecha_creacion(fecha_creacion);
 				orden.setHora_creacion(resultSet.getString("hora_creacion"));

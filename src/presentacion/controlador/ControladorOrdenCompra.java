@@ -23,7 +23,6 @@ public class ControladorOrdenCompra implements ActionListener{
 	private UsuarioDTO usuarioLogueado;
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private Integer cantidad = 1;
-	private float suma = 0;
 	
 	public ControladorOrdenCompra( VentanaOrdenCompra VentanaOrdenCompra, UsuarioDTO usuario) {
 		this.ventanaOrdenCompra = VentanaOrdenCompra;
@@ -47,13 +46,13 @@ public class ControladorOrdenCompra implements ActionListener{
 	}
 	
 	public void inicializar() {
-		ventanaOrdenCompra.setVisible(true);
-		ventanaOrdenCompra.getBtnVaciarVentanaOrden().setVisible(false);
+		this.ventanaOrdenCompra.setVisible(true);
+		this.ventanaOrdenCompra.getBtnVaciarVentanaOrden().setVisible(false);
 		this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
 		this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
 		this.ventanaOrdenCompra.getBtnImprimir().setVisible(false);
 		this.ventanaOrdenCompra.getBtnEnviarEmial().setVisible(false);
-		ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
+		this.ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
 	}
 
 	private void cargarComboComponentes() {
@@ -89,6 +88,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(false);
 		this.ventanaOrdenCompra.getBtnImprimir().setVisible(true);
 		this.ventanaOrdenCompra.getBtnEnviarEmial().setVisible(true);
+		mostrarColumnaCantidadReal();
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class ControladorOrdenCompra implements ActionListener{
 			if(this.ventanaOrdenCompra.getComponente_ComboBox().getSelectedIndex()!= -1) {
 				agregarRepuestoATabla();
 				ocultarColumnaId();
-				sumarTotales();
+				ocultarColumnaCantidadReal();
 			} else {
 
 				JOptionPane.showMessageDialog(ventanaOrdenCompra, "No puede agregar sin seleccionar un repuesto ", "Atencion!",
@@ -220,6 +220,20 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
 		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 	}
+	
+	private void ocultarColumnaCantidadReal() {
+		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(3).setMaxWidth(0);
+		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(3).setMinWidth(0);
+		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(3).setMaxWidth(0);
+		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(3).setMinWidth(0);
+	}
+	
+	private void mostrarColumnaCantidadReal() {
+		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(3).setMaxWidth(100);
+		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(3).setMinWidth(100);
+		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(3).setMaxWidth(100);
+		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(3).setMinWidth(100);
+	}
 
 	private void validarCampos() {
 		
@@ -234,7 +248,7 @@ public class ControladorOrdenCompra implements ActionListener{
 					JOptionPane.INFORMATION_MESSAGE);
 			
 		} else {
-			ordenCompra.getOrdenCompraDTO().setImporte_total(Float.parseFloat(this.ventanaOrdenCompra.getValorPresupuestado_txf().getText()));
+			
 			ordenCompra.getOrdenCompraDTO().setIdusuario(this.usuarioLogueado.getId());
 			
 			Boolean guardo = ordenCompra.crearOrdenCompra();
@@ -248,32 +262,38 @@ public class ControladorOrdenCompra implements ActionListener{
 			}
 		}
 	}
-	
-	private void sumarTotales() {
-		suma = 0;
-		for (int i = 0 ; i < ventanaOrdenCompra.getComponentes_table().getRowCount(); i++){
-			suma += Float.parseFloat(ventanaOrdenCompra.getComponentes_table().getValueAt(i, 4).toString());
-		}
-		this.ventanaOrdenCompra.getValorPresupuestado_txf().setText(String.valueOf(suma));
-	}
 
 	private void actualizarTablaRepuestos() {
-		modelTable = new DefaultTableModel();
+		
+		modelTable = new DefaultTableModel(){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int fila, int columna) {
+
+				return false;
+			}
+		};
+		
 		modelTable.setColumnIdentifiers(ventanaOrdenCompra.getComponentes_nombreColumnas());
 		 
 		ArrayList<ItemRepuestoDTO> repuestosAgregados = ordenCompra.getListaDeRepuestos();
 		
 		for(int i = 0; i < repuestosAgregados.size(); i++){
 			Object[] fila = {repuestosAgregados.get(i).getId(),repuestosAgregados.get(i).getDetalle(),
-					repuestosAgregados.get(i).getCantidad(),repuestosAgregados.get(i).getPrecioUnitario(),
-					repuestosAgregados.get(i).getPrecio()};
+					repuestosAgregados.get(i).getCantidad(),repuestosAgregados.get(i).getCantidad()};
 
 			modelTable.insertRow(0, fila);
+			
+			modelTable.isCellEditable(i, 0);
+			modelTable.isCellEditable(i, 1);
+			modelTable.isCellEditable(i, 2);
 		}
 		
 		this.ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
 		
 		ocultarColumnaId();
+		ocultarColumnaCantidadReal();
 	}
 
 	private void eliminarRepuestoDeTabla() {
@@ -290,7 +310,6 @@ public class ControladorOrdenCompra implements ActionListener{
 			}
 			
 			actualizarTablaRepuestos();
-			sumarTotales();
 		} else {
 
 			JOptionPane.showMessageDialog(ventanaOrdenCompra, "Debe seleccionar fila para eliminar ", "Atencion!",
@@ -305,13 +324,12 @@ public class ControladorOrdenCompra implements ActionListener{
 		//agrego el repuesto al objeto Presupuesto con su lista
 		int cantidad = Integer.parseInt(ventanaOrdenCompra.getCantidad_lbl().getText());
 		RepuestoDTO resp = ordenCompra.buscarRepuesto((String) this.ventanaOrdenCompra.getComponente_ComboBox().getSelectedItem());
-		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, resp.getPrecioUnitario(),resp.getPrecioUnitario() * cantidad);
+		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, null, null);
 		//me fijo si existe en la tabla
 		for (int i = 0; i < ordenCompra.getListaDeRepuestos().size(); i++) {
 			if(ordenCompra.getListaDeRepuestos().get(i).getDetalle().equals(resp.getDetalle())) {
 				existe = true;
 				this.ordenCompra.getListaDeRepuestos().get(i).sumarCantidad(cantidad);
-				this.ordenCompra.getListaDeRepuestos().get(i).sumarTotal(resp.getPrecioUnitario() * cantidad);
 			}
 		}
 		if(!existe) {

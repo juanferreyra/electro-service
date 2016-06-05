@@ -104,7 +104,7 @@ public class OrdenCompra {
 			int idOrden = ordenCompraDAO.getNextId();
 			ordenCompraDTO.setId(idOrden);
 			for (int i = 0; i < listaRepuestos.size(); i++) {
-				OrdenCompraRepuestoDTO orden = new OrdenCompraRepuestoDTO(0, idOrden,  listaRepuestos.get(i).getIdrepuesto(), listaRepuestos.get(i).getCantidad(), listaRepuestos.get(i).getPrecioUnitario(), null, true);
+				OrdenCompraRepuestoDTO orden = new OrdenCompraRepuestoDTO(0, idOrden,  listaRepuestos.get(i).getIdrepuesto(), listaRepuestos.get(i).getCantidad(),listaRepuestos.get(i).getCantidad(), null, true);
 				ordenCompraRepuestoDAO.insert(orden);
 			}
 			
