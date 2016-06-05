@@ -223,6 +223,31 @@ INSERT INTO `ingreso_log` VALUES (150,22,1,'2016-06-04 20:24:54',0,1);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `itemstock`
+--
+
+DROP TABLE IF EXISTS `itemstock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `itemstock` (
+  `id` int(11) NOT NULL,
+  `InsumoId` int(11) NOT NULL,
+  `Existencias` int(11) NOT NULL,
+  `habilitado` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itemstock`
+--
+
+LOCK TABLES `itemstock` WRITE;
+/*!40000 ALTER TABLE `itemstock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itemstock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `marca_producto`
 --
 
@@ -260,13 +285,12 @@ CREATE TABLE `orden_compra` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idproveedor` int(11) DEFAULT NULL,
   `importe_total` float DEFAULT NULL,
-  `importe_validado` float DEFAULT NULL,
   `idusuario` int(11) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   `estado` enum('NUEVA','RECIBIDA','CANCELADA') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,6 +299,7 @@ CREATE TABLE `orden_compra` (
 
 LOCK TABLES `orden_compra` WRITE;
 /*!40000 ALTER TABLE `orden_compra` DISABLE KEYS */;
+INSERT INTO `orden_compra` VALUES (7,2,0,1,'2016-06-05 19:54:13',1,'NUEVA'),(8,2,0,1,'2016-06-05 19:56:12',1,'NUEVA');
 /*!40000 ALTER TABLE `orden_compra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,11 +315,11 @@ CREATE TABLE `orden_compra_repuestos` (
   `idorden_compra` int(11) DEFAULT NULL,
   `idrepuesto` int(11) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
-  `precio_unitario` float DEFAULT NULL,
+  `cantidad_real` int(11) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,6 +328,7 @@ CREATE TABLE `orden_compra_repuestos` (
 
 LOCK TABLES `orden_compra_repuestos` WRITE;
 /*!40000 ALTER TABLE `orden_compra_repuestos` DISABLE KEYS */;
+INSERT INTO `orden_compra_repuestos` VALUES (14,7,1,5,5,'2016-06-05 19:54:13',1),(15,8,1,5,5,'2016-06-05 19:56:12',1);
 /*!40000 ALTER TABLE `orden_compra_repuestos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -603,9 +629,6 @@ CREATE TABLE `tipo_producto` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
-
-
 --
 -- Dumping data for table `tipo_producto`
 --
@@ -647,20 +670,6 @@ INSERT INTO `usuario` VALUES (1,'jefe','NOMBRE_JEFE','APELLIDO_JEFE','jefe',1,1,
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-DROP TABLE IF EXISTS `itemStock`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-
-CREATE TABLE `itemStock` (
-  `id` INT(4)  NOT NULL AUTO_INCREMENT COMMENT '',
-  `InsumoId` INT(4) NOT NULL COMMENT '',
-  `Existencias` INT(6) NOT NULL COMMENT '',
-  `itemStockcol` TINYINT(1) NOT NULL COMMENT '',
-  PRIMARY KEY (`id`)  COMMENT '');
-
-
-
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -669,4 +678,4 @@ CREATE TABLE `itemStock` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-04 20:40:22
+-- Dump completed on 2016-06-05 20:52:06
