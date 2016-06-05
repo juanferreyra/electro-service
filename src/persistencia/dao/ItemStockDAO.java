@@ -19,6 +19,14 @@ public class ItemStockDAO {
 	private static final String readall = "SELECT Id, InsumoId, Existencias FROM itemStock WHERE habilitado = true;";
 	private static final String update = "update itemStock SET Existencias = Existencias + ? WHERE Id = ? ;";
 	private static final String find = "SELECT Id, detalle, idusuario FROM itemStock WHERE habilitado = true AND Id = ?;";
+	private static final String INSUMOSAPROVADOS = "SELECT idrepuesto "
+												 + "FROM presupuesto_repuestos "
+												 + "WHERE idpresupuesto IN (SELECT id "
+												 						 + "FROM presupuesto "
+												 						 + "WHERE idingreso IN (SELECT id "
+												 						 					+ "FROM ingreso "
+												 						 					+ "WHERE estado = 5)	"
+								+ " )";
 	private static Conexion conexion = Conexion.getConexion();
 	
 	public boolean insert(RepuestoDTO nuevoComponente){
@@ -28,7 +36,7 @@ public class ItemStockDAO {
 			statement.setLong(1,nuevoComponente.getId());
 			statement.setInt(2, 0);
 			
-			if(statement.executeUpdate() > 0){ //Si se ejecut� devuelvo true
+			if(statement.executeUpdate() > 0){ //Si se ejecuta devuelvo true
 				return true;
 			}
 		}
