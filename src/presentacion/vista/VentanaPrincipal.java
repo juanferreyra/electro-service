@@ -30,6 +30,7 @@ import presentacion.controlador.ControladorABMProveedor;
 import presentacion.controlador.ControladorABMRepuesto;
 import presentacion.controlador.ControladorABMTipoProducto;
 import presentacion.controlador.ControladorVentanaABMUsuario;
+import presentacion.controlador.ControladorVentanaLogin;
 import presentacion.controlador.ControladorVentanaStock;
 
 import javax.swing.BoxLayout;
@@ -39,6 +40,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
+import java.awt.Rectangle;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -52,12 +54,13 @@ public class VentanaPrincipal extends JFrame {
 	private JMenuBar menuBar;
 	private FormatoTablaOrdenesTrabajo formatoTabla;
 	private JButton btnOrdenDeCompra;
-	private JLabel avisoFaltanteLabel;
-	private JPanel panelAviso;
+	private JTable table_avisoFaltante;
+	private JScrollPane panelAviso;
 	private JMenu _sistema;
 	private JMenu _contabilidad;
 	private JMenu _gestion;
 	private JMenu _reporte;
+	private JMenuItem deslogueo;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
@@ -169,14 +172,37 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_scrollPane.add(ordenesDeTrabajo_table);
 		ordenesDeTrabajo_scrollPane.setViewportView(ordenesDeTrabajo_table);
 
-		// LABEL DE AVISO DE FALTANTE
+		// TABLA DE AVISO DE FALTANTE
 
-		panelAviso = new JPanel();
-		panelAviso.setMaximumSize(new Dimension(2000, 50));
-		avisoFaltanteLabel = new JLabel(
-				"\u00A1 Atenci\u00F3n !  Se han terminado los repuestos de botones WTG negros.");// HARDCODEO
-		avisoFaltanteLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panelAviso.add(avisoFaltanteLabel);
+		table_avisoFaltante = new JTable();
+
+		DefaultTableModel modeloAviso = new DefaultTableModel(new Object[][] {}, new String[] { "Aviso de Faltante" }) {
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] { String.class };
+
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+
+			@Override
+			public boolean isCellEditable(int fila, int columna) {
+
+				return false;
+			}
+		};
+
+		table_avisoFaltante.setRowHeight(20);
+		table_avisoFaltante.setModel(modeloAviso);
+
+		panelAviso = new JScrollPane();
+		panelAviso.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panelAviso.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		panelAviso.setBounds(0, 0, 1005, 301);
+		panelAviso.add(table_avisoFaltante);
+
+		panelAviso.setViewportView(table_avisoFaltante);
+
 		this.actualizarAvisoFaltante();
 
 		// AGREGO LABEL AVISO FALTANTE Y TABLA ORDENES DE TRABAJO EN UN PANEL
@@ -360,6 +386,10 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void cargarItemsDeSistema() {
+		deslogueo = new JMenuItem("Cerrar Sesión");
+
+		_sistema.add(deslogueo);
+
 		JMenuItem ayuda = new JMenuItem("Ayuda");
 		_sistema.add(ayuda);
 
@@ -385,7 +415,11 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void actualizarAvisoFaltante() {
-		panelAviso.setBackground(Color.decode("#F6D8CE"));
+		String[] dato = { "Holisss", "Chau", "Hola", "chau" };
+		((DefaultTableModel) table_avisoFaltante.getModel()).addRow(dato);
+		// Atenci\u00F3n ! Se han terminado los repuestos de botones WTG
+		// negros.")
+		panelAviso.setBackground(Color.WHITE);
 		panelAviso.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 	}
 
@@ -429,12 +463,20 @@ public class VentanaPrincipal extends JFrame {
 		return btnElaborarHojaDe;
 	}
 
-	public String getAvisoFaltanteLabel() {
-		return avisoFaltanteLabel.getText();
+	public JTable getTable_AvisoFaltante() {
+		return table_avisoFaltante;
 	}
 
-	public void setAvisoFaltanteLabel(String aviso) {
-		this.avisoFaltanteLabel.setText(aviso);
+	public void setTableAvisoFaltante(JTable table_avisoFaltante) {
+		this.table_avisoFaltante = table_avisoFaltante;
+	}
+
+	public JMenuItem getDeslogueo() {
+		return deslogueo;
+	}
+
+	public void setDeslogueo(JMenuItem deslogueo) {
+		this.deslogueo = deslogueo;
 	}
 
 }

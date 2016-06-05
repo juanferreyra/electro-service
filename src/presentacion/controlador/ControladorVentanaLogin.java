@@ -21,22 +21,23 @@ public class ControladorVentanaLogin implements ActionListener {
 		this.login.getContrasena_txf().addActionListener(this);
 		this.login.getLogin_btn().addActionListener(this);
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == this.login.getLogin_btn()) {
-					
+
 			boolean existe = this.usuario.existeUsuario(this.login.getUsuario_txf().getText());
-			
-			if(!existe){
+
+			if (!existe) {
 				JOptionPane.showMessageDialog(this.login, "Usuario o contraseña incorrectos", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
 			} else {
 				UsuarioDTO user = this.usuario.obtenerUsuario(this.login.getUsuario_txf().getText());
-				
-				boolean coincidePassword = user.getPassword().equals(String.copyValueOf(this.login.getContrasena_txf().getPassword()));
-				
-				if(!coincidePassword) {
+
+				boolean coincidePassword = user.getPassword()
+						.equals(String.copyValueOf(this.login.getContrasena_txf().getPassword()));
+
+				if (!coincidePassword) {
 					JOptionPane.showMessageDialog(this.login, "Usuario o contraseña incorrectos", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {

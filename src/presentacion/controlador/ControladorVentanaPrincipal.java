@@ -43,6 +43,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getReparacion_btn().addActionListener(this);
 		this.principal.getBtnElaborarHojaDe().addActionListener(this);
 		this.principal.getBtnOrdenDeCompra().addActionListener(this);
+		this.principal.getDeslogueo().addActionListener(this);
 		this.agregarMouseListenerTabla(this);
 	}
 
@@ -57,24 +58,24 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	private void adecuarVentanaPrincipal() {
 
-		if (this.usuarioLogueado.getIdperfil()==2) {
+		if (this.usuarioLogueado.getIdperfil() == 2) {
 			// Visualizacion modo administrativo
 			this.principal.getPresupuestar_btn().setVisible(false);
 			this.principal.getReparacion_btn().setVisible(false);
 			this.principal.setVisible(true);
 
-		} else if (this.usuarioLogueado.getIdperfil()==3) {
+		} else if (this.usuarioLogueado.getIdperfil() == 3) {
 			// Visualizacion modo tecnico
 			this.principal.getIngresarProducto_btn().setVisible(false);
 			this.principal.getBtnElaborarHojaDe().setVisible(false);
 			this.principal.getBtnOrdenDeCompra().setVisible(false);
 			this.principal.setVisible(true);
 
-		} else if(this.usuarioLogueado.getIdperfil()==1){
+		} else if (this.usuarioLogueado.getIdperfil() == 1) {
 			// Visualizacion modo jefe/admin
 			this.principal.setVisible(true);
 		} else {
-			
+
 		}
 	}
 
@@ -108,8 +109,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					clienteDAO.find(ingresos.get(i).getIdcliente()).getNombre(),
 					(ingresos.get(i).getEnvio()) ? "SI" : "NO",
 					new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
-					nombreCompletoTecnicoAsignado,
-					estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
+					nombreCompletoTecnicoAsignado, estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
 		}
 	}
 
@@ -129,17 +129,17 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		// Agrego fila solo en caso de que lo permita el perfil (hardcodeo luego
 		// modificar)
-		if (this.usuarioLogueado.getIdperfil()==2 && (estado.equals("NUEVO") || estado.equals("INFORMADO")
+		if (this.usuarioLogueado.getIdperfil() == 2 && (estado.equals("NUEVO") || estado.equals("INFORMADO")
 				|| estado.equals("IRREPARABLE") || estado.equals("REPARADO") || estado.equals("RECHAZADO")
 				|| estado.equals("AVISO DE RETIRO") || estado.equals("RETIRADO") || estado.equals(""))) {// HARDCODEO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 
-		} else if (this.usuarioLogueado.getIdperfil()==3 && (estado.equals("NUEVO") || estado.equals("ACEPTADO")
+		} else if (this.usuarioLogueado.getIdperfil() == 3 && (estado.equals("NUEVO") || estado.equals("ACEPTADO")
 				|| estado.equals("EN REPARACION") || estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO"))) {// HARDCODEO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
-		} else if (this.usuarioLogueado.getIdperfil()==1) {
+		} else if (this.usuarioLogueado.getIdperfil() == 1) {
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 		}
 
@@ -212,9 +212,15 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			ControladorVentanaHojaDeRuta hojaruta = new ControladorVentanaHojaDeRuta(new VentanaHojaDeRuta(), this,
 					usuarioLogueado);
 			hojaruta.inicializar();
-		} else if (e.getSource()== this.principal.getBtnOrdenDeCompra()) {
+		} else if (e.getSource() == this.principal.getBtnOrdenDeCompra()) {
 			ControladorOrdenCompra a = new ControladorOrdenCompra(new VentanaOrdenCompra(), usuarioLogueado);
 			a.inicializar();
+		} else if (e.getSource() == this.principal.getDeslogueo()) {
+
+			this.principal.setVisible(false);
+
+			ControladorVentanaLogin controlLogin = new ControladorVentanaLogin();
+			controlLogin.getPantalla();
 		}
 	}
 

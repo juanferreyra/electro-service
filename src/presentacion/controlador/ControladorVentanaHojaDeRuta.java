@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +24,7 @@ import dto.UsuarioDTO;
 import modelo.HojaDeRuta;
 import persistencia.dao.IngresoLogDAO;
 import presentacion.reportes.ReporteHojaDeRuta;
+import presentacion.vista.VentanaABMFlete;
 import presentacion.vista.VentanaHojaDeRuta;
 
 public class ControladorVentanaHojaDeRuta implements ActionListener {
@@ -48,6 +51,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		this.ventanaHojaRuta.getBtnCancelar().addActionListener(this);
 		this.ventanaHojaRuta.getBtnBorrarCarga().addActionListener(this);
 		this.ventanaHojaRuta.getBtnMarcarEntregados().addActionListener(this);
+		this.ventanaHojaRuta.getCrearFletero_btn().addActionListener(this);
 		this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(false);
 		this.ventanaHojaRuta.getBtnImprimir().setVisible(false);
 		this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(false);
@@ -365,6 +369,64 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		      
 		    }
 			//recorro la lista de ingresados y los seteo como estado de entregados
+		    
+		}else if (e.getSource() == this.ventanaHojaRuta.getCrearFletero_btn()){
+			
+			VentanaABMFlete ventanaABMFlete = new VentanaABMFlete();
+			ControladorABMFlete cont = new ControladorABMFlete(ventanaABMFlete);
+			cont.inicializar();
+			
+			ventanaABMFlete.addWindowListener(new WindowListener() {
+				
+				@Override
+				public void windowOpened(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowClosing(WindowEvent e) {
+					
+					if (ventanaABMFlete.getTablaFlete().getSelectedRow() != -1){
+
+					cargarFlete(Integer.parseInt(ventanaABMFlete.getDocumento_txf().getText()));
+					
+					ventanaHojaRuta.getTxtflBuscarConductor().setText(ventanaABMFlete.getDocumento_txf().getText());
+					
+					}
+				}
+				
+				@Override
+				public void windowClosed(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
 		}
 	}
 }
