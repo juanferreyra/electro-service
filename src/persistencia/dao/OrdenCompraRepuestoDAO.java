@@ -11,10 +11,10 @@ import persistencia.conexion.Conexion;
 public class OrdenCompraRepuestoDAO {
 	
 	private static final String insert = "INSERT INTO orden_compra_repuestos (idorden_compra,idrepuesto,"
-			+ "cantidad,precio_unitario,fecha_creacion,habilitado) VALUES (?,?,?,?,now(),true);";
+			+ "cantidad,cantidad_real,fecha_creacion,habilitado) VALUES (?,?,?,?,now(),true);";
 	
-	private static final String find = "SELECT ocr.id, ocr.idrepuesto, r.detalle, ocr.cantidad, r.precio, "
-			+ "ocr.cantidad * r.precio AS total FROM orden_compra_repuestos ocr LEFT JOIN repuesto r ON "
+	private static final String find = "SELECT ocr.id, ocr.idrepuesto, r.detalle, ocr.cantidad, "
+			+ "ocr.cantidad_real  FROM orden_compra_repuestos ocr LEFT JOIN repuesto r ON "
 			+ "(ocr.idrepuesto = r.id) WHERE ocr.idorden_compra = ? AND ocr.habilitado = TRUE;";
 	
 	private Conexion conexion = Conexion.getConexion();
@@ -27,7 +27,7 @@ public class OrdenCompraRepuestoDAO {
 			statement.setInt(1, OrdenCompraRepuestoDTO.getIdOrdenCompra());
 			statement.setInt(2, OrdenCompraRepuestoDTO.getIdComponente());
 			statement.setInt(3, OrdenCompraRepuestoDTO.getCantidad());
-			statement.setFloat(4, OrdenCompraRepuestoDTO.getPrecio_unitario());
+			statement.setFloat(4, OrdenCompraRepuestoDTO.getCantidad_real());
 
 			if (statement.executeUpdate() > 0)
 				return true;
@@ -56,8 +56,8 @@ public class OrdenCompraRepuestoDAO {
 						resultSet.getInt("idrepuesto"),
 						resultSet.getString("detalle"),
 						resultSet.getInt("cantidad"),
-						resultSet.getFloat("precio"),
-						resultSet.getFloat("total")));
+						null,
+						null));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

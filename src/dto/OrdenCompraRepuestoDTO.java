@@ -8,18 +8,18 @@ public class OrdenCompraRepuestoDTO {
 	private int idOrdenCompra;
 	private int idComponente;
 	private int cantidad;
-	private float precio_unitario;
+	private int cantidad_real;
 	private Date fechaCreacion;
 	private boolean habilitado;
 
-	public OrdenCompraRepuestoDTO(int id, int idOrdenCompra, int idComponente, int cantidad, float precio_unitario,Date fechaCreacion,
+	public OrdenCompraRepuestoDTO(int id, int idOrdenCompra, int idComponente, int cantidad, int cantidad_real,Date fechaCreacion,
 			boolean habilitado) {
 
 		this.id = id;
 		this.idOrdenCompra = idOrdenCompra;
 		this.idComponente = idComponente;
 		this.cantidad = cantidad;
-		this.precio_unitario = precio_unitario;
+		this.cantidad_real = cantidad_real;
 		this.fechaCreacion = fechaCreacion;
 		this.habilitado = habilitado;
 	}
@@ -72,12 +72,12 @@ public class OrdenCompraRepuestoDTO {
 		this.habilitado = habilitado;
 	}
 
-	public float getPrecio_unitario() {
-		return precio_unitario;
+	public float getCantidad_real() {
+		return cantidad_real;
 	}
 
-	public void setPrecio_unitario(float precio_unitario) {
-		this.precio_unitario = precio_unitario;
+	public void setCantidad_real(int cantidad_real) {
+		this.cantidad_real = cantidad_real;
 	}
 
 
