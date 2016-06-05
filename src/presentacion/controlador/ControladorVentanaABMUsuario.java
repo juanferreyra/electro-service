@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 import dto.PerfilDTO;
 import dto.UsuarioDTO;
+import modelo.Perfil;
 import modelo.Usuario;
 import presentacion.vista.VentanaABMUsuario;
 
@@ -20,6 +23,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 	private List<UsuarioDTO> clientes_en_tabla;
 	private List<JTextField> txts;
 	private List<PerfilDTO> perfiles_en_combo;
+	private Perfil perfil;
 	
 	
 	public ControladorVentanaABMUsuario( VentanaABMUsuario ventanaABMUsuario) {
@@ -33,6 +37,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 	public void inicializar(){
 		
 		this.usuario = new Usuario();
+		this.perfil = new Perfil();
 		this.ventanaABMUsuario.setVisible(true);
 		
 		this.txts = new ArrayList<JTextField>();
@@ -57,8 +62,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		this.perfiles_en_combo = this.usuario.obtenerPerfiles();
 		for (int i = 0; i < this.perfiles_en_combo.size(); i++)
 		{
-				this.ventanaABMUsuario.getPerfil_comboBox().addItem(this.perfiles_en_combo.get(i).getId()+ " " + 
-		this.perfiles_en_combo.get(i).getPerfil());
+				this.ventanaABMUsuario.getPerfil_comboBox().addItem(this.perfiles_en_combo.get(i).getPerfil());
 		}
 		
 		
@@ -113,7 +117,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 		// carga de combo
 		PerfilDTO perfilSeleccionado = new PerfilDTO(obtenerPerfil((int)this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 5))); 
 		
-		this.ventanaABMUsuario.getPerfil_comboBox().setSelectedItem(perfilSeleccionado.getId() +" "+ perfilSeleccionado.getPerfil());
+		this.ventanaABMUsuario.getPerfil_comboBox().setSelectedItem(perfilSeleccionado.getPerfil());
 		
 		
 
@@ -137,7 +141,8 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 					this.clientes_en_tabla.get(i).getIdperfil()} ;
 
 			this.ventanaABMUsuario.getModelUsuario().addRow(fila);
-
+			
+			
 		}
 
 		ocultarColumnaId();
@@ -171,22 +176,22 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 	
 	private void ocultarColumnaIdPerfil() {
 		
-		this.ventanaABMUsuario.getTablaUsuario().getColumnModel().getColumn(4).setMaxWidth(0);
-		this.ventanaABMUsuario.getTablaUsuario().getColumnModel().getColumn(4).setMinWidth(0);
-		this.ventanaABMUsuario.getTablaUsuario().getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
-		this.ventanaABMUsuario.getTablaUsuario().getTableHeader().getColumnModel().getColumn(4).setMinWidth(0);
+		this.ventanaABMUsuario.getTablaUsuario().getColumnModel().getColumn(5).setMaxWidth(0);
+		this.ventanaABMUsuario.getTablaUsuario().getColumnModel().getColumn(5).setMinWidth(0);
+		this.ventanaABMUsuario.getTablaUsuario().getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
+		this.ventanaABMUsuario.getTablaUsuario().getTableHeader().getColumnModel().getColumn(5).setMinWidth(0);
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == this.ventanaABMUsuario.getLimpiar_btn()) {
+		if (e.getSource() == this.ventanaABMUsuario.getLimpiar_btn()) { // boton limpiar
 
 			this.limpiartxts();
 			this.ventanaABMUsuario.getTablaUsuario().clearSelection();
 			
-		} else if (e.getSource() == this.ventanaABMUsuario.getEliminarItem_btn()) {
+		} else if (e.getSource() == this.ventanaABMUsuario.getEliminarItem_btn()) { // boton eliminar
 
 			// si la tabla no esta vacia
 			if (this.ventanaABMUsuario.getTablaUsuario().getRowCount() != 0) {
@@ -212,7 +217,7 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 				JOptionPane.showMessageDialog(this.ventanaABMUsuario, "No hay Usuarios a eliminar");
 			}
 				
-		} else if (e.getSource() == this.ventanaABMUsuario.getGuardar_btn()) {
+		} else if (e.getSource() == this.ventanaABMUsuario.getGuardar_btn()) { // boton guardar
 
 			// si esta seleccionado de la tabla
 			// modificar cliente
@@ -275,11 +280,13 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 	
 	private int obtenerIdPerfil() {
 		
-		String idPerfil = (String)this.ventanaABMUsuario.getPerfil_comboBox().getSelectedItem();
-		String [] array = idPerfil.split(" ");
-		String ret = array[0];
-		int id = Integer.parseInt(ret);
-		return id;
+		String perfilEnCombo = (String)this.ventanaABMUsuario.getPerfil_comboBox().getSelectedItem();
+		
+		PerfilDTO  ret = this.perfil.obtenerPerfilPorDetalle(perfilEnCombo);
+		
+		int idPerfil = ret.getId();
+		
+		return idPerfil;
 		
 	}
 
@@ -308,6 +315,8 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 
 		
 	}
+	
+	
 
 	public static void main(String[] args) {
 		VentanaABMUsuario abm = new VentanaABMUsuario();
