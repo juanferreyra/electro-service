@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import dto.ClienteDTO;
 import modelo.Cliente;
@@ -120,6 +121,15 @@ public class ControladorABMCliente implements ActionListener {
 					this.clientes_en_tabla.get(i).getTelefono(), this.clientes_en_tabla.get(i).getMail() };
 
 			this.ventanaABMCliente.getModelClientes().addRow(fila);
+			
+			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 0);
+			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 1);
+			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 2);
+			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 3);
+			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 4);
+			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 5);
+			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 6);
+			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 7);
 
 		}
 		ocultarColumnaId();
@@ -320,12 +330,12 @@ public class ControladorABMCliente implements ActionListener {
 		return matcher.matches();
 	}
 
-//	public static void main(String[] args) {
-//
-//		VentanaABMCliente abm = new VentanaABMCliente();
-//		ControladorABMCliente c = new ControladorABMCliente(abm);
-//		c.inicializar();
-//
-//	}
+	public static void main(String[] args) {
+
+		VentanaABMCliente abm = new VentanaABMCliente();
+		ControladorABMCliente c = new ControladorABMCliente(abm);
+		c.inicializar();
+
+	}
 
 }

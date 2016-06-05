@@ -116,7 +116,19 @@ public class VentanaABMCliente extends JFrame {
 		clientes_scrollPane.setBounds(123, 280, 459, 91);
 		getContentPane().add(clientes_scrollPane);
 
-		modelClientes = new DefaultTableModel(null, nombreColumnas);
+		modelClientes = new DefaultTableModel(null, nombreColumnas){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int fila, int columna) {
+
+				return false;
+			}
+		};
+
 		tablaClientes = new JTable(modelClientes);
 		clientes_scrollPane.setViewportView(tablaClientes);
 

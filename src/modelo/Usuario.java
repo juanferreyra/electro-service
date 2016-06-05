@@ -46,4 +46,16 @@ public class Usuario {
 
 		return usuarioDAO.todosLosPerfiles();		
 	}
+	
+	public Boolean existeUsuario(String nick){
+		
+		return usuarioDAO.findNick(nick)!=null;
+
+	}
+	
+	public UsuarioDTO obtenerUsuario(String nick) {
+		
+		return usuarioDAO.findNick(nick);
+		
+	}
 }

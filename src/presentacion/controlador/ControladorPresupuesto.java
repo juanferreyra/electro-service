@@ -7,10 +7,8 @@ import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import dto.RepuestoDTO;
 import dto.IngresoLogDTO;
 import dto.ItemRepuestoDTO;
@@ -19,6 +17,7 @@ import modelo.EmailPresupuesto;
 import modelo.Ingreso;
 import modelo.Presupuesto;
 import persistencia.dao.IngresoLogDAO;
+import persistencia.dao.UsuarioDAO;
 import presentacion.vista.VentanaPresupuesto;
 
 public class ControladorPresupuesto implements ActionListener{
@@ -34,13 +33,12 @@ public class ControladorPresupuesto implements ActionListener{
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
 	private EmailPresupuesto email;
-	private String perfil;
+	private UsuarioDAO usuarioDAO;
 	
 	public ControladorPresupuesto( VentanaPresupuesto ventanaPresupuesto, Ingreso ingreso,
 			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
 		this.ingreso = ingreso;
 		this.usuarioLogueado = usuario;
-		this.perfil = usuario.getPerfilDTO().getPerfil();
 		this.presupuesto = new Presupuesto(ingreso.getIngreso());
 		this.ventanaPresupuesto = ventanaPresupuesto;
 		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
@@ -56,6 +54,7 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getBtnAceptado().addActionListener(this);
 		this.ventanaPresupuesto.getBtnAsignar().addActionListener(this);
 		this.ventanaPresupuesto.getBtnRechazado().addActionListener(this);
+		this.usuarioDAO = new UsuarioDAO();
 	}
 	
 	public void inicializar() {
@@ -76,15 +75,15 @@ public class ControladorPresupuesto implements ActionListener{
 			cargarModelo();
 			ventanaPresupuesto.getGuardar_btn().setVisible(false);
 			ventanaPresupuesto.getCancelar_btn().setText("Cerrar");
-			if(this.ingreso.getIngreso().getEstado()==3 && (perfil.equals("ADMINISTRATIVO") || perfil.equals("JEFE"))) {
+			if(this.ingreso.getIngreso().getEstado()==3 && (this.usuarioLogueado.getIdperfil()==2 /*ADMINISTRATIVO*/|| this.usuarioLogueado.getIdperfil()==1/*JEFE*/)) {
 				mostrarBotonInformado();
 			}
 			
-			if(this.ingreso.getIngreso().getEstado()==4 && (perfil.equals("ADMINISTRATIVO") || perfil.equals("JEFE"))) {
+			if(this.ingreso.getIngreso().getEstado()==4 && (this.usuarioLogueado.getIdperfil()==2 /*ADMINISTRATIVO*/|| this.usuarioLogueado.getIdperfil()==1/*JEFE*/)) {
 				mostrarBotonAceptado();
 			}
 			
-			if(this.ingreso.getIngreso().getEstado()==5 && (perfil.equals("TECNICO") || perfil.equals("JEFE"))) {
+			if(this.ingreso.getIngreso().getEstado()==5 && (this.usuarioLogueado.getIdperfil()==3 /*TECNICO*/|| this.usuarioLogueado.getIdperfil()==1/*JEFE*/)) {
 				mostrarBotonAsignar();
 			}
 		}
@@ -124,8 +123,9 @@ public class ControladorPresupuesto implements ActionListener{
 		this.ventanaPresupuesto.getHorasDeTrabajo_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getHorasTrabajo()));
 		//seteo el total del presupuesto (que actualmente se guarda en mano de obra)
 		this.ventanaPresupuesto.getValorPresupuestado_txf().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
-		//TODO:Deberia setear el usuario que creo el presupuesto, por ahora seteo el lodeado hasta que hagamos el ABM de usuarios
-		ventanaPresupuesto.getLbltecnico().setText(this.usuarioLogueado.getNombre()+" "+this.usuarioLogueado.getApellido());
+		//seteo el tecnico asignado a la orden
+		UsuarioDTO tecnicoAsignado = this.usuarioDAO.find(this.presupuesto.getPresupuesto().getIdUsuario());
+		this.ventanaPresupuesto.getLbltecnico().setText(tecnicoAsignado.getNombre()+" "+tecnicoAsignado.getApellido());
 		this.bloquearCampos();
 	}
 
@@ -215,7 +215,7 @@ public class ControladorPresupuesto implements ActionListener{
 					IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 					//ingreso el estado
 				ingresoLogDAO.insert(ingrLog);
-				if(perfil.equals("TECNICO") || perfil.equals("JEFE")){
+				if(this.usuarioLogueado.getIdperfil()==2 /*TECNICO*/|| this.usuarioLogueado.getIdperfil()==3/*JEFE*/){
 					mostrarBotonAsignar();
 				}else {
 					ocultarBotonesEstados();

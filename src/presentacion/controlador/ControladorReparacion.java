@@ -2,14 +2,10 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 import dto.IngresoLogDTO;
 import dto.ItemRepuestoDTO;
 import dto.RepuestoDTO;
@@ -32,9 +28,6 @@ public class ControladorReparacion implements ActionListener {
 	private Reparaciones_repuestos reparaciones_repuestos;
 	private UsuarioDTO usuarioLogueado;
 	private DefaultTableModel modelTable = new DefaultTableModel();
-	private float suma = 0;
-	@SuppressWarnings("unused")
-	private Calendar hoy = new GregorianCalendar();
 	private ControladorVentanaPrincipal controladorVentanaPrincipal;
 
 	public ControladorReparacion(VentanaReparacion ventanaReparacion,

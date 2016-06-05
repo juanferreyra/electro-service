@@ -24,13 +24,10 @@ public class ControladorOrdenCompra implements ActionListener{
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private Integer cantidad = 1;
 	private float suma = 0;
-	@SuppressWarnings("unused")
-	private String perfil;
 	
 	public ControladorOrdenCompra( VentanaOrdenCompra VentanaOrdenCompra, UsuarioDTO usuario) {
 		this.ventanaOrdenCompra = VentanaOrdenCompra;
 		this.usuarioLogueado = usuario;
-		this.perfil = usuario.getPerfilDTO().getPerfil();
 		this.ordenCompra = new OrdenCompra();
 		
 		this.ventanaOrdenCompra.getBtnCancelada().addActionListener(this);

@@ -127,7 +127,15 @@ public class VentanaABMProveedor extends JFrame{
 		scrollPane.setBounds(25, 340, 800, 215);
 		getContentPane().add(scrollPane);
 		
-		modelProveedores = new DefaultTableModel(null, nombreColumnas);
+		modelProveedores = new DefaultTableModel(null, nombreColumnas){
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public boolean isCellEditable(int fila, int columna) {
+
+			return false;
+		}
+	};
 		tablaProveedores = new JTable(modelProveedores);
 		scrollPane.setViewportView(tablaProveedores);
 		
@@ -135,7 +143,15 @@ public class VentanaABMProveedor extends JFrame{
 		scrollPane_1.setBounds(469, 50, 185, 222);
 		getContentPane().add(scrollPane_1);
 		
-		modelMarcas = new DefaultTableModel(null, nombreColumnasMarcas);
+		modelMarcas = new DefaultTableModel(null, nombreColumnasMarcas){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int fila, int columna) {
+
+				return false;
+			}
+		};
 		tablaMarcas = new JTable(modelMarcas);
 		scrollPane_1.setViewportView(tablaMarcas);
 		
