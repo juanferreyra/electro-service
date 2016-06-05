@@ -160,12 +160,12 @@ public class VentanaReparacion extends JFrame {
 		JLabel descripcionFinal_lbl = new JLabel("Descripcion final:");
 		descripcionFinal_lbl.setBounds(30, 473, 156, 14);
 		contentPane.add(descripcionFinal_lbl);
-		JScrollPane descripcionFinal_jScrollPane = new JScrollPane();
-		descripcionFinal_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		descripcionFinal_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		descripcionFinal_jScrollPane.setBounds(new Rectangle(10, 10, 30, 30));
-		descripcionFinal_jScrollPane.setBounds(30, 499, 669, 52);
-		contentPane.add(descripcionFinal_jScrollPane);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(30, 502, 651, 49);
+		contentPane.add(scrollPane);
+		descripcionFinal_jTextArea = new JTextArea();
+		scrollPane.setViewportView(descripcionFinal_jTextArea);
 
 		enviarAvisoReparacion_btn = new JButton("Enviar Aviso");
 		enviarAvisoReparacion_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/mail.png")));
@@ -187,9 +187,6 @@ public class VentanaReparacion extends JFrame {
 		reparable_CheckBox = new JCheckBox("Reparable");
 		reparable_CheckBox.setBounds(591, 40, 97, 23);
 		contentPane.add(reparable_CheckBox);
-		descripcionFinal_jTextArea = new JTextArea();
-		descripcionFinal_jTextArea.setBounds(30, 502, 651, 49);
-		contentPane.add(descripcionFinal_jTextArea);
 		
 		lblMontoPresupuestado = new JLabel("");
 		lblMontoPresupuestado.setBounds(208, 440, 146, 15);

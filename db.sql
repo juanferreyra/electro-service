@@ -650,15 +650,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `itemStock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `itemStock`(
 
-`id` int(4) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-
-`InsumoId` int(4),
-
-`Existencias` int(6),
-
-`habilitado`tinyint(1))
+CREATE TABLE `itemStock` (
+  `id` INT(4)  NOT NULL AUTO_INCREMENT COMMENT '',
+  `InsumoId` INT(4) NOT NULL COMMENT '',
+  `Existencias` INT(6) NOT NULL COMMENT '',
+  `itemStockcol` TINYINT(1) NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '');
 
 
 

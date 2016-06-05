@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import dto.ClienteDTO;
@@ -14,6 +16,7 @@ import dto.TipoProductoDTO;
 import modelo.Ingreso;
 import persistencia.dao.ClienteDAO;
 import presentacion.reportes.ReporteIngreso;
+import presentacion.vista.VentanaABMCliente;
 import presentacion.vista.VentanaIngreso;
 
 public class ControladorVentanaIngreso implements ActionListener {
@@ -34,6 +37,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.ventana_ingreso.getEnvioDomicilio().addActionListener(this);
 		this.ventana_ingreso.getDireccion_nueva().addActionListener(this);
 		this.ventana_ingreso.getBtnReporteDeIngreso().addActionListener(this);
+		this.ventana_ingreso.getCrearCliente_btn().addActionListener(this);
 		this.ventana_ingreso.getNumeroCliente_txf().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent evt) {
@@ -87,6 +91,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			this.ventana_ingreso.getEnvioDomicilio().setEnabled(false);
 			this.ventana_ingreso.getTxtDireccionNueva().setEditable(false);
 			this.ventana_ingreso.getDireccion_nueva().setEnabled(false);
+			this.ventana_ingreso.getCrearCliente_btn().setEnabled(false);
 		} else {
 			this.ventana_ingreso.getBtnReporteDeIngreso().setVisible(false);
 			this.llenarComboMarcas();
@@ -213,6 +218,57 @@ public class ControladorVentanaIngreso implements ActionListener {
 			this.ventana_ingreso.setTxtDireccionNueva("");
 			this.ventana_ingreso.setMontoEnvio("");
 			this.determinarVisibilidadCuadro_DireccionNueva();
+		} else if(e.getSource() == this.ventana_ingreso.getCrearCliente_btn()) {
+			VentanaABMCliente ventClient = new VentanaABMCliente();
+			ControladorABMCliente contrClient = new ControladorABMCliente(ventClient);
+			contrClient.inicializar();
+			
+			ventClient.addWindowListener(new WindowListener() {
+				
+				@Override
+				public void windowOpened(WindowEvent e) {
+					// TODO Auto-generated method stub
+				}
+				
+				@Override
+				public void windowIconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeiconified(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowDeactivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void windowClosing(WindowEvent e) {
+					// TODO Auto-generated method stub
+				}
+				
+				@Override
+				public void windowClosed(WindowEvent e) {
+					// TODO Auto-generated method stub
+					if(ventClient.getTablaClientes().getSelectedRow() != -1){
+						ventana_ingreso.getTxtNroCliente().setText(ventClient.getDocumento_txt().getText());
+						buscarCliente();
+					}
+				}
+				
+				@Override
+				public void windowActivated(WindowEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
 		}
 	}
 

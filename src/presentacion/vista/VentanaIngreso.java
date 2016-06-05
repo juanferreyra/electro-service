@@ -43,7 +43,7 @@ public class VentanaIngreso extends JFrame {
 	private JButton btnVerIngreso;
 	private JPanel direccionNueva_JPanel;
 	private JLabel otraDireccion_lbl;
-
+	private JButton crearCliente_btn;
 
 	public VentanaIngreso() {
 
@@ -93,7 +93,7 @@ public class VentanaIngreso extends JFrame {
 		buscarCliente_btn.setBounds(367, 52, 33, 20);
 		contentPane.add(buscarCliente_btn);
 
-		JButton crearCliente_btn = new JButton("");
+		crearCliente_btn = new JButton("");
 		crearCliente_btn.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/user-add.png")));
 		crearCliente_btn.setBounds(410, 52, 33, 20);
 		contentPane.add(crearCliente_btn);
@@ -236,6 +236,10 @@ public class VentanaIngreso extends JFrame {
 								label.setEnabled(false);
 	}
 
+	public JButton getCrearCliente_btn() {
+		return crearCliente_btn;
+	}
+
 	public JButton getBtnBuscarCliente() {
 		return buscarCliente_btn;
 	}
@@ -353,5 +357,6 @@ public class VentanaIngreso extends JFrame {
 	public void setLbl_direccion_cliente(JLabel lbl_direccion_cliente) {
 		this.lbl_direccion_cliente = lbl_direccion_cliente;
 	}
+	
 
 }

@@ -65,7 +65,7 @@ public class EmailOrdenDeCompra extends Thread {
 		"<p> <b>Total de repuestos:     $  </b>"+ventanaordenDeCompra.getValorPresupuestado_txf().getText()+"</p><br>"+
 		
 		"<p> <b>Le solicitamos que se ponga en contacto con nosotros al telefono: 4685 -5438  o por emial a " +
-		"<a href= mailtoreparaciones.electroservice@gmail.com>reparaciones.electroservice@gmail.com </a></b></p><br>"+
+		"<a href= mailto reparaciones.electroservice@gmail.com>reparaciones.electroservice@gmail.com </a></b></p><br>"+
 		
 		"<p> <b>ATTE:  </b>"+usuario.getNombre()+"   "+ usuario.getApellido()+"</p>";
 		
@@ -122,7 +122,7 @@ public class EmailOrdenDeCompra extends Thread {
 			// Se compone la parte del texto
 			BodyPart texto = new MimeBodyPart();
 						
-			texto.setContent("<font color=red> <h1 align=center>Electro Service</font></h1></font> <br>" +
+			texto.setContent("<font color=red> <h1 align=center>Electro R S.R.L.</font></h1></font> <br>" +
 							"<p align=center>Darregueyra 3896,Los Polvorines, Malvinas Argentinas, Buenos Aires<br></p>" +
 					        "<font color=Navy><h3 align=center>Tel&#233;fono: 4685 -5438  </h3></font> <br>" +
 					        mensaje, "text/html");
