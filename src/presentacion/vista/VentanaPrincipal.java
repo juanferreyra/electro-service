@@ -52,7 +52,7 @@ public class VentanaPrincipal extends JFrame {
 	private JButton reparacion_btn;
 	private JButton btnElaborarHojaDe;
 	private JMenuBar menuBar;
-	private FormatoTablaOrdenesTrabajo formatoTabla;
+	private FormatoTablaOrdenesTrabajo formatoTablaOrdenTrabajo;
 	private JButton btnOrdenDeCompra;
 	private JTable table_avisoFaltante;
 	private JScrollPane panelAviso;
@@ -61,6 +61,7 @@ public class VentanaPrincipal extends JFrame {
 	private JMenu _gestion;
 	private JMenu _reporte;
 	private JMenuItem deslogueo;
+	private FormatoTablaAvisoFaltante formatoTablaAvisoFaltante;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
@@ -150,7 +151,7 @@ public class VentanaPrincipal extends JFrame {
 
 		ordenesDeTrabajo_table.setModel(modeloOrdenesTrabajo);
 
-		setearPropiedadesDeTabla();
+		setearPropiedadesDeTablaOrdenesTrabajo();
 
 		ordenesDeTrabajo_table.setDefaultRenderer(JLabel.class, new TableCellRenderer() {
 			@Override
@@ -201,6 +202,7 @@ public class VentanaPrincipal extends JFrame {
 		panelAviso.add(table_avisoFaltante);
 
 		panelAviso.setViewportView(table_avisoFaltante);
+		setearPropiedadesDeTablaAvisoFaltante();
 
 		// AGREGO LABEL AVISO FALTANTE Y TABLA ORDENES DE TRABAJO EN UN PANEL
 		// CENTRAL
@@ -411,16 +413,23 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
-	private void setearPropiedadesDeTabla() {
+	private void setearPropiedadesDeTablaOrdenesTrabajo() {
 		ordenesDeTrabajo_table.getColumnModel().getColumn(0).setMaxWidth(10);
 		ordenesDeTrabajo_table.getColumnModel().getColumn(6).setMaxWidth(10);
-		formatoTabla = new FormatoTablaOrdenesTrabajo();
-		ordenesDeTrabajo_table.setDefaultRenderer(Object.class, formatoTabla);
+		formatoTablaOrdenTrabajo = new FormatoTablaOrdenesTrabajo();
+		ordenesDeTrabajo_table.setDefaultRenderer(Object.class, formatoTablaOrdenTrabajo);
 		ordenesDeTrabajo_table.getTableHeader().setResizingAllowed(false);
 		ordenesDeTrabajo_table.getTableHeader().setReorderingAllowed(false);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setCellRenderer(formatoTabla);
-		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setCellRenderer(formatoTabla);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setCellRenderer(formatoTablaOrdenTrabajo);
+		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setCellRenderer(formatoTablaOrdenTrabajo);
 
+	}
+
+	private void setearPropiedadesDeTablaAvisoFaltante() {
+		formatoTablaAvisoFaltante = new FormatoTablaAvisoFaltante();
+		ordenesDeTrabajo_table.setDefaultRenderer(Object.class, formatoTablaAvisoFaltante);
+		ordenesDeTrabajo_table.getTableHeader().setResizingAllowed(false);
+		ordenesDeTrabajo_table.getTableHeader().setReorderingAllowed(false);
 	}
 
 	public JButton getBtnOrdenDeCompra() {
