@@ -2,16 +2,20 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
+import dto.InsumoStockDTO;
 import dto.UsuarioDTO;
+import modelo.Stock;
 import presentacion.vista.VentanaOrdenCompra;
 import presentacion.vista.VentanaStock;
 
 public class ControladorVentanaStock implements ActionListener {
 
 	private VentanaStock ventanaStock;
+	private Stock stock;
 
 	public ControladorVentanaStock(VentanaStock ventanaStock) {
 		this.ventanaStock = ventanaStock;
@@ -21,24 +25,27 @@ public class ControladorVentanaStock implements ActionListener {
 
 	public void inicializar() {
 		// Crear todos los news de los datos
+		this.stock = new Stock();
 		this.cargar_tablaStock();
+
 	}
 
 	private void cargar_tablaStock() {
 		// Consigo todos los datos de stock y genero las filas
-		// ArrayList<datosStock> datosStock = datosStockDAO.readAll();
-		// ObtenerFilas(datos);
-		//
+		ArrayList<InsumoStockDTO> datosStock = new ArrayList<InsumoStockDTO>();
+		
+		datosStock = stock.obtenerStock();
+		ObtenerFilas(datosStock);
 
 	}
 
-	// private void ObtenerFilas(ArrayList<datosStock> datos) {
-	// limpiar_tablaStock();
-	// for (int i = 0; i <= datos.size() - 1; i++) {
-	// this.cargarFila(i, marca, repuesto, existencia, reservado, pedido,
-	// disponible);
-	// }
-	// }
+	private void ObtenerFilas(ArrayList<InsumoStockDTO> datos) {
+		limpiar_tablaStock();
+		for (int i = 0; i <= datos.size() - 1; i++) {
+			this.cargarFila(i, datos.get(i).getMarca(), datos.get(i).getNombre(), datos.get(i).getExistencias(),
+					datos.get(i).getaUsar(), datos.get(i).getSolicitada(), datos.get(i).getRestante());
+		}
+	}
 
 	private void cargarFila(int fila, String marca, String repuesto, int existencia, int reservado, int pedido,
 			int disponible) {
@@ -50,7 +57,9 @@ public class ControladorVentanaStock implements ActionListener {
 		dato[3] = reservado;
 		dato[4] = pedido;
 		dato[5] = disponible;
-
+		
+		((DefaultTableModel) this.ventanaStock.getModelo()).addRow(dato);
+		
 		// Establezco que no se pueda editar pero si seleccionar una fila
 		((DefaultTableModel) this.ventanaStock.getModelo()).isCellEditable(fila, 0);
 		((DefaultTableModel) this.ventanaStock.getModelo()).isCellEditable(fila, 1);
@@ -75,11 +84,12 @@ public class ControladorVentanaStock implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == this.ventanaStock.getGenerarOC_btn()) {
-			//ControladorOrdenCompra controladorOC = new ControladorOrdenCompra(new VentanaOrdenCompra(),
-					//new UsuarioDTO(0, null, null, null, 0));// Ingresar el
-															// usuario correcto
-															// !!!!!
-			//controladorOC.inicializar();
+			// ControladorOrdenCompra controladorOC = new
+			// ControladorOrdenCompra(new VentanaOrdenCompra(),
+			// new UsuarioDTO(0, null, null, null, 0));// Ingresar el
+			// usuario correcto
+			// !!!!!
+			// controladorOC.inicializar();
 		}
 
 	}
