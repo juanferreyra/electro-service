@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
 import dto.ItemRepuestoDTO;
+import dto.MarcaDTO;
 import dto.ProveedorDTO;
 import dto.UsuarioDTO;
 import modelo.EmailOrdenDeCompra;
@@ -222,17 +223,17 @@ public class ControladorOrdenCompra implements ActionListener{
 	}
 	
 	private void ocultarColumnaCantidadReal() {
-		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(3).setMaxWidth(0);
-		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(3).setMinWidth(0);
-		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(3).setMaxWidth(0);
-		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(3).setMinWidth(0);
+		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(4).setMaxWidth(0);
+		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(4).setMinWidth(0);
+		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(4).setMaxWidth(0);
+		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(4).setMinWidth(0);
 	}
 	
 	private void mostrarColumnaCantidadReal() {
-		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(3).setMaxWidth(100);
-		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(3).setMinWidth(100);
-		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(3).setMaxWidth(100);
-		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(3).setMinWidth(100);
+		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(4).setMaxWidth(100);
+		this.ventanaOrdenCompra.getComponentes_table().getColumnModel().getColumn(4).setMinWidth(100);
+		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(4).setMaxWidth(100);
+		this.ventanaOrdenCompra.getComponentes_table().getTableHeader().getColumnModel().getColumn(4).setMinWidth(100);
 	}
 
 	private void validarCampos() {
@@ -280,7 +281,10 @@ public class ControladorOrdenCompra implements ActionListener{
 		ArrayList<ItemRepuestoDTO> repuestosAgregados = ordenCompra.getListaDeRepuestos();
 		
 		for(int i = 0; i < repuestosAgregados.size(); i++){
-			Object[] fila = {repuestosAgregados.get(i).getId(),repuestosAgregados.get(i).getDetalle(),
+			
+			MarcaDTO marca = ordenCompra.buscarMarca(repuestosAgregados.get(i).getIdrepuesto());
+			
+			Object[] fila = {repuestosAgregados.get(i).getIdrepuesto(),marca.getDetalle(),repuestosAgregados.get(i).getDetalle(),
 					repuestosAgregados.get(i).getCantidad(),repuestosAgregados.get(i).getCantidad()};
 
 			modelTable.insertRow(0, fila);
@@ -288,6 +292,8 @@ public class ControladorOrdenCompra implements ActionListener{
 			modelTable.isCellEditable(i, 0);
 			modelTable.isCellEditable(i, 1);
 			modelTable.isCellEditable(i, 2);
+			modelTable.isCellEditable(i, 3);
+			
 		}
 		
 		this.ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
@@ -324,6 +330,7 @@ public class ControladorOrdenCompra implements ActionListener{
 		//agrego el repuesto al objeto Presupuesto con su lista
 		int cantidad = Integer.parseInt(ventanaOrdenCompra.getCantidad_lbl().getText());
 		RepuestoDTO resp = ordenCompra.buscarRepuesto((String) this.ventanaOrdenCompra.getComponente_ComboBox().getSelectedItem());
+		
 		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1 ,resp.getId(), resp.getDetalle(),cantidad, null, null);
 		//me fijo si existe en la tabla
 		for (int i = 0; i < ordenCompra.getListaDeRepuestos().size(); i++) {

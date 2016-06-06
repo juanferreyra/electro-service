@@ -34,7 +34,7 @@ public class VentanaOrdenCompra extends JFrame {
 	private JLabel razonsocialTexto_lbl;
 	private JLabel mailTexto_lbl;
 	private JLabel direccionTexto_lbl;
-	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Cantidad Real"};
+	private String[] componentes_nombreColumnas = { "id", "Marca","Detalle", "Cantidad", "Cantidad Real"};
 	private JButton btnCancelada;
 	private JButton btnRecibido;
 	private JTextField txtfldNroProveedor;

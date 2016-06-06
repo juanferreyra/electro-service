@@ -143,4 +143,8 @@ public class OrdenCompra {
 		return impresionOrdenCompraStatic.find(ordenCompraDTO.getId());
 	}
 	
+	public MarcaDTO buscarMarca(int idmarca) {
+		return marcaDAO.find(idmarca);
+	}
+	
 }
