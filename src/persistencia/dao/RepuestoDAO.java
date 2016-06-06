@@ -24,6 +24,8 @@ public class RepuestoDAO {
 	
 	private static final String find = "SELECT * FROM repuesto WHERE detalle = ? ;";
 	
+	private static final String findXid = "SELECT * FROM repuesto WHERE id = ? ;";
+	
 	private static final Conexion conexion = Conexion.getConexion();
 	
 	private static final String insert1 = "INSERT INTO repuesto ("
@@ -245,4 +247,38 @@ public class RepuestoDAO {
 		
 		return componentes;
 	}
+	
+	public RepuestoDTO findXid(int idrepuesto)
+	{
+		PreparedStatement statement;
+		ResultSet resultSet; //Guarda el resultado de la query
+		RepuestoDTO componente = null;
+		try
+		{
+			statement = conexion.getSQLConexion().prepareStatement(findXid);
+			statement.setInt(1, idrepuesto);
+			resultSet = statement.executeQuery();
+
+			
+			while(resultSet.next())
+			{
+				componente = new RepuestoDTO(resultSet.getInt("id"),
+						resultSet.getString("detalle"),resultSet.getFloat("precio"),
+						resultSet.getInt("stock_minimo"), resultSet.getInt("idmarca"),resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("idusuario"),resultSet.getInt("habilitado"));
+			}
+		}
+		catch (SQLException e) 
+		{
+			System.out.println("hubo un error");
+			e.printStackTrace();
+		}
+		finally //Se ejecuta siempre
+		{
+			Conexion.cerrarConexion();
+		}
+		
+		return componente;
+	}
+	
 }
