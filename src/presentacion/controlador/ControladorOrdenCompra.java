@@ -256,8 +256,15 @@ public class ControladorOrdenCompra implements ActionListener{
 			if(guardo) {
 				JOptionPane.showMessageDialog(ventanaOrdenCompra, "Orden de compra Nro "+ordenCompra.getOrdenCompraDTO().getId()+" creada correctamente!", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
+				
+				// envia email al guardar la orden de compra
+				EmailOrdenDeCompra emailOrdenDeCompra = new EmailOrdenDeCompra(usuarioLogueado, this.ventanaOrdenCompra);
+				emailOrdenDeCompra.start();
+				
 				vaciarCampos();
+				
 			} else {
+				
 				JOptionPane.showMessageDialog(ventanaOrdenCompra, "Ocurrio un error al guardar! Por favor verifique los datos ingresados o recomience la orden. Gracias", "Atencion!",
 						JOptionPane.ERROR_MESSAGE);
 			}
