@@ -41,6 +41,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 import java.awt.Rectangle;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -167,6 +169,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
+		ordenesDeTrabajo_scrollPane.setMinimumSize(new Dimension(50, 50));
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
@@ -196,9 +199,14 @@ public class VentanaPrincipal extends JFrame {
 		table_avisoFaltante.setModel(modeloAviso);
 
 		panelAviso = new JScrollPane();
-		panelAviso.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panelAviso.setBounds(new Rectangle(0, 0, 150, 500));
+		panelAviso.setLayout(null);
+		panelAviso.setSize(new Dimension(150, 150));
+		panelAviso.setBackground(SystemColor.control);
 		panelAviso.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		panelAviso.setBounds(0, 0, 1005, 301);
+		panelAviso.setBorder(new LineBorder(new Color(130, 135, 144), 3, true));
+		panelAviso.setMaximumSize(new Dimension(150, 150));
+		panelAviso.setBounds(0, 0, 505, 101);
 		panelAviso.add(table_avisoFaltante);
 
 		panelAviso.setViewportView(table_avisoFaltante);
@@ -209,10 +217,11 @@ public class VentanaPrincipal extends JFrame {
 		JPanel contenedorCentral = new JPanel();
 		contenedorCentral.setLayout(new BoxLayout(contenedorCentral, BoxLayout.PAGE_AXIS));
 
-		contenedorCentral.add(panelAviso);
 		contenedorCentral.add(ordenesDeTrabajo_scrollPane);
 
 		contentPane.add(contenedorCentral, BorderLayout.CENTER);
+
+		contentPane.add(panelAviso, BorderLayout.WEST);
 
 		// FIN CONTENEDOR CENTRAL
 
