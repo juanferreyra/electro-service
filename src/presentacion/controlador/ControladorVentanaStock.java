@@ -43,12 +43,12 @@ public class ControladorVentanaStock implements ActionListener {
 		limpiar_tablaStock();
 		for (int i = 0; i <= datos.size() - 1; i++) {
 			this.cargarFila(i, datos.get(i).getMarca(), datos.get(i).getNombre(), datos.get(i).getExistencias(),
-					datos.get(i).getaUsar(), datos.get(i).getSolicitada(), datos.get(i).getRestante());
+					datos.get(i).getaUsar(), datos.get(i).getSolicitada(), datos.get(i).getRestante(), datos.get(i).getMinimo());
 		}
 	}
 
 	private void cargarFila(int fila, String marca, String repuesto, int existencia, int reservado, int pedido,
-			int disponible) {
+			int disponible, int minimo) {
 
 		Object[] dato = new Object[6];
 		dato[0] = marca;
@@ -57,6 +57,7 @@ public class ControladorVentanaStock implements ActionListener {
 		dato[3] = reservado;
 		dato[4] = pedido;
 		dato[5] = disponible;
+		dato[6] = minimo;
 		
 		((DefaultTableModel) this.ventanaStock.getModelo()).addRow(dato);
 		
