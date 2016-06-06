@@ -11,7 +11,7 @@ import modelo.Stock;
 public class FormatoTablaStock extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 1L;
-	private Stock stock;
+	private Stock stock = new Stock();
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused,
 			int row, int column) {
@@ -24,30 +24,40 @@ public class FormatoTablaStock extends DefaultTableCellRenderer {
 	}
 
 	private void aplicarColorFilas(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-//		if () {
-//			setBackground(Color.decode("#D8F6CE"));
-//		}
-		// else if (String.valueOf(table.getValueAt(row,
-		// 8)).equals("PRESUPUESTADO")) {
+
+		int existencia = Integer.valueOf((String) table.getValueAt(row, 2));
+		int reservado = Integer.valueOf((String) table.getValueAt(row, 3));
+		int pedido = Integer.valueOf((String) table.getValueAt(row, 4));
+		int minimo = Integer.valueOf((String) table.getValueAt(row, 6));
+
+		int resultado = existencia - (reservado + pedido);
+		int resultado2 = (existencia - reservado);
+//		int resultado3= re
+		
+		if (resultado > minimo) {// 
+			// 0 ok
+			// 1
+			// amarillo
+			// claro
+			// 2
+			// amarillo
+			// fuerte
+			// 3
+			// rojo
+			// claro
+			// 4
+			// rojo
+			// fuerte
+			setBackground(Color.decode("#BCF5A9"));
+		}
+		// else if (1) {
 		// setBackground(Color.decode("#F6E3CE"));
-		// } else if (String.valueOf(table.getValueAt(row,
-		// 8)).equals("RETIRADO")) {
+		// } else if (2) {
 		// setBackground(Color.decode("#F5A9A9"));
-		// } else if (String.valueOf(table.getValueAt(row,
-		// 8)).equals("REPARADO")) {
-		// setBackground(Color.decode("#CEF6F5"));
-		// } else if (String.valueOf(table.getValueAt(row,
-		// 8)).equals("IRREPARABLE")) {
-		// setBackground(Color.decode("#CED8F6"));
-		// } else if (String.valueOf(table.getValueAt(row,
-		// 8)).equals("INFORMADO")) {
-		// setBackground(Color.decode("#F5F6CE"));
-		// }else if (String.valueOf(table.getValueAt(row,
-		// 8)).equals("ACEPTADO")) {
-		// setBackground(Color.decode("#CEF6E3"));
-		// }else if (String.valueOf(table.getValueAt(row,
-		// 8)).equals("RECHAZADO")) {
-		// setBackground(Color.decode("#F6D8CE"));
+		// } else if (3) {
+		// setBackground(Color.decode("#F5A9A9"));
+		// } else if (4) {
+		// setBackground(Color.decode("#F5A9A9"));
 		// }
 	}
 

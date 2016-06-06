@@ -48,10 +48,10 @@ public class VentanaStock extends JFrame {
 		stock_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
 		modelo = new DefaultTableModel(new Object[][] {},
-				new String[] { "Marca", "Repuesto", "Existencias", "Reservado", "Pedido", "Disponible" }) {
+				new String[] { "Marca", "Repuesto", "Existencias", "Reservado", "Pedido", "Disponible", "Minimo" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { String.class, String.class, Integer.class, Integer.class, Integer.class,
-					Integer.class };
+					Integer.class, Integer.class };
 
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			public Class getColumnClass(int columnIndex) {
