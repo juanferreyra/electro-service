@@ -34,6 +34,7 @@ public class IngresoLogDAO {
 			
 			Ingreso ingreso = new Ingreso();
 			if(statement.executeUpdate() > 0){
+				//actualizo el estado en la tabla Ingreso
 				ingreso.actualizarEstado(ingreso_log.getIdingreso(), ingreso_log.getIdestado());
 				return true; //Si se ejecut� devuelvo true
 			}
