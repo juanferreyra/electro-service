@@ -28,24 +28,26 @@ public class FormatoTablaStock extends DefaultTableCellRenderer {
 		int existencia = Integer.valueOf((String) table.getValueAt(row, 2));
 		int reservado = Integer.valueOf((String) table.getValueAt(row, 3));
 		int pedido = Integer.valueOf((String) table.getValueAt(row, 4));
-//		int minimo = stock.obtenerMinimo(row);
+		int minimo = Integer.valueOf((String) table.getValueAt(row, 6));
 
 		int resultado = existencia - (reservado + pedido);
-
-		if (resultado > 0) {// Si es
-							// 0 ok
-							// 1
-							// amarillo
-							// claro
-							// 2
-							// amarillo
-							// fuerte
-							// 3
-							// rojo
-							// claro
-							// 4
-							// rojo
-							// fuerte
+		int resultado2 = (existencia - reservado);
+//		int resultado3= re
+		
+		if (resultado > minimo) {// 
+			// 0 ok
+			// 1
+			// amarillo
+			// claro
+			// 2
+			// amarillo
+			// fuerte
+			// 3
+			// rojo
+			// claro
+			// 4
+			// rojo
+			// fuerte
 			setBackground(Color.decode("#BCF5A9"));
 		}
 		// else if (1) {
