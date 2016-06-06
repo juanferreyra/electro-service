@@ -422,7 +422,6 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table.getTableHeader().setReorderingAllowed(false);
 		ordenesDeTrabajo_table.getColumnModel().getColumn(1).setCellRenderer(formatoTablaOrdenTrabajo);
 		ordenesDeTrabajo_table.getColumnModel().getColumn(5).setCellRenderer(formatoTablaOrdenTrabajo);
-
 	}
 
 	private void setearPropiedadesDeTablaAvisoFaltante() {
