@@ -427,9 +427,9 @@ public class VentanaPrincipal extends JFrame {
 
 	private void setearPropiedadesDeTablaAvisoFaltante() {
 		formatoTablaAvisoFaltante = new FormatoTablaAvisoFaltante();
-		ordenesDeTrabajo_table.setDefaultRenderer(Object.class, formatoTablaAvisoFaltante);
-		ordenesDeTrabajo_table.getTableHeader().setResizingAllowed(false);
-		ordenesDeTrabajo_table.getTableHeader().setReorderingAllowed(false);
+		table_avisoFaltante.setDefaultRenderer(Object.class, formatoTablaAvisoFaltante);
+		table_avisoFaltante.getTableHeader().setResizingAllowed(false);
+		table_avisoFaltante.getTableHeader().setReorderingAllowed(false);
 	}
 
 	public JButton getBtnOrdenDeCompra() {
