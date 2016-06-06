@@ -40,12 +40,24 @@ private static ItemStockDAO itemStockDAO;
 	public void  modificarStock(long repuestoID, int variacion) {
 		itemStockDAO.update(repuestoID, variacion);
 	}
+	
+	public  ArrayList<InsumoStockDTO> cargarPedidos(ArrayList<InsumoStockDTO> insumosStock ) {
+		
+		return itemStockDAO.cargarInsumosPedidos(insumosStock);		
+	}
 		
 	public ArrayList<InsumoStockDTO> obtenerStock() {
 		ArrayList<InsumoStockDTO> stock = new  ArrayList<InsumoStockDTO>();
 		stock = itemStockDAO.readAll();
+		System.out.println(stock.size());
+		stock = cargarReservados(stock);
+		stock = cargarPedidos(stock);
 		
 		
 		return stock;
+	}
+	
+	public ArrayList<InsumoStockDTO> cargarReservados(ArrayList<InsumoStockDTO> insumosStock ){
+	return itemStockDAO.CargarInsumosReservados(insumosStock);	
 	}
 }

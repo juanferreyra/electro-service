@@ -8,12 +8,13 @@ public class InsumoStockDTO {
 	private int aUsar;
 	private int restante; 
 	private int solicitada;
+	private int alarma;
 	private String marca;
 	private String nombre;
 	private int minimo;
 	
 	public InsumoStockDTO(int iD, long insumoID, int existencias, int aUsar, int restante, int solicitada, String marca,
-			String nombre, int minimo) {
+			String nombre, int minimo, int alarma) {
 		super();
 		ID = iD;
 		InsumoID = insumoID;
@@ -24,6 +25,7 @@ public class InsumoStockDTO {
 		this.marca = marca;
 		this.nombre = nombre;
 		this.minimo = minimo;
+		this.alarma = alarma;
 	}
 	
 	public InsumoStockDTO(int iD, long insumoID, int existencias) {
@@ -34,8 +36,8 @@ public class InsumoStockDTO {
 		this.aUsar = 0;
 		this.restante = 0;
 		this.solicitada = 0;
-		this.marca = "";
-		this.nombre = "";
+		this.marca = "Marca";
+		this.nombre = "Nombre";
 		this.minimo = 0;
 	}
 
@@ -109,6 +111,14 @@ public class InsumoStockDTO {
 
 	public void setMinimo(int minimo) {
 		this.minimo = minimo;
+	}
+
+	public int getAlarma() {
+		return alarma;
+	}
+
+	public void setAlarma(int alarma) {
+		this.alarma = alarma;
 	}
 	
 	
