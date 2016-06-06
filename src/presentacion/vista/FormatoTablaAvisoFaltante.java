@@ -24,15 +24,11 @@ public class FormatoTablaAvisoFaltante extends DefaultTableCellRenderer {
 	}
 
 	private void aplicarColorFilas(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-//		if () {
+//		if (2) {//amarillo fuerte
 //			setBackground(Color.decode("#D8F6CE"));
-//		} else if (String.valueOf(table.getValueAt(row, 8)).equals("PRESUPUESTADO")) {
+//		} else if (4) {//rojo fuerte
 //			setBackground(Color.decode("#F6E3CE"));
-//		} else if (String.valueOf(table.getValueAt(row, 8)).equals("RETIRADO")) {
-//			setBackground(Color.decode("#F5A9A9"));
-//		} else if (String.valueOf(table.getValueAt(row, 8)).equals("REPARADO")) {
-		// setBackground(Color.decode("#CEF6F5"));
-		// }
+//		} 
 
 	}
 

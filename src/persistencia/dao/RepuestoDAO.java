@@ -121,7 +121,7 @@ public class RepuestoDAO {
 			{
 				componentes.add(new RepuestoDTO(resultSet.getInt("id"),
 						resultSet.getString("detalle"),resultSet.getFloat("precio"),
-						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("stock_minimo"),resultSet.getInt("idmarca"),resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("idusuario"),resultSet.getInt("habilitado")));
 			}
 		}
@@ -181,7 +181,7 @@ public class RepuestoDAO {
 			{
 				componente = new RepuestoDTO(resultSet.getInt("id"),
 						resultSet.getString("detalle"),resultSet.getFloat("precio"),
-						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
+						resultSet.getInt("stock_minimo"), resultSet.getInt("idmarca"),resultSet.getDate("fecha_creacion"),
 						resultSet.getInt("idusuario"),resultSet.getInt("habilitado"));
 			}
 		}
@@ -228,8 +228,9 @@ public class RepuestoDAO {
 			{
 				componentes.add(new RepuestoDTO(resultSet.getInt("id"),
 						resultSet.getString("detalle"),resultSet.getFloat("precio"),
-						resultSet.getInt("stock_minimo"),resultSet.getDate("fecha_creacion"),
-						resultSet.getInt("idusuario"),resultSet.getInt("habilitado")));
+						resultSet.getInt("stock_minimo"),resultSet.getInt("idmarca"),
+						resultSet.getDate("fecha_creacion"),resultSet.getInt("idusuario"),
+						resultSet.getInt("habilitado")));
 			}
 		}
 		catch (SQLException e) 

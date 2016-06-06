@@ -8,21 +8,31 @@ public class RepuestoDTO {
 	private String detalle;
 	private float precioUnitario;
 	private int stockMinimo;
+	private int idmarca;
 	private Date fechaCreacion;
 	private int idUsuario;
 	private int habilitado;
 	
 	public RepuestoDTO (int id, String detalle, float precioUnitario,
-			int stockMinimo, Date fechaCreacion,int idUsuario, int habilitado ){
+			int stockMinimo, int idmarca,Date fechaCreacion,int idUsuario, int habilitado ){
 		
 		this.id = id;
 		this.detalle = detalle;
 		this.precioUnitario = precioUnitario;
 		this.stockMinimo = stockMinimo;
+		this.idmarca = idmarca;
 		this.fechaCreacion = fechaCreacion;
 		this.idUsuario = idUsuario;
 		this.habilitado = habilitado;
 		
+	}
+
+	public int getIdmarca() {
+		return idmarca;
+	}
+
+	public void setIdmarca(int idmarca) {
+		this.idmarca = idmarca;
 	}
 
 	public int getId() {
