@@ -34,6 +34,11 @@ public class FormatoTablaStock extends DefaultTableCellRenderer {
 		int resultado2 = (existencia - reservado);
 //		int resultado3= re
 		
+		//amarillo tenue.#F5F6CE
+		//amarillo fuerte #F3F781
+		// rojo tenue #F6E3CE
+		// rojo fuerte. #F5BCA9
+		
 		if (resultado > minimo) {// 
 			// 0 ok
 			// 1
