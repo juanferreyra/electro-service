@@ -21,6 +21,8 @@ public class ControladorVentanaStock implements ActionListener {
 		this.ventanaStock = ventanaStock;
 		this.ventanaStock.getGenerarOC_btn().addActionListener(this);
 
+		
+		
 	}
 
 	public void inicializar() {
@@ -50,7 +52,7 @@ public class ControladorVentanaStock implements ActionListener {
 	private void cargarFila(int fila, String marca, String repuesto, int existencia, int reservado, int pedido,
 			int disponible, int minimo) {
 
-		Object[] dato = new Object[6];
+		Object[] dato = new Object[7];
 		dato[0] = marca;
 		dato[1] = repuesto;
 		dato[2] = existencia;
@@ -58,7 +60,21 @@ public class ControladorVentanaStock implements ActionListener {
 		dato[4] = pedido;
 		dato[5] = disponible;
 		dato[6] = minimo;
-		
+//********************************************************************		
+		//int resultado = existencia - reservado;
+		//TODO Aca estan las condiciones.
+//		if ((resultado<1) && (resultado+pedido)<minimo){
+//			//ROJO FUERTE
+//		}else if((resultado<1) && (resultado+pedido)>minimo){
+//			//ROJO TENUE
+//		}else if((resultado<minimo) && (resultado+pedido)<minimo){
+//			//AMARILLO FUERTE
+//		}else if((resultado<minimo) && (resultado+pedido)>minimo){
+//			//AMARILLO TENUE
+//		}else{
+//			//NORMAL
+//		}
+//*********************************************************************
 		((DefaultTableModel) this.ventanaStock.getModelo()).addRow(dato);
 		
 		// Establezco que no se pueda editar pero si seleccionar una fila
@@ -94,5 +110,4 @@ public class ControladorVentanaStock implements ActionListener {
 		}
 
 	}
-
 }
