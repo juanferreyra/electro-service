@@ -45,7 +45,7 @@ public class EmailOrdenDeCompra extends Thread {
 		for(int i = 0; i <  this.ventanaordenDeCompra.getComponentes_table().getRowCount(); i++){
 			
 		componentes += "<b>Repuesto:</b>&nbsp;&nbsp;"+ (String) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 1) + "&nbsp; &nbsp;&nbsp;&nbsp;" + 
-							"<b>Precio Unitario: $ </b>&nbsp;&nbsp;" + (int) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 3) + "&nbsp;&nbsp;&nbsp;&nbsp;" +
+							"<b>Cantidad: </b>&nbsp;&nbsp;" + (int) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 3) + "&nbsp;&nbsp;&nbsp;&nbsp;" +
 							"<br>";
 		}
 		
@@ -61,8 +61,6 @@ public class EmailOrdenDeCompra extends Thread {
 				
 		"<p> <b>Listado de repuestos :  </b></p><br>" +
 		"<p>" + componentes +" </p> <br>"+
-		"<p> <b>Total de repuestos:     $  </b>"+ventanaordenDeCompra.getValorPresupuestado_txf().getText()+"</p><br>"+
-		
 		"<p> <b>Le solicitamos que se ponga en contacto con nosotros al telefono: 4685 -5438  o por emial a " +
 		" reparaciones.electroservice@gmail.com </b></p><br>"+
 		

@@ -93,6 +93,18 @@ public class ControladorVentanaStock implements ActionListener {
 			// controladorOC.inicializar();
 		}
 
+		/*if (e.getSource() == this.ventanaStock.getGenerarOC_btn()) {
+			ControladorOrdenCompra controladorOC = new ControladorOrdenCompra(new VentanaOrdenCompra(),
+					new UsuarioDTO(0, null, null, null, 0));// Ingresar el
+			ControladorOrdenCompra controladorOC = new ControladorOrdenCompra(new VentanaOrdenCompra(),
+					new UsuarioDTO(0," "," "," "," ",0));// Ingresar el
+
+															// usuario correcto
+															// !!!!!
+			controladorOC.inicializar();
+		}*/
+
+
 	}
 
 }
