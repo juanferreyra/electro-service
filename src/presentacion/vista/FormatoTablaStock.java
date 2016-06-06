@@ -31,8 +31,10 @@ public class FormatoTablaStock extends DefaultTableCellRenderer {
 		int minimo = Integer.valueOf((String) table.getValueAt(row, 6));
 
 		int resultado = existencia - (reservado + pedido);
-
-		if (resultado > minimo) {// Si es
+		int resultado2 = (existencia - reservado);
+//		int resultado3= re
+		
+		if (resultado > minimo) {// 
 			// 0 ok
 			// 1
 			// amarillo
