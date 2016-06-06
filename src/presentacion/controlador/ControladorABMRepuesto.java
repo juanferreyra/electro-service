@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dto.RepuestoDTO;
 import modelo.Repuesto;
+import modelo.Stock;
 import presentacion.vista.VentanaABMRepuesto;
 
 public class ControladorABMRepuesto implements ActionListener {
@@ -23,6 +24,7 @@ public class ControladorABMRepuesto implements ActionListener {
 	@SuppressWarnings("unused")
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private List<JTextField> txts;
+	private Stock stock;
 
 	public ControladorABMRepuesto(VentanaABMRepuesto ventanaABMRepuesto) {
 
@@ -146,7 +148,8 @@ public class ControladorABMRepuesto implements ActionListener {
 							.getValueAt(filaSeleccionada, 0);
 
 					this.repuesto.borrarRepuesto(id_cliente_a_eliminar);
-
+					//TODO BORRAR
+					this.stock.borrarRepuestoDelStock(id_cliente_a_eliminar);
 					cargarTablaRepuestos();
 					limpiartxts();
 
@@ -191,7 +194,7 @@ public class ControladorABMRepuesto implements ActionListener {
 					if (isTxtsValidos()) {
 
 						repuesto.agregarRepuesto(obteneRepuesto(0));
-
+						stock.agregarRepuesto(obteneRepuesto(0));
 						limpiartxts();
 						cargarTablaRepuestos();
 						;
