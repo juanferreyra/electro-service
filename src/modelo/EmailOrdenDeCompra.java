@@ -45,13 +45,12 @@ public class EmailOrdenDeCompra extends Thread {
 		for(int i = 0; i <  this.ventanaordenDeCompra.getComponentes_table().getRowCount(); i++){
 			
 		componentes += "<b>Repuesto:</b>&nbsp;&nbsp;"+ (String) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 1) + "&nbsp; &nbsp;&nbsp;&nbsp;" + 
-							"<b>Precio Unitario: $ </b>&nbsp;&nbsp;" + (float) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 3) + "&nbsp;&nbsp;&nbsp;&nbsp;" +
-							"<b>Cantidad:</b>&nbsp;&nbsp;" + (int) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 2) + "&nbsp;&nbsp;&nbsp;&nbsp;" + 
-							"<b>PrecioTotal: $ </b>&nbsp;&nbsp;" + (float)this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 4) + "<br>";
+							"<b>Precio Unitario: $ </b>&nbsp;&nbsp;" + (int) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 3) + "&nbsp;&nbsp;&nbsp;&nbsp;" +
+							"<br>";
 		}
 		
 		//asunto
-		String asunto ="Solicitud de compra de repuestos de Electro Service."; 
+		String asunto ="Solicitud  compra de repuestos de Electro Service."; 
 		
 		
 		///Cuerpo de mensaje
@@ -65,7 +64,7 @@ public class EmailOrdenDeCompra extends Thread {
 		"<p> <b>Total de repuestos:     $  </b>"+ventanaordenDeCompra.getValorPresupuestado_txf().getText()+"</p><br>"+
 		
 		"<p> <b>Le solicitamos que se ponga en contacto con nosotros al telefono: 4685 -5438  o por emial a " +
-		"<a href= mailto reparaciones.electroservice@gmail.com>reparaciones.electroservice@gmail.com </a></b></p><br>"+
+		" reparaciones.electroservice@gmail.com </b></p><br>"+
 		
 		"<p> <b>ATTE:  </b>"+usuario.getNombre()+"   "+ usuario.getApellido()+"</p>";
 		
