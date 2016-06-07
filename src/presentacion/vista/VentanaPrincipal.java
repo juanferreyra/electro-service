@@ -30,17 +30,12 @@ import presentacion.controlador.ControladorABMProveedor;
 import presentacion.controlador.ControladorABMRepuesto;
 import presentacion.controlador.ControladorABMTipoProducto;
 import presentacion.controlador.ControladorVentanaABMUsuario;
-import presentacion.controlador.ControladorVentanaLogin;
-import presentacion.controlador.ControladorVentanaStock;
-
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.border.TitledBorder;
-import java.awt.Rectangle;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
 
@@ -65,11 +60,12 @@ public class VentanaPrincipal extends JFrame {
 	private JMenuItem deslogueo;
 	private FormatoTablaAvisoFaltante formatoTablaAvisoFaltante;
 	private JMenuItem ordenCompra;
+	private JMenuItem stock;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
 
-		setTitle("::: ELECTRO R SRL. ::: Software para Servicios Electrónicos");
+		setTitle("::: ELECTRO R SRL. ::: Software para Servicios Electrï¿½nicos");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
 
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -95,7 +91,7 @@ public class VentanaPrincipal extends JFrame {
 		menuBar.add(_sistema);
 		cargarItemsDeSistema();
 
-		_gestion = new JMenu("Gestión de Datos");
+		_gestion = new JMenu("Gestiï¿½n de Datos");
 		menuBar.add(_gestion);
 		cargarItemsDeGestion();
 
@@ -133,8 +129,8 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table.setFont(new Font("Arial", Font.PLAIN, 17));
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-		DefaultTableModel modeloOrdenesTrabajo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número",
-				"Fecha", "Producto", "Cliente", "Envío", "", "Técnico Asignado", "Estado" }) {
+		DefaultTableModel modeloOrdenesTrabajo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Nï¿½mero",
+				"Fecha", "Producto", "Cliente", "Envï¿½o", "", "Tï¿½cnico Asignado", "Estado" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { JLabel.class, Integer.class, String.class, String.class, String.class,
 					String.class, JLabel.class, String.class, String.class };
@@ -249,7 +245,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void cargarItemsReporte() {
-		JMenu estadisticos = new JMenu("Generar Reporte Estadístico");
+		JMenu estadisticos = new JMenu("Generar Reporte Estadï¿½stico");
 		_reporte.add(estadisticos);
 
 		JMenuItem venta = new JMenuItem("De ventas por fecha");
@@ -268,7 +264,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 		estadisticos.add(reparado);
 
-		JMenuItem masInsumido = new JMenuItem("De repuestos más insumidos");
+		JMenuItem masInsumido = new JMenuItem("De repuestos mï¿½s insumidos");
 		masInsumido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// Abrir reporte repuestos mas insumidos
@@ -280,14 +276,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private void cargarItemsContabilidad() {
 
-		JMenuItem stock = new JMenuItem("Control de Stock");
-		stock.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				VentanaStock stock = new VentanaStock();
-				ControladorVentanaStock c = new ControladorVentanaStock(stock);
-				c.inicializar();
-			}
-		});
+		stock = new JMenuItem("Control de Stock");
 		_contabilidad.add(stock);
 
 		ordenCompra = new JMenuItem("Generar Orden de Compra");
@@ -380,7 +369,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void cargarItemsDeSistema() {
-		deslogueo = new JMenuItem("Cerrar Sesión");
+		deslogueo = new JMenuItem("Cerrar Sesiï¿½n");
 
 		_sistema.add(deslogueo);
 
@@ -477,5 +466,9 @@ public class VentanaPrincipal extends JFrame {
 	public void setOrdenCompra(JMenuItem ordenCompra) {
 		this.ordenCompra = ordenCompra;
 	}
-
+	
+	public JMenuItem getStock() {
+		return stock;
+	}
+	
 }

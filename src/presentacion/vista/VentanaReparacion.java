@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
-import java.awt.Rectangle;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JCheckBox;

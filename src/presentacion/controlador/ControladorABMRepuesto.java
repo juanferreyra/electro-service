@@ -121,7 +121,6 @@ public class ControladorABMRepuesto implements ActionListener {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	private void cargarComboRepuestoSeleccionado(int fila) {
 		
 		//this.ventanaABMRepuesto.getCmb_marca().removeAllItems();
@@ -374,6 +373,14 @@ public class ControladorABMRepuesto implements ActionListener {
 		ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
 		c.inicializar();
 
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 
 }

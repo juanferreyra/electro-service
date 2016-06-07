@@ -1,7 +1,6 @@
 package modelo;
 
 import java.net.Socket;
-import java.util.Calendar;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -15,7 +14,6 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
 import dto.UsuarioDTO;
-import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaReparacion;
 
 public class EmailReparacion extends Thread  {
@@ -30,7 +28,7 @@ public class EmailReparacion extends Thread  {
 		this.ingreso = ingreso;
 		this.usuario = usuario;
 		this.ventana = ventana;
-		this.reparacion =reparacion;
+		this.setReparacion(reparacion);
 		
 	}
 	
@@ -115,6 +113,7 @@ public class EmailReparacion extends Thread  {
 		int puerto = 80;
 
 		try{
+			@SuppressWarnings("resource")
 			Socket prueba = new Socket(dirWeb, puerto);
 
 			if(prueba.isConnected()){
@@ -158,6 +157,7 @@ public class EmailReparacion extends Thread  {
 					        mensaje, "text/html");
 
 			// Se compone el adjunto con la imagen
+			@SuppressWarnings("unused")
 			BodyPart adjunto = new MimeBodyPart();
 			//adjunto.setDataHandler(
 			//		new DataHandler(new FileDataSource("PresentacionInicial.pdf")));
@@ -198,6 +198,22 @@ public class EmailReparacion extends Thread  {
 			JOptionPane.showMessageDialog(null, "Email de Aviso de Reparación, NO SE HA PODIDO ENVIAR, por favor intente mas tarde", "Atencion!",
 					JOptionPane.INFORMATION_MESSAGE);	
 		}
+	}
+
+
+
+
+
+	public Reparacion getReparacion() {
+		return reparacion;
+	}
+
+
+
+
+
+	public void setReparacion(Reparacion reparacion) {
+		this.reparacion = reparacion;
 	}
 
 

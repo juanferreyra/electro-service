@@ -1,9 +1,7 @@
 package modelo;
 
 import java.util.List;
-
 import dto.MarcaDTO;
-import dto.RepuestoDTO;
 import persistencia.dao.MarcaDAO;
 
 public class Marca {

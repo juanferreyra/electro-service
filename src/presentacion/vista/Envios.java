@@ -22,9 +22,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
 
 public class Envios extends JFrame {
 
@@ -80,7 +77,7 @@ public class Envios extends JFrame {
 		ordenesDeTrabajo_table = new JTable();
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "Enviar", "Número", "Fecha",
+		DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] { "Enviar", "Nï¿½mero", "Fecha",
 				"Producto", "Cliente", "Direccion", "Localidad","Valor", ""}) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { JLabel.class, Integer.class, String.class, String.class, String.class,

@@ -6,7 +6,6 @@ import java.util.List;
 import dto.InsumoStockDTO;
 import dto.RepuestoDTO;
 import persistencia.dao.ItemStockDAO;
-import persistencia.dao.RepuestoDAO;
 
 public class Stock {
 

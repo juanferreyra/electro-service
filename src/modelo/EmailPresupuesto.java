@@ -108,6 +108,7 @@ public class EmailPresupuesto extends Thread {
 		int puerto = 80;
 
 		try{
+			@SuppressWarnings("resource")
 			Socket prueba = new Socket(dirWeb, puerto);
 
 			if(prueba.isConnected()){
@@ -148,6 +149,7 @@ public class EmailPresupuesto extends Thread {
 					        mensaje, "text/html");
 
 			// Se compone el adjunto con la imagen
+			@SuppressWarnings("unused")
 			BodyPart adjunto = new MimeBodyPart();
 			//adjunto.setDataHandler(
 			//		new DataHandler(new FileDataSource("PresentacionInicial.pdf")));

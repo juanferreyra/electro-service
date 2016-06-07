@@ -98,6 +98,7 @@ public class VentanaABMRepuesto extends JFrame {
 		getContentPane().add(lblMarca);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public JComboBox getCmb_marca() {
 		return cmb_marca;
 	}

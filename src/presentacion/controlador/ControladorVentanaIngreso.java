@@ -160,7 +160,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (descripcion_falla.equals("") && !error) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"La descripcion de la falla está vacia. Por favor, vuelva a intentarlo.", null,
+						"La descripcion de la falla estï¿½ vacia. Por favor, vuelva a intentarlo.", null,
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 
@@ -191,7 +191,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 					} catch (NumberFormatException nfe) {
 						error = true;
 						JOptionPane.showMessageDialog(this.ventana_ingreso,
-								"El monto no es válido. Por favor, vuelva a intentarlo.", null,
+								"El monto no es vï¿½lido. Por favor, vuelva a intentarlo.", null,
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
@@ -226,36 +226,23 @@ public class ControladorVentanaIngreso implements ActionListener {
 			ventClient.addWindowListener(new WindowListener() {
 				
 				@Override
-				public void windowOpened(WindowEvent e) {
-					// TODO Auto-generated method stub
-				}
+				public void windowOpened(WindowEvent e) { }
 				
 				@Override
-				public void windowIconified(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowIconified(WindowEvent e) { }
 				
 				@Override
-				public void windowDeiconified(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowDeiconified(WindowEvent e) { }
 				
 				@Override
-				public void windowDeactivated(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowDeactivated(WindowEvent e) { }
 				
 				@Override
-				public void windowClosing(WindowEvent e) {
-					// TODO Auto-generated method stub
-				}
+				public void windowClosing(WindowEvent e) { }
 				
 				@Override
 				public void windowClosed(WindowEvent e) {
-					// TODO Auto-generated method stub
+					
 					if(ventClient.getTablaClientes().getSelectedRow() != -1){
 						ventana_ingreso.getTxtNroCliente().setText(ventClient.getDocumento_txt().getText());
 						buscarCliente();
@@ -263,10 +250,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				}
 				
 				@Override
-				public void windowActivated(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowActivated(WindowEvent e) { }
 			});
 			
 		}
@@ -283,7 +267,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 	private void buscarCliente() {
 		String textoingresado = this.ventana_ingreso.getTxtNroCliente().getText();
 		if (textoingresado == null || textoingresado.equals("")) {
-			JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor, ingrese un número de cliente.", null,
+			JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor, ingrese un nï¿½mero de cliente.", null,
 					JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			try {
@@ -292,7 +276,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				ClienteDTO cdto = cdao.findPorNrodoc(nrodoc);
 				if (cdto == null) {
 					JOptionPane.showMessageDialog(this.ventana_ingreso,
-							"El cliente buscado no existe, por favor, ingrese un valor válido.", null,
+							"El cliente buscado no existe, por favor, ingrese un valor vï¿½lido.", null,
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					this.ingreso.setCliente(cdto);
@@ -300,7 +284,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				}
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"El número de cliente es incorrecto, vuelva a intentarlo. ", null,
+						"El nï¿½mero de cliente es incorrecto, vuelva a intentarlo. ", null,
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}

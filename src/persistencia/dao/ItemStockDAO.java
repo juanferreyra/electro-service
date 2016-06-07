@@ -4,11 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import dto.InsumoStockDTO;
 import dto.RepuestoDTO;
-import modelo.Repuesto;
 import persistencia.conexion.Conexion;
 
 public class ItemStockDAO {

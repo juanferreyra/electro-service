@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -214,9 +216,52 @@ public class ControladorOrdenCompra implements ActionListener{
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnBuscarProveedor()) {
 			buscarProveedor();
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnVerProveedores()) {
+			
 			VentanaABMProveedor ventanaABMProveedor = new VentanaABMProveedor();
 			ControladorABMProveedor cp = new ControladorABMProveedor(ventanaABMProveedor);
 	    	cp.inicializar();
+	    	
+	    	ventanaABMProveedor.addWindowListener(new WindowListener() {
+				
+				@Override
+				public void windowOpened(WindowEvent e) { }
+				
+				@Override
+				public void windowIconified(WindowEvent e) { }
+				
+				@Override
+				public void windowDeiconified(WindowEvent e) { }
+				
+				@Override
+				public void windowDeactivated(WindowEvent e) { }
+				
+				@Override
+				public void windowClosing(WindowEvent e) { }
+				
+				@Override
+				public void windowClosed(WindowEvent e) {
+					
+					if(ventanaABMProveedor.getTablaProveedores().getSelectedRow() != -1){
+						
+						int filaSeleccionada = ventanaABMProveedor.getTablaProveedores().getSelectedRow();
+						
+						int nroProveedor = (int) ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0);
+						
+						ProveedorDAO cdao = ordenCompra.getProveedorDAO();
+						ProveedorDTO cdto = cdao.find(nroProveedor);
+						
+						vaciarCampos();
+						ordenCompra.setProveedorDTO(cdto);
+						cargarProveedor(cdto);
+						ordenCompra.actualizarListaMarcas();
+						cargarComboComponentes();
+					}
+				}
+				
+				@Override
+				public void windowActivated(WindowEvent e) { }
+			});
+	    	
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnCargarOrden()) {
 			String nroOrdenString = this.ventanaOrdenCompra.getTxtfldCargarOrden().getText();
 			try {
@@ -467,6 +512,47 @@ public class ControladorOrdenCompra implements ActionListener{
 				ControladorABMProveedor cp = new ControladorABMProveedor(ventanaABMProveedor);
 		    	cp.inicializar();
 		    	
+		    	ventanaABMProveedor.addWindowListener(new WindowListener() {
+					
+					@Override
+					public void windowOpened(WindowEvent e) { }
+					
+					@Override
+					public void windowIconified(WindowEvent e) { }
+					
+					@Override
+					public void windowDeiconified(WindowEvent e) { }
+					
+					@Override
+					public void windowDeactivated(WindowEvent e) { }
+					
+					@Override
+					public void windowClosing(WindowEvent e) { }
+					
+					@Override
+					public void windowClosed(WindowEvent e) {
+						
+						if(ventanaABMProveedor.getTablaProveedores().getSelectedRow() != -1){
+							
+							int filaSeleccionada = ventanaABMProveedor.getTablaProveedores().getSelectedRow();
+							
+							int nroProveedor = (int) ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0);
+							
+							ProveedorDAO cdao = ordenCompra.getProveedorDAO();
+							ProveedorDTO cdto = cdao.find(nroProveedor);
+							
+							vaciarCampos();
+							ordenCompra.setProveedorDTO(cdto);
+							cargarProveedor(cdto);
+							ordenCompra.actualizarListaMarcas();
+							cargarComboComponentes();
+						}
+					}
+					
+					@Override
+					public void windowActivated(WindowEvent e) { }
+				});
+
 		    } else if (response2 == JOptionPane.CLOSED_OPTION) {
 		      
 		    }

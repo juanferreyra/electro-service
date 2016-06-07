@@ -16,13 +16,12 @@ public class ControladorVentanaStock implements ActionListener {
 
 	private VentanaStock ventanaStock;
 	private Stock stock;
+	private UsuarioDTO usuarioLogueado;
 
-	public ControladorVentanaStock(VentanaStock ventanaStock) {
+	public ControladorVentanaStock(VentanaStock ventanaStock, UsuarioDTO usuario) {
 		this.ventanaStock = ventanaStock;
 		this.ventanaStock.getGenerarOC_btn().addActionListener(this);
-
-		
-		
+		this.usuarioLogueado = usuario;
 	}
 
 	public void inicializar() {
@@ -101,25 +100,9 @@ public class ControladorVentanaStock implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == this.ventanaStock.getGenerarOC_btn()) {
-			// ControladorOrdenCompra controladorOC = new
-			// ControladorOrdenCompra(new VentanaOrdenCompra(),
-			// new UsuarioDTO(0, null, null, null, 0));// Ingresar el
-			// usuario correcto
-			// !!!!!
-			// controladorOC.inicializar();
+			VentanaOrdenCompra ventanaOdenCompra = new VentanaOrdenCompra();
+			ControladorOrdenCompra c = new ControladorOrdenCompra(ventanaOdenCompra, usuarioLogueado);
+			c.inicializar();
 		}
-
-		/*if (e.getSource() == this.ventanaStock.getGenerarOC_btn()) {
-			ControladorOrdenCompra controladorOC = new ControladorOrdenCompra(new VentanaOrdenCompra(),
-					new UsuarioDTO(0, null, null, null, 0));// Ingresar el
-			ControladorOrdenCompra controladorOC = new ControladorOrdenCompra(new VentanaOrdenCompra(),
-					new UsuarioDTO(0," "," "," "," ",0));// Ingresar el
-
-															// usuario correcto
-															// !!!!!
-			controladorOC.inicializar();
-		}*/
-
-
 	}
 }

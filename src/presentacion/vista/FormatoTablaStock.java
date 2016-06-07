@@ -51,4 +51,12 @@ public class FormatoTablaStock extends DefaultTableCellRenderer {
 
 	}
 
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
 }

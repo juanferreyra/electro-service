@@ -26,6 +26,7 @@ import presentacion.vista.VentanaOrdenCompra;
 import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaPrincipal;
 import presentacion.vista.VentanaReparacion;
+import presentacion.vista.VentanaStock;
 
 public class ControladorVentanaPrincipal implements ActionListener {
 
@@ -48,6 +49,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getBtnOrdenDeCompra().addActionListener(this);
 		this.principal.getDeslogueo().addActionListener(this);
 		this.principal.getOrdenCompra().addActionListener(this);
+		this.principal.getStock().addActionListener(this);
 		this.agregarMouseListenerTabla(this);
 	}
 
@@ -233,6 +235,10 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			ControladorOrdenCompra c = new ControladorOrdenCompra(ventanaOdenCompra, usuarioLogueado);
 			c.inicializar();
 
+		} else if (e.getSource() == this.principal.getStock()) {
+			VentanaStock stock = new VentanaStock();
+			ControladorVentanaStock c = new ControladorVentanaStock(stock,usuarioLogueado);
+			c.inicializar();
 		}
 	}
 

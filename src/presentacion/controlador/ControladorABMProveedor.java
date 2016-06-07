@@ -2,10 +2,6 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
@@ -410,34 +406,19 @@ public class ControladorABMProveedor implements ActionListener{
 			ventana.addWindowListener(new WindowListener() {
 				
 				@Override
-				public void windowOpened(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowOpened(WindowEvent e) { }
 				
 				@Override
-				public void windowIconified(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowIconified(WindowEvent e) { }
 				
 				@Override
-				public void windowDeiconified(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowDeiconified(WindowEvent e) { }
 				
 				@Override
-				public void windowDeactivated(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowDeactivated(WindowEvent e) { }
 				
 				@Override
-				public void windowClosing(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowClosing(WindowEvent e) { }
 				
 				@Override
 				public void windowClosed(WindowEvent e) {
@@ -457,10 +438,7 @@ public class ControladorABMProveedor implements ActionListener{
 				}
 				
 				@Override
-				public void windowActivated(WindowEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+				public void windowActivated(WindowEvent e) { }
 			});
 		}
 				
