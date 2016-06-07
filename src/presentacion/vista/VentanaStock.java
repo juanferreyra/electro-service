@@ -32,6 +32,7 @@ public class VentanaStock extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setVisible(true);
+		setLocationRelativeTo(null);
 
 		JLabel lblControlDeStock = new JLabel("Control de Stock");
 		lblControlDeStock.setFont(new Font("Tahoma", Font.PLAIN, 14));

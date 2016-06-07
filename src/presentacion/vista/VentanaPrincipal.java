@@ -41,6 +41,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 import java.awt.Rectangle;
+import javax.swing.border.LineBorder;
+import java.awt.SystemColor;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -62,6 +64,7 @@ public class VentanaPrincipal extends JFrame {
 	private JMenu _reporte;
 	private JMenuItem deslogueo;
 	private FormatoTablaAvisoFaltante formatoTablaAvisoFaltante;
+	private JMenuItem ordenCompra;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
@@ -167,6 +170,7 @@ public class VentanaPrincipal extends JFrame {
 		});
 
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
+		ordenesDeTrabajo_scrollPane.setMinimumSize(new Dimension(50, 50));
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
@@ -196,9 +200,9 @@ public class VentanaPrincipal extends JFrame {
 		table_avisoFaltante.setModel(modeloAviso);
 
 		panelAviso = new JScrollPane();
-		panelAviso.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		panelAviso.setBackground(SystemColor.control);
 		panelAviso.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		panelAviso.setBounds(0, 0, 1005, 301);
+		panelAviso.setBorder(new LineBorder(new Color(130, 135, 144), 3, true));
 		panelAviso.add(table_avisoFaltante);
 
 		panelAviso.setViewportView(table_avisoFaltante);
@@ -207,11 +211,10 @@ public class VentanaPrincipal extends JFrame {
 		// AGREGO LABEL AVISO FALTANTE Y TABLA ORDENES DE TRABAJO EN UN PANEL
 		// CENTRAL
 		JPanel contenedorCentral = new JPanel();
-		contenedorCentral.setLayout(new BoxLayout(contenedorCentral, BoxLayout.PAGE_AXIS));
+		contenedorCentral.setLayout(new BoxLayout(contenedorCentral, BoxLayout.LINE_AXIS));
 
-		contenedorCentral.add(panelAviso);
 		contenedorCentral.add(ordenesDeTrabajo_scrollPane);
-
+		contentPane.add(panelAviso, BorderLayout.WEST);
 		contentPane.add(contenedorCentral, BorderLayout.CENTER);
 
 		// FIN CONTENEDOR CENTRAL
@@ -287,16 +290,8 @@ public class VentanaPrincipal extends JFrame {
 		});
 		_contabilidad.add(stock);
 
-		JMenuItem ordenCompra = new JMenuItem("Generar Orden de Compra");
-		ordenCompra.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// VentanaOrdenCompra ventanaOdenCompra = new
-				// VentanaOrdenCompra();
-				// ControladorOrdenCompra c = new
-				// ControladorOrdenCompra(ventanaOdenCompra,usuario);
-				// c.inicializar();
-			}
-		});
+		ordenCompra = new JMenuItem("Generar Orden de Compra");
+
 		_contabilidad.add(ordenCompra);
 		_contabilidad.addSeparator();
 	}
@@ -473,6 +468,14 @@ public class VentanaPrincipal extends JFrame {
 
 	public void setTable_avisoFaltante(JTable table_avisoFaltante) {
 		this.table_avisoFaltante = table_avisoFaltante;
+	}
+
+	public JMenuItem getOrdenCompra() {
+		return ordenCompra;
+	}
+
+	public void setOrdenCompra(JMenuItem ordenCompra) {
+		this.ordenCompra = ordenCompra;
 	}
 
 }

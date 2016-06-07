@@ -1,7 +1,6 @@
 
 package presentacion.controlador;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -11,11 +10,12 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import dto.IngresoDTO;
+import dto.InsumoStockDTO;
 import dto.UsuarioDTO;
 import modelo.Ingreso;
+import modelo.Stock;
 import persistencia.dao.ClienteDAO;
 import persistencia.dao.EstadoDAO;
 import persistencia.dao.IngresoDAO;
@@ -35,6 +35,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	private EstadoDAO estadoDAO;
 	private UsuarioDAO usuarioDAO;
 	private UsuarioDTO usuarioLogueado;
+	private Stock stock;
 
 	public ControladorVentanaPrincipal(VentanaPrincipal principal, UsuarioDTO usuario) {
 
@@ -46,6 +47,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getBtnElaborarHojaDe().addActionListener(this);
 		this.principal.getBtnOrdenDeCompra().addActionListener(this);
 		this.principal.getDeslogueo().addActionListener(this);
+		this.principal.getOrdenCompra().addActionListener(this);
 		this.agregarMouseListenerTabla(this);
 	}
 
@@ -54,8 +56,10 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		clienteDAO = new ClienteDAO();
 		estadoDAO = new EstadoDAO();
 		usuarioDAO = new UsuarioDAO();
+		stock = new Stock();
 		this.adecuarVentanaPrincipal();
 		this.cargar_tablaOrdenesTrabajo();
+		this.actualizar_AvisoFaltante();
 	}
 
 	private void adecuarVentanaPrincipal() {
@@ -223,6 +227,12 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 			ControladorVentanaLogin controlLogin = new ControladorVentanaLogin();
 			controlLogin.getPantalla();
+		} else if (e.getSource() == this.principal.getOrdenCompra()) {
+
+			VentanaOrdenCompra ventanaOdenCompra = new VentanaOrdenCompra();
+			ControladorOrdenCompra c = new ControladorOrdenCompra(ventanaOdenCompra, usuarioLogueado);
+			c.inicializar();
+
 		}
 	}
 
@@ -278,14 +288,29 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		});
 	}
 
-	// private void actualizarAvisoFaltante() {
-	// String[] dato = { "Holisss", "Chau", "Hola", "chau" };
-	// ((DefaultTableModel) table_avisoFaltante.getModel()).addRow(dato);
-	// // Atenci\u00F3n ! Se han terminado los repuestos de botones WTG
-	// // negros.")
-	// panelAviso.setBackground(Color.WHITE);
-	// panelAviso.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
-	// TitledBorder.TOP, null, null));
-	// }
+	public void limpiar_tablaAvisoFaltante() {
+
+		int largo = ((DefaultTableModel) this.principal.getTable_avisoFaltante().getModel()).getRowCount();
+
+		for (int i = largo - 1; i >= 0; i--) {
+			((DefaultTableModel) this.principal.getTable_avisoFaltante().getModel()).removeRow(i);
+		}
+
+	}
+
+	public void actualizar_AvisoFaltante() {
+		limpiar_tablaAvisoFaltante();
+		ArrayList<InsumoStockDTO> insumos = stock.getFaltante();
+		for (int i = 0; i < insumos.size(); i++) {
+			cargar_FilaTablaAvisoFaltante(insumos.get(i).getNombre());
+		}
+
+	}
+
+	private void cargar_FilaTablaAvisoFaltante(String insumo) {
+		String[] dato = { insumo };
+		((DefaultTableModel) this.principal.getTable_avisoFaltante().getModel()).addRow(dato);
+
+	}
 
 }

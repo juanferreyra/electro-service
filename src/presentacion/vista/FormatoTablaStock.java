@@ -30,35 +30,26 @@ public class FormatoTablaStock extends DefaultTableCellRenderer {
 		int pedido = Integer.valueOf((String) table.getValueAt(row, 4));
 		int minimo = Integer.valueOf((String) table.getValueAt(row, 6));
 
-		int resultado = existencia - (reservado + pedido);
-		int resultado2 = (existencia - reservado);
-//		int resultado3= re
-		
-		if (resultado > minimo) {// 
-			// 0 ok
-			// 1
-			// amarillo
-			// claro
-			// 2
-			// amarillo
-			// fuerte
-			// 3
-			// rojo
-			// claro
-			// 4
-			// rojo
-			// fuerte
-			setBackground(Color.decode("#BCF5A9"));
+		int resultado = existencia - reservado;
+
+		// COLORES
+		// amarillo tenue.#F5F6CE
+		// amarillo fuerte #F3F781
+		// rojo tenue #F6E3CE
+		// rojo fuerte. #F5BCA9
+
+		if ((resultado < 1) && (resultado + pedido) < minimo) {
+			setBackground(Color.decode("#F5BCA9"));// Rojo fuerte
+		} else if ((resultado < 1) && (resultado + pedido) > minimo) {
+			setBackground(Color.decode("#F6E3CE"));// Rojo Claro
+		} else if ((resultado < minimo) && (resultado + pedido) < minimo) {
+			setBackground(Color.decode("#F3F781"));// Amarillo fuerte
+		} else if ((resultado < minimo) && (resultado + pedido) > minimo) {
+			setBackground(Color.decode("#F5F6CE"));// amarillo claro
+		} else {
+			setBackground(Color.white);// Blanco
 		}
-		// else if (1) {
-		// setBackground(Color.decode("#F6E3CE"));
-		// } else if (2) {
-		// setBackground(Color.decode("#F5A9A9"));
-		// } else if (3) {
-		// setBackground(Color.decode("#F5A9A9"));
-		// } else if (4) {
-		// setBackground(Color.decode("#F5A9A9"));
-		// }
+
 	}
 
 }

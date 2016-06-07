@@ -36,7 +36,7 @@ public class VentanaABMUsuario extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 		
 		JLabel nick_lbl = new JLabel("Nick");
 		nick_lbl.setBounds(123, 62, 71, 14);

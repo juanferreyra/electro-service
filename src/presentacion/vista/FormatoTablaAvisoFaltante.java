@@ -24,11 +24,22 @@ public class FormatoTablaAvisoFaltante extends DefaultTableCellRenderer {
 	}
 
 	private void aplicarColorFilas(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-//		if (2) {//amarillo fuerte
-//			setBackground(Color.decode("#D8F6CE"));
-//		} else if (4) {//rojo fuerte
-//			setBackground(Color.decode("#F6E3CE"));
-//		} 
+		int existencia = Integer.valueOf((String) table.getValueAt(row, 2));
+		int reservado = Integer.valueOf((String) table.getValueAt(row, 3));
+		int pedido = Integer.valueOf((String) table.getValueAt(row, 4));
+		int minimo = Integer.valueOf((String) table.getValueAt(row, 6));
+
+		int resultado = existencia - reservado;
+
+		// COLORES
+		// amarillo fuerte #F3F781
+		// rojo fuerte. #F5BCA9
+
+		if ((resultado < 1) && (resultado + pedido) < minimo) {
+			setBackground(Color.decode("#F5BCA9"));// Rojo fuerte
+		} else if ((resultado < minimo) && (resultado + pedido) < minimo) {
+			setBackground(Color.decode("#F3F781"));// Amarillo fuerte
+		}
 
 	}
 
