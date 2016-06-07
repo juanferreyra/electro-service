@@ -199,14 +199,9 @@ public class VentanaPrincipal extends JFrame {
 		table_avisoFaltante.setModel(modeloAviso);
 
 		panelAviso = new JScrollPane();
-		panelAviso.setBounds(new Rectangle(0, 0, 150, 500));
-		panelAviso.setLayout(null);
-		panelAviso.setSize(new Dimension(150, 150));
 		panelAviso.setBackground(SystemColor.control);
 		panelAviso.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panelAviso.setBorder(new LineBorder(new Color(130, 135, 144), 3, true));
-		panelAviso.setMaximumSize(new Dimension(150, 150));
-		panelAviso.setBounds(0, 0, 505, 101);
 		panelAviso.add(table_avisoFaltante);
 
 		panelAviso.setViewportView(table_avisoFaltante);
@@ -215,13 +210,11 @@ public class VentanaPrincipal extends JFrame {
 		// AGREGO LABEL AVISO FALTANTE Y TABLA ORDENES DE TRABAJO EN UN PANEL
 		// CENTRAL
 		JPanel contenedorCentral = new JPanel();
-		contenedorCentral.setLayout(new BoxLayout(contenedorCentral, BoxLayout.PAGE_AXIS));
+		contenedorCentral.setLayout(new BoxLayout(contenedorCentral, BoxLayout.LINE_AXIS));
 
 		contenedorCentral.add(ordenesDeTrabajo_scrollPane);
-
-		contentPane.add(contenedorCentral, BorderLayout.CENTER);
-
 		contentPane.add(panelAviso, BorderLayout.WEST);
+		contentPane.add(contenedorCentral, BorderLayout.CENTER);
 
 		// FIN CONTENEDOR CENTRAL
 
