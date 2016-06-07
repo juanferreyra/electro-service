@@ -152,6 +152,29 @@ public class MarcaDAO {
 		}
 		return marca;
 	}
+	
+	public String BuscarDetalleXid(int idmarca) {
+
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		String marca = "";
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(find);
+			statement.setInt(1, idmarca);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				marca = resultSet.getString("detalle");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return marca;
+	}
 
 	public MarcaDTO findByDetalle(String detalle) {
 

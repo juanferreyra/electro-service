@@ -33,6 +33,10 @@ public class Marca {
 		
 		
 	}
+	
+	public String buscarDetalleMarcaXid(int idMarca){
+		return marcaDAO.BuscarDetalleXid(idMarca); 
+	}
 
 	public int obtenerIdMarca(String detalle) {
 		return marcaDAO.buscarIdMarca(detalle);

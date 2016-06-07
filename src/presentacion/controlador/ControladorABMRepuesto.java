@@ -11,7 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import dto.MarcaDTO;
 import dto.RepuestoDTO;
+import modelo.Marca;
 import modelo.Repuesto;
 import modelo.Stock;
 import presentacion.vista.VentanaABMRepuesto;
@@ -25,6 +27,8 @@ public class ControladorABMRepuesto implements ActionListener {
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private List<JTextField> txts;
 	private Stock stock;
+	private Marca marca;
+	private List<MarcaDTO> listaDeMarcas;
 
 	public ControladorABMRepuesto(VentanaABMRepuesto ventanaABMRepuesto) {
 
@@ -38,8 +42,10 @@ public class ControladorABMRepuesto implements ActionListener {
 	public void inicializar() {
 
 		this.repuesto = new Repuesto();
+		this.marca = new Marca();
 
 		cargarTabla();
+		cargarCombo();
 
 		this.ventanaABMRepuesto.setVisible(true);
 
@@ -50,6 +56,20 @@ public class ControladorABMRepuesto implements ActionListener {
 		txts.add(this.ventanaABMRepuesto.getStockMinimo_txt());// 2
 
 		mouseClickedOnTable();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void cargarCombo() {
+		
+		this.listaDeMarcas = marca.obtenerMarcas();
+		
+		for(int i = 0; i < this.listaDeMarcas.size(); i++){
+			
+			this.ventanaABMRepuesto.getCmb_marca().addItem(this.listaDeMarcas.get(i).getDetalle());	
+		}
+		this.ventanaABMRepuesto.getCmb_marca().setSelectedIndex(0);
+		
+		
 	}
 
 	private void mouseClickedOnTable() {
@@ -90,11 +110,33 @@ public class ControladorABMRepuesto implements ActionListener {
 
 		int filaSeleccionada = this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow();
 
-		this.txts.get(0).setText((String) this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 1));
+		this.txts.get(0).setText((String) this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 2));
 		this.txts.get(1)
-				.setText(String.valueOf(this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 2)));
-		this.txts.get(2)
 				.setText(String.valueOf(this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 3)));
+		this.txts.get(2)
+				.setText(String.valueOf(this.ventanaABMRepuesto.getModelRepuesto().getValueAt(filaSeleccionada, 4)));
+		
+		cargarComboRepuestoSeleccionado(filaSeleccionada);
+		
+
+	}
+
+	@SuppressWarnings("unchecked")
+	private void cargarComboRepuestoSeleccionado(int fila) {
+		
+		//this.ventanaABMRepuesto.getCmb_marca().removeAllItems();
+		
+		this.listaDeMarcas = marca.obtenerMarcas();
+
+		for(int i = 0; i < this.listaDeMarcas.size(); i++){
+			
+			if(this.listaDeMarcas.get(i).getDetalle().equals(this.ventanaABMRepuesto.getModelRepuesto().getValueAt(fila, 1))){
+				
+				this.ventanaABMRepuesto.getCmb_marca().setSelectedIndex(i);
+			}
+		}
+		
+
 
 	}
 
@@ -116,8 +158,11 @@ public class ControladorABMRepuesto implements ActionListener {
 		this.repuestos_en_tabla = repuesto.obtenerRepuestos();
 
 		for (int i = 0; i < this.repuestos_en_tabla.size(); i++) {
-
-			Object[] fila = { this.repuestos_en_tabla.get(i).getId(), this.repuestos_en_tabla.get(i).getDetalle(),
+			
+			Object[] fila = { this.repuestos_en_tabla.get(i).getId(),
+					
+					marca.buscarDetalleMarcaXid(this.repuestos_en_tabla.get(i).getIdmarca()),
+					this.repuestos_en_tabla.get(i).getDetalle(),
 					this.repuestos_en_tabla.get(i).getPrecioUnitario(),
 					this.repuestos_en_tabla.get(i).getStockMinimo() };
 
@@ -135,6 +180,7 @@ public class ControladorABMRepuesto implements ActionListener {
 
 			this.limpiartxts();
 			this.ventanaABMRepuesto.getTablaRepuesto().clearSelection();
+			
 		} else if (e.getSource() == this.ventanaABMRepuesto.getEliminarItem_btn()) {
 
 			// si la tabla no esta vacia
@@ -144,12 +190,13 @@ public class ControladorABMRepuesto implements ActionListener {
 				if (this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow() != -1) {
 
 					int filaSeleccionada = this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow();
-					int id_cliente_a_eliminar = (int) this.ventanaABMRepuesto.getModelRepuesto()
+					int id_repuesto_a_eliminar = (int) this.ventanaABMRepuesto.getModelRepuesto()
 							.getValueAt(filaSeleccionada, 0);
 
-					this.repuesto.borrarRepuesto(id_cliente_a_eliminar);
-					//TODO BORRAR
-					this.stock.borrarRepuestoDelStock(id_cliente_a_eliminar);
+					this.repuesto.borrarRepuesto(id_repuesto_a_eliminar);
+
+					//this.stock.borrarRepuestoDelStock(id_cliente_a_eliminar);
+					
 					cargarTablaRepuestos();
 					limpiartxts();
 
@@ -161,10 +208,11 @@ public class ControladorABMRepuesto implements ActionListener {
 
 				JOptionPane.showMessageDialog(this.ventanaABMRepuesto, "No hay Repuestos a eliminar");
 			}
+			
 		} else if (e.getSource() == this.ventanaABMRepuesto.getGuardar_btn()) {
 
 			// si esta seleccionado de la tabla
-			// modificar cliente
+			// modificar repuesto
 			if (this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow() != -1) {
 
 				int filaSeleccionada = this.ventanaABMRepuesto.getTablaRepuesto().getSelectedRow();
@@ -187,17 +235,16 @@ public class ControladorABMRepuesto implements ActionListener {
 				}
 
 			} else {
-				// nuevo cliente
+				// nuevo repuesto
 
 				if (!isTxtsVacios()) {
 
 					if (isTxtsValidos()) {
 
 						repuesto.agregarRepuesto(obteneRepuesto(0));
-						stock.agregarRepuesto(obteneRepuesto(0));
+						//stock.agregarRepuesto(obteneRepuesto(0));
 						limpiartxts();
 						cargarTablaRepuestos();
-						;
 					}
 
 				} else {
@@ -212,10 +259,13 @@ public class ControladorABMRepuesto implements ActionListener {
 	}
 
 	private RepuestoDTO obteneRepuesto(int id) {
+		
+		int idMarca = marca.obtenerIdMarca((String) this.ventanaABMRepuesto.getCmb_marca().getSelectedItem());;
 
 		RepuestoDTO repuestoDTO = new RepuestoDTO(id, this.txts.get(0).getText(), // detalle
 				Float.parseFloat(this.txts.get(1).getText()), // precioUniario
 				Integer.parseInt(this.txts.get(2).getText()), // StockMinimo
+				idMarca,
 				null, 0, 1);
 
 		return repuestoDTO;
@@ -270,6 +320,8 @@ public class ControladorABMRepuesto implements ActionListener {
 
 		}
 
+		this.ventanaABMRepuesto.getCmb_marca().setSelectedIndex(-1);
+
 	}
 
 	private void cargarTablaRepuestos() {
@@ -282,7 +334,12 @@ public class ControladorABMRepuesto implements ActionListener {
 
 		for (int i = 0; i < this.repuestos_en_tabla.size(); i++) {
 
-			Object[] fila = { this.repuestos_en_tabla.get(i).getId(), this.repuestos_en_tabla.get(i).getDetalle(),
+			
+			Object[] fila = { this.repuestos_en_tabla.get(i).getId(),
+					
+					marca.buscarDetalleMarcaXid(this.repuestos_en_tabla.get(i).getIdmarca()),
+					
+					this.repuestos_en_tabla.get(i).getDetalle(),
 					this.repuestos_en_tabla.get(i).getPrecioUnitario(),
 					this.repuestos_en_tabla.get(i).getStockMinimo() };
 
@@ -311,12 +368,12 @@ public class ControladorABMRepuesto implements ActionListener {
 		}
 	}
 
-	// public static void main(String[] args) {
-	//
-	// VentanaABMRepuesto abm = new VentanaABMRepuesto();
-	// ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
-	// c.iniciar();
-	//
-	// }
+	public static void main(String[] args) {
+
+		VentanaABMRepuesto abm = new VentanaABMRepuesto();
+		ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
+		c.inicializar();
+
+	}
 
 }
