@@ -223,13 +223,13 @@ INSERT INTO `ingreso_log` VALUES (150,22,1,'2016-06-04 20:24:54',0,1);
 UNLOCK TABLES;
 
 --
--- Table structure for table `itemstock`
+-- Table structure for table `itemStock`
 --
 
-DROP TABLE IF EXISTS `itemstock`;
+DROP TABLE IF EXISTS `itemStock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `itemstock` (
+CREATE TABLE `itemStock` (
   `id` int(11) NOT NULL,
   `InsumoId` int(11) NOT NULL,
   `Existencias` int(11) NOT NULL,
@@ -239,12 +239,12 @@ CREATE TABLE `itemstock` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `itemstock`
+-- Dumping data for table `itemStock`
 --
 
-LOCK TABLES `itemstock` WRITE;
-/*!40000 ALTER TABLE `itemstock` DISABLE KEYS */;
-/*!40000 ALTER TABLE `itemstock` ENABLE KEYS */;
+LOCK TABLES `itemStock` WRITE;
+/*!40000 ALTER TABLE `itemStock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itemStock` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
