@@ -9,21 +9,21 @@ import persistencia.conexion.Conexion;
 
 public class OrdenCompraDAO {
 
-	private static final String insert = "INSERT INTO orden_compra(`idproveedor`, `importe_total`, `idusuario`, `fecha_creacion`, `habilitado`,`estado`) VALUES (?, ?, ?, now(), true,'NUEVA');";
-
-	//TODO:private static final String updateImporte = "";
+	private static final String insert = "INSERT INTO orden_compra(`idproveedor`, `importe_total`, `idusuario`, `fecha_creacion`, `fecha_modificacion`, `habilitado`,`estado`) VALUES (?, ?, ?, now(), now(), true,'NUEVA');";
 	
 	private static final String readall = "SELECT id, idproveedor, idusuario, importe_total, "
-			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion ,estado "
+			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion, "
+			+ "date(fecha_modificacion) as fecha_modificacion, time(fecha_modificacion) as hora_modificacion, estado "
 			+ "FROM orden_compra WHERE habilitado=true;";
 	
 	private static final String find =  "SELECT id, idproveedor, idusuario, importe_total, "
-			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion , estado "
+			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion , "
+			+ "date(fecha_modificacion) as fecha_modificacion, time(fecha_modificacion) as hora_modificacion, estado "
 			+ "FROM orden_compra WHERE habilitado=true AND id= ? ;";
 	
 	private static final String updateEstado = "UPDATE orden_compra SET estado = ? WHERE id = ? ;";
 	
-	private static final String updateMonto = "UPDATE orden_compra set importe_total = ? WHERE id = ?";
+	private static final String updateMonto = "UPDATE orden_compra set importe_total = ? , fecha_modificacion = now() WHERE id = ?";
 	
 	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'orden_compra';";
 	
@@ -42,6 +42,7 @@ public class OrdenCompraDAO {
 			
 			while (resultSet.next()){
 				java.util.Date fecha_creacion = new java.util.Date(resultSet.getDate("fecha_creacion").getTime());
+				java.util.Date fecha_modificacion = new java.util.Date(resultSet.getDate("fecha_modificacion").getTime());
 				
 				OrdenCompraDTO orden = new OrdenCompraDTO();
 				orden.setId(resultSet.getInt("id"));
@@ -51,6 +52,8 @@ public class OrdenCompraDAO {
 				orden.setIdusuario(resultSet.getInt("idusuario"));
 				orden.setFecha_creacion(fecha_creacion);
 				orden.setHora_creacion(resultSet.getString("hora_creacion"));
+				orden.setFecha_modificacion(fecha_modificacion);
+				orden.setHora_modificacion(resultSet.getString("hora_modificacion"));
 				orden.setEstado(resultSet.getString("estado"));
 				
 				presupuestos.add(orden);
@@ -138,6 +141,7 @@ public class OrdenCompraDAO {
 			while (resultSet.next()){
 				
 				java.util.Date fecha_creacion = new java.util.Date(resultSet.getDate("fecha_creacion").getTime());
+				java.util.Date fecha_modificacion = new java.util.Date(resultSet.getDate("fecha_modificacion").getTime());
 				
 				orden = new OrdenCompraDTO();
 				orden.setId(resultSet.getInt("id"));
@@ -146,6 +150,8 @@ public class OrdenCompraDAO {
 				orden.setIdusuario(resultSet.getInt("idusuario"));
 				orden.setFecha_creacion(fecha_creacion);
 				orden.setHora_creacion(resultSet.getString("hora_creacion"));
+				orden.setFecha_modificacion(fecha_modificacion);
+				orden.setHora_modificacion(resultSet.getString("hora_modificacion"));
 				orden.setEstado(resultSet.getString("estado"));
 			}
 			

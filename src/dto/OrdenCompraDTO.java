@@ -11,6 +11,8 @@ public class OrdenCompraDTO {
 	private int idusuario;
 	private Date fecha_creacion;
 	private String hora_creacion;
+	private Date fecha_modificacion;
+	private String hora_modificacion;
 	private String estado;
 	
 	public OrdenCompraDTO() {
@@ -79,6 +81,22 @@ public class OrdenCompraDTO {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public Date getFecha_modificacion() {
+		return fecha_modificacion;
+	}
+
+	public void setFecha_modificacion(Date fecha_modificacion) {
+		this.fecha_modificacion = fecha_modificacion;
+	}
+
+	public String getHora_modificacion() {
+		return hora_modificacion;
+	}
+
+	public void setHora_modificacion(String hora_modificacion) {
+		this.hora_modificacion = hora_modificacion;
 	}
 	
 }
