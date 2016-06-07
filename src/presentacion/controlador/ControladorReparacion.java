@@ -15,6 +15,7 @@ import modelo.Ingreso;
 import modelo.Presupuesto;
 import modelo.Reparacion;
 import modelo.Reparaciones_repuestos;
+import modelo.Stock;
 import persistencia.dao.IngresoLogDAO;
 import presentacion.vista.VentanaReparacion;
 
@@ -178,11 +179,23 @@ public class ControladorReparacion implements ActionListener {
 		int idrepuesto;
 		Date fecha_creacion = null;
 		boolean habilitado = true;
+		
+		Stock st = new Stock();
+		
 		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
 			idrepuesto = presupuesto.getListaDeRepuestos().get(i).getIdrepuesto();
+			
+			int cantResp = (int) (this.ventanaReparacion.getComponentes_table().getValueAt(i, 2));
+	
 
 			this.reparaciones_repuestos.guardarReparacion_repuesto(idReparacion, idrepuesto,
-					(int) (this.ventanaReparacion.getComponentes_table().getValueAt(i, 2)), fecha_creacion, habilitado);
+					cantResp, fecha_creacion, habilitado);
+			
+			try {
+				st.modificarStock(idrepuesto, -cantResp);
+			} catch (Exception e) {
+				e.getMessage();
+			}
 		}
 
 	}
