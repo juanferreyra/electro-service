@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `20161_service_g2` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `20161_service_g2`;
+-- MySQL dump 10.13  Distrib 5.6.19, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: 20161_service_g2
 -- ------------------------------------------------------
--- Server version	5.7.9
+-- Server version	5.6.19-1~exp1ubuntu2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,7 +37,7 @@ CREATE TABLE `cliente` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +46,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,1,'Lucas','Avelda?o','Malvinas Argentinas','Londres 312','153214211','juangabrielferreyra93@gmail.com','2016-04-29 23:45:10',0,1),(2,2,'Agustina','De Napoli','Tigre','Tacuari 342','152315213','juangabrielferreyra93@gmail.com','2016-04-29 23:54:42',0,1),(3,3,'Robert','Quilmes','Malvinas Argentinas','Guayaquil 932','153524252','juangabrielferreyra93@gmail.com','2016-05-03 19:57:48',0,1),(4,4,'Claudia','Alfonso','San Isidro','Stephenson 932','1543265223','juangabrielferreyra93@gmail.com','2016-05-03 19:57:48',0,1),(5,5,'Lucas','Guayco','bella vista','gaspar campos','1565545432','juangabrielferreyra93@gmail.com','2016-06-03 19:01:11',0,1);
+INSERT INTO `cliente` VALUES (1,1,'Lucas','Avelda?o','Malvinas Argentinas','Londres 312','153214211','juangabrielferreyra93@gmail.com','2016-04-29 23:45:10',0,1),(2,2,'Agustina','De Napoli','Tigre','Tacuari 342','152315213','juangabrielferreyra93@gmail.com','2016-04-29 23:54:42',0,1),(3,3,'Robert','Quilmes','Malvinas Argentinas','Guayaquil 932','153524252','juangabrielferreyra93@gmail.com','2016-05-03 19:57:48',0,1),(4,4,'Claudia','Alfonso','San Isidro','Stephenson 932','1543265223','juangabrielferreyra93@gmail.com','2016-05-03 19:57:48',0,1),(5,5,'Lucas','Guayco','bella vista','gaspar campos','1565545432','juangabrielferreyra93@gmail.com','2016-06-03 19:01:11',0,1),(6,37360567,'Martin','Nuñez','Malvinas Argentinas','Miraflores 123','1546477879','madarnu@hotmail.com','2016-06-07 11:47:02',0,1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +121,7 @@ CREATE TABLE `hojaruta` (
   `habilitado` tinyint(1) DEFAULT NULL,
   `idusuario` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,6 +130,7 @@ CREATE TABLE `hojaruta` (
 
 LOCK TABLES `hojaruta` WRITE;
 /*!40000 ALTER TABLE `hojaruta` DISABLE KEYS */;
+INSERT INTO `hojaruta` VALUES (1,4,'2016-06-07 12:49:28',1,1);
 /*!40000 ALTER TABLE `hojaruta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +148,7 @@ CREATE TABLE `hojaruta_ingreso` (
   `en_entrega` tinyint(1) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,6 +157,7 @@ CREATE TABLE `hojaruta_ingreso` (
 
 LOCK TABLES `hojaruta_ingreso` WRITE;
 /*!40000 ALTER TABLE `hojaruta_ingreso` DISABLE KEYS */;
+INSERT INTO `hojaruta_ingreso` VALUES (1,1,23,0,'2016-06-07 12:49:28');
 /*!40000 ALTER TABLE `hojaruta_ingreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +185,7 @@ CREATE TABLE `ingreso` (
   `habilitado` tinyint(1) DEFAULT NULL,
   `tecnico_asignado` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +194,7 @@ CREATE TABLE `ingreso` (
 
 LOCK TABLES `ingreso` WRITE;
 /*!40000 ALTER TABLE `ingreso` DISABLE KEYS */;
-INSERT INTO `ingreso` VALUES (22,1,'Razr i',0,1,'Se le rompio la antena Wiffi',1,1,'Guayaquil 884',300,1,'2016-06-04 20:24:54',0,1,NULL);
+INSERT INTO `ingreso` VALUES (22,1,'Razr i',0,1,'Se le rompio la antena Wiffi',1,1,'Guayaquil 884',300,1,'2016-06-04 20:24:54',0,1,NULL),(23,6,'E XT1527',0,1,'Se le rompio el display',1,1,'Mirafloes 325',300.5,11,'2016-06-07 11:50:18',0,1,NULL);
 /*!40000 ALTER TABLE `ingreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +213,7 @@ CREATE TABLE `ingreso_log` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,7 +222,7 @@ CREATE TABLE `ingreso_log` (
 
 LOCK TABLES `ingreso_log` WRITE;
 /*!40000 ALTER TABLE `ingreso_log` DISABLE KEYS */;
-INSERT INTO `ingreso_log` VALUES (150,22,1,'2016-06-04 20:24:54',0,1);
+INSERT INTO `ingreso_log` VALUES (150,22,1,'2016-06-04 20:24:54',0,1),(151,23,1,'2016-06-07 11:50:17',0,1),(152,23,3,'2016-06-07 12:24:10',1,1),(153,23,4,'2016-06-07 12:24:21',1,1),(154,23,5,'2016-06-07 12:24:24',1,1),(155,23,6,'2016-06-07 12:42:52',1,1),(156,23,7,'2016-06-07 12:48:16',1,1),(157,23,11,'2016-06-07 13:10:57',1,1);
 /*!40000 ALTER TABLE `ingreso_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,12 +234,12 @@ DROP TABLE IF EXISTS `itemStock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `itemStock` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `InsumoId` int(11) NOT NULL,
   `Existencias` int(11) NOT NULL,
   `habilitado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,6 +248,7 @@ CREATE TABLE `itemStock` (
 
 LOCK TABLES `itemStock` WRITE;
 /*!40000 ALTER TABLE `itemStock` DISABLE KEYS */;
+INSERT INTO `itemStock` VALUES (6,6,15,1),(5,5,160,1),(7,7,15,1),(4,4,89,1),(3,3,15,1),(2,2,80,1),(1,1,39,1);
 /*!40000 ALTER TABLE `itemStock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,7 +295,7 @@ CREATE TABLE `orden_compra` (
   `habilitado` tinyint(1) DEFAULT NULL,
   `estado` enum('NUEVA','RECIBIDA','CANCELADA') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +304,7 @@ CREATE TABLE `orden_compra` (
 
 LOCK TABLES `orden_compra` WRITE;
 /*!40000 ALTER TABLE `orden_compra` DISABLE KEYS */;
-INSERT INTO `orden_compra` VALUES (7,2,0,1,'2016-06-05 19:54:13',1,'NUEVA'),(8,2,0,1,'2016-06-05 19:56:12',1,'NUEVA');
+INSERT INTO `orden_compra` VALUES (7,2,0,1,'2016-06-05 19:54:13',1,'NUEVA'),(8,2,0,1,'2016-06-05 19:56:12',1,'NUEVA'),(9,2,1800.5,1,'2016-06-07 13:15:33',1,'RECIBIDA'),(10,1,900,1,'2016-06-07 13:48:53',1,'RECIBIDA'),(11,2,90000,1,'2016-06-07 14:00:49',1,'RECIBIDA');
 /*!40000 ALTER TABLE `orden_compra` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -319,7 +324,7 @@ CREATE TABLE `orden_compra_repuestos` (
   `fecha_creacion` datetime DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,7 +333,7 @@ CREATE TABLE `orden_compra_repuestos` (
 
 LOCK TABLES `orden_compra_repuestos` WRITE;
 /*!40000 ALTER TABLE `orden_compra_repuestos` DISABLE KEYS */;
-INSERT INTO `orden_compra_repuestos` VALUES (14,7,1,5,5,'2016-06-05 19:54:13',1),(15,8,1,5,5,'2016-06-05 19:56:12',1);
+INSERT INTO `orden_compra_repuestos` VALUES (14,7,1,5,5,'2016-06-05 19:54:13',1),(15,8,1,5,5,'2016-06-05 19:56:12',1),(16,9,2,2,3,'2016-06-07 13:15:33',1),(17,9,1,2,3,'2016-06-07 13:15:33',1),(18,9,3,3,4,'2016-06-07 13:15:33',1),(19,10,1,2,10,'2016-06-07 13:48:53',1),(20,10,2,2,10,'2016-06-07 13:48:53',1),(21,10,5,3,10,'2016-06-07 13:48:53',1),(22,11,1,2,29,'2016-06-07 14:00:49',1),(23,11,3,1,15,'2016-06-07 14:00:49',1),(24,11,2,1,70,'2016-06-07 14:00:49',1),(25,11,4,1,89,'2016-06-07 14:00:49',1),(26,11,5,1,150,'2016-06-07 14:00:49',1),(27,11,6,1,15,'2016-06-07 14:00:49',1),(28,11,7,1,15,'2016-06-07 14:00:49',1);
 /*!40000 ALTER TABLE `orden_compra_repuestos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +432,7 @@ CREATE TABLE `presupuesto` (
   `fecha_creacion` datetime DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -436,6 +441,7 @@ CREATE TABLE `presupuesto` (
 
 LOCK TABLES `presupuesto` WRITE;
 /*!40000 ALTER TABLE `presupuesto` DISABLE KEYS */;
+INSERT INTO `presupuesto` VALUES (1,23,'Se cambiaria el modulo	','Se cambiaria el modulo rtfg',8,120,67624,'2016-06-30',1,'2016-06-07 12:24:10',1);
 /*!40000 ALTER TABLE `presupuesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -454,7 +460,7 @@ CREATE TABLE `presupuesto_repuestos` (
   `fecha_creacion` datetime DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,6 +469,7 @@ CREATE TABLE `presupuesto_repuestos` (
 
 LOCK TABLES `presupuesto_repuestos` WRITE;
 /*!40000 ALTER TABLE `presupuesto_repuestos` DISABLE KEYS */;
+INSERT INTO `presupuesto_repuestos` VALUES (1,1,1,2,'2016-06-07 12:24:10',1),(2,1,2,2,'2016-06-07 12:24:10',1),(3,1,3,2,'2016-06-07 12:24:10',1),(4,1,4,1,'2016-06-07 12:24:10',1),(5,1,5,1,'2016-06-07 12:24:10',1);
 /*!40000 ALTER TABLE `presupuesto_repuestos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -569,7 +576,7 @@ CREATE TABLE `reparaciones_repuestos` (
   `fecha_creacion` datetime DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -578,7 +585,7 @@ CREATE TABLE `reparaciones_repuestos` (
 
 LOCK TABLES `reparaciones_repuestos` WRITE;
 /*!40000 ALTER TABLE `reparaciones_repuestos` DISABLE KEYS */;
-INSERT INTO `reparaciones_repuestos` VALUES (1,1,2,2,NULL,1),(2,2,2,1,NULL,1),(3,2,1,3,NULL,1),(4,3,1,2,NULL,1);
+INSERT INTO `reparaciones_repuestos` VALUES (1,1,2,2,NULL,1),(2,2,2,1,NULL,1),(3,2,1,3,NULL,1),(4,3,1,2,NULL,1),(5,4,1,1,NULL,1),(6,4,2,1,NULL,1),(7,4,3,2,NULL,1),(8,4,4,2,NULL,1),(9,4,5,2,NULL,1);
 /*!40000 ALTER TABLE `reparaciones_repuestos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -599,7 +606,7 @@ CREATE TABLE `repuesto` (
   `idusuario` int(11) DEFAULT NULL,
   `habilitado` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -608,7 +615,7 @@ CREATE TABLE `repuesto` (
 
 LOCK TABLES `repuesto` WRITE;
 /*!40000 ALTER TABLE `repuesto` DISABLE KEYS */;
-INSERT INTO `repuesto` VALUES (1,'Botonera Galaxy S3',1350,5,0,'2016-04-30 00:05:20',0,1),(2,'Modulo Pantalla',32143,4,2,'2016-04-30 00:05:20',0,1),(3,'Teclado p3',300,3,1,'2016-05-29 00:29:08',0,1),(4,'Lamparita',15,250,NULL,'2016-06-03 19:07:15',0,1),(5,'Otra Lamparita',23,45,NULL,'2016-06-03 19:07:39',0,1);
+INSERT INTO `repuesto` VALUES (1,'Botonera Galaxy S3',1350,5,0,'2016-04-30 00:05:20',0,1),(2,'Modulo Pantalla',32143,4,2,'2016-04-30 00:05:20',0,1),(3,'Teclado p3',300,3,1,'2016-05-29 00:29:08',0,1),(4,'Lamparita',15,250,1,'2016-06-03 19:07:15',0,1),(5,'Otra Lamparita',23,45,2,'2016-06-03 19:07:39',0,1),(6,'Fuente 450-os',700,10,3,'2016-06-07 13:31:24',0,1),(7,'Disco Rigido',1050,10,1,'2016-06-07 13:39:40',0,1);
 /*!40000 ALTER TABLE `repuesto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -656,7 +663,7 @@ CREATE TABLE `usuario` (
   `habilitado` tinyint(4) DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -678,4 +685,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-05 20:52:06
+-- Dump completed on 2016-06-07 16:17:59
