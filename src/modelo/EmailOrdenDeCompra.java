@@ -44,9 +44,11 @@ public class EmailOrdenDeCompra extends Thread {
 		
 		for(int i = 0; i <  this.ventanaordenDeCompra.getComponentes_table().getRowCount(); i++){
 			
-		componentes += "<b>Repuesto:</b>&nbsp;&nbsp;"+ (String) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 1) + "&nbsp; &nbsp;&nbsp;&nbsp;" + 
-							"<b>Cantidad: </b>&nbsp;&nbsp;" + (int) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 3) + "&nbsp;&nbsp;&nbsp;&nbsp;" +
-							"<br>";
+		componentes += 
+				"<b>Marca:</b>&nbsp;&nbsp;"+ (String) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 1) + "&nbsp; &nbsp;&nbsp;&nbsp;" +
+				"<b>Repuesto:</b>&nbsp;&nbsp;"+ (String) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 2) + "&nbsp; &nbsp;&nbsp;&nbsp;" + 
+				"<b>Cantidad: </b>&nbsp;&nbsp;" + (int) this.ventanaordenDeCompra.getComponentes_table().getModel().getValueAt(i, 3) + "&nbsp;&nbsp;&nbsp;&nbsp;" +
+				"<br>";
 		}
 		
 		//asunto
