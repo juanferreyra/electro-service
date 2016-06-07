@@ -6,21 +6,19 @@ public class InsumoStockDTO {
 	private long InsumoID;
 	private int existencias;
 	private int aUsar;
-	private int restante; 
 	private int solicitada;
 	private int alarma;
 	private String marca;
 	private String nombre;
 	private int minimo;
 	
-	public InsumoStockDTO(int iD, long insumoID, int existencias, int aUsar, int restante, int solicitada, String marca,
+	public InsumoStockDTO(int iD, long insumoID, int existencias, int aUsar, int solicitada, String marca,
 			String nombre, int minimo, int alarma) {
 		super();
 		ID = iD;
 		InsumoID = insumoID;
 		this.existencias = existencias;
 		this.aUsar = aUsar;
-		this.restante = restante;
 		this.solicitada = solicitada;
 		this.marca = marca;
 		this.nombre = nombre;
@@ -28,17 +26,17 @@ public class InsumoStockDTO {
 		this.alarma = alarma;
 	}
 	
-	public InsumoStockDTO(int iD, long insumoID, int existencias) {
+	public InsumoStockDTO(int iD, long insumoID,String marca, String nombre, int existencias, int minimo) {
 		super();
 		ID = iD;
 		InsumoID = insumoID;
 		this.existencias = existencias;
 		this.aUsar = 0;
-		this.restante = 0;
 		this.solicitada = 0;
-		this.marca = "Marca";
-		this.nombre = "Nombre";
-		this.minimo = 0;
+		this.marca = marca;
+		this.nombre = nombre;
+		this.minimo = minimo;
+		this.alarma = 0;
 	}
 
 	public int getID() {
@@ -74,12 +72,10 @@ public class InsumoStockDTO {
 	}
 
 	public int getRestante() {
-		return restante;
+		return this.getExistencias()-this.getaUsar();
 	}
 
-	public void setRestante(int restante) {
-		this.restante = restante;
-	}
+	
 
 	public int getSolicitada() {
 		return solicitada;

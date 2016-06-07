@@ -293,8 +293,8 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 	public void actualizar_AvisoFaltante() {
 		limpiar_tablaAvisoFaltante();
-		ArrayList<InsumoStockDTO> insumos = stock.getFaltante();
-		for (int i = 0; i < insumos.size(); i++) {
+		ArrayList<InsumoStockDTO> insumos = stock.getFiltrado();
+		for (int i = 0; i <= insumos.size()-1; i++) {
 			cargar_FilaTablaAvisoFaltante(insumos.get(i).getNombre());
 		}
 

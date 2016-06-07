@@ -24,11 +24,10 @@ public class FormatoTablaStock extends DefaultTableCellRenderer {
 	}
 
 	private void aplicarColorFilas(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-
-		int existencia = Integer.valueOf((String) table.getValueAt(row, 2));
-		int reservado = Integer.valueOf((String) table.getValueAt(row, 3));
-		int pedido = Integer.valueOf((String) table.getValueAt(row, 4));
-		int minimo = Integer.valueOf((String) table.getValueAt(row, 6));
+		int existencia = (int)table.getValueAt(row, 2);
+		int reservado = (int) table.getValueAt(row, 3);
+		int pedido = (int) table.getValueAt(row, 4);
+		int minimo = (int) table.getValueAt(row, 6);
 
 		int resultado = existencia - reservado;
 

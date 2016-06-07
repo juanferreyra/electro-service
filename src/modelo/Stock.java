@@ -11,6 +11,7 @@ import persistencia.dao.RepuestoDAO;
 public class Stock {
 
 	private static ItemStockDAO itemStockDAO;
+	ArrayList<InsumoStockDTO> stockFiltrado = new ArrayList<InsumoStockDTO>();
 
 	public Stock() {
 
@@ -59,7 +60,30 @@ public class Stock {
 		return itemStockDAO.CargarInsumosReservados(insumosStock);
 	}
 
-	public ArrayList<InsumoStockDTO> getFaltante() {
-		return cargarPedidos(obtenerStock());
+	public ArrayList<InsumoStockDTO> getFiltrado() {
+
+		ArrayList<InsumoStockDTO> filtrado = new ArrayList<InsumoStockDTO>();
+		ArrayList<InsumoStockDTO> todos = obtenerStock();
+		for (InsumoStockDTO i : todos) {
+			if (i.getAlarma() == 1 || i.getAlarma() == 3) {
+				filtrado.add(i);
+			}
+		}
+
+		return filtrado;
+	}
+
+	public boolean esRojo(String repuestoName) {
+		ArrayList<InsumoStockDTO> filtrado = getFiltrado();
+		for (int i = 0; i < filtrado.size(); i++) {
+			if (filtrado.get(i).getNombre().equals(repuestoName)) {
+				if (filtrado.get(i).getAlarma() == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 }
