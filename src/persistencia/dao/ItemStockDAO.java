@@ -10,7 +10,7 @@ import dto.RepuestoDTO;
 import persistencia.conexion.Conexion;
 
 public class ItemStockDAO {
-	private static final String insert = "INSERT INTO itemStock (" + "`InsumoId`, `Existencias`, `habilitado`)"
+	private static final String insert = "INSERT INTO itemStock (`InsumoId`, " + "`Existencias`, `habilitado`)"
 			+ " VALUES (?, ?, 1); ";
 	private static final String delete = "UPDATE itemStock SET habilitado='0' WHERE Id = ?";
 	private static final String readall = "SELECT st.Id,mar.detalle AS Marca, st.InsumoId, re.detalle AS Nombre, st.Existencias, re.stock_minimo AS Minimo FROM itemStock st INNER JOIN repuesto re INNER JOIN  marca_producto mar ON  st.InsumoId = re.id and re.idmarca = mar.id WHERE st.habilitado = true;";

@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -236,9 +238,37 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			c.inicializar();
 
 		} else if (e.getSource() == this.principal.getStock()) {
+			
 			VentanaStock stock = new VentanaStock();
 			ControladorVentanaStock c = new ControladorVentanaStock(stock,usuarioLogueado);
 			c.inicializar();
+			
+			stock.addWindowListener(new WindowListener() {
+				
+				@Override
+				public void windowOpened(WindowEvent e) { }
+				
+				@Override
+				public void windowIconified(WindowEvent e) { }
+				
+				@Override
+				public void windowDeiconified(WindowEvent e) { }
+				
+				@Override
+				public void windowDeactivated(WindowEvent e) { }
+				
+				@Override
+				public void windowClosing(WindowEvent e) { }
+				
+				@Override
+				public void windowClosed(WindowEvent e) {
+					actualizar_AvisoFaltante();
+				}
+				
+				@Override
+				public void windowActivated(WindowEvent e) { }
+			});
+			
 		}
 	}
 

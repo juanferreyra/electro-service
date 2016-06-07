@@ -29,21 +29,18 @@ public class Repuesto {
 	
 	public void  modificarRepuesto(RepuestoDTO repuesto_a_modificar) {
 		repuestoDAO.update(repuesto_a_modificar);
-
 	}
+	
 	public RepuestoDTO buscarRepuesto(String detalle){
 		return repuestoDAO.find(detalle);
-
 	}
 
 	public String buscarDetalleXid(int idRepuesto){
 		return repuestoDAO.BuscarDetalleXid(idRepuesto);
 	}
+	
 	public int buscarIdRepuesto(String detalle){
 		return repuestoDAO.findXDetalle(detalle);
 	}
-
-
-
-
+	
 }

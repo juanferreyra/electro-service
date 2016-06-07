@@ -43,6 +43,7 @@ public class ControladorABMRepuesto implements ActionListener {
 
 		this.repuesto = new Repuesto();
 		this.marca = new Marca();
+		this.stock = new Stock();
 
 		cargarTabla();
 		cargarCombo();
@@ -239,10 +240,16 @@ public class ControladorABMRepuesto implements ActionListener {
 				if (!isTxtsVacios()) {
 
 					if (isTxtsValidos()) {
+						RepuestoDTO repuestoNuevo = obteneRepuesto(0);
 
-						repuesto.agregarRepuesto(obteneRepuesto(0));
-						//stock.agregarRepuesto(obteneRepuesto(0));
+						repuesto.agregarRepuesto(repuestoNuevo);
+						
+						 RepuestoDTO repuestoCompleto = repuesto.buscarRepuesto(repuestoNuevo.getDetalle());
+						
+						stock.agregarRepuesto(repuestoCompleto);
+						
 						limpiartxts();
+						
 						cargarTablaRepuestos();
 					}
 
@@ -373,14 +380,6 @@ public class ControladorABMRepuesto implements ActionListener {
 		ControladorABMRepuesto c = new ControladorABMRepuesto(abm);
 		c.inicializar();
 
-	}
-
-	public Stock getStock() {
-		return stock;
-	}
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
 	}
 
 }
