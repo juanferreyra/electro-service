@@ -64,6 +64,7 @@ public class VentanaPrincipal extends JFrame {
 	private JMenu _reporte;
 	private JMenuItem deslogueo;
 	private FormatoTablaAvisoFaltante formatoTablaAvisoFaltante;
+	private JMenuItem ordenCompra;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
@@ -289,16 +290,8 @@ public class VentanaPrincipal extends JFrame {
 		});
 		_contabilidad.add(stock);
 
-		JMenuItem ordenCompra = new JMenuItem("Generar Orden de Compra");
-		ordenCompra.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// VentanaOrdenCompra ventanaOdenCompra = new
-				// VentanaOrdenCompra();
-				// ControladorOrdenCompra c = new
-				// ControladorOrdenCompra(ventanaOdenCompra,usuario);
-				// c.inicializar();
-			}
-		});
+		ordenCompra = new JMenuItem("Generar Orden de Compra");
+
 		_contabilidad.add(ordenCompra);
 		_contabilidad.addSeparator();
 	}
@@ -475,6 +468,14 @@ public class VentanaPrincipal extends JFrame {
 
 	public void setTable_avisoFaltante(JTable table_avisoFaltante) {
 		this.table_avisoFaltante = table_avisoFaltante;
+	}
+
+	public JMenuItem getOrdenCompra() {
+		return ordenCompra;
+	}
+
+	public void setOrdenCompra(JMenuItem ordenCompra) {
+		this.ordenCompra = ordenCompra;
 	}
 
 }

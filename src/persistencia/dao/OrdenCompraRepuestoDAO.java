@@ -17,6 +17,10 @@ public class OrdenCompraRepuestoDAO {
 			+ "ocr.cantidad_real  FROM orden_compra_repuestos ocr LEFT JOIN repuesto r ON "
 			+ "(ocr.idrepuesto = r.id) WHERE ocr.idorden_compra = ? AND ocr.habilitado = TRUE;";
 	
+	private static final String findRepuesto = "SELECT * FROM orden_compra_repuestos WHERE idorden_compra = ? AND idrepuesto = ? AND habilitado=true;";
+	
+	private static final String updateCantidadReal = "UPDATE orden_compra_repuestos SET cantidad_real=? WHERE idorden_compra=? AND idrepuesto=?;";
+	
 	private Conexion conexion = Conexion.getConexion();
 
 	public boolean insert(OrdenCompraRepuestoDTO OrdenCompraRepuestoDTO) {
@@ -66,5 +70,54 @@ public class OrdenCompraRepuestoDAO {
 		}
 		return ordenCompraRepuesto;
 	}
+	
+	public boolean updateCantReal(int idordenCompra, int idRepuesto, int cantidadReal) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(updateCantidadReal);
+			statement.setInt(1, cantidadReal);
+			statement.setInt(2, idordenCompra);
+			statement.setInt(3, idRepuesto);
 
+			if (statement.executeUpdate() > 0)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return false;
+	}
+	
+	public OrdenCompraRepuestoDTO findRepuestoEnOrden(int idrepuesto, int idorden) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		OrdenCompraRepuestoDTO repuestoEnOrden = null;
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(findRepuesto);
+			statement.setInt(1, idorden);
+			statement.setInt(2, idrepuesto);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				repuestoEnOrden = new OrdenCompraRepuestoDTO(
+						resultSet.getInt("id"),
+						resultSet.getInt("idorden_compra"),
+						resultSet.getInt("idrepuesto"),
+						resultSet.getInt("cantidad"),
+						resultSet.getInt("cantidad_real"),
+						resultSet.getDate("fecha_creacion"),
+						true);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return repuestoEnOrden;
+	}
+	
 }

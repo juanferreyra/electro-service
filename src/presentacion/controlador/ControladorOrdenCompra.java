@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
 import dto.ItemRepuestoDTO;
 import dto.MarcaDTO;
+import dto.OrdenCompraRepuestoDTO;
 import dto.ProveedorDTO;
 import dto.UsuarioDTO;
 import modelo.EmailOrdenDeCompra;
@@ -68,14 +69,16 @@ public class ControladorOrdenCompra implements ActionListener{
 		ordenCompra.cargarVariables();
 		cargarProveedor(ordenCompra.getProveedorDTO());
 		actualizarTablaRepuestos();
-		this.ventanaOrdenCompra.getValorPresupuestado_txf().setText(String.valueOf( ordenCompra.getOrdenCompraDTO().getImporte_total()));
+		mostrarColumnaCantidadReal();
 		
 		if(!ordenCompra.getOrdenCompraDTO().getEstado().equals("NUEVA")) {
 			this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
 			this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
+			this.ventanaOrdenCompra.getValorPresupuestado_txf().setText(String.valueOf( ordenCompra.getOrdenCompraDTO().getImporte_total()));
 		} else {
 			this.ventanaOrdenCompra.getBtnCancelada().setVisible(true);
 			this.ventanaOrdenCompra.getBtnRecibido().setVisible(true);
+			this.ventanaOrdenCompra.getValorPresupuestado_txf().setText("");
 		}
 		
 		this.ventanaOrdenCompra.getBtnBuscarProveedor().setEnabled(false);
@@ -89,7 +92,6 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(false);
 		this.ventanaOrdenCompra.getBtnImprimir().setVisible(true);
 		this.ventanaOrdenCompra.getBtnEnviarEmial().setVisible(true);
-		mostrarColumnaCantidadReal();
 	}
 
 	@Override
@@ -134,16 +136,64 @@ public class ControladorOrdenCompra implements ActionListener{
 			
 		}else if(e.getSource() == this.ventanaOrdenCompra.getBtnRecibido()) {
 			
-			int response = JOptionPane.showConfirmDialog(null, "Ud. va a dar el presupuesto como Recibido la orden de compra. Realmente esta seguro?", "Confirmar",
+			int response = JOptionPane.showConfirmDialog(null, "Ud. actualizara las cantidades reales recibidas al dar la orden como RECIBIDA. Realmente esta seguro de dichos cambios?", "Confirmar",
 		        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		    if (response == JOptionPane.NO_OPTION) {
 		      
 		    } else if (response == JOptionPane.YES_OPTION) {
 		    	
-		    	ordenCompra.actualizarEstado("RECIBIDA");
-		    	this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
-				this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
+		    	Boolean error = false;
 		    	
+		    	Float importe = null;
+		    	
+		    	ArrayList<ItemRepuestoDTO> listaCantidades = new ArrayList<ItemRepuestoDTO>();
+		    	
+		    	try {
+		    		
+					importe = Float.parseFloat(this.ventanaOrdenCompra.getValorPresupuestado_txf().getText());
+					
+				} catch (Exception e3) {
+					JOptionPane.showMessageDialog(ventanaOrdenCompra, "Debe completar el campo importe. Gracias!", "Error!",
+							JOptionPane.INFORMATION_MESSAGE);
+					error = true;
+				}
+		    	
+		    	for(int i = 0; i <  this.ventanaOrdenCompra.getComponentes_table().getRowCount(); i++){
+		    		try {
+		    			int idRepuesto = Integer.parseInt(this.ventanaOrdenCompra.getComponentes_table().getModel().getValueAt(i, 0).toString());
+			    		int cantidadReal =Integer.parseInt(this.ventanaOrdenCompra.getComponentes_table().getModel().getValueAt(i, 4).toString());
+			    		
+			    		ItemRepuestoDTO item = new ItemRepuestoDTO(0,idRepuesto,"",cantidadReal,null,null);
+			    		
+			    		listaCantidades.add(item);
+			    		
+					} catch (NumberFormatException e2) {
+						
+						if(!error) {
+							JOptionPane.showMessageDialog(ventanaOrdenCompra, "Al parecer la cantidad real  del producto "+this.ventanaOrdenCompra.getComponentes_table().getModel().getValueAt(i, 2).toString()+" no es numerico. Por favor ingrese una nueva cantidad para continuar. Gracias", "Error!",
+									JOptionPane.INFORMATION_MESSAGE);
+						}
+						error = true;
+					}
+		    	}
+		    	
+	    		if(!error) {
+	    			Boolean actualizoCantidades = ordenCompra.actualizarCantidadesReales(listaCantidades);
+	    			Boolean actualizoStock = ordenCompra.actualizarStockRepuestos(listaCantidades);
+	    			Boolean actualizoImporte = ordenCompra.actualizarMontoFinal(importe);
+	    			ordenCompra.actualizarEstado("RECIBIDA");
+			    	this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
+					this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
+					
+					if(actualizoCantidades && actualizoStock && actualizoImporte) {
+						JOptionPane.showMessageDialog(ventanaOrdenCompra, "Stock actualizado", "Excelente!",
+								JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(ventanaOrdenCompra, "Ocurrio un error al actualizar las cantidades o el stock!", ":C",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+	    		}
+	    		
 		    } else if (response == JOptionPane.CLOSED_OPTION) {
 		    	
 		    }
@@ -273,13 +323,16 @@ public class ControladorOrdenCompra implements ActionListener{
 
 	private void actualizarTablaRepuestos() {
 		
-		modelTable = new DefaultTableModel(){
+		modelTable = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int fila, int columna) {
-
-				return false;
+				if(columna==4) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		};
 		
@@ -291,8 +344,19 @@ public class ControladorOrdenCompra implements ActionListener{
 			
 			MarcaDTO marca = ordenCompra.buscarMarca(repuestosAgregados.get(i).getIdrepuesto());
 			
+			int cantidadReal = repuestosAgregados.get(i).getCantidad();
+			
+			if(!(ordenCompra.getOrdenCompraDTO().getId()==-1)) {
+				if(!ordenCompra.getOrdenCompraDTO().getEstado().equals("NUEVA")) {
+					
+					OrdenCompraRepuestoDTO repuestoEnOrden = ordenCompra.getRepuestoEnOrden(repuestosAgregados.get(i).getIdrepuesto());
+					cantidadReal = repuestoEnOrden.getCantidad_real();
+				}
+			}
+			
+			
 			Object[] fila = {repuestosAgregados.get(i).getIdrepuesto(),marca.getDetalle(),repuestosAgregados.get(i).getDetalle(),
-					repuestosAgregados.get(i).getCantidad(),repuestosAgregados.get(i).getCantidad()};
+					repuestosAgregados.get(i).getCantidad(),cantidadReal};
 
 			modelTable.insertRow(0, fila);
 			

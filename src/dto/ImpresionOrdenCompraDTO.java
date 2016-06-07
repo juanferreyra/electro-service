@@ -5,7 +5,7 @@ import java.util.Date;
 public class ImpresionOrdenCompraDTO {
 	
 	public int orden_id;
-	public Float orden_importe;
+	public String orden_importe;
 	public Date orden_fecha;
 	public String orden_hora;
 	public String orden_estado;
@@ -21,8 +21,7 @@ public class ImpresionOrdenCompraDTO {
 	//campos de repuestos
 	public String resp_nombre;
 	public int resp_cantidad;
-	public Float resp_preciounitario;
-	public Float resp_preciototal;
+	public int resp_cantidadReal;
 	public String resp_marca;
 	
 	public ImpresionOrdenCompraDTO() {
@@ -37,11 +36,11 @@ public class ImpresionOrdenCompraDTO {
 		this.orden_id = orden_id;
 	}
 
-	public Float getOrden_importe() {
+	public String getOrden_importe() {
 		return orden_importe;
 	}
 
-	public void setOrden_importe(Float orden_importe) {
+	public void setOrden_importe(String orden_importe) {
 		this.orden_importe = orden_importe;
 	}
 
@@ -149,27 +148,19 @@ public class ImpresionOrdenCompraDTO {
 		this.resp_cantidad = resp_cantidad;
 	}
 
-	public Float getResp_preciounitario() {
-		return resp_preciounitario;
-	}
-
-	public void setResp_preciounitario(Float resp_preciounitario) {
-		this.resp_preciounitario = resp_preciounitario;
-	}
-
-	public Float getResp_preciototal() {
-		return resp_preciototal;
-	}
-
-	public void setResp_preciototal(Float resp_preciototal) {
-		this.resp_preciototal = resp_preciototal;
-	}
-
 	public String getResp_marca() {
 		return resp_marca;
 	}
 
 	public void setResp_marca(String resp_marca) {
 		this.resp_marca = resp_marca;
+	}
+
+	public void setResp_cantidadReal(int resp_cantidadReal) {
+		this.resp_cantidadReal = resp_cantidadReal;
+	}
+	
+	public int getResp_cantidadReal() {
+		return resp_cantidadReal;
 	}
 }

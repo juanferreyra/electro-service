@@ -34,7 +34,8 @@ public class VentanaABMRepuesto extends JFrame {
 		setBounds(100, 100, 779, 464);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
-
+		setLocationRelativeTo(null);
+		
 		JLabel title_lbl = new JLabel("Nuevo repuesto");
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 12));

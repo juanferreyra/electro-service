@@ -30,7 +30,7 @@ public class VentanaABMTipoProducto extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		limpiar_btn = new JButton("Limpiar");
 		limpiar_btn.setBounds(500, 252, 89, 23);
