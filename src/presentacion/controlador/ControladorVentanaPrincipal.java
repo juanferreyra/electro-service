@@ -47,6 +47,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getBtnElaborarHojaDe().addActionListener(this);
 		this.principal.getBtnOrdenDeCompra().addActionListener(this);
 		this.principal.getDeslogueo().addActionListener(this);
+		this.principal.getOrdenCompra().addActionListener(this);
 		this.agregarMouseListenerTabla(this);
 	}
 
@@ -226,6 +227,12 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 			ControladorVentanaLogin controlLogin = new ControladorVentanaLogin();
 			controlLogin.getPantalla();
+		} else if (e.getSource() == this.principal.getOrdenCompra()) {
+
+			VentanaOrdenCompra ventanaOdenCompra = new VentanaOrdenCompra();
+			ControladorOrdenCompra c = new ControladorOrdenCompra(ventanaOdenCompra, usuarioLogueado);
+			c.inicializar();
+
 		}
 	}
 

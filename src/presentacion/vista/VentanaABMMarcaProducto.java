@@ -31,7 +31,8 @@ public class VentanaABMMarcaProducto extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		setLocationRelativeTo(null);
+		
 		JLabel title_lbl = new JLabel("Nueva marca de producto");
 		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);

@@ -38,6 +38,7 @@ public class VentanaABMFlete extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		limpiar_btn = new JButton("Limpiar");
 		limpiar_btn.setBounds(474, 348, 121, 23);

@@ -39,6 +39,7 @@ public class VentanaABMCliente extends JFrame {
 		setBounds(100, 100, 742, 454);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
 
 		JLabel title_lbl = new JLabel("Nuevo cliente");
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
