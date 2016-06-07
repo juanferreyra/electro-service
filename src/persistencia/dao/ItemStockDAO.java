@@ -149,8 +149,8 @@ public class ItemStockDAO {
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(update);
-			statement.setLong(1, insumoID);
-			statement.setInt(2, variacion);
+			statement.setLong(1,variacion);
+			statement.setLong(2, insumoID);
 
 			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
 				return true;
