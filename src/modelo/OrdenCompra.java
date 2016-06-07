@@ -179,19 +179,19 @@ public class OrdenCompra {
 	
 	public Boolean actualizarStockRepuestos(ArrayList<ItemRepuestoDTO> items) {
 		
-		/*for (int i = 0; i < items.size(); i++) {
+		Stock st = new Stock();
+		
+		for (int i = 0; i < items.size(); i++) {
 			
-			int idOrden = ordenCompraDTO.getId();
 			int idRepuesto = items.get(i).getIdrepuesto();
 			int cantidadReal = items.get(i).getCantidad();
 			
 			try {
-				//TODO::Actualizaria stock de Repuestos
+				st.modificarStock(idRepuesto, cantidadReal);
 			} catch (Exception e) {
 				return false;
 			}
-		}*/
-		
+		}
 		return true;
 	}
 	
