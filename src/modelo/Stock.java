@@ -36,7 +36,7 @@ public class Stock {
 		return itemStockDAO.readAll();
 	}
 
-	public void modificarStock(long repuestoID, int variacion) {
+	public void modificarStock(int repuestoID, int variacion) {
 		itemStockDAO.update(repuestoID, variacion);
 	}
 
