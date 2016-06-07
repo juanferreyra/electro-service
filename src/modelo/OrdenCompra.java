@@ -148,4 +148,51 @@ public class OrdenCompra {
 		return marcaDAO.find(resp.getIdmarca());
 	}
 	
+	public Boolean actualizarCantidadesReales(ArrayList<ItemRepuestoDTO> items) {
+		
+		for (int i = 0; i < items.size(); i++) {
+			
+			int idOrden = ordenCompraDTO.getId();
+			int idRepuesto = items.get(i).getIdrepuesto();
+			int cantidadReal = items.get(i).getCantidad();
+			
+			try {
+				ordenCompraRepuestoDAO.updateCantReal(idOrden,idRepuesto,cantidadReal);
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		
+		return true;
+		
+	}
+	
+	public Boolean actualizarMontoFinal(Float monto) {
+		
+		return ordenCompraDAO.updateImporteTotal(monto, this.ordenCompraDTO.getId());
+		
+	}
+	
+	public OrdenCompraRepuestoDTO getRepuestoEnOrden(int idrepuesto) {
+		return ordenCompraRepuestoDAO.findRepuestoEnOrden(idrepuesto, this.ordenCompraDTO.getId());
+	}
+	
+	public Boolean actualizarStockRepuestos(ArrayList<ItemRepuestoDTO> items) {
+		
+		/*for (int i = 0; i < items.size(); i++) {
+			
+			int idOrden = ordenCompraDTO.getId();
+			int idRepuesto = items.get(i).getIdrepuesto();
+			int cantidadReal = items.get(i).getCantidad();
+			
+			try {
+				//TODO::Actualizaria stock de Repuestos
+			} catch (Exception e) {
+				return false;
+			}
+		}*/
+		
+		return true;
+	}
+	
 }

@@ -9,19 +9,19 @@ import persistencia.conexion.Conexion;
 
 public class ImpresionOrdenCompraDAO {
 	
-	private static final String readall = "SELECT oc.id as orden_id, oc.importe_total as orden_importe, DATE(oc.fecha_creacion) as orden_fecha, "
+	private static final String readall = "SELECT oc.id as orden_id, IF(oc.importe_total=0,'',concat('IMPORTE: ',oc.importe_total)) AS orden_importe, DATE(oc.fecha_creacion) as orden_fecha, "
 			+ " TIME(oc.fecha_creacion) as orden_hora, oc.estado as orden_estado, p.razon_social as proveedor_razonSocial,  p.cuit as proveedor_cuit,"
 			+ " p.direccion as proveedor_direccion, p.mail as proveedor_mail, p.contacto_nombre as proveedor_nombreContacto, p.contacto_telefono as proveedor_telefonoContacto,"
 			+ " p.contacto_mail as proveedor_emailContacto, p.mail_para_pedidos as proveedor_emailPedidos, r.detalle as resp_nombre, ocr.cantidad as resp_cantidad,"
-			+ " ocr.precio_unitario as resp_preciounitario, ocr.precio_unitario * ocr.cantidad as resp_preciototal, m.detalle as resp_marca"
+			+ " IF(oc.estado='NUEVA','',ocr.cantidad_real) AS resp_cantidadReal, m.detalle as resp_marca"
 			+ " FROM orden_compra oc LEFT JOIN orden_compra_repuestos ocr ON(ocr.idorden_compra=oc.id) LEFT JOIN repuesto r ON(ocr.idrepuesto=r.id) LEFT JOIN"
 			+ " proveedor p ON(p.id=oc.idproveedor) LEFT JOIN marca_producto m ON(m.id=r.idmarca) WHERE oc.habilitado=true; ";
 			
-	private static final String find = "SELECT oc.id as orden_id, oc.importe_total as orden_importe, DATE(oc.fecha_creacion) as orden_fecha, "
+	private static final String find = "SELECT oc.id as orden_id, IF(oc.importe_total=0,'',concat('IMPORTE: ',oc.importe_total)) AS orden_importe, DATE(oc.fecha_creacion) as orden_fecha, "
 			+ " TIME(oc.fecha_creacion) as orden_hora, oc.estado as orden_estado, p.razon_social as proveedor_razonSocial,  p.cuit as proveedor_cuit,"
 			+ " p.direccion as proveedor_direccion, p.mail as proveedor_mail, p.contacto_nombre as proveedor_nombreContacto, p.contacto_telefono as proveedor_telefonoContacto,"
 			+ " p.contacto_mail as proveedor_emailContacto, p.mail_para_pedidos as proveedor_emailPedidos, r.detalle as resp_nombre, ocr.cantidad as resp_cantidad,"
-			+ " ocr.precio_unitario as resp_preciounitario, ocr.precio_unitario * ocr.cantidad as resp_preciototal, m.detalle as resp_marca"
+			+ " IF(oc.estado='NUEVA','',ocr.cantidad_real) AS resp_cantidadReal, m.detalle as resp_marca"
 			+ " FROM orden_compra oc LEFT JOIN orden_compra_repuestos ocr ON(ocr.idorden_compra=oc.id) LEFT JOIN repuesto r ON(ocr.idrepuesto=r.id) LEFT JOIN"
 			+ " proveedor p ON(p.id=oc.idproveedor) LEFT JOIN marca_producto m ON(m.id=r.idmarca) WHERE oc.id = ? AND oc.habilitado=true;";
 	
@@ -43,7 +43,7 @@ public class ImpresionOrdenCompraDAO {
 				
 				ImpresionOrdenCompraDTO orden = new ImpresionOrdenCompraDTO();
 				orden.setOrden_id(resultSet.getInt("orden_id"));
-				orden.setOrden_importe(resultSet.getFloat("orden_importe"));
+				orden.setOrden_importe(resultSet.getString("orden_importe"));
 				orden.setOrden_fecha(resultSet.getDate("orden_fecha"));
 				orden.setOrden_hora(resultSet.getString("orden_hora"));
 				orden.setOrden_estado(resultSet.getString("orden_estado"));
@@ -57,8 +57,7 @@ public class ImpresionOrdenCompraDAO {
 				orden.setProveedor_emailPedidos(resultSet.getString("proveedor_emailPedidos"));
 				orden.setResp_nombre(resultSet.getString("resp_nombre"));
 				orden.setResp_cantidad(resultSet.getInt("resp_cantidad"));
-				orden.setResp_preciounitario(resultSet.getFloat("resp_preciounitario"));
-				orden.setResp_preciototal(resultSet.getFloat("resp_preciototal"));
+				orden.setResp_cantidadReal(resultSet.getInt("resp_cantidadReal"));
 				orden.setResp_marca(resultSet.getString("resp_marca"));
 				
 				ordenes.add(orden);
@@ -87,7 +86,7 @@ public class ImpresionOrdenCompraDAO {
 				
 				ImpresionOrdenCompraDTO orden = new ImpresionOrdenCompraDTO();
 				orden.setOrden_id(resultSet.getInt("orden_id"));
-				orden.setOrden_importe(resultSet.getFloat("orden_importe"));
+				orden.setOrden_importe(resultSet.getString("orden_importe"));
 				orden.setOrden_fecha(resultSet.getDate("orden_fecha"));
 				orden.setOrden_hora(resultSet.getString("orden_hora"));
 				orden.setOrden_estado(resultSet.getString("orden_estado"));
@@ -101,8 +100,7 @@ public class ImpresionOrdenCompraDAO {
 				orden.setProveedor_emailPedidos(resultSet.getString("proveedor_emailPedidos"));
 				orden.setResp_nombre(resultSet.getString("resp_nombre"));
 				orden.setResp_cantidad(resultSet.getInt("resp_cantidad"));
-				orden.setResp_preciounitario(resultSet.getFloat("resp_preciounitario"));
-				orden.setResp_preciototal(resultSet.getFloat("resp_preciototal"));
+				orden.setResp_cantidadReal(resultSet.getInt("resp_cantidadReal"));
 				orden.setResp_marca(resultSet.getString("resp_marca"));
 				
 				ordenes.add(orden);

@@ -72,7 +72,7 @@ public class OrdenCompraRepuestoDTO {
 		this.habilitado = habilitado;
 	}
 
-	public float getCantidad_real() {
+	public int getCantidad_real() {
 		return cantidad_real;
 	}
 

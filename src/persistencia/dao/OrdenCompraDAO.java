@@ -21,7 +21,9 @@ public class OrdenCompraDAO {
 			+ "date(fecha_creacion) as fecha_creacion, time(fecha_creacion) as hora_creacion , estado "
 			+ "FROM orden_compra WHERE habilitado=true AND id= ? ;";
 	
-	private static final String updateEstado = "UPDATE orden_compra SET `estado`=? WHERE `id`= ? ;";
+	private static final String updateEstado = "UPDATE orden_compra SET estado = ? WHERE id = ? ;";
+	
+	private static final String updateMonto = "UPDATE orden_compra set importe_total = ? WHERE id = ?";
 	
 	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'orden_compra';";
 	
@@ -89,6 +91,26 @@ public class OrdenCompraDAO {
 			statement = conexion.getSQLConexion().prepareStatement(updateEstado);
 
 			statement.setString(1, estado);
+			statement.setInt(2, id);
+			
+			if (statement.executeUpdate() > 0)
+				return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		return false;
+	}
+	
+	public boolean updateImporteTotal(Float importe, int id) {
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(updateMonto);
+
+			statement.setFloat(1, importe);
 			statement.setInt(2, id);
 			
 			if (statement.executeUpdate() > 0)

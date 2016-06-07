@@ -165,11 +165,11 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(monto_pedido_lbl);
 
 		cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(598, 688, 90, 23);
+		cancelar_btn.setBounds(620, 688, 90, 23);
 		contentPane.add(cancelar_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(494, 688, 90, 23);
+		guardar_btn.setBounds(520, 688, 90, 23);
 		contentPane.add(guardar_btn);
 		
 		btnBuscarProveedor = new JButton("");
@@ -208,16 +208,17 @@ public class VentanaOrdenCompra extends JFrame {
 		
 		BtnVaciarVentanaOrden = new JButton("");
 		BtnVaciarVentanaOrden.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/delete.png")));
-		BtnVaciarVentanaOrden.setBounds(694, 11, 25, 25);
+		BtnVaciarVentanaOrden.setBounds(685, 11, 25, 25);
 		contentPane.add(BtnVaciarVentanaOrden);
 		
 		btnImprimir = new JButton("Imprimir");
 		btnImprimir.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/printer.png")));
-		btnImprimir.setBounds(179, 688, 139, 23);
+		btnImprimir.setBounds(34, 688, 139, 23);
 		contentPane.add(btnImprimir);
 		
 		btnEnviarEmial = new JButton("Enviar Emial");
-		btnEnviarEmial.setBounds(348, 688, 127, 23);
+		btnEnviarEmial.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/mail.png")));
+		btnEnviarEmial.setBounds(179, 688, 127, 23);
 		contentPane.add(btnEnviarEmial);
 	}
 
@@ -324,5 +325,4 @@ public class VentanaOrdenCompra extends JFrame {
 	public JButton getBtnEnviarEmial() {
 		return btnEnviarEmial;
 	}
-	
 }
