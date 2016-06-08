@@ -368,6 +368,7 @@ public class ControladorOrdenCompra implements ActionListener{
 
 	private void actualizarTablaRepuestos() {
 		
+		
 		modelTable = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 
@@ -403,7 +404,7 @@ public class ControladorOrdenCompra implements ActionListener{
 			Object[] fila = {repuestosAgregados.get(i).getIdrepuesto(),marca.getDetalle(),repuestosAgregados.get(i).getDetalle(),
 					repuestosAgregados.get(i).getCantidad(),cantidadReal};
 
-			modelTable.insertRow(0, fila);
+			modelTable.addRow(fila);;
 			
 			modelTable.isCellEditable(i, 0);
 			modelTable.isCellEditable(i, 1);
@@ -423,10 +424,13 @@ public class ControladorOrdenCompra implements ActionListener{
 		if(this.ventanaOrdenCompra.getComponentes_table().getSelectedRow() != -1) {
 
 			int seleccionado = ventanaOrdenCompra.getComponentes_table().getSelectedRow();
-			String nombre = ventanaOrdenCompra.getComponentes_table().getValueAt(seleccionado, 1).toString();
+			String nombre = ventanaOrdenCompra.getComponentes_table().getValueAt(seleccionado, 2).toString();
+			System.out.println(nombre);
 			
 			for (int i = 0; i < this.ordenCompra.getListaDeRepuestos().size(); i++) {
+				
 				if(this.ordenCompra.getListaDeRepuestos().get(i).getDetalle().equals(nombre)) {
+					
 					this.ordenCompra.getListaDeRepuestos().remove(i);
 				}
 			}
