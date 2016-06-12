@@ -23,8 +23,8 @@ public class VentanaABMUsuario extends JFrame {
 	private JPasswordField pass_txt;
 	private JTable tablaUsuario;
 	private DefaultTableModel modelUsuario;
-	private String[] nombreColumnas = { "id","Nick","Nombre", "Apellido", "Perfil", "idPerfil" };
-	private JComboBox <String> perfil_comboBox ;
+	private String[] nombreColumnas = { "id", "Nick", "Nombre", "Apellido", "Perfil", "idPerfil" };
+	private JComboBox<String> perfil_comboBox;
 	private JButton limpiar_btn;
 	private JButton guardar_btn;
 	private JButton eliminarItem_btn;
@@ -37,86 +37,92 @@ public class VentanaABMUsuario extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
-		
+		contentPane.setLayout(null);
+
 		JLabel nick_lbl = new JLabel("Nick");
-		nick_lbl.setBounds(123, 62, 71, 14);
+		nick_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		nick_lbl.setBounds(142, 54, 146, 14);
 		contentPane.add(nick_lbl);
-		
+
 		JLabel nombre_lbl = new JLabel("Nombre");
-		nombre_lbl.setBounds(123, 95, 71, 14);
+		nombre_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		nombre_lbl.setBounds(142, 88, 129, 14);
 		contentPane.add(nombre_lbl);
 
 		JLabel apellido_lbl = new JLabel("Apellido");
-		apellido_lbl.setBounds(123, 120, 71, 14);
+		apellido_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		apellido_lbl.setBounds(142, 119, 146, 14);
 		contentPane.add(apellido_lbl);
 
 		JLabel pass_lbl = new JLabel("Contrase\u00F1a");
-		pass_lbl.setBounds(123, 145, 71, 14);
+		pass_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		pass_lbl.setBounds(142, 150, 178, 14);
 		contentPane.add(pass_lbl);
-		
+
 		nick_txt = new JTextField();
-		nick_txt.setBounds(190, 59, 392, 20);
+		nick_txt.setBounds(221, 51, 373, 20);
 		contentPane.add(nick_txt);
 		nick_txt.setColumns(10);
 
 		nombre_txt = new JTextField();
-		nombre_txt.setBounds(190, 89, 392, 20);
+		nombre_txt.setBounds(221, 85, 373, 20);
 		contentPane.add(nombre_txt);
 		nombre_txt.setColumns(10);
 
 		apellido_txt = new JTextField();
 		apellido_txt.setColumns(10);
-		apellido_txt.setBounds(190, 117, 392, 20);
+		apellido_txt.setBounds(221, 116, 373, 20);
 		contentPane.add(apellido_txt);
 
 		pass_txt = new JPasswordField();
-		pass_txt.setBounds(190, 145, 392, 20);
+		pass_txt.setBounds(221, 147, 160, 20);
 		contentPane.add(pass_txt);
 
 		JLabel lblPerfil = new JLabel("Perfil");
-		lblPerfil.setBounds(123, 199, 71, 14);
+		lblPerfil.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblPerfil.setBounds(419, 150, 119, 14);
 		contentPane.add(lblPerfil);
 
 		perfil_comboBox = new JComboBox<String>();
-		perfil_comboBox.setBounds(190, 193, 392, 20);
+		perfil_comboBox.setBounds(465, 147, 129, 20);
 		contentPane.add(perfil_comboBox);
 
 		JLabel title_lbl = new JLabel("Nuevo usuario");
-		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		title_lbl.setBounds(34, 24, 712, 14);
+		title_lbl.setBounds(10, 11, 736, 15);
 		contentPane.add(title_lbl);
 
 		limpiar_btn = new JButton("Limpiar");
-		limpiar_btn.setBounds(664, 392, 89, 23);
+		limpiar_btn.setBounds(439, 389, 99, 23);
 		getContentPane().add(limpiar_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(565, 392, 89, 23);
+		guardar_btn.setBounds(221, 389, 99, 23);
 		getContentPane().add(guardar_btn);
 
 		JScrollPane repuesto_scrollPane = new JScrollPane();
-		repuesto_scrollPane.setBounds(123, 246, 459, 91);
+		repuesto_scrollPane.setBounds(142, 219, 452, 159);
 		getContentPane().add(repuesto_scrollPane);
 
-		modelUsuario = new DefaultTableModel(null, nombreColumnas){
+		modelUsuario = new DefaultTableModel(null, nombreColumnas) {
 
-		/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
-		@Override
-		public boolean isCellEditable(int fila, int columna) {
+			@Override
+			public boolean isCellEditable(int fila, int columna) {
 
-			return false;
-		}
-	};
+				return false;
+			}
+		};
 		tablaUsuario = new JTable(modelUsuario);
+		tablaUsuario.getColumnModel().getColumn(0).setMaxWidth(0);
+		tablaUsuario.getColumnModel().getColumn(0).setMinWidth(0);
+		tablaUsuario.getColumnModel().getColumn(0).setPreferredWidth(0);
 		repuesto_scrollPane.setViewportView(tablaUsuario);
 
-		eliminarItem_btn = new JButton("Eliminar Item");
-		eliminarItem_btn.setBounds(434, 392, 121, 23);
+		eliminarItem_btn = new JButton("Eliminar");
+		eliminarItem_btn.setBounds(330, 389, 99, 23);
 		getContentPane().add(eliminarItem_btn);
 	}
 
@@ -163,6 +169,5 @@ public class VentanaABMUsuario extends JFrame {
 	public JButton getEliminarItem_btn() {
 		return eliminarItem_btn;
 	}
-	
-	
+
 }
