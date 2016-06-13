@@ -35,7 +35,7 @@ public class VentanaSelectorFechasReporte extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaSelectorFechasReporte.class.getResource("/chart-pie.png")));
 		setType(Type.POPUP);
 		setTitle("Selector de Fechas");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 367);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

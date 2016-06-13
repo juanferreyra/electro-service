@@ -28,6 +28,7 @@ import presentacion.vista.VentanaOrdenCompra;
 import presentacion.vista.VentanaPresupuesto;
 import presentacion.vista.VentanaPrincipal;
 import presentacion.vista.VentanaReparacion;
+import presentacion.vista.VentanaSelectorFechasReporte;
 import presentacion.vista.VentanaStock;
 
 public class ControladorVentanaPrincipal implements ActionListener {
@@ -52,6 +53,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getDeslogueo().addActionListener(this);
 		this.principal.getOrdenCompra().addActionListener(this);
 		this.principal.getStock().addActionListener(this);
+		this.principal.getVenta().addActionListener(this);
+		this.principal.getReparado().addActionListener(this);
+		this.principal.getMasInsumido().addActionListener(this);
 		this.agregarMouseListenerTabla(this);
 	}
 
@@ -269,6 +273,15 @@ public class ControladorVentanaPrincipal implements ActionListener {
 				public void windowActivated(WindowEvent e) { }
 			});
 			
+		} else if(e.getSource() == this.principal.getVenta()) {
+			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(1, new VentanaSelectorFechasReporte());
+			a.inicializar();
+		} else if(e.getSource() == this.principal.getReparado()) {
+			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(2, new VentanaSelectorFechasReporte());
+			a.inicializar();
+		} else if(e.getSource() == this.principal.getMasInsumido()) {
+			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(3, new VentanaSelectorFechasReporte());
+			a.inicializar();
 		}
 	}
 

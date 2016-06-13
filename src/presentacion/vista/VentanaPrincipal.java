@@ -61,6 +61,9 @@ public class VentanaPrincipal extends JFrame {
 	private FormatoTablaAvisoFaltante formatoTablaAvisoFaltante;
 	private JMenuItem ordenCompra;
 	private JMenuItem stock;
+	private JMenuItem venta;
+	private JMenuItem reparado;
+	private JMenuItem masInsumido;
 
 	@SuppressWarnings("serial")
 	public VentanaPrincipal() {
@@ -245,31 +248,16 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void cargarItemsReporte() {
-		JMenu estadisticos = new JMenu("Generar Reporte Estad�stico");
+		JMenu estadisticos = new JMenu("Generar Reporte Estadistico");
 		_reporte.add(estadisticos);
 
-		JMenuItem venta = new JMenuItem("De ventas por fecha");
-		venta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// Abrir reporte ventas por fecha
-			}
-		});
+		venta = new JMenuItem("De ventas por fecha");
 		estadisticos.add(venta);
 
-		JMenuItem reparado = new JMenuItem("De reparaciones");
-		reparado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// Abrir reporte reparaciones
-			}
-		});
+		reparado = new JMenuItem("De reparaciones");
 		estadisticos.add(reparado);
 
-		JMenuItem masInsumido = new JMenuItem("De repuestos m�s insumidos");
-		masInsumido.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				// Abrir reporte repuestos mas insumidos
-			}
-		});
+		masInsumido = new JMenuItem("De repuestos mas insumidos");
 		estadisticos.add(masInsumido);
 		_reporte.addSeparator();
 	}
@@ -471,4 +459,16 @@ public class VentanaPrincipal extends JFrame {
 		return stock;
 	}
 	
+	public JMenuItem getVenta() {
+		return venta;
+	}
+
+	public JMenuItem getReparado() {
+		return reparado;
+	}
+
+	public JMenuItem getMasInsumido() {
+		return masInsumido;
+	}
+
 }
