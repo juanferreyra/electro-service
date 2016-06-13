@@ -11,6 +11,7 @@ public class Reparacion {
 
 	public void guardarReparacion(String tecnicoAsignado, Date fecha_reparacion, int horas, int valor_estimado,
 			String descripcionFinal, int ingresoId) {
+		
 		reparacionDTO.setId(reparacionDAO.getNextId());
 		reparacionDTO.setTecnico_asignado(tecnicoAsignado);
 		reparacionDTO.setFecha_reparacion(fecha_reparacion);
@@ -18,6 +19,7 @@ public class Reparacion {
 		reparacionDTO.setValor_estimado(valor_estimado);
 		reparacionDTO.setDescripcion_final(descripcionFinal);
 		reparacionDTO.setIngreso_id(ingresoId);
+		
 		reparacionDAO.insert(reparacionDTO);
 	}
 

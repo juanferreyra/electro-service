@@ -425,7 +425,7 @@ public class ControladorOrdenCompra implements ActionListener{
 
 			int seleccionado = ventanaOrdenCompra.getComponentes_table().getSelectedRow();
 			String nombre = ventanaOrdenCompra.getComponentes_table().getValueAt(seleccionado, 2).toString();
-			System.out.println(nombre);
+		
 			
 			for (int i = 0; i < this.ordenCompra.getListaDeRepuestos().size(); i++) {
 				

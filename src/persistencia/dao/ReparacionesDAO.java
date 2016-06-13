@@ -12,7 +12,7 @@ public class ReparacionesDAO {
 
 	private static final String insert = "INSERT INTO reparaciones (`id`,"
 			+ "`tecnico_asignado`, `fecha_reparacion`, `horas`, `valor_estimado`,`descripcion_final`,`ingreso_id`)"
-			+ " VALUES (?, ?, ?, ?, ?, ?, ?); ";
+			+ " VALUES (?, ?, now(), ?, ?, ?, ?); ";
 	private static final String nextId = "SELECT Auto_Increment as siguiente FROM INFORMATION_SCHEMA.TABLES WHERE Table_name = 'reparaciones';";
 	private Conexion conexion = Conexion.getConexion();
 
