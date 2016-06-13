@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
-
+import javax.swing.ScrollPaneLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -38,6 +38,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
+import java.awt.Rectangle;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.CardLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.border.MatteBorder;
+import javax.swing.UIManager;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.Point;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -52,7 +66,7 @@ public class VentanaPrincipal extends JFrame {
 	private FormatoTablaOrdenesTrabajo formatoTablaOrdenTrabajo;
 	private JButton btnOrdenDeCompra;
 	private JTable table_avisoFaltante;
-	private JScrollPane panelAviso;
+	private JScrollPane scrollPaneAviso;
 	private JMenu _sistema;
 	private JMenu _contabilidad;
 	private JMenu _gestion;
@@ -77,7 +91,6 @@ public class VentanaPrincipal extends JFrame {
 		setMinimumSize(new Dimension(1046, 546));
 
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout());
 
 		setContentPane(contentPane);
@@ -87,14 +100,14 @@ public class VentanaPrincipal extends JFrame {
 		menuBar.setBorder(null);
 		menuBar.setMinimumSize(new Dimension(0, 0));
 		menuBar.setMaximumSize(new Dimension(0, 0));
-		menuBar.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		menuBar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		menuBar.setBounds(0, 0, 1028, 50);
 
 		_sistema = new JMenu("Sistema");
 		menuBar.add(_sistema);
 		cargarItemsDeSistema();
 
-		_gestion = new JMenu("Gestiï¿½n de Datos");
+		_gestion = new JMenu("Gesti\u00F3n de Datos");
 		menuBar.add(_gestion);
 		cargarItemsDeGestion();
 
@@ -110,14 +123,14 @@ public class VentanaPrincipal extends JFrame {
 
 		JLabel ordenesDeTrabajo_lbl = new JLabel("<html>\u00D3rdenes de Trabajo</html>");
 		ordenesDeTrabajo_lbl.setMinimumSize(new Dimension(1000, 50));
-		ordenesDeTrabajo_lbl.setForeground(new Color(105, 105, 105));
-		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		ordenesDeTrabajo_lbl.setForeground(new Color(0, 0, 0));
+		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel contenedorPanelArriba = new JPanel(new BorderLayout());
 
 		JPanel subpanelArriba = new JPanel();
-		subpanelArriba.setBackground(Color.WHITE);
+		subpanelArriba.setBackground(new Color(248, 248, 255));
 		subpanelArriba.setForeground(Color.WHITE);
 		subpanelArriba.add(ordenesDeTrabajo_lbl);
 
@@ -132,8 +145,8 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_table.setFont(new Font("Arial", Font.PLAIN, 17));
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 
-		DefaultTableModel modeloOrdenesTrabajo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Nï¿½mero",
-				"Fecha", "Producto", "Cliente", "Envï¿½o", "", "Tï¿½cnico Asignado", "Estado" }) {
+		DefaultTableModel modeloOrdenesTrabajo = new DefaultTableModel(new Object[][] {}, new String[] { "", "Número",
+				"Fecha", "Producto", "Cliente", "Envío", "", "Técnico Asignado", "Estado" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { JLabel.class, Integer.class, String.class, String.class, String.class,
 					String.class, JLabel.class, String.class, String.class };
@@ -169,8 +182,9 @@ public class VentanaPrincipal extends JFrame {
 		});
 
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
-		ordenesDeTrabajo_scrollPane.setMinimumSize(new Dimension(50, 50));
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		ordenesDeTrabajo_scrollPane.setBorder(null);
+		ordenesDeTrabajo_scrollPane.setMinimumSize(new Dimension(50, 50));
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
 		ordenesDeTrabajo_scrollPane.add(ordenesDeTrabajo_table);
@@ -179,8 +193,10 @@ public class VentanaPrincipal extends JFrame {
 		// TABLA DE AVISO DE FALTANTE
 
 		table_avisoFaltante = new JTable();
+		table_avisoFaltante.setBorder(null);
+		table_avisoFaltante.setPreferredScrollableViewportSize(new Dimension(200, 500));
 
-		DefaultTableModel modeloAviso = new DefaultTableModel(new Object[][] {}, new String[] { "Aviso de Faltante" }) {
+		DefaultTableModel modeloAviso = new DefaultTableModel(new Object[][] {}, new String[] { "" }) {
 			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { String.class };
 
@@ -198,28 +214,35 @@ public class VentanaPrincipal extends JFrame {
 		table_avisoFaltante.setRowHeight(20);
 		table_avisoFaltante.setModel(modeloAviso);
 
-		panelAviso = new JScrollPane();
-		panelAviso.setBackground(SystemColor.control);
-		panelAviso.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		panelAviso.setBorder(new LineBorder(new Color(130, 135, 144), 3, true));
-		panelAviso.add(table_avisoFaltante);
+		table_avisoFaltante.getColumnModel().getColumn(0).setMaxWidth(250);
+		table_avisoFaltante.getColumnModel().getColumn(0).setMinWidth(250);
+		table_avisoFaltante.getColumnModel().getColumn(0).setPreferredWidth(250);
 
-		panelAviso.setViewportView(table_avisoFaltante);
+		scrollPaneAviso = new JScrollPane();
+		scrollPaneAviso.setForeground(Color.BLACK);
+		scrollPaneAviso.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		scrollPaneAviso.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "AVISO DE FALTANTE", TitledBorder.CENTER, TitledBorder.BELOW_TOP, null, new Color(70, 130, 180)));
+		scrollPaneAviso.setMinimumSize(new Dimension(50, 50));
+		scrollPaneAviso.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneAviso.setBounds(10, 134, 1005, 301);
+		scrollPaneAviso.add(table_avisoFaltante);
+		scrollPaneAviso.setViewportView(table_avisoFaltante);
+
 		setearPropiedadesDeTablaAvisoFaltante();
 
-		// AGREGO LABEL AVISO FALTANTE Y TABLA ORDENES DE TRABAJO EN UN PANEL
+		// AGREGO AVISO FALTANTE Y TABLA ORDENES DE TRABAJO EN UN PANEL
 		// CENTRAL
 		JPanel contenedorCentral = new JPanel();
 		contenedorCentral.setLayout(new BoxLayout(contenedorCentral, BoxLayout.LINE_AXIS));
 
 		contenedorCentral.add(ordenesDeTrabajo_scrollPane);
-		contentPane.add(panelAviso, BorderLayout.WEST);
+		contentPane.add(scrollPaneAviso, BorderLayout.WEST);
 		contentPane.add(contenedorCentral, BorderLayout.CENTER);
 
 		// FIN CONTENEDOR CENTRAL
 
 		JPanel panelDeBotones = new JPanel(new FlowLayout());
-		panelDeBotones.setBackground(Color.WHITE);
+		panelDeBotones.setBackground(new Color(248, 248, 255));
 		contentPane.add(panelDeBotones, BorderLayout.SOUTH);
 
 		ingresarProducto_btn = new JButton("<html><center>Crear</center></html>");
@@ -248,7 +271,7 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void cargarItemsReporte() {
-		JMenu estadisticos = new JMenu("Generar Reporte Estadistico");
+		JMenu estadisticos = new JMenu("Generar Reporte Estad\u00EDstico");
 		_reporte.add(estadisticos);
 
 		venta = new JMenuItem("De ventas por fecha");
@@ -257,7 +280,7 @@ public class VentanaPrincipal extends JFrame {
 		reparado = new JMenuItem("De reparaciones");
 		estadisticos.add(reparado);
 
-		masInsumido = new JMenuItem("De repuestos mas insumidos");
+		masInsumido = new JMenuItem("De repuestos m\u00E1s insumidos");
 		estadisticos.add(masInsumido);
 		_reporte.addSeparator();
 	}
@@ -357,9 +380,6 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	private void cargarItemsDeSistema() {
-		deslogueo = new JMenuItem("Cerrar Sesiï¿½n");
-
-		_sistema.add(deslogueo);
 
 		JMenuItem ayuda = new JMenuItem("Ayuda");
 		_sistema.add(ayuda);
@@ -371,6 +391,9 @@ public class VentanaPrincipal extends JFrame {
 		backup.add(_export);
 		JMenuItem _import = new JMenuItem("Importar Datos");
 		backup.add(_import);
+		deslogueo = new JMenuItem("Cerrar Sesi\u00F3n");
+
+		_sistema.add(deslogueo);
 
 		_sistema.addSeparator();
 
@@ -454,7 +477,7 @@ public class VentanaPrincipal extends JFrame {
 	public void setOrdenCompra(JMenuItem ordenCompra) {
 		this.ordenCompra = ordenCompra;
 	}
-	
+
 	public JMenuItem getStock() {
 		return stock;
 	}
@@ -470,5 +493,4 @@ public class VentanaPrincipal extends JFrame {
 	public JMenuItem getMasInsumido() {
 		return masInsumido;
 	}
-
 }
