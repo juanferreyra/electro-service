@@ -16,11 +16,11 @@ public class IngresoDTO {
 	private Date fecha_creacion;
 	private int estado;
 	private int idusuario;
-	private int tecnico_asignado;;
+	private String tecnico_asignado;;
 
 	public IngresoDTO(int id, int idcliente, String descripcion, int idmarca, int idtipo_producto,
 			String descripcion_falla, Boolean envio, Boolean envioDefault, String direccion_alternativa,
-			float monto_envio, Date fecha_creacion, int estado, int idusuario, int tecnico_asignado) {
+			float monto_envio, Date fecha_creacion, int estado, int idusuario, String tecnico_asignado) {
 		this.id = id;
 		this.idcliente = idcliente;
 		this.descripcion = descripcion;
@@ -145,11 +145,11 @@ public class IngresoDTO {
 		return monto_envio + "";
 	}
 
-	public void setTecnico_asignado(int tecnico_asignado) {
+	public void setTecnico_asignado(String tecnico_asignado) {
 		this.tecnico_asignado = tecnico_asignado;
 	}
 
-	public int getTecnico_asignado() {
+	public String getTecnico_asignado() {
 		return this.tecnico_asignado;
 	}
 }

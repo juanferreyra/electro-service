@@ -183,8 +183,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				if (monto.equals("") && !error) {
 					error = true;
 					JOptionPane.showMessageDialog(this.ventana_ingreso,
-							"Por favor, ingrese el costo en pesos del envio.", null,
-							JOptionPane.INFORMATION_MESSAGE);
+							"Por favor, ingrese el costo en pesos del envio.", null, JOptionPane.INFORMATION_MESSAGE);
 				} else if (!error) {
 					try {
 						montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
@@ -203,7 +202,14 @@ public class ControladorVentanaIngreso implements ActionListener {
 						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
 						this.ventana_ingreso.getEnvioDomicilio().isSelected(),
 						this.ventana_ingreso.getDireccion_nueva().isSelected(),
-						this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1, 0, 0);
+						this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1, 0, "");// VER
+																											// ESTO
+																											// !!!
+																											// SE
+																											// GUARDA
+																											// VACIO
+																											// EL
+																											// TECNICO
 				this.ingreso.ingr = ingresoDTO;
 
 				Boolean ingreso = this.ingreso.guardarIngreso(0);
@@ -218,41 +224,47 @@ public class ControladorVentanaIngreso implements ActionListener {
 			this.ventana_ingreso.setTxtDireccionNueva("");
 			this.ventana_ingreso.setMontoEnvio("");
 			this.determinarVisibilidadCuadro_DireccionNueva();
-		} else if(e.getSource() == this.ventana_ingreso.getCrearCliente_btn()) {
+		} else if (e.getSource() == this.ventana_ingreso.getCrearCliente_btn()) {
 			VentanaABMCliente ventClient = new VentanaABMCliente();
 			ControladorABMCliente contrClient = new ControladorABMCliente(ventClient);
 			contrClient.inicializar();
-			
+
 			ventClient.addWindowListener(new WindowListener() {
-				
+
 				@Override
-				public void windowOpened(WindowEvent e) { }
-				
+				public void windowOpened(WindowEvent e) {
+				}
+
 				@Override
-				public void windowIconified(WindowEvent e) { }
-				
+				public void windowIconified(WindowEvent e) {
+				}
+
 				@Override
-				public void windowDeiconified(WindowEvent e) { }
-				
+				public void windowDeiconified(WindowEvent e) {
+				}
+
 				@Override
-				public void windowDeactivated(WindowEvent e) { }
-				
+				public void windowDeactivated(WindowEvent e) {
+				}
+
 				@Override
-				public void windowClosing(WindowEvent e) { }
-				
+				public void windowClosing(WindowEvent e) {
+				}
+
 				@Override
 				public void windowClosed(WindowEvent e) {
-					
-					if(ventClient.getTablaClientes().getSelectedRow() != -1){
+
+					if (ventClient.getTablaClientes().getSelectedRow() != -1) {
 						ventana_ingreso.getTxtNroCliente().setText(ventClient.getDocumento_txt().getText());
 						buscarCliente();
 					}
 				}
-				
+
 				@Override
-				public void windowActivated(WindowEvent e) { }
+				public void windowActivated(WindowEvent e) {
+				}
 			});
-			
+
 		}
 	}
 
@@ -306,10 +318,10 @@ public class ControladorVentanaIngreso implements ActionListener {
 	}
 
 	private void llenarTablaCliente(ClienteDTO client) {
-		this.ventana_ingreso.getLbl_nombre_apellido_cliente().setText(client.getNombre()+", "+client.getApellido());
+		this.ventana_ingreso.getLbl_nombre_apellido_cliente().setText(client.getNombre() + ", " + client.getApellido());
 		this.ventana_ingreso.getLbl_direccion_cliente().setText(client.getDireccion());
-		this.ventana_ingreso.getLbl_telefono_cliente().setText("Telefono: "+client.getTelefono());
-		this.ventana_ingreso.getLbl_email_cliente().setText("Email: "+client.getMail());
+		this.ventana_ingreso.getLbl_telefono_cliente().setText("Telefono: " + client.getTelefono());
+		this.ventana_ingreso.getLbl_email_cliente().setText("Email: " + client.getMail());
 	}
 
 }

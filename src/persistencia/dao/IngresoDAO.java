@@ -28,6 +28,8 @@ public class IngresoDAO {
 
 	private static final String updateStatus = "UPDATE ingreso SET estado = ? WHERE Id = ? ;";
 
+	private static final String updateTecnicoAsignado = "UPDATE ingreso SET tecnico_asignado = ? WHERE Id = ? ;";
+
 	private static final String findReparados = "SELECT  i.id, i.idcliente,  i.descripcion_producto, i.idmarca, i.idtipo_producto, i.descripcion_falla, i.envio, "
 			+ "i.envio_default, i.direccion_alternativa, i.monto_envio, log.estado, i.fecha_creacion, i.idusuario, i.habilitado, "
 			+ "i.tecnico_asignado, hi.idhojaruta FROM ingreso i LEFT JOIN (SELECT  il.idingreso, (SELECT idestado FROM "
@@ -37,12 +39,35 @@ public class IngresoDAO {
 			+ "(hi.en_entrega=false OR hi.en_entrega IS NULL) group by i.id;";
 	private Conexion conexion = Conexion.getConexion();
 
-	public boolean update(int ingresoId, int estado) { //Le inserta el nuevo estado.
-															
+	public boolean update(int ingresoId, int estado) { // Le inserta el nuevo
+														// estado.
+
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(updateStatus);
 			statement.setInt(1, estado);
+			statement.setInt(2, ingresoId);
+
+			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { // Se ejecuta siempre
+			Conexion.cerrarConexion();
+		}
+		return false;
+	}
+
+	public boolean updateTecnicoAsignado(int ingresoId, String tecnico) { // Le
+																			// inserta
+																			// el
+		// nuevo
+		// tecnico.
+
+		PreparedStatement statement;
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(updateTecnicoAsignado);
+			statement.setString(1, tecnico);
 			statement.setInt(2, ingresoId);
 
 			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
@@ -72,7 +97,7 @@ public class IngresoDAO {
 						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
 						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
-						resultSet.getInt("tecnico_asignado")));
+						resultSet.getString("tecnico_asignado")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -147,7 +172,7 @@ public class IngresoDAO {
 						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
 						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
-						resultSet.getInt("tecnico_asignado"));
+						resultSet.getString("tecnico_asignado"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -196,7 +221,7 @@ public class IngresoDAO {
 						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
 						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
-						resultSet.getInt("tecnico_asignado")));
+						resultSet.getString("tecnico_asignado")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -223,7 +248,7 @@ public class IngresoDAO {
 						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
 						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
-						resultSet.getInt("tecnico_asignado")));
+						resultSet.getString("tecnico_asignado")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

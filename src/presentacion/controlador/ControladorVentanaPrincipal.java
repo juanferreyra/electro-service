@@ -112,12 +112,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
 		limpiar_tablaOrdenesTrabajo();
 		for (int i = 0; i <= ingresos.size() - 1; i++) {
-			String nombreCompletoTecnicoAsignado = "";
-			if (ingresos.get(i).getTecnico_asignado() != 0) {
-				nombreCompletoTecnicoAsignado = usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getNombre() + " "
-						+ usuarioDAO.find(ingresos.get(i).getTecnico_asignado()).getApellido();
 
-			}
+			String nombreCompletoTecnicoAsignado = ingresos.get(i).getTecnico_asignado() + "";
+
 			this.cargarFila(i, new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
 					ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(), ingresos.get(i).getDescripcion(),
 					clienteDAO.find(ingresos.get(i).getIdcliente()).getNombre(),
