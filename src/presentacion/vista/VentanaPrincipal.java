@@ -5,8 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.ScrollPaneLayout;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JLabel;
@@ -36,22 +34,8 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.border.LineBorder;
-import java.awt.SystemColor;
-import java.awt.Rectangle;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.CardLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import javax.swing.border.MatteBorder;
 import javax.swing.UIManager;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
-import java.awt.Point;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -218,7 +202,8 @@ public class VentanaPrincipal extends JFrame {
 		scrollPaneAviso = new JScrollPane();
 		scrollPaneAviso.setForeground(Color.BLACK);
 		scrollPaneAviso.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		scrollPaneAviso.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "AVISO DE FALTANTE", TitledBorder.CENTER, TitledBorder.BELOW_TOP, null, new Color(70, 130, 180)));
+		scrollPaneAviso.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "AVISO DE FALTANTE",
+				TitledBorder.CENTER, TitledBorder.BELOW_TOP, null, new Color(70, 130, 180)));
 		scrollPaneAviso.setMinimumSize(new Dimension(50, 50));
 		scrollPaneAviso.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneAviso.setBounds(10, 134, 1005, 301);
