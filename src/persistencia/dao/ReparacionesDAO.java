@@ -23,10 +23,10 @@ public class ReparacionesDAO {
 			statement.setInt(1, componente.getId());
 			statement.setString(2, componente.getTecnico_asignado());
 			statement.setDate(3, (Date) componente.getFecha_reparacion());
-			statement.setInt(4, componente.getHoras());
-			statement.setInt(5, componente.getValor_estimado());
-			statement.setString(6, componente.getDescripcion_final());
-			statement.setInt(7, componente.getIngreso_id());
+			//statement.setInt(4, componente.getHoras());
+			statement.setInt(4, componente.getValor_estimado());
+			statement.setString(5, componente.getDescripcion_final());
+			statement.setInt(6, componente.getIngreso_id());
 
 			if (statement.executeUpdate() > 0)
 				return true;
