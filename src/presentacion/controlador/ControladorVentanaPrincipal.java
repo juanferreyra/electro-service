@@ -143,17 +143,18 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		// Agrego fila solo en caso de que lo permita el perfil (hardcodeo luego
 		// modificar)
-		if (this.usuarioLogueado.getIdperfil() == 2 && (estado.equals("NUEVO") || estado.equals("INFORMADO")
-				|| estado.equals("IRREPARABLE") || estado.equals("REPARADO") || estado.equals("RECHAZADO")
-				|| estado.equals("AVISO DE RETIRO") || estado.equals("RETIRADO") || estado.equals(""))) {// HARDCODEO
+		if (this.usuarioLogueado.getIdperfil() == 2
+				&& (estado.equals("NUEVO") || estado.equals("INFORMADO") || estado.equals("IRREPARABLE")
+						|| estado.equals("REPARADO") || estado.equals("RECHAZADO") || estado.equals("AVISO DE RETIRO")
+						|| estado.equals("RETIRADO") || estado.equals("") || estado.equals("PRESUPUESTADO"))) {// ADMINISTRATIVO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 
 		} else if (this.usuarioLogueado.getIdperfil() == 3 && (estado.equals("NUEVO") || estado.equals("ACEPTADO")
-				|| estado.equals("EN REPARACION") || estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO"))) {// HARDCODEO
+				|| estado.equals("EN REPARACION") || estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO"))) {// TECNICO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
-		} else if (this.usuarioLogueado.getIdperfil() == 1) {
+		} else if (this.usuarioLogueado.getIdperfil() == 1) {// ADMINISTRADOR
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 		}
 
@@ -242,45 +243,54 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			c.inicializar();
 
 		} else if (e.getSource() == this.principal.getStock()) {
-			
+
 			VentanaStock stock = new VentanaStock();
-			ControladorVentanaStock c = new ControladorVentanaStock(stock,usuarioLogueado);
+			ControladorVentanaStock c = new ControladorVentanaStock(stock, usuarioLogueado);
 			c.inicializar();
-			
+
 			stock.addWindowListener(new WindowListener() {
-				
+
 				@Override
-				public void windowOpened(WindowEvent e) { }
-				
+				public void windowOpened(WindowEvent e) {
+				}
+
 				@Override
-				public void windowIconified(WindowEvent e) { }
-				
+				public void windowIconified(WindowEvent e) {
+				}
+
 				@Override
-				public void windowDeiconified(WindowEvent e) { }
-				
+				public void windowDeiconified(WindowEvent e) {
+				}
+
 				@Override
-				public void windowDeactivated(WindowEvent e) { }
-				
+				public void windowDeactivated(WindowEvent e) {
+				}
+
 				@Override
-				public void windowClosing(WindowEvent e) { }
-				
+				public void windowClosing(WindowEvent e) {
+				}
+
 				@Override
 				public void windowClosed(WindowEvent e) {
 					actualizar_AvisoFaltante();
 				}
-				
+
 				@Override
-				public void windowActivated(WindowEvent e) { }
+				public void windowActivated(WindowEvent e) {
+				}
 			});
-			
-		} else if(e.getSource() == this.principal.getVenta()) {
-			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(1, new VentanaSelectorFechasReporte());
+
+		} else if (e.getSource() == this.principal.getVenta()) {
+			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(1,
+					new VentanaSelectorFechasReporte());
 			a.inicializar();
-		} else if(e.getSource() == this.principal.getReparado()) {
-			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(2, new VentanaSelectorFechasReporte());
+		} else if (e.getSource() == this.principal.getReparado()) {
+			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(2,
+					new VentanaSelectorFechasReporte());
 			a.inicializar();
-		} else if(e.getSource() == this.principal.getMasInsumido()) {
-			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(3, new VentanaSelectorFechasReporte());
+		} else if (e.getSource() == this.principal.getMasInsumido()) {
+			ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(3,
+					new VentanaSelectorFechasReporte());
 			a.inicializar();
 		}
 	}
@@ -350,7 +360,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	public void actualizar_AvisoFaltante() {
 		limpiar_tablaAvisoFaltante();
 		ArrayList<InsumoStockDTO> insumos = stock.getFiltrado();
-		for (int i = 0; i <= insumos.size()-1; i++) {
+		for (int i = 0; i <= insumos.size() - 1; i++) {
 			cargar_FilaTablaAvisoFaltante(insumos.get(i).getNombre());
 		}
 
