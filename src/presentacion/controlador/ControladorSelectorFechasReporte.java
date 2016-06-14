@@ -2,8 +2,12 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+
+import dto.ReporteFinancieroActivosDTO;
+import dto.ReporteFinancieroPasivosDTO;
 import modelo.SelectorFechaReporte;
 import presentacion.vista.VentanaSelectorFechasReporte;
 
@@ -133,6 +137,17 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 			}
 			
 			if(!error) {
+				
+				ArrayList<ReporteFinancieroPasivosDTO> a = this.modelReporte.getFinancieroPasivos();
+				ArrayList<ReporteFinancieroActivosDTO> b = this.modelReporte.getFinancieroActivos();
+				
+				for (int i = 0; i < a.size(); i++) {
+					System.out.println(a.get(i).fecha_orden);
+				}
+				
+				for (int x = 0; x < b.size(); x++) {
+					System.out.println(b.get(x).nro_ingreso);
+				}
 				
 				//TODO::Aca valido el tipo de reporte y lo muestro con una funcion de SelectorFechaReporte
 				//donde me traiga el tipo de reporte sabiendo que

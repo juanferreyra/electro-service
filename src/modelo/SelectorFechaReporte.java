@@ -1,17 +1,33 @@
 package modelo;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import dto.ReporteFinancieroActivosDTO;
+import dto.ReporteFinancieroPasivosDTO;
+import persistencia.dao.ReporteFinancieroDAO;
+
 public class SelectorFechaReporte {
 	
+	private ReporteFinancieroDAO financieroDAO;
 	private Date inicio;
 	private Date fin;
 	
 	public SelectorFechaReporte() {
+		financieroDAO = new ReporteFinancieroDAO();
 		this.inicio = null;
 		this.fin = null;
+	}
+	
+	public ArrayList<ReporteFinancieroPasivosDTO> getFinancieroPasivos() {
+		return this.financieroDAO.findPasivos(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteFinancieroActivosDTO> getFinancieroActivos() {
+		return this.financieroDAO.findActivos(this.inicio, this.fin);
 	}
 	
 	public void setearFechasAnio(GregorianCalendar fecha) {
@@ -68,8 +84,6 @@ public class SelectorFechaReporte {
 	}
 
 	private Date getUltimoDiaAnio(GregorianCalendar fecha) {
-		//SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		//sdf.format(cal.getTime());
 		Calendar cal = fecha;
 		// get end of the year
 		cal.add(Calendar.YEAR, 1);
@@ -94,6 +108,7 @@ public class SelectorFechaReporte {
 	}
 	
 	public String fechasToString() {
-		return "Fecha inicio:"+inicio.toString() +" Fecha Fin:"+fin.toString();	
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		return "Fecha inicio:"+sdf.format(inicio.getTime()) +" Fecha Fin:"+sdf.format(fin.getTime());
 	}
 }

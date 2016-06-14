@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-06-13T18:00:31 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ImpresionIngreso" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="12a0abd7-5c3f-4ef0-bf9e-b71189e32dec">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="electroServ_OrdenCompra"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="orden_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[orden_id]]></fieldDescription>
+	</field>
+	<field name="proveedor_razonSocial" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_razonSocial]]></fieldDescription>
+	</field>
+	<field name="orden_fecha" class="java.util.Date">
+		<fieldDescription><![CDATA[orden_fecha]]></fieldDescription>
+	</field>
+	<field name="proveedor_email" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_email]]></fieldDescription>
+	</field>
+	<field name="resp_marca" class="java.lang.String">
+		<fieldDescription><![CDATA[resp_marca]]></fieldDescription>
+	</field>
+	<field name="proveedor_direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_direccion]]></fieldDescription>
+	</field>
+	<field name="proveedor_emailPedidos" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_emailPedidos]]></fieldDescription>
+	</field>
+	<field name="orden_hora" class="java.lang.String">
+		<fieldDescription><![CDATA[orden_hora]]></fieldDescription>
+	</field>
+	<field name="proveedor_telefonoContacto" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_telefonoContacto]]></fieldDescription>
+	</field>
+	<field name="orden_estado" class="java.lang.String">
+		<fieldDescription><![CDATA[orden_estado]]></fieldDescription>
+	</field>
+	<field name="proveedor_cuit" class="java.lang.Integer">
+		<fieldDescription><![CDATA[proveedor_cuit]]></fieldDescription>
+	</field>
+	<field name="proveedor_nombreContacto" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_nombreContacto]]></fieldDescription>
+	</field>
+	<field name="resp_cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[resp_cantidad]]></fieldDescription>
+	</field>
+	<field name="proveedor_emailContacto" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor_emailContacto]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="resp_nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[resp_nombre]]></fieldDescription>
+	</field>
+	<field name="resp_cantidadReal" class="java.lang.Integer">
+		<fieldDescription><![CDATA[resp_cantidadReal]]></fieldDescription>
+	</field>
+	<field name="orden_importe" class="java.lang.String">
+		<fieldDescription><![CDATA[orden_importe]]></fieldDescription>
+	</field>
+	<group name="marcas">
+		<groupExpression><![CDATA[$F{resp_marca}]]></groupExpression>
+		<groupHeader>
+			<band height="53"/>
+		</groupHeader>
+	</group>
+	<pageHeader>
+		<band height="227">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="350" y="117" width="232" height="20" uuid="b96fd677-ec23-476a-81fa-7ead8949f5ca"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha: "+$F{orden_fecha}+" "+$F{orden_hora}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="20" y="202" width="250" height="1" uuid="f9ac1149-dc3c-45e2-8cfb-65a56ce4abf5"/>
+			</line>
+			<line>
+				<reportElement x="20" y="157" width="318" height="1" uuid="340595a1-c7ba-49d3-999e-8c34a08e8d0b"/>
+			</line>
+			<rectangle>
+				<reportElement mode="Opaque" x="15" y="8" width="568" height="109" forecolor="#FFFFFF" backcolor="#77767E" uuid="04e182c5-4cdf-4c94-aff7-5c3920e574cc"/>
+			</rectangle>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement mode="Opaque" x="20" y="13" width="178" height="100" forecolor="rgba(255, 255, 255, 0.0)" backcolor="rgba(255, 255, 255, 0.99215686)" uuid="f8b24f87-2c66-4fba-a6b4-7f1c1feec07a"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="419" y="8" width="154" height="20" forecolor="#FFFFFF" uuid="661378ad-3204-4d7f-aec8-8aaa8354c452"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Microsoft New Tai Lue" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Orden de Compra Nº "+$F{orden_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="228" y="41" width="343" height="60" forecolor="#FFFFFF" uuid="8d62a5b7-6b49-4ea2-b861-d4d5a5b84261"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Activos y Pasivos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="50"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="37">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="395" y="10" width="190" height="20" uuid="5f6b98a4-060f-4e2d-bd7b-9db93d4869e9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
