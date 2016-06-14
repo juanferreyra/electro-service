@@ -206,7 +206,7 @@ public class ControladorPresupuesto implements ActionListener {
 
 		} else if (e.getSource() == this.ventanaPresupuesto.getBtnInformado()) {
 			int response = JOptionPane.showConfirmDialog(null,
-					"Ud. va a dar el presupuesto como Informado al cliente.<br> Esta seguro?", "Confirmar",
+					"Ud. va a dar el presupuesto como Informado al cliente. ¿Esta seguro?", "Confirmar",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (response == JOptionPane.NO_OPTION) {
 
@@ -222,7 +222,7 @@ public class ControladorPresupuesto implements ActionListener {
 			}
 		} else if (e.getSource() == this.ventanaPresupuesto.getBtnAceptado()) {
 			int response = JOptionPane.showConfirmDialog(null,
-					"Ud. va a dar el presupuesto como aceptado por el cliente. Esta seguro?", "Confirmar",
+					"Ud. va a dar el presupuesto como aceptado por el cliente. ¿Esta seguro?", "Confirmar",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (response == JOptionPane.NO_OPTION) {
 
@@ -244,7 +244,7 @@ public class ControladorPresupuesto implements ActionListener {
 			}
 		} else if (e.getSource() == this.ventanaPresupuesto.getBtnRechazado()) {
 			int response = JOptionPane.showConfirmDialog(null,
-					"Ud. va a dar el presupuesto como rechazado por el cliente. Esta seguro?", "Confirmar",
+					"Ud. va a dar el presupuesto como rechazado por el cliente. ¿Esta seguro?", "Confirmar",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (response == JOptionPane.NO_OPTION) {
 
