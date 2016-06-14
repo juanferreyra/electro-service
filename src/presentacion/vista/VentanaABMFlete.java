@@ -44,7 +44,7 @@ public class VentanaABMFlete extends JFrame {
 		limpiar_btn.setBounds(474, 348, 121, 23);
 		getContentPane().add(limpiar_btn);
 
-		guardar_btn = new JButton("Ingresar Item");
+		guardar_btn = new JButton("Ingresar");
 		guardar_btn.setBounds(343, 348, 121, 23);
 		getContentPane().add(guardar_btn);
 
@@ -64,7 +64,7 @@ public class VentanaABMFlete extends JFrame {
 		tablaFlete = new JTable(modelFlete);
 		flete_scrollPane.setViewportView(tablaFlete);
 
-		eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar");
 		eliminarItem_btn.setBounds(212, 348, 121, 23);
 		getContentPane().add(eliminarItem_btn);
 

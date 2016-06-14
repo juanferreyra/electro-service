@@ -31,40 +31,41 @@ public class VentanaABMTipoProducto extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
+		contentPane.setLayout(null);
 
 		limpiar_btn = new JButton("Limpiar");
-		limpiar_btn.setBounds(500, 252, 89, 23);
+		limpiar_btn.setBounds(384, 262, 125, 23);
 		getContentPane().add(limpiar_btn);
 
-		ingresar_btn = new JButton("Ingresar Item");
-		ingresar_btn.setBounds(401, 252, 89, 23);
+		ingresar_btn = new JButton("Ingresar");
+		ingresar_btn.setBounds(249, 262, 125, 23);
 		getContentPane().add(ingresar_btn);
 
 		JLabel title_lbl = new JLabel("Nuevo tipo de producto");
 		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		title_lbl.setBounds(10, 11, 622, 14);
+		title_lbl.setBounds(10, 11, 622, 15);
 		contentPane.add(title_lbl);
 
 		JLabel detalle_lbl = new JLabel("Detalle");
-		detalle_lbl.setBounds(83, 76, 76, 14);
+		detalle_lbl.setBounds(114, 59, 146, 14);
 		contentPane.add(detalle_lbl);
 
 		detalle_txt = new JTextField();
-		detalle_txt.setBounds(128, 73, 455, 20);
+		detalle_txt.setBounds(184, 56, 325, 20);
 		contentPane.add(detalle_txt);
 		detalle_txt.setColumns(10);
 
 		JScrollPane tipoProducto_scrollPane = new JScrollPane();
-		tipoProducto_scrollPane.setBounds(83, 135, 504, 91);
+		tipoProducto_scrollPane.setBounds(114, 100, 394, 137);
 		getContentPane().add(tipoProducto_scrollPane);
 
 		modelTipoProducto = new DefaultTableModel(null, nombreColumnas);
 		tablaTipoProducto = new JTable(modelTipoProducto);
 		tipoProducto_scrollPane.setViewportView(tablaTipoProducto);
 
-		eliminarItem_btn = new JButton("Eliminar Item");
-		eliminarItem_btn.setBounds(269, 252, 121, 23);
+		eliminarItem_btn = new JButton("Eliminar");
+		eliminarItem_btn.setBounds(114, 262, 125, 23);
 		getContentPane().add(eliminarItem_btn);
 	}
 
