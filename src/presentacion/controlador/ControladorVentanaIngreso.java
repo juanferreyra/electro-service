@@ -13,6 +13,7 @@ import dto.ClienteDTO;
 import dto.IngresoDTO;
 import dto.MarcaDTO;
 import dto.TipoProductoDTO;
+import dto.UsuarioDTO;
 import modelo.Ingreso;
 import persistencia.dao.ClienteDAO;
 import presentacion.reportes.ReporteIngreso;
@@ -26,9 +27,11 @@ public class ControladorVentanaIngreso implements ActionListener {
 	private List<MarcaDTO> lista_marcas;
 	private List<TipoProductoDTO> lista_tiposproductos;
 	private ControladorVentanaPrincipal controladorVentanaPrincipal;
+	private UsuarioDTO usuarioLogueado;
 
 	public ControladorVentanaIngreso(VentanaIngreso ventana, Ingreso ingreso,
-			ControladorVentanaPrincipal controladorVentanaPrincipal) {
+			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
+		this.usuarioLogueado = usuario;
 		this.ventana_ingreso = ventana;
 		this.ingreso = ingreso;
 		this.ventana_ingreso.getBtnBuscarCliente().addActionListener(this);
@@ -202,17 +205,11 @@ public class ControladorVentanaIngreso implements ActionListener {
 						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
 						this.ventana_ingreso.getEnvioDomicilio().isSelected(),
 						this.ventana_ingreso.getDireccion_nueva().isSelected(),
-						this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1, 0, "");// VER
-																											// ESTO
-																											// !!!
-																											// SE
-																											// GUARDA
-																											// VACIO
-																											// EL
-																											// TECNICO
+						this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1,
+						usuarioLogueado.getId(), this.ingreso.getId());
 				this.ingreso.ingr = ingresoDTO;
 
-				Boolean ingreso = this.ingreso.guardarIngreso(0);
+				Boolean ingreso = this.ingreso.guardarIngreso(usuarioLogueado.getId());
 
 				if (ingreso) {
 					this.ventana_ingreso.vaciarTodo();

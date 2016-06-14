@@ -272,7 +272,7 @@ public class ControladorPresupuesto implements ActionListener {
 				ingresoLogDAO.insert(ingrLog);
 				// Asigno el tecnico
 				IngresoDAO ingresoDAO = new IngresoDAO();
-				ingresoDAO.updateTecnicoAsignado(ingreso.id, usuarioLogueado.getNombre());
+				ingresoDAO.updateTecnicoAsignado(ingreso.id, usuarioLogueado.getId());
 
 				ocultarBotonesEstados();
 				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();

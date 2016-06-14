@@ -12,23 +12,23 @@ import persistencia.conexion.Conexion;
 public class UsuarioDAO {
 
 	private static final String find = "SELECT * FROM usuario WHERE id=? AND habilitado = true";
-	
+
 	private static final String findNick = "SELECT * from usuario WHERE nick = ? AND habilitado = true";
-	
-	private static final String buscarPerfil ="SELECT * FROM perfil WHERE id = ?;";
-	
-	private static final String ALLPerfil ="SELECT * FROM perfil;";
-	
+
+	private static final String buscarPerfil = "SELECT * FROM perfil WHERE id = ?;";
+
+	private static final String ALLPerfil = "SELECT * FROM perfil;";
+
 	private static final String insert = "INSERT INTO usuario (nick, nombre, apellido, password, idperfil, habilitado, fecha_creacion)"
 			+ " VALUES (?, ?, ?, ?, ?, true, now());";
-	
+
 	private static final String delete = "UPDATE usuario SET habilitado='0' WHERE id = ?";
-	
+
 	private static final String readall = "SELECT id, nick, nombre, apellido, password, idperfil  FROM usuario WHERE habilitado = true;";
-	
+
 	private static final String update = "UPDATE usuario SET nick = ?,nombre = ?, apellido = ?, password = ?, idperfil = ?"
 			+ " WHERE id = ?;";
-	
+
 	private Conexion conexion = Conexion.getConexion();
 
 	public UsuarioDTO find(int idusuario) {
@@ -43,8 +43,9 @@ public class UsuarioDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				usuario = new UsuarioDTO(resultSet.getInt("id"),resultSet.getString("nick"), resultSet.getString("nombre"),
-						resultSet.getString("apellido"), resultSet.getString("password"), resultSet.getInt("idperfil"));
+				usuario = new UsuarioDTO(resultSet.getInt("id"), resultSet.getString("nick"),
+						resultSet.getString("nombre"), resultSet.getString("apellido"), resultSet.getString("password"),
+						resultSet.getInt("idperfil"));
 			}
 		} catch (
 
@@ -57,96 +58,76 @@ public class UsuarioDAO {
 	}
 
 	public boolean insert(UsuarioDTO nuevoCliente) {
-		
+
 		PreparedStatement statement;
-		try 
-		{
+		try {
 			statement = conexion.getSQLConexion().prepareStatement(insert);
 			statement.setString(1, nuevoCliente.getNick());
-			statement.setString(2,nuevoCliente.getNombre());
+			statement.setString(2, nuevoCliente.getNombre());
 			statement.setString(3, nuevoCliente.getApellido());
-			statement.setString(4,nuevoCliente.getPassword());
-			statement.setInt(5,nuevoCliente.getIdperfil());
-	
-			
-			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
+			statement.setString(4, nuevoCliente.getPassword());
+			statement.setInt(5, nuevoCliente.getIdperfil());
+
+			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
 				return true;
-		}
-		catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally //Se ejecuta siempre
+		} finally // Se ejecuta siempre
 		{
 			Conexion.cerrarConexion();
 		}
 		return false;
-		
-		
+
 	}
 
 	public boolean delete(int id_usuario_a_eliminar) {
-		
+
 		PreparedStatement statement;
-		int chequeoUpdate=0;
-		try 
-		{
+		int chequeoUpdate = 0;
+		try {
 			statement = conexion.getSQLConexion().prepareStatement(delete);
 			statement.setString(1, Integer.toString(id_usuario_a_eliminar));
 			chequeoUpdate = statement.executeUpdate();
-			if(chequeoUpdate > 0) //Si se ejecut� devuelvo true
+			if (chequeoUpdate > 0) // Si se ejecut� devuelvo true
 				return true;
-		} 
-		catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally //Se ejecuta siempre
+		} finally // Se ejecuta siempre
 		{
 			Conexion.cerrarConexion();
 		}
 		return false;
 	}
-		
 
 	public List<UsuarioDTO> readAll() {
-		
+
 		PreparedStatement statement;
-		ResultSet resultSet; //Guarda el resultado de la query
+		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<UsuarioDTO> usuarios = new ArrayList<UsuarioDTO>();
-		try 
-		{
+		try {
 			statement = conexion.getSQLConexion().prepareStatement(readall);
 			resultSet = statement.executeQuery();
-			
-			while(resultSet.next())
-			{
-				usuarios.add(new UsuarioDTO(resultSet.getInt("id"),
-						resultSet.getString("nick"),
-						resultSet.getString("nombre"),
-						resultSet.getString("apellido"),
-						resultSet.getString("password"),
+
+			while (resultSet.next()) {
+				usuarios.add(new UsuarioDTO(resultSet.getInt("id"), resultSet.getString("nick"),
+						resultSet.getString("nombre"), resultSet.getString("apellido"), resultSet.getString("password"),
 						resultSet.getInt("idperfil")));
 			}
-		} 
-		catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally //Se ejecuta siempre
+		} finally // Se ejecuta siempre
 		{
 			Conexion.cerrarConexion();
 		}
-		
+
 		return usuarios;
 	}
 
 	public boolean update(UsuarioDTO usuario_a_modificar) {
 		PreparedStatement statement;
-		try 
-		{
+		try {
 			statement = conexion.getSQLConexion().prepareStatement(update);
-			
+
 			statement.setString(1, usuario_a_modificar.getNick());
 			statement.setString(2, usuario_a_modificar.getNombre());
 			statement.setString(3, usuario_a_modificar.getApellido());
@@ -154,14 +135,11 @@ public class UsuarioDAO {
 			statement.setInt(5, usuario_a_modificar.getIdperfil());
 			statement.setInt(6, usuario_a_modificar.getId());
 
-			if(statement.executeUpdate() > 0) //Si se ejecut� devuelvo true
+			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
 				return true;
-		} 
-		catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally //Se ejecuta siempre 
+		} finally // Se ejecuta siempre
 		{
 			Conexion.cerrarConexion();
 		}
@@ -169,7 +147,7 @@ public class UsuarioDAO {
 	}
 
 	public PerfilDTO buscarPerfil(int id) {
-		
+
 		conexion = Conexion.getConexion();
 		PreparedStatement statement;
 		ResultSet resultSet;
@@ -181,9 +159,7 @@ public class UsuarioDAO {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				perfil = new PerfilDTO(
-						resultSet.getInt("id"),
-						resultSet.getString("detalle"));
+				perfil = new PerfilDTO(resultSet.getInt("id"), resultSet.getString("detalle"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -191,34 +167,28 @@ public class UsuarioDAO {
 			Conexion.cerrarConexion();
 		}
 		return perfil;
-		
+
 	}
-	
-public List<PerfilDTO> todosLosPerfiles() {
-		
+
+	public List<PerfilDTO> todosLosPerfiles() {
+
 		PreparedStatement statement;
-		ResultSet resultSet; //Guarda el resultado de la query
+		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<PerfilDTO> perfiles = new ArrayList<PerfilDTO>();
-		try 
-		{
+		try {
 			statement = conexion.getSQLConexion().prepareStatement(ALLPerfil);
 			resultSet = statement.executeQuery();
-			
-			while(resultSet.next())
-			{
-				perfiles.add(new PerfilDTO(resultSet.getInt("id"),
-						resultSet.getString("detalle")));
+
+			while (resultSet.next()) {
+				perfiles.add(new PerfilDTO(resultSet.getInt("id"), resultSet.getString("detalle")));
 			}
-		} 
-		catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally //Se ejecuta siempre
+		} finally // Se ejecuta siempre
 		{
 			Conexion.cerrarConexion();
 		}
-		
+
 		return perfiles;
 	}
 
@@ -234,8 +204,9 @@ public List<PerfilDTO> todosLosPerfiles() {
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
-				usuario = new UsuarioDTO(resultSet.getInt("id"),resultSet.getString("nick"), resultSet.getString("nombre"),
-						resultSet.getString("apellido"), resultSet.getString("password"), resultSet.getInt("idperfil"));
+				usuario = new UsuarioDTO(resultSet.getInt("id"), resultSet.getString("nick"),
+						resultSet.getString("nombre"), resultSet.getString("apellido"), resultSet.getString("password"),
+						resultSet.getInt("idperfil"));
 			}
 		} catch (
 

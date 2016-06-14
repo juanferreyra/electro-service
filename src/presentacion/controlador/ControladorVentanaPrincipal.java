@@ -56,7 +56,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.principal.getVenta().addActionListener(this);
 		this.principal.getReparado().addActionListener(this);
 		this.principal.getMasInsumido().addActionListener(this);
-		this.agregarMouseListenerTabla(this);
+		this.agregarMouseListenerTabla(this, usuarioLogueado);
 	}
 
 	public void iniciar() {
@@ -112,8 +112,11 @@ public class ControladorVentanaPrincipal implements ActionListener {
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
 		limpiar_tablaOrdenesTrabajo();
 		for (int i = 0; i <= ingresos.size() - 1; i++) {
-
-			String nombreCompletoTecnicoAsignado = ingresos.get(i).getTecnico_asignado() + "";
+			UsuarioDTO usuarioDTO = usuarioDAO.find(ingresos.get(i).getTecnico_asignado());
+			String nombreCompletoTecnicoAsignado = "";
+			if (usuarioDTO != null) {
+				nombreCompletoTecnicoAsignado = (usuarioDTO.getNombre());
+			}
 
 			this.cargarFila(i, new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
 					ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(), ingresos.get(i).getDescripcion(),
@@ -173,7 +176,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		if (e.getSource() == this.principal.getIngresarProducto_btn()) {
 			ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(new VentanaIngreso(),
-					new Ingreso(), this);
+					new Ingreso(), this, this.usuarioLogueado);
 
 			controladorVentanaIngreso.inicializar();
 
@@ -292,7 +295,8 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		}
 	}
 
-	private void agregarMouseListenerTabla(ControladorVentanaPrincipal controladorVentanaPrincipal) {
+	private void agregarMouseListenerTabla(ControladorVentanaPrincipal controladorVentanaPrincipal,
+			UsuarioDTO usuario) {
 		this.principal.getOrdenesDeTrabajo_table().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -312,7 +316,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 						ingreso.setId(ingresoDTO.getId());
 
 						ControladorVentanaIngreso controladorVentanaIngreso = new ControladorVentanaIngreso(
-								new VentanaIngreso(), ingreso, controladorVentanaPrincipal);
+								new VentanaIngreso(), ingreso, controladorVentanaPrincipal, usuario);
 
 						controladorVentanaIngreso.inicializar();
 					}

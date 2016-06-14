@@ -58,16 +58,16 @@ public class IngresoDAO {
 		return false;
 	}
 
-	public boolean updateTecnicoAsignado(int ingresoId, String tecnico) { // Le
-																			// inserta
-																			// el
+	public boolean updateTecnicoAsignado(int ingresoId, int tecnico) { // Le
+																		// inserta
+																		// el
 		// nuevo
 		// tecnico.
 
 		PreparedStatement statement;
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(updateTecnicoAsignado);
-			statement.setString(1, tecnico);
+			statement.setInt(1, tecnico);
 			statement.setInt(2, ingresoId);
 
 			if (statement.executeUpdate() > 0) // Si se ejecut� devuelvo true
@@ -97,7 +97,7 @@ public class IngresoDAO {
 						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
 						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
-						resultSet.getString("tecnico_asignado")));
+						resultSet.getInt("tecnico_asignado")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -172,7 +172,7 @@ public class IngresoDAO {
 						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
 						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
-						resultSet.getString("tecnico_asignado"));
+						resultSet.getInt("tecnico_asignado"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -221,7 +221,7 @@ public class IngresoDAO {
 						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
 						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
-						resultSet.getString("tecnico_asignado")));
+						resultSet.getInt("tecnico_asignado")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -248,7 +248,7 @@ public class IngresoDAO {
 						resultSet.getBoolean("envio"), resultSet.getBoolean("envio_default"),
 						resultSet.getString("direccion_alternativa"), resultSet.getFloat("monto_envio"),
 						resultSet.getDate("fecha_creacion"), resultSet.getInt("estado"), resultSet.getInt("idusuario"),
-						resultSet.getString("tecnico_asignado")));
+						resultSet.getInt("tecnico_asignado")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
