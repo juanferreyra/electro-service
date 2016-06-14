@@ -318,6 +318,8 @@ public class ControladorOrdenCompra implements ActionListener{
 			this.ventanaOrdenCompra.getComponente_ComboBox().setEnabled(true);
 			this.ventanaOrdenCompra.getBtnImprimir().setVisible(false);
 			this.ventanaOrdenCompra.getBtnEnviarEmial().setVisible(false);
+			this.ventanaOrdenCompra.getBtnRecibido().setVisible(false);
+			this.ventanaOrdenCompra.getBtnCancelada().setVisible(false);
 			
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnImprimir()) {
 			
@@ -400,6 +402,7 @@ public class ControladorOrdenCompra implements ActionListener{
 				// envia email al guardar la orden de compra
 				EmailOrdenDeCompra emailOrdenDeCompra = new EmailOrdenDeCompra(usuarioLogueado, this.ventanaOrdenCompra);
 				emailOrdenDeCompra.start();
+				cargarCombo();
 				
 				vaciarCampos();
 				
@@ -626,6 +629,8 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getDireccionTexto_lbl().setText("");
 		this.ventanaOrdenCompra.getMailTexto_lbl().setText("");
 		this.ventanaOrdenCompra.getValorPresupuestado_txf().setText("");
+		this.ventanaOrdenCompra.getTxtfldCargarOrden().setText("");
+		this.ventanaOrdenCompra.getListaOrdenesCompras_cmb().setSelectedIndex(-1);
 		this.ordenCompra = new OrdenCompra();
 		actualizarTablaRepuestos();
 	}
