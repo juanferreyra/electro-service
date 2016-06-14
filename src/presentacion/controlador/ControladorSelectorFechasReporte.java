@@ -9,14 +9,16 @@ import javax.swing.JOptionPane;
 import dto.ReporteFinancieroActivosDTO;
 import dto.ReporteFinancieroPasivosDTO;
 import modelo.SelectorFechaReporte;
+import presentacion.reportes.ReporteFinanciero;
 import presentacion.vista.VentanaSelectorFechasReporte;
 
 public class ControladorSelectorFechasReporte  implements ActionListener {
 	
 	private VentanaSelectorFechasReporte ventanaSelectorReportes;
 	private SelectorFechaReporte modelReporte;
+	private int tipoReporte;
 	
-	public ControladorSelectorFechasReporte(int tipoReporte, VentanaSelectorFechasReporte ventanaSelector){
+	public ControladorSelectorFechasReporte(int tipoReporteSeleccionado, VentanaSelectorFechasReporte ventanaSelector){
 		this.ventanaSelectorReportes = ventanaSelector;
 		this.ventanaSelectorReportes.getRdbtnAnual().addActionListener(this);
 		this.ventanaSelectorReportes.getRdbtnMensual().addActionListener(this);
@@ -30,7 +32,7 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 		 * #2 = De Reparaciones
 		 * #3 = De repuestos mas insumidos
 		 */
-		
+		this.tipoReporte = tipoReporteSeleccionado;
 	}
 	
 	public void inicializar() {
@@ -138,31 +140,33 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 			
 			if(!error) {
 				
-				ArrayList<ReporteFinancieroPasivosDTO> a = this.modelReporte.getFinancieroPasivos();
-				ArrayList<ReporteFinancieroActivosDTO> b = this.modelReporte.getFinancieroActivos();
-				
-				for (int i = 0; i < a.size(); i++) {
-					System.out.println(a.get(i).fecha_orden);
-				}
-				
-				for (int x = 0; x < b.size(); x++) {
-					System.out.println(b.get(x).nro_ingreso);
-				}
-				
-				//TODO::Aca valido el tipo de reporte y lo muestro con una funcion de SelectorFechaReporte
-				//donde me traiga el tipo de reporte sabiendo que
-				/* @Tipos de reporte
+				/* Recuerdo
+				 * @Tipos de reporte
 				 * #1 = De Ventas por fecha
 				 * #2 = De Reparaciones
 				 * #3 = De repuestos mas insumidos
 				 */
-				System.out.println(this.modelReporte.fechasToString());
+				
+				if(this.tipoReporte == 1) {
+					
+					ArrayList<ReporteFinancieroPasivosDTO> a = this.modelReporte.getFinancieroPasivos();
+					
+					ArrayList<ReporteFinancieroActivosDTO> b = this.modelReporte.getFinancieroActivos();
+					
+					ReporteFinanciero reporte = new ReporteFinanciero(a,b);
+					
+					reporte.mostrar();
+					
+				} else if(this.tipoReporte == 2){
+					
+					
+				} else if(this.tipoReporte == 3){
+					
+					
+				}
+				
+				this.ventanaSelectorReportes.dispose();
 			}
 		}
-	}
-	
-	public static void main(String[] args) {
-		ControladorSelectorFechasReporte a = new ControladorSelectorFechasReporte(1, new VentanaSelectorFechasReporte());
-		a.inicializar();
 	}
 }

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-06-14T16:21:58 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteFinanciero_Activos" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="80bed90f-d626-4a37-8568-a54d8767bdbd">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ReporteFinanciero_Activos"/>
+	<import value="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="SUB_DATASOURCE" class="java.util.List"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="valor_total" class="java.lang.Float">
+		<fieldDescription><![CDATA[valor_total]]></fieldDescription>
+	</field>
+	<field name="fecha_retiro" class="java.lang.String">
+		<fieldDescription><![CDATA[fecha_retiro]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[marca]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[tipo]]></fieldDescription>
+	</field>
+	<field name="nro_ingreso" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nro_ingreso]]></fieldDescription>
+	</field>
+	<field name="valor_flete" class="java.lang.String">
+		<fieldDescription><![CDATA[valor_flete]]></fieldDescription>
+	</field>
+	<field name="fecha_ingreso" class="java.lang.String">
+		<fieldDescription><![CDATA[fecha_ingreso]]></fieldDescription>
+	</field>
+	<field name="valor_mano_obra" class="java.lang.Float">
+		<fieldDescription><![CDATA[valor_mano_obra]]></fieldDescription>
+	</field>
+	<field name="valor_componentes" class="java.lang.Float">
+		<fieldDescription><![CDATA[valor_componentes]]></fieldDescription>
+	</field>
+	<variable name="totalActivos" class="java.lang.Float" incrementType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor_total}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="30" uuid="2a1bd309-7925-4477-8cb2-4b8140ef3435"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha_ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="30" height="30" uuid="58fed45c-3923-4e96-9d18-bdd5f68e4864"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="0" width="114" height="30" uuid="12fcf80b-87a2-4204-9e26-c4c7c85ebaab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo/Marca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="0" width="74" height="30" uuid="9c62f64b-2d8e-4208-8f59-d489af0a22a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Componentes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="0" width="66" height="30" uuid="65925a84-850d-499d-9b6a-5060b8a520a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mano Obra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="0" width="56" height="30" uuid="44e90f7e-e70e-4de2-9d89-fad3772fd235"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor envio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="0" width="61" height="30" uuid="3133f533-876e-4319-a862-33a7a0cc8745"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="481" y="0" width="74" height="30" uuid="ebe637a6-9598-4682-a12d-5869c360e01c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Retiro]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="30" uuid="e88323ef-a1d8-4921-823a-57ed076a8b41"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="30" height="30" uuid="ac422a54-1980-47e8-9541-252631777c86"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nro_ingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="114" height="30" uuid="255d949c-ccee-4ada-8dac-3b1bc9e43521"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo}+"/"+$F{marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="0" width="74" height="30" uuid="114b1f9c-aff6-4f5c-bb81-c421054e3974"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$F{valor_componentes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="0" width="66" height="30" uuid="29267360-5ca0-447e-a842-391ad51e3f92"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$F{valor_mano_obra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="0" width="56" height="30" uuid="7740ac8d-5464-41f9-a9af-d444fac5e092"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$F{valor_flete}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="0" width="61" height="30" uuid="fc0bdc31-696c-4a68-a51f-0bf5f4abdb46"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$F{valor_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="481" y="0" width="74" height="30" uuid="d6afad6a-bdf8-4790-afd4-35a30d5062a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_retiro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="35" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="298" y="0" width="256" height="30" uuid="599d75f4-df80-4705-a6af-d419eb8c2b41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["TOTAL ACTIVOS: $"+$V{totalActivos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
