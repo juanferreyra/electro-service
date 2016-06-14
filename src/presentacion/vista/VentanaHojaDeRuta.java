@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import java.awt.Toolkit;
+import javax.swing.JComboBox;
 
 public class VentanaHojaDeRuta extends JFrame {
 
@@ -41,6 +42,7 @@ public class VentanaHojaDeRuta extends JFrame {
 	private JButton btnBorrarCarga;
 	private JButton btnMarcarEntregados;
 	private JButton crearFletero_btn;
+	private JComboBox<String> listaHojasRuta_cmb;
 
 	@SuppressWarnings("serial")
 	public VentanaHojaDeRuta() {
@@ -203,23 +205,23 @@ public class VentanaHojaDeRuta extends JFrame {
 		JLabel lblCargar = new JLabel("Cargar:");
 		lblCargar.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 11));
 		lblCargar.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblCargar.setBounds(444, 12, 70, 23);
+		lblCargar.setBounds(347, 18, 70, 23);
 		contentPane.add(lblCargar);
 		
 		txtfldCargarHoja = new JTextField();
 		txtfldCargarHoja.setToolTipText("Ingresar el Nro de hoja de ruta");
-		txtfldCargarHoja.setBounds(522, 12, 86, 23);
+		txtfldCargarHoja.setBounds(561, 11, 48, 23);
 		contentPane.add(txtfldCargarHoja);
 		txtfldCargarHoja.setColumns(10);
 		
 		btnCargarHoja = new JButton("");
 		btnCargarHoja.setIcon(new ImageIcon(VentanaHojaDeRuta.class.getResource("/download.png")));
-		btnCargarHoja.setBounds(611, 11, 25, 25);
+		btnCargarHoja.setBounds(611, 9, 25, 25);
 		contentPane.add(btnCargarHoja);
 		
 		btnBorrarCarga = new JButton("");
 		btnBorrarCarga.setIcon(new ImageIcon(VentanaHojaDeRuta.class.getResource("/delete.png")));
-		btnBorrarCarga.setBounds(644, 11, 25, 25);
+		btnBorrarCarga.setBounds(644, 9, 25, 25);
 		contentPane.add(btnBorrarCarga);
 		
 		btnMarcarEntregados = new JButton("Marcar Entregados");
@@ -232,11 +234,19 @@ public class VentanaHojaDeRuta extends JFrame {
 		crearFletero_btn.setIcon(new ImageIcon(VentanaHojaDeRuta.class.getResource("/user-add.png")));
 		crearFletero_btn.setBounds(403, 55, 33, 20);
 		contentPane.add(crearFletero_btn);
+		
+		listaHojasRuta_cmb = new JComboBox<String>();
+		listaHojasRuta_cmb.setBounds(423, 10, 130, 24);
+		contentPane.add(listaHojasRuta_cmb);
 
 	}
 
 	public JButton getCrearFletero_btn() {
 		return crearFletero_btn;
+	}
+
+	public JComboBox<String> getListaHojasRuta_cmb() {
+		return listaHojasRuta_cmb;
 	}
 
 	private void setearPropiedadesDeTabla() {
