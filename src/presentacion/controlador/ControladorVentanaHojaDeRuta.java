@@ -2,8 +2,13 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -17,6 +22,7 @@ import javax.swing.table.TableModel;
 
 import dto.ClienteDTO;
 import dto.FleteDTO;
+import dto.HojaDeRutaDTO;
 import dto.HojaDeRutaIngresosDTO;
 import dto.IngresoDTO;
 import dto.IngresoLogDTO;
@@ -36,6 +42,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 	private HojaDeRuta hojaDeRuta;
 	@SuppressWarnings("unused")
 	private Calendar hoy = new GregorianCalendar();
+	private ArrayList<HojaDeRutaDTO> todaslasHojasDeRutas;
 
 	public ControladorVentanaHojaDeRuta(VentanaHojaDeRuta ventanaHojaRuta,
 			ControladorVentanaPrincipal controladorVentanaPrincipal, UsuarioDTO usuario) {
@@ -62,9 +69,50 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 	public void inicializar() {
 		ventanaHojaRuta.setVisible(true);
 		cargar_tablaOrdenesTrabajoReparadas();
+		cargaComboListaHojasRutas();
+		clikEnCombo();
 	}
 	
+	private void clikEnCombo() {
+		this.ventanaHojaRuta.getListaHojasRuta_cmb().addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				
+				if (e.getStateChange() == ItemEvent.SELECTED){
+					ventanaHojaRuta.getTxtfldCargarHoja().setText(obtenerId((String)ventanaHojaRuta.getListaHojasRuta_cmb().getSelectedItem()));
+				}
+			}
+
+			
+		});
+	}
+
+	private void cargaComboListaHojasRutas() {
+		
+		 this.todaslasHojasDeRutas = hojaDeRuta.readAll();
+		 
+		 for(HojaDeRutaDTO hojas : todaslasHojasDeRutas){
+			 
+			 this.ventanaHojaRuta.getListaHojasRuta_cmb().addItem(hojas.getId()+" _ "+ hojas.getCreacion());
+		 }
+		 this.ventanaHojaRuta.getListaHojasRuta_cmb().setSelectedIndex(-1);
+
+	}
+	
+	private String obtenerId(String selectedItem) {
+		String id = "";
+		
+		String cadena = selectedItem;
+		String delimitadores= " _";
+		String[] palabrasSeparadas = cadena.split(delimitadores);
+		id = palabrasSeparadas[0];
+		
+		return id;
+	}
+
 	private void cargarModelo() {
+		
 		if(hojaDeRuta.getHojaRuta().getId()!=-1) {
 			this.ventanaHojaRuta.getTxtfldNombreConductor().setText(this.hojaDeRuta.getFlete().getNombre());
 			this.ventanaHojaRuta.getTxtfldMovil().setText(this.hojaDeRuta.getFlete().getModelo());
@@ -249,6 +297,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == this.ventanaHojaRuta.getBtnCargarHoja()) {
+			
 			String nroCarga = this.ventanaHojaRuta.getTxtfldCargarHoja().getText();
 			
 			if(soloNumeros(nroCarga)) {
@@ -263,6 +312,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 					this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(true);
 					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
 					this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(true);
+					
 					cargarModelo();
 				} else {
 					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",

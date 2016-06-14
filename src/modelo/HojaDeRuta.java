@@ -42,6 +42,10 @@ public class HojaDeRuta {
 		flete = null;
 	}
 	
+	public ArrayList<HojaDeRutaDTO> readAll(){
+		return hojaRutaDAO.readAll();
+	}
+	
 	public void cargarVariables() {
 		if(id!=-1) {
 			hojaRuta = hojaRutaDAO.find(id);
