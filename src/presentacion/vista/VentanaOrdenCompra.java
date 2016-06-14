@@ -45,6 +45,7 @@ public class VentanaOrdenCompra extends JFrame {
 	private JButton BtnVaciarVentanaOrden;
 	private JButton btnImprimir;
 	private JButton btnEnviarEmial;
+	private JComboBox<String> listaOrdenesCompras_cmb;
 
 	public VentanaOrdenCompra() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaOrdenCompra.class.getResource("/calculator.png")));
@@ -58,11 +59,11 @@ public class VentanaOrdenCompra extends JFrame {
 		setLocationRelativeTo(null);
 		
 		btnCancelada = new JButton("Cancelada");
-		btnCancelada.setBounds(376, 11, 116, 23);
+		btnCancelada.setBounds(314, 10, 116, 23);
 		contentPane.add(btnCancelada);
 		
 		btnRecibido = new JButton("Recibido");
-		btnRecibido.setBounds(257, 11, 116, 23);
+		btnRecibido.setBounds(195, 10, 116, 23);
 		contentPane.add(btnRecibido);
 
 		JLabel titulo_lbl = new JLabel("<html><i>ORDEN DE COMPRA</i></html>");
@@ -192,13 +193,13 @@ public class VentanaOrdenCompra extends JFrame {
 		JLabel label = new JLabel("Cargar:");
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 11));
-		label.setBounds(494, 12, 70, 23);
+		label.setBounds(427, 10, 63, 23);
 		contentPane.add(label);
 		
 		txtfldCargarOrden = new JTextField();
 		txtfldCargarOrden.setToolTipText("Ingresar el Nro de hoja de ruta");
 		txtfldCargarOrden.setColumns(10);
-		txtfldCargarOrden.setBounds(572, 12, 86, 23);
+		txtfldCargarOrden.setBounds(619, 12, 39, 23);
 		contentPane.add(txtfldCargarOrden);
 		
 		btnCargarOrden = new JButton("");
@@ -220,6 +221,14 @@ public class VentanaOrdenCompra extends JFrame {
 		btnEnviarEmial.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/mail.png")));
 		btnEnviarEmial.setBounds(179, 688, 127, 23);
 		contentPane.add(btnEnviarEmial);
+		
+		listaOrdenesCompras_cmb = new JComboBox<String>();
+		listaOrdenesCompras_cmb.setBounds(494, 9, 123, 24);
+		contentPane.add(listaOrdenesCompras_cmb);
+	}
+
+	public JComboBox<String> getListaOrdenesCompras_cmb() {
+		return listaOrdenesCompras_cmb;
 	}
 
 	public JButton getBtnImprimir() {

@@ -81,14 +81,17 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 				
 				if (e.getStateChange() == ItemEvent.SELECTED){
 					ventanaHojaRuta.getTxtfldCargarHoja().setText(obtenerId((String)ventanaHojaRuta.getListaHojasRuta_cmb().getSelectedItem()));
+					validacion();
 				}
-			}
-
-			
+			}	
 		});
+		
+		
 	}
 
 	private void cargaComboListaHojasRutas() {
+		
+		this.ventanaHojaRuta.getListaHojasRuta_cmb().removeAllItems();
 		
 		 this.todaslasHojasDeRutas = hojaDeRuta.readAll();
 		 
@@ -298,31 +301,10 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		
 		if(e.getSource() == this.ventanaHojaRuta.getBtnCargarHoja()) {
 			
-			String nroCarga = this.ventanaHojaRuta.getTxtfldCargarHoja().getText();
 			
-			if(soloNumeros(nroCarga)) {
-				int id = Integer.parseInt(nroCarga);
-				if(this.hojaDeRuta.existeHojaDeRuta(id)){
-					this.hojaDeRuta.setId(id);
-					this.hojaDeRuta.cargarVariables();
-					this.ventanaHojaRuta.getBtnBuscarConductor().setEnabled(false);
-					this.ventanaHojaRuta.getTxtflBuscarConductor().setEnabled(false);
-					this.ventanaHojaRuta.getBtnGuardar().setVisible(false);
-					this.ventanaHojaRuta.getBtnCancelar().setText("Cerrar");
-					this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(true);
-					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
-					this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(true);
-					
-					cargarModelo();
-				} else {
-					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-				
-			} else {
-				JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Campo para cargar la hoja debe ser numerico ", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
-			}
+			
+			validacion();
+			
 			
 		} else if(e.getSource() == this.ventanaHojaRuta.getBtnBorrarCarga()) {
 			this.ventanaHojaRuta.getTxtfldCargarHoja().setText("");
@@ -366,6 +348,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 					//vacio todos los datos o muestro la impresion
 					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
 					this.ventanaHojaRuta.getBtnGuardar().setVisible(false);
+					cargaComboListaHojasRutas();
 				}
 			}
 		} else if(e.getSource() == this.ventanaHojaRuta.getBtnImprimir()) {
@@ -478,5 +461,38 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			});
 			
 		}
+	}
+
+	private void validacion() {
+		
+		String nroCarga = this.ventanaHojaRuta.getTxtfldCargarHoja().getText();
+		
+		if(soloNumeros(nroCarga)) {
+			
+			
+			int id = Integer.parseInt(nroCarga);
+			if(this.hojaDeRuta.existeHojaDeRuta(id)){
+				this.hojaDeRuta.setId(id);
+				this.hojaDeRuta.cargarVariables();
+				this.ventanaHojaRuta.getBtnBuscarConductor().setEnabled(false);
+				this.ventanaHojaRuta.getTxtflBuscarConductor().setEnabled(false);
+				this.ventanaHojaRuta.getBtnGuardar().setVisible(false);
+				this.ventanaHojaRuta.getBtnCancelar().setText("Cerrar");
+				this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(true);
+				this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
+				this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(true);
+				
+				cargarModelo();
+			} else {
+				JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Campo para cargar la hoja debe ser numerico ", "Atencion!",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+		
 	}
 }

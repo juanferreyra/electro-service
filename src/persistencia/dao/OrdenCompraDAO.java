@@ -48,7 +48,7 @@ public class OrdenCompraDAO {
 				orden.setId(resultSet.getInt("id"));
 				orden.setIdproveedor(resultSet.getInt("idproveedor"));
 				orden.setImporte_total(resultSet.getFloat("importe_total"));
-				orden.setImporte_validado(resultSet.getFloat("importe_validado"));
+				//orden.setImporte_validado(resultSet.getFloat("importe_validado"));
 				orden.setIdusuario(resultSet.getInt("idusuario"));
 				orden.setFecha_creacion(fecha_creacion);
 				orden.setHora_creacion(resultSet.getString("hora_creacion"));
