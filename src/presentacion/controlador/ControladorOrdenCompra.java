@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
 import dto.ItemRepuestoDTO;
 import dto.MarcaDTO;
+import dto.OrdenCompraDTO;
 import dto.OrdenCompraRepuestoDTO;
 import dto.ProveedorDTO;
 import dto.UsuarioDTO;
@@ -57,6 +60,40 @@ public class ControladorOrdenCompra implements ActionListener{
 		this.ventanaOrdenCompra.getBtnImprimir().setVisible(false);
 		this.ventanaOrdenCompra.getBtnEnviarEmial().setVisible(false);
 		this.ventanaOrdenCompra.getComponentes_table().setModel(modelTable);
+		cargarCombo();
+		clickEnCombo();
+	}
+
+	private void clickEnCombo() {
+		this.ventanaOrdenCompra.getListaOrdenesCompras_cmb().addItemListener(new ItemListener() {
+			
+			@SuppressWarnings("static-access")
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == e.SELECTED){
+					
+					ventanaOrdenCompra.getTxtfldCargarOrden().setText((String)ventanaOrdenCompra.getListaOrdenesCompras_cmb()
+							.getSelectedItem());
+					
+					validarYCargarOrden();
+				}
+			}
+		});
+		
+	}
+
+	private void cargarCombo() {
+		
+		ArrayList<OrdenCompraDTO> listaOrdenesDeCompra = ordenCompra.readAll();
+		
+		this.ventanaOrdenCompra.getListaOrdenesCompras_cmb().removeAllItems();
+		
+		for(OrdenCompraDTO ordenes : listaOrdenesDeCompra){
+			this.ventanaOrdenCompra.getListaOrdenesCompras_cmb().addItem(String.valueOf(ordenes.getId()));
+		}
+		
+		this.ventanaOrdenCompra.getListaOrdenesCompras_cmb().setSelectedIndex(-1);
+	
 	}
 
 	private void cargarComboComponentes() {
@@ -263,23 +300,9 @@ public class ControladorOrdenCompra implements ActionListener{
 			});
 	    	
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnCargarOrden()) {
-			String nroOrdenString = this.ventanaOrdenCompra.getTxtfldCargarOrden().getText();
-			try {
-				int nroOrden = Integer.parseInt(nroOrdenString);
-				
-				if(ordenCompra.existeOrdenCompra(nroOrden)){
-					ordenCompra.getOrdenCompraDTO().setId(nroOrden);
-					cargarModelo();
-					this.ventanaOrdenCompra.getBtnVaciarVentanaOrden().setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(ventanaOrdenCompra, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
-							JOptionPane.INFORMATION_MESSAGE);
-				}
-			} catch (NumberFormatException nfe) {
-				JOptionPane.showMessageDialog(this.ventanaOrdenCompra,
-						"El n�mero de proveedor es incorrecto, vuelva a intentarlo. ", null,
-						JOptionPane.INFORMATION_MESSAGE);
-			}
+			
+			validarYCargarOrden();
+			
 		} else if(e.getSource() == this.ventanaOrdenCompra.getBtnVaciarVentanaOrden()) {
 			
 			vaciarCampos();
@@ -308,6 +331,28 @@ public class ControladorOrdenCompra implements ActionListener{
 			
 		}
     }
+
+	private void validarYCargarOrden() {
+		
+		String nroOrdenString = this.ventanaOrdenCompra.getTxtfldCargarOrden().getText();
+		try {
+			int nroOrden = Integer.parseInt(nroOrdenString);
+			
+			if(ordenCompra.existeOrdenCompra(nroOrden)){
+				ordenCompra.getOrdenCompraDTO().setId(nroOrden);
+				cargarModelo();
+				this.ventanaOrdenCompra.getBtnVaciarVentanaOrden().setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(ventanaOrdenCompra, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} catch (NumberFormatException nfe) {
+			JOptionPane.showMessageDialog(this.ventanaOrdenCompra,
+					"El n�mero de proveedor es incorrecto, vuelva a intentarlo. ", null,
+					JOptionPane.INFORMATION_MESSAGE);
+		}
+
+	}
 
 	private void ocultarColumnaId() {
 

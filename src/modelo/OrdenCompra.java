@@ -195,4 +195,8 @@ public class OrdenCompra {
 		return true;
 	}
 	
+	public ArrayList<OrdenCompraDTO> readAll(){
+		return ordenCompraDAO.readAll();
+	}
+	
 }
