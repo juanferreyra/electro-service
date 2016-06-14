@@ -109,7 +109,7 @@ public class VentanaABMCliente extends JFrame {
 		documento_txt.setBounds(188, 105, 394, 20);
 		getContentPane().add(documento_txt);
 
-		guardar_btn = new JButton("Ingresar Item");
+		guardar_btn = new JButton("Ingresar");
 		guardar_btn.setBounds(285, 382, 139, 23);
 		getContentPane().add(guardar_btn);
 
@@ -133,7 +133,7 @@ public class VentanaABMCliente extends JFrame {
 		tablaClientes = new JTable(modelClientes);
 		clientes_scrollPane.setViewportView(tablaClientes);
 
-		eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar");
 		eliminarItem_btn.setBounds(123, 382, 139, 23);
 		getContentPane().add(eliminarItem_btn);
 

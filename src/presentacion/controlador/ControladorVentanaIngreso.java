@@ -285,8 +285,9 @@ public class ControladorVentanaIngreso implements ActionListener {
 				ClienteDTO cdto = cdao.findPorNrodoc(nrodoc);
 				if (cdto == null) {
 					JOptionPane.showMessageDialog(this.ventana_ingreso,
-							"El cliente buscado no existe, por favor, ingrese un valor vï¿½lido.", null,
+							"El cliente buscado no existe, por favor, ingrese un valor válido.", null,
 							JOptionPane.INFORMATION_MESSAGE);
+					this.ventana_ingreso.vaciarTodo();
 				} else {
 					this.ingreso.setCliente(cdto);
 					this.llenarTablaCliente(cdto);

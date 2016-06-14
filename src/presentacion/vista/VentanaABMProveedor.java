@@ -153,7 +153,7 @@ public class VentanaABMProveedor extends JFrame {
 		tablaMarcas = new JTable(modelMarcas);
 		scrollPane_1.setViewportView(tablaMarcas);
 
-		eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar");
 		eliminarItem_btn.setBounds(469, 620, 117, 25);
 		getContentPane().add(eliminarItem_btn);
 

@@ -69,7 +69,7 @@ public class VentanaABMRepuesto extends JFrame {
 		stockMinimo_txt.setBounds(199, 154, 383, 20);
 		getContentPane().add(stockMinimo_txt);
 
-		guardar_btn = new JButton("Ingresar Item");
+		guardar_btn = new JButton("Ingresar");
 		guardar_btn.setBounds(317, 348, 121, 23);
 		getContentPane().add(guardar_btn);
 
@@ -81,7 +81,7 @@ public class VentanaABMRepuesto extends JFrame {
 		tablaRepuesto = new JTable(modelRepuesto);
 		repuesto_scrollPane.setViewportView(tablaRepuesto);
 
-		eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar");
 		eliminarItem_btn.setBounds(186, 348, 121, 23);
 		getContentPane().add(eliminarItem_btn);
 

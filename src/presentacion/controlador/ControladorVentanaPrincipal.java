@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import dto.ClienteDTO;
 import dto.IngresoDTO;
 import dto.InsumoStockDTO;
 import dto.UsuarioDTO;
@@ -117,11 +119,11 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			if (usuarioDTO != null) {
 				nombreCompletoTecnicoAsignado = (usuarioDTO.getNombre());
 			}
-
+			ClienteDTO clienteDTO = clienteDAO.find(ingresos.get(i).getIdcliente());
+			String nombreCliente = clienteDTO.getNombre() + " " + clienteDTO.getApellido();
 			this.cargarFila(i, new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
 					ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(), ingresos.get(i).getDescripcion(),
-					clienteDAO.find(ingresos.get(i).getIdcliente()).getNombre(),
-					(ingresos.get(i).getEnvio()) ? "SI" : "NO",
+					nombreCliente, (ingresos.get(i).getEnvio()) ? "SI" : "NO",
 					new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
 					nombreCompletoTecnicoAsignado, estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
 		}

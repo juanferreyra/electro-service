@@ -65,11 +65,11 @@ public class VentanaABMMarcaProducto extends JFrame {
 		tablaMarcaProducto = new JTable(modelMarcaProducto);
 		marcaProducto_scrollPane.setViewportView(tablaMarcaProducto);
 
-		eliminarItem_btn = new JButton("Eliminar Item");
+		eliminarItem_btn = new JButton("Eliminar");
 		eliminarItem_btn.setBounds(147, 237, 121, 23);
 		getContentPane().add(eliminarItem_btn);
 
-		ingresar_btn = new JButton("Ingresar Item");
+		ingresar_btn = new JButton("Ingresar");
 		ingresar_btn.setBounds(280, 237, 121, 23);
 		contentPane.add(ingresar_btn);
 
