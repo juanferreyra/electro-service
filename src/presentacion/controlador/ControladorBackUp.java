@@ -88,7 +88,7 @@ public class ControladorBackUp implements ActionListener {
 
 	private void crearBackUp() {
 		try {
-			String path = obtenerPath();
+			String path = guardarPath();
 			
 			if (path != null) {
 				if (path != "") {
@@ -130,7 +130,7 @@ public class ControladorBackUp implements ActionListener {
 		return null;
 	}
 
-	private String guardar() {
+	private String guardarPath() {
 		
 		String path = "";
 		JFileChooser file = getFileChooser();
