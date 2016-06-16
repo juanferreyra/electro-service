@@ -71,7 +71,7 @@ public class ControladorBackUp implements ActionListener {
 
 				if (respuesta == JOptionPane.YES_OPTION) {
 					
-					//BackUp.restore();
+					this.backUp.restore(this.usuario,this.contrasenia, path);
 					
 					JOptionPane.showMessageDialog(null, "Back Up realizado correctamente, debe reiniciar la aplicacion",
 							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
@@ -93,7 +93,7 @@ public class ControladorBackUp implements ActionListener {
 			if (path != null) {
 				if (path != "") {
 					
-					System.out.println(path);
+					System.out.println(path + usuario + contrasenia);
 					
 					backUp.CrearBackup(path, this.usuario, this.contrasenia);
 					
@@ -150,7 +150,8 @@ public class ControladorBackUp implements ActionListener {
 		}
 		return null;
 	}
-
+	
+	// seteo del file chooser
 	private JFileChooser getFileChooser() {
 		JFileChooser file = new JFileChooser();
 		FileFilter filtro = new FileNameExtensionFilter("TEXT FILES", "sql");
@@ -158,12 +159,15 @@ public class ControladorBackUp implements ActionListener {
 		return file;
 	}
 
+	// path seleccionado
 	private String getPath(JFileChooser file) {
 		String path;
 		path = file.getSelectedFile().getAbsolutePath();
 		return path;
 	}
 
+	
+	// foramto del path
 	private boolean masDeUnPunto(String path) {
 		return contadorPuntos(path) > 1;
 	}
