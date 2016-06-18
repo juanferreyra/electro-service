@@ -70,6 +70,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.adecuarVentanaPrincipal();
 		this.cargar_tablaOrdenesTrabajo();
 		this.actualizar_AvisoFaltante();
+		this.principal.setLblUsuario(this.usuarioLogueado.getNick());
 	}
 
 	private void adecuarVentanaPrincipal() {
@@ -82,6 +83,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		} else if (this.usuarioLogueado.getIdperfil() == 3) {
 			// Visualizacion modo tecnico
+			this.principal.getScrollPaneAviso().setVisible(false);
 			this.principal.getIngresarProducto_btn().setVisible(false);
 			this.principal.getBtnElaborarHojaDe().setVisible(false);
 			this.principal.getBtnOrdenDeCompra().setVisible(false);
@@ -89,6 +91,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		} else if (this.usuarioLogueado.getIdperfil() == 1) {
 			// Visualizacion modo jefe/admin
+			this.principal.getScrollPaneAviso().setVisible(false);
 			this.principal.setVisible(true);
 		} else {
 

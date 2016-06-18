@@ -8,12 +8,13 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class VentanaABMProveedor extends JFrame {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JTextField razonSocial_txt;
 	private JTextField cuit_txt;
@@ -26,8 +27,8 @@ public class VentanaABMProveedor extends JFrame {
 	private JTable tablaProveedores;
 	private DefaultTableModel modelProveedores;
 	private DefaultTableModel modelMarcas;
-	private String[] nombreColumnas = { "Nro Proveedor", "Razon Social", "Nro Cuit", "Direccion", "Email",
-			"Nombre Contacto", "Telefono Contacto", "Email Contacto", "Email Pedidos" };
+	private String[] nombreColumnas = { "Proveedor", "Razon Social", "CUIT", "Direcci\u00f3n", "Email",
+			"Nombre", "Tel\u00e9fono", "Email Contacto", "Email Pedidos" };
 	private JTable tablaMarcas;
 	private String[] nombreColumnasMarcas = { "id", "Detalle" };
 	private JButton eliminarItem_btn;
@@ -46,7 +47,9 @@ public class VentanaABMProveedor extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JLabel proveedor_lbl = new JLabel("Proveedores");
-		proveedor_lbl.setBounds(213, 24, 122, 15);
+		proveedor_lbl.setHorizontalAlignment(SwingConstants.CENTER);
+		proveedor_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		proveedor_lbl.setBounds(10, 24, 425, 15);
 		getContentPane().add(proveedor_lbl);
 
 		JLabel RazonSocial_lbl = new JLabel("Razon Social");
@@ -58,7 +61,7 @@ public class VentanaABMProveedor extends JFrame {
 		getContentPane().add(razonSocial_txt);
 		razonSocial_txt.setColumns(10);
 
-		JLabel lblNroCuit = new JLabel("Nro. Cuit");
+		JLabel lblNroCuit = new JLabel("CUIT");
 		lblNroCuit.setBounds(25, 87, 108, 15);
 		getContentPane().add(lblNroCuit);
 
@@ -67,7 +70,7 @@ public class VentanaABMProveedor extends JFrame {
 		cuit_txt.setBounds(151, 85, 271, 19);
 		getContentPane().add(cuit_txt);
 
-		JLabel lblDireccion = new JLabel("Direccion");
+		JLabel lblDireccion = new JLabel("Direcci\u00F3n");
 		lblDireccion.setBounds(25, 116, 108, 15);
 		getContentPane().add(lblDireccion);
 
@@ -85,7 +88,7 @@ public class VentanaABMProveedor extends JFrame {
 		email_txt.setBounds(151, 143, 271, 19);
 		getContentPane().add(email_txt);
 
-		JLabel lblNombreContacto = new JLabel("Nombre Contacto");
+		JLabel lblNombreContacto = new JLabel("Nombre");
 		lblNombreContacto.setBounds(25, 172, 108, 15);
 		getContentPane().add(lblNombreContacto);
 
@@ -94,7 +97,7 @@ public class VentanaABMProveedor extends JFrame {
 		nombreContacto_txt.setBounds(151, 170, 271, 19);
 		getContentPane().add(nombreContacto_txt);
 
-		JLabel lblTelefonoContacto = new JLabel("Telefono Contacto");
+		JLabel lblTelefonoContacto = new JLabel("Telefono");
 		lblTelefonoContacto.setBounds(25, 203, 108, 15);
 		getContentPane().add(lblTelefonoContacto);
 
@@ -154,15 +157,15 @@ public class VentanaABMProveedor extends JFrame {
 		scrollPane_1.setViewportView(tablaMarcas);
 
 		eliminarItem_btn = new JButton("Eliminar");
-		eliminarItem_btn.setBounds(469, 620, 117, 25);
+		eliminarItem_btn.setBounds(230, 620, 117, 25);
 		getContentPane().add(eliminarItem_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(598, 620, 117, 25);
+		guardar_btn.setBounds(367, 620, 117, 25);
 		getContentPane().add(guardar_btn);
 
 		limpiar_btn = new JButton("Limpiar");
-		limpiar_btn.setBounds(734, 620, 117, 25);
+		limpiar_btn.setBounds(494, 620, 117, 25);
 		getContentPane().add(limpiar_btn);
 
 		agregarMarca_jcmbox = new JComboBox<String>();
@@ -184,6 +187,11 @@ public class VentanaABMProveedor extends JFrame {
 		btnMarcaNueva = new JButton("Marca Nueva");
 		btnMarcaNueva.setBounds(689, 111, 162, 25);
 		getContentPane().add(btnMarcaNueva);
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(445, 11, 14, 302);
+		getContentPane().add(separator);
 	}
 
 	public JTextField getRazonSocial_txt() {
@@ -269,5 +277,4 @@ public class VentanaABMProveedor extends JFrame {
 	public JButton getBtnMarcaNueva() {
 		return btnMarcaNueva;
 	}
-
 }

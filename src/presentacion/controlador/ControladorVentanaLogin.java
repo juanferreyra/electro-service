@@ -29,8 +29,7 @@ public class ControladorVentanaLogin implements ActionListener {
 			boolean existe = this.usuario.existeUsuario(this.login.getUsuario_txf().getText());
 
 			if (!existe) {
-				JOptionPane.showMessageDialog(this.login, "Usuario o contraseña incorrectos", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.login, "El usuario ingresado es incorrecto. Por favor, vuelva a intentarlo.");
 			} else {
 				UsuarioDTO user = this.usuario.obtenerUsuario(this.login.getUsuario_txf().getText());
 
@@ -38,8 +37,7 @@ public class ControladorVentanaLogin implements ActionListener {
 						.equals(String.copyValueOf(this.login.getContrasena_txf().getPassword()));
 
 				if (!coincidePassword) {
-					JOptionPane.showMessageDialog(this.login, "Usuario o contraseña incorrectos", "Atencion!",
-							JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(this.login, "El usuario y/o contraseña son incorrectos. Por favor, vuelva a intentarlo.");
 				} else {
 					this.login.setVisible(false);
 					VentanaPresentacion presentacion = new VentanaPresentacion(user);
