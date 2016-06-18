@@ -8,8 +8,10 @@ import javax.swing.JOptionPane;
 
 import dto.ReporteFinancieroActivosDTO;
 import dto.ReporteFinancieroPasivosDTO;
+import dto.ReporteMarcaTipoDTO;
 import modelo.SelectorFechaReporte;
 import presentacion.reportes.ReporteFinanciero;
+import presentacion.reportes.ReporteMarcaTipo;
 import presentacion.vista.VentanaSelectorFechasReporte;
 
 public class ControladorSelectorFechasReporte  implements ActionListener {
@@ -24,6 +26,9 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 		this.ventanaSelectorReportes.getRdbtnMensual().addActionListener(this);
 		this.ventanaSelectorReportes.getRdbtnSemanal().addActionListener(this);
 		this.ventanaSelectorReportes.getRdbtnEntreFechas().addActionListener(this);
+		this.ventanaSelectorReportes.getRdbtnPorMarca().addActionListener(this);
+		this.ventanaSelectorReportes.getRdbtnTipoproducto().addActionListener(this);
+		this.ventanaSelectorReportes.getRdbtnPorMarcaY().addActionListener(this);
 		this.ventanaSelectorReportes.getBtnGenerarReporte().addActionListener(this);
 		
 		this.modelReporte = new SelectorFechaReporte();
@@ -43,6 +48,12 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 		this.ventanaSelectorReportes.getFecha_semana().setEnabled(false);
 		this.ventanaSelectorReportes.getDesde_entrefechas().setEnabled(false);
 		this.ventanaSelectorReportes.getHasta_entrefechas().setEnabled(false);
+		
+		if(this.tipoReporte!=2){
+			this.ventanaSelectorReportes.getRdbtnPorMarca().setVisible(false);
+			this.ventanaSelectorReportes.getRdbtnTipoproducto().setVisible(false);
+			this.ventanaSelectorReportes.getRdbtnPorMarcaY().setVisible(false);
+		}
 		
 		this.ventanaSelectorReportes.setVisible(true);
 	}
@@ -159,9 +170,29 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 					
 				} else if(this.tipoReporte == 2){
 					
+					if(this.ventanaSelectorReportes.getRdbtnTipoproducto().isSelected()) {
+						//por tipo de producto
+						this.modelReporte.setTipoDeFiltro("PorTipoProducto");
+						
+					} else if(this.ventanaSelectorReportes.getRdbtnPorMarca().isSelected()) {
+						//por marca de producto
+						this.modelReporte.setTipoDeFiltro("PorMarca");
+						
+					} else if(this.ventanaSelectorReportes.getRdbtnPorMarcaY().isSelected()) {
+						//por marca y tipo
+						this.modelReporte.setTipoDeFiltro("PorMarcaTipoProducto");
+					} else {
+						JOptionPane.showMessageDialog(ventanaSelectorReportes, "Debe seleccionar un criterio de filtro para el informe.", "Atencion!",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+					ArrayList<ReporteMarcaTipoDTO> a = this.modelReporte.getTodosReporte2();
+					ReporteMarcaTipo reporte = new ReporteMarcaTipo(a,this.modelReporte.fechasToString());
+					reporte.mostrar();
 					
 				} else if(this.tipoReporte == 3){
 					
+					//TODO: repuestos mas utilizados
 					
 				}
 				
