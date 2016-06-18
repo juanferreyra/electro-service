@@ -70,7 +70,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.adecuarVentanaPrincipal();
 		this.cargar_tablaOrdenesTrabajo();
 		this.actualizar_AvisoFaltante();
-		this.principal.setLblUsuario(this.usuarioLogueado.getNick());
+		this.principal.setLblUsuario(this.usuarioLogueado.getNick().toUpperCase());
 	}
 
 	private void adecuarVentanaPrincipal() {

@@ -79,7 +79,7 @@ public class VentanaPrincipal extends JFrame {
 		setMinimumSize(new Dimension(1046, 546));
 
 		contentPane = new JPanel();
-		contentPane.setBorder(new LineBorder(new Color(70, 130, 180), 2, true));
+		contentPane.setBorder(new EmptyBorder(0, 20, 10, 20));
 		contentPane.setLayout(new BorderLayout());
 
 		setContentPane(contentPane);
@@ -128,8 +128,9 @@ public class VentanaPrincipal extends JFrame {
 		contenedorPanelArriba.add(subpanelArriba, BorderLayout.SOUTH);
 
 		lblUsuario = new JLabel("");
+		lblUsuario.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/com/jtattoo/plaf/icons/pearl_blue_24x24.png")));
 		lblUsuario.setBorder(new EmptyBorder(4, 4, 4, 4));
-		lblUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
+		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblUsuario.setForeground(Color.GRAY);
 		subpanelArriba.add(lblUsuario, BorderLayout.EAST);
 		contenedorPanelArriba.add(menuBar, BorderLayout.NORTH);
@@ -180,7 +181,7 @@ public class VentanaPrincipal extends JFrame {
 
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		ordenesDeTrabajo_scrollPane.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
+		ordenesDeTrabajo_scrollPane.setBorder(new LineBorder(Color.LIGHT_GRAY, 3, true));
 		ordenesDeTrabajo_scrollPane.setMinimumSize(new Dimension(50, 50));
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);

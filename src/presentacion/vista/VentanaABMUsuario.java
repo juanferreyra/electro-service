@@ -40,69 +40,69 @@ public class VentanaABMUsuario extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel nick_lbl = new JLabel("Nick");
-		nick_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		nick_lbl.setBounds(142, 54, 146, 14);
+		nick_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		nick_lbl.setBounds(142, 82, 146, 14);
 		contentPane.add(nick_lbl);
 
 		JLabel nombre_lbl = new JLabel("Nombre");
-		nombre_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		nombre_lbl.setBounds(142, 88, 129, 14);
+		nombre_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		nombre_lbl.setBounds(142, 113, 129, 14);
 		contentPane.add(nombre_lbl);
 
 		JLabel apellido_lbl = new JLabel("Apellido");
-		apellido_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		apellido_lbl.setBounds(142, 119, 146, 14);
+		apellido_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		apellido_lbl.setBounds(142, 143, 146, 17);
 		contentPane.add(apellido_lbl);
 
 		JLabel pass_lbl = new JLabel("Contrase\u00F1a");
-		pass_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		pass_lbl.setBounds(142, 150, 178, 14);
+		pass_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		pass_lbl.setBounds(142, 171, 178, 14);
 		contentPane.add(pass_lbl);
 
 		nick_txt = new JTextField();
-		nick_txt.setBounds(221, 51, 373, 20);
+		nick_txt.setBounds(221, 81, 373, 20);
 		contentPane.add(nick_txt);
 		nick_txt.setColumns(10);
 
 		nombre_txt = new JTextField();
-		nombre_txt.setBounds(221, 85, 373, 20);
+		nombre_txt.setBounds(221, 112, 373, 20);
 		contentPane.add(nombre_txt);
 		nombre_txt.setColumns(10);
 
 		apellido_txt = new JTextField();
 		apellido_txt.setColumns(10);
-		apellido_txt.setBounds(221, 116, 373, 20);
+		apellido_txt.setBounds(221, 143, 373, 20);
 		contentPane.add(apellido_txt);
 
 		pass_txt = new JPasswordField();
-		pass_txt.setBounds(221, 147, 160, 20);
+		pass_txt.setBounds(221, 171, 160, 20);
 		contentPane.add(pass_txt);
 
 		JLabel lblPerfil = new JLabel("Perfil");
-		lblPerfil.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPerfil.setBounds(419, 150, 119, 14);
+		lblPerfil.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPerfil.setBounds(413, 172, 119, 14);
 		contentPane.add(lblPerfil);
 
 		perfil_comboBox = new JComboBox<String>();
-		perfil_comboBox.setBounds(465, 147, 129, 20);
+		perfil_comboBox.setBounds(465, 170, 129, 20);
 		contentPane.add(perfil_comboBox);
 
 		JLabel title_lbl = new JLabel("Nuevo usuario");
-		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		title_lbl.setBounds(10, 11, 736, 15);
 		contentPane.add(title_lbl);
 
 		limpiar_btn = new JButton("Limpiar");
-		limpiar_btn.setBounds(439, 389, 99, 23);
+		limpiar_btn.setBounds(445, 389, 129, 23);
 		getContentPane().add(limpiar_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(221, 389, 99, 23);
+		guardar_btn.setBounds(201, 389, 119, 23);
 		getContentPane().add(guardar_btn);
 
 		JScrollPane repuesto_scrollPane = new JScrollPane();
-		repuesto_scrollPane.setBounds(142, 219, 452, 159);
+		repuesto_scrollPane.setBounds(10, 230, 736, 121);
 		getContentPane().add(repuesto_scrollPane);
 
 		modelUsuario = new DefaultTableModel(null, nombreColumnas) {
@@ -122,7 +122,7 @@ public class VentanaABMUsuario extends JFrame {
 		repuesto_scrollPane.setViewportView(tablaUsuario);
 
 		eliminarItem_btn = new JButton("Eliminar");
-		eliminarItem_btn.setBounds(330, 389, 99, 23);
+		eliminarItem_btn.setBounds(330, 389, 105, 23);
 		getContentPane().add(eliminarItem_btn);
 	}
 
