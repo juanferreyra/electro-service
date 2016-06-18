@@ -52,6 +52,8 @@ public class ControladorABMProveedor implements ActionListener{
 	
 	public void inicializar() {
 
+			
+		
 		this.proveedor = new Proveedor();
 		
 		this.proveedorMarca = new ProveedorMarca();
@@ -62,6 +64,9 @@ public class ControladorABMProveedor implements ActionListener{
 
 		this.txts = new ArrayList<JTextField>();
 
+		
+		cargarTablaProveedores();
+		
 		txts.add(this.ventanaABMProveedor.getRazonSocial_txt());// 0
 		txts.add(this.ventanaABMProveedor.getCuit_txt());// 1
 		txts.add(this.ventanaABMProveedor.getDireccion_txt());// 2
@@ -72,7 +77,7 @@ public class ControladorABMProveedor implements ActionListener{
 		txts.add(this.ventanaABMProveedor.getEmailPedidos_txt());// 7
 		
 		cargarComboMarcas();
-		cargarTablaProveedores();	
+//		cargarTablaProveedores();	
 		mouseClickedOnTable();
 		ocultarIdMarcas();
 
@@ -203,7 +208,6 @@ public class ControladorABMProveedor implements ActionListener{
 			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 8);
 			
 		}
-		//ocultarColumnaId();
 		
 	}
 	
