@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class ControladorABMCliente implements ActionListener {
 		this.ventanaABMCliente.getEliminarItem_btn().addActionListener(this);
 		this.ventanaABMCliente.getGuardar_btn().addActionListener(this);
 		this.ventanaABMCliente.getLimpiar_btn().addActionListener(this);
+		
 	}
 
 	public void inicializar() {
@@ -84,7 +87,7 @@ public class ControladorABMCliente implements ActionListener {
 					cargartxts();
 
 				}
-
+				
 			}
 
 		});
@@ -121,7 +124,7 @@ public class ControladorABMCliente implements ActionListener {
 					this.clientes_en_tabla.get(i).getTelefono(), this.clientes_en_tabla.get(i).getMail() };
 
 			this.ventanaABMCliente.getModelClientes().addRow(fila);
-			
+
 			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 0);
 			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 1);
 			((DefaultTableModel) this.ventanaABMCliente.getTablaClientes().getModel()).isCellEditable(i, 2);
@@ -165,21 +168,20 @@ public class ControladorABMCliente implements ActionListener {
 
 				} else {
 
-					JOptionPane.showMessageDialog(this.ventanaABMCliente, "Debe seleccionar un cliente a eliminar",
-							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(this.ventanaABMCliente, "Disculpe, debe seleccionar un cliente a eliminar.");
 				}
 			} else {
 
-				JOptionPane.showMessageDialog(this.ventanaABMCliente, "No hay clientes a eliminar", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.ventanaABMCliente, "Disculpe, no hay clientes a eliminar.");
 			}
 
 		} else if (e.getSource() == this.ventanaABMCliente.getLimpiar_btn()) {
 
 			this.limpiartxts();
 			this.ventanaABMCliente.getTablaClientes().clearSelection();
-			
-		} else if (e.getSource() == this.ventanaABMCliente.getGuardar_btn()) {// boton guardar
+
+		} else if (e.getSource() == this.ventanaABMCliente.getGuardar_btn()) {// boton
+																				// guardar
 
 			// si esta seleccionado de la tabla
 			// modificar cliente
@@ -201,7 +203,7 @@ public class ControladorABMCliente implements ActionListener {
 				} else {
 
 					JOptionPane.showMessageDialog(this.ventanaABMCliente,
-							"No se permiten campos vac�os. Por favor, vuelva a intentarlo.");
+							"No se permiten campos vac\u00edos. Por favor, vuelva a intentarlo.");
 				}
 
 			} else {
@@ -220,7 +222,7 @@ public class ControladorABMCliente implements ActionListener {
 				} else {
 
 					JOptionPane.showMessageDialog(this.ventanaABMCliente,
-							"No se permiten campos vac�os. Por favor, vuelva a intentarlo.");
+							"No se permiten campos vac\u00edos. Por favor, vuelva a intentarlo.");
 				}
 
 			}
@@ -259,7 +261,7 @@ public class ControladorABMCliente implements ActionListener {
 		if (!soloNumeros(this.txts.get(2).getText())) { // valida documento
 
 			JOptionPane.showMessageDialog(this.ventanaABMCliente,
-					"Disculpe, has ingresado un nro de documento incorrecto.");
+					"Disculpe, ha ingresado un n\u00fameroro de documento incorrecto.");
 			return false;
 
 		} else {
@@ -270,7 +272,7 @@ public class ControladorABMCliente implements ActionListener {
 		if (!soloNumeros(this.txts.get(5).getText())) { // valida telefono
 
 			JOptionPane.showMessageDialog(this.ventanaABMCliente,
-					"Disculpe, has ingresado un nro de telefono incorrecto.");
+					"Disculpe, ha ingresado un n\u00fameroro de tel\u00e9fono incorrecto.");
 			return false;
 
 		} else {
@@ -280,7 +282,7 @@ public class ControladorABMCliente implements ActionListener {
 
 		if (!validarEmail(this.txts.get(6).getText())) { // valida email
 
-			JOptionPane.showMessageDialog(this.ventanaABMCliente, "Disculpe, has ingresado un mail incorrecto.");
+			JOptionPane.showMessageDialog(this.ventanaABMCliente, "Disculpe, ha ingresado un mail incorrecto.");
 			return false;
 
 		} else {
@@ -330,12 +332,12 @@ public class ControladorABMCliente implements ActionListener {
 		return matcher.matches();
 	}
 
-	public static void main(String[] args) {
-
-		VentanaABMCliente abm = new VentanaABMCliente();
-		ControladorABMCliente c = new ControladorABMCliente(abm);
-		c.inicializar();
-
-	}
+//	public static void main(String[] args) {
+//
+//		VentanaABMCliente abm = new VentanaABMCliente();
+//		ControladorABMCliente c = new ControladorABMCliente(abm);
+//		c.inicializar();
+//
+//	}
 
 }

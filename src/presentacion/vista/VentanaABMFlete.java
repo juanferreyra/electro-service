@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 
@@ -19,8 +21,8 @@ public class VentanaABMFlete extends JFrame {
 	private JPanel contentPane;
 	private JTable tablaFlete;
 	private DefaultTableModel modelFlete;
-	private String[] nombreColumnas = { "Nombre", "Documento", "Modelo transporte", "Patente transporte", "Teléfono",
-			"Fecha vto. licencia" };
+	private String[] nombreColumnas = { "Nombre", "DNI", "Modelo transporte", "Patente transporte", "Teléfono",
+			"Vencimiento licencia" };
 	private JTextField nombre_txf;
 	private JTextField documento_txf;
 	private JTextField modeloTransporte_txf;
@@ -33,7 +35,8 @@ public class VentanaABMFlete extends JFrame {
 
 	public VentanaABMFlete() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 787, 473);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
+		setBounds(100, 100, 742, 454);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -41,15 +44,15 @@ public class VentanaABMFlete extends JFrame {
 		setLocationRelativeTo(null);
 
 		limpiar_btn = new JButton("Limpiar");
-		limpiar_btn.setBounds(474, 348, 121, 23);
+		limpiar_btn.setBounds(433, 382, 121, 23);
 		getContentPane().add(limpiar_btn);
 
 		guardar_btn = new JButton("Ingresar");
-		guardar_btn.setBounds(343, 348, 121, 23);
+		guardar_btn.setBounds(302, 382, 121, 23);
 		getContentPane().add(guardar_btn);
 
 		JScrollPane flete_scrollPane = new JScrollPane();
-		flete_scrollPane.setBounds(74, 246, 644, 91);
+		flete_scrollPane.setBounds(10, 269, 705, 91);
 		getContentPane().add(flete_scrollPane);
 
 		modelFlete = new DefaultTableModel(null, nombreColumnas) {
@@ -65,66 +68,72 @@ public class VentanaABMFlete extends JFrame {
 		flete_scrollPane.setViewportView(tablaFlete);
 
 		eliminarItem_btn = new JButton("Eliminar");
-		eliminarItem_btn.setBounds(212, 348, 121, 23);
+		eliminarItem_btn.setBounds(152, 382, 140, 23);
 		getContentPane().add(eliminarItem_btn);
 
 		JLabel title_lbl = new JLabel("Nuevo fletero");
-		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		title_lbl.setBounds(74, 11, 644, 14);
+		title_lbl.setBounds(10, 11, 708, 14);
 		contentPane.add(title_lbl);
 
 		JLabel nombre_lbl = new JLabel("Nombre");
-		nombre_lbl.setBounds(74, 62, 126, 14);
+		nombre_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		nombre_lbl.setBounds(74, 84, 186, 14);
 		contentPane.add(nombre_lbl);
 
 		JLabel documento_lbl = new JLabel("Documento");
-		documento_lbl.setBounds(74, 87, 126, 14);
+		documento_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		documento_lbl.setBounds(74, 109, 168, 14);
 		contentPane.add(documento_lbl);
 
 		JLabel modeloTransporte_lbl = new JLabel("Modelo transporte");
-		modeloTransporte_lbl.setBounds(74, 112, 126, 14);
+		modeloTransporte_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		modeloTransporte_lbl.setBounds(74, 134, 156, 14);
 		contentPane.add(modeloTransporte_lbl);
 
 		JLabel patenteTransporte_lbl = new JLabel("Patente transporte");
-		patenteTransporte_lbl.setBounds(74, 137, 168, 14);
+		patenteTransporte_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		patenteTransporte_lbl.setBounds(74, 159, 168, 14);
 		contentPane.add(patenteTransporte_lbl);
 
 		JLabel telefono_lbl = new JLabel("Tel\u00E9fono");
-		telefono_lbl.setBounds(74, 162, 168, 14);
+		telefono_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		telefono_lbl.setBounds(74, 189, 168, 14);
 		contentPane.add(telefono_lbl);
 
-		JLabel fechaLicencia_lbl = new JLabel("Fecha vto. licencia ");
-		fechaLicencia_lbl.setBounds(74, 193, 168, 14);
+		JLabel fechaLicencia_lbl = new JLabel("Vencimiento licencia ");
+		fechaLicencia_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		fechaLicencia_lbl.setBounds(74, 214, 168, 14);
 		contentPane.add(fechaLicencia_lbl);
 
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(220, 187, 129, 20);
+		dateChooser.setBounds(220, 214, 129, 20);
 		contentPane.add(dateChooser);
 
 		nombre_txf = new JTextField();
-		nombre_txf.setBounds(220, 59, 496, 20);
+		nombre_txf.setBounds(220, 81, 440, 20);
 		contentPane.add(nombre_txf);
 		nombre_txf.setColumns(10);
 
 		documento_txf = new JTextField();
 		documento_txf.setColumns(10);
-		documento_txf.setBounds(220, 84, 496, 20);
+		documento_txf.setBounds(219, 106, 441, 20);
 		contentPane.add(documento_txf);
 
 		modeloTransporte_txf = new JTextField();
 		modeloTransporte_txf.setColumns(10);
-		modeloTransporte_txf.setBounds(220, 109, 496, 20);
+		modeloTransporte_txf.setBounds(219, 131, 440, 20);
 		contentPane.add(modeloTransporte_txf);
 
 		patenteTransporte_txf = new JTextField();
 		patenteTransporte_txf.setColumns(10);
-		patenteTransporte_txf.setBounds(220, 137, 496, 20);
+		patenteTransporte_txf.setBounds(219, 158, 441, 20);
 		contentPane.add(patenteTransporte_txf);
 
 		telefono_txf = new JTextField();
 		telefono_txf.setColumns(10);
-		telefono_txf.setBounds(220, 162, 496, 20);
+		telefono_txf.setBounds(220, 188, 440, 20);
 		contentPane.add(telefono_txf);
 
 	}

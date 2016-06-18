@@ -16,7 +16,7 @@ import java.awt.Rectangle;
 public class VentanaPresentacion extends Thread {
 
 	private JFrame frame;
-	private int retardoInicial = 1000;
+	private int retardoInicial = 3000;
 	private ControladorVentanaPrincipal controladorVentanaPrincipal;
 
 	@Override

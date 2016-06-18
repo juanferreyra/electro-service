@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
@@ -22,7 +24,7 @@ public class VentanaABMCliente extends JFrame {
 	private JTextField documento_txt;
 	private JTable tablaClientes;
 	private DefaultTableModel modelClientes;
-	private String[] nombreColumnas = { "id", "Nombre", "Apellido", "Documento", "Localidad", "Direccion", "Telefono",
+	private String[] nombreColumnas = { "id", "Nombre", "Apellido", "DNI", "Localidad", "Direcci\u00f3n", "Tel\u00e9fono",
 			"Email" };
 	private JButton guardar_btn;
 	private JButton eliminarItem_btn;
@@ -39,74 +41,82 @@ public class VentanaABMCliente extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
 
 		JLabel title_lbl = new JLabel("Nuevo cliente");
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		title_lbl.setBounds(10, 11, 706, 14);
 		getContentPane().add(title_lbl);
 
 		JLabel nombre_lbl = new JLabel("Nombre");
+		nombre_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		nombre_lbl.setBounds(123, 52, 100, 14);
 		getContentPane().add(nombre_lbl);
 
 		nombre_txt = new JTextField();
-		nombre_txt.setBounds(188, 49, 394, 20);
+		nombre_txt.setBounds(209, 49, 373, 20);
 		getContentPane().add(nombre_txt);
 		nombre_txt.setColumns(10);
 
 		JLabel apellido_lbl = new JLabel("Apellido");
-		apellido_lbl.setBounds(123, 80, 100, 14);
+		apellido_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		apellido_lbl.setBounds(123, 80, 100, 17);
 		getContentPane().add(apellido_lbl);
 
 		apellido_txt = new JTextField();
 		apellido_txt.setColumns(10);
-		apellido_txt.setBounds(188, 77, 394, 20);
+		apellido_txt.setBounds(209, 77, 373, 20);
 		getContentPane().add(apellido_txt);
 
 		JLabel localidad_lbl = new JLabel("Localidad");
+		localidad_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		localidad_lbl.setBounds(123, 139, 100, 14);
 		getContentPane().add(localidad_lbl);
 
 		localidad_txt = new JTextField();
 		localidad_txt.setColumns(10);
-		localidad_txt.setBounds(188, 136, 394, 20);
+		localidad_txt.setBounds(209, 136, 373, 20);
 		getContentPane().add(localidad_txt);
 
 		JLabel direccion_lbl = new JLabel("Direcci\u00F3n");
+		direccion_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		direccion_lbl.setBounds(123, 167, 100, 14);
 		getContentPane().add(direccion_lbl);
 
 		direccion_txt = new JTextField();
 		direccion_txt.setColumns(10);
-		direccion_txt.setBounds(188, 164, 394, 20);
+		direccion_txt.setBounds(209, 164, 373, 20);
 		getContentPane().add(direccion_txt);
 
 		JLabel telefono_lbl = new JLabel("Tel\u00E9fono");
+		telefono_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		telefono_lbl.setBounds(123, 193, 100, 14);
 		getContentPane().add(telefono_lbl);
 
 		telefono_txt = new JTextField();
 		telefono_txt.setColumns(10);
-		telefono_txt.setBounds(188, 190, 394, 20);
+		telefono_txt.setBounds(209, 190, 373, 20);
 		getContentPane().add(telefono_txt);
 
 		JLabel email_lbl = new JLabel("E-mail");
+		email_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		email_lbl.setBounds(123, 218, 100, 14);
 		getContentPane().add(email_lbl);
 
 		email_txt = new JTextField();
 		email_txt.setColumns(10);
-		email_txt.setBounds(188, 215, 394, 20);
+		email_txt.setBounds(209, 215, 373, 20);
 		getContentPane().add(email_txt);
 
 		JLabel documento_lbl = new JLabel("Documento");
+		documento_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		documento_lbl.setBounds(123, 108, 100, 14);
 		getContentPane().add(documento_lbl);
 
 		documento_txt = new JTextField();
 		documento_txt.setColumns(10);
-		documento_txt.setBounds(188, 105, 394, 20);
+		documento_txt.setBounds(209, 105, 373, 20);
 		getContentPane().add(documento_txt);
 
 		guardar_btn = new JButton("Ingresar");
@@ -114,7 +124,7 @@ public class VentanaABMCliente extends JFrame {
 		getContentPane().add(guardar_btn);
 
 		JScrollPane clientes_scrollPane = new JScrollPane();
-		clientes_scrollPane.setBounds(123, 280, 459, 91);
+		clientes_scrollPane.setBounds(10, 280, 706, 91);
 		getContentPane().add(clientes_scrollPane);
 
 		modelClientes = new DefaultTableModel(null, nombreColumnas){
