@@ -7,14 +7,18 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import dto.ReporteFinancieroActivosDTO;
 import dto.ReporteFinancieroPasivosDTO;
+import dto.ReporteMarcaTipoDTO;
 import persistencia.dao.ReporteFinancieroDAO;
+import persistencia.dao.ReporteMarcaTipoDAO;
 
 public class SelectorFechaReporte {
 	
 	private static ReporteFinancieroDAO financieroDAO;
+	private static ReporteMarcaTipoDAO marcaTipoDAO;
 	private Date inicio;
 	private Date fin;
-	
+	private String tipoDeFiltro;
+
 	public SelectorFechaReporte() {
 		this.inicio = null;
 		this.fin = null;
@@ -28,6 +32,31 @@ public class SelectorFechaReporte {
 	public ArrayList<ReporteFinancieroActivosDTO> getFinancieroActivos() {
 		financieroDAO = new ReporteFinancieroDAO();
 		return financieroDAO.findActivos(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteMarcaTipoDTO> getTodosReporte2() {
+		if(tipoDeFiltro.equals("PorTipoProducto")) {
+			return this.getPorTipoProducto();
+		} else if(tipoDeFiltro.equals("PorMarca")) {
+			return this.getPorMarca();
+		} else {
+			return this.getPorMarcaTipoProducto();
+		}
+	}
+	
+	public ArrayList<ReporteMarcaTipoDTO> getPorTipoProducto() {
+		marcaTipoDAO = new ReporteMarcaTipoDAO();
+		return marcaTipoDAO.porTipo(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteMarcaTipoDTO> getPorMarca() {
+		marcaTipoDAO = new ReporteMarcaTipoDAO();
+		return marcaTipoDAO.porMarca(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteMarcaTipoDTO> getPorMarcaTipoProducto() {
+		marcaTipoDAO = new ReporteMarcaTipoDAO();
+		return marcaTipoDAO.porMarcaTipo(this.inicio, this.fin);
 	}
 	
 	public void setearFechasAnio(GregorianCalendar fecha) {
@@ -107,8 +136,16 @@ public class SelectorFechaReporte {
 		return fin;
 	}
 	
+	public String getTipoDeFiltro() {
+		return tipoDeFiltro;
+	}
+
+	public void setTipoDeFiltro(String tipoDeFiltro) {
+		this.tipoDeFiltro = tipoDeFiltro;
+	}
+	
 	public String fechasToString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		return "Fecha inicio:"+sdf.format(inicio.getTime()) +" Fecha Fin:"+sdf.format(fin.getTime());
+		return "del "+sdf.format(inicio.getTime()) +" al "+sdf.format(fin.getTime());
 	}
 }

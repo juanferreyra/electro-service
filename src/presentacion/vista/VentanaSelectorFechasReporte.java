@@ -29,14 +29,18 @@ public class VentanaSelectorFechasReporte extends JFrame {
 	private JDateChooser hasta_entrefechas;
 	private ButtonGroup tipoFecha;
 	private JButton btnGenerarReporte;
-
+	private JRadioButton rdbtnTipoproducto;
+	private JRadioButton rdbtnPorMarca;
+	private JRadioButton rdbtnPorMarcaY;
+	private ButtonGroup tipoMarca;
+	
 	public VentanaSelectorFechasReporte() {
 		setAlwaysOnTop(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaSelectorFechasReporte.class.getResource("/chart-pie.png")));
 		setType(Type.POPUP);
 		setTitle("Selector de Fechas");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 367);
+		setBounds(100, 100, 450, 452);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -138,11 +142,41 @@ public class VentanaSelectorFechasReporte extends JFrame {
 		
 		btnGenerarReporte = new JButton("Generar Reporte");
 		btnGenerarReporte.setIcon(new ImageIcon(VentanaSelectorFechasReporte.class.getResource("/chart-bar-outline.png")));
-		btnGenerarReporte.setBounds(22, 279, 380, 36);
+		btnGenerarReporte.setBounds(22, 366, 380, 36);
 		contentPane.add(btnGenerarReporte);
+		
+		rdbtnTipoproducto = new JRadioButton("Por Tipo de Producto");
+		rdbtnTipoproducto.setBounds(22, 281, 228, 23);
+		contentPane.add(rdbtnTipoproducto);
+		
+		rdbtnPorMarca = new JRadioButton("Por Marca");
+		rdbtnPorMarca.setBounds(22, 307, 228, 23);
+		contentPane.add(rdbtnPorMarca);
+		
+		rdbtnPorMarcaY = new JRadioButton("Por Marca y Tipo de de Producto");
+		rdbtnPorMarcaY.setBounds(22, 334, 228, 25);
+		contentPane.add(rdbtnPorMarcaY);
+		
+		tipoMarca = new ButtonGroup();
+		rdbtnTipoproducto.setSelected(true);
+		tipoMarca.add(rdbtnTipoproducto);
+		tipoMarca.add(rdbtnPorMarca);
+		tipoMarca.add(rdbtnPorMarcaY);
 		
 	}
 	
+	public JRadioButton getRdbtnTipoproducto() {
+		return rdbtnTipoproducto;
+	}
+
+	public JRadioButton getRdbtnPorMarca() {
+		return rdbtnPorMarca;
+	}
+
+	public JRadioButton getRdbtnPorMarcaY() {
+		return rdbtnPorMarcaY;
+	}
+
 	public JButton getBtnGenerarReporte() {
 		return btnGenerarReporte;
 	}
