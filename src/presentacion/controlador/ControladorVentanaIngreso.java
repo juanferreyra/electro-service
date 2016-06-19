@@ -198,10 +198,8 @@ public class ControladorVentanaIngreso implements ActionListener {
 			}
 
 			if (!error) {
-				if ((this.ventana_ingreso.getComboMarcas().getSelectedItem() == null
-						&& this.ventana_ingreso.getComboTiposProductos().getSelectedItem() == null)
-						&& (this.ventana_ingreso.getComboMarcas().getSelectedItem() == null
-								|| this.ventana_ingreso.getComboTiposProductos().getSelectedItem() == null)) {
+				if ((this.ventana_ingreso.getComboMarcas().getSelectedItem() != null
+						&& this.ventana_ingreso.getComboTiposProductos().getSelectedItem() != null)) {
 					IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
 							this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
 							this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,

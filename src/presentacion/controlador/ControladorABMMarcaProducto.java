@@ -36,6 +36,7 @@ public class ControladorABMMarcaProducto implements ActionListener {
 				int fila = this.ventanaABMMarcaProducto.getTablaMarcaProducto().getSelectedRow();
 				String marca = (String) this.ventanaABMMarcaProducto.getTablaMarcaProducto().getValueAt(fila, 0);
 				eliminarMarcaProducto(marca);
+				this.limpiartxts();
 			}
 		} else if (e.getSource() == this.ventanaABMMarcaProducto.getIngresar_btn()) {
 			if (this.ventanaABMMarcaProducto.getDetalle_txt().getText() != "") {
@@ -56,7 +57,7 @@ public class ControladorABMMarcaProducto implements ActionListener {
 					ingresarMarcaProducto(this.ventanaABMMarcaProducto.getDetalle_txt().getText());
 					limpiartxts();
 					cargarTablaMarcaProducto();
-					
+
 				}
 
 			} else {
