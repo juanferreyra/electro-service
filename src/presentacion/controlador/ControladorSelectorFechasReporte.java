@@ -186,8 +186,9 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 					
-					ArrayList<ReporteMarcaTipoDTO> a = this.modelReporte.getTodosReporte2();
-					ReporteMarcaTipo reporte = new ReporteMarcaTipo(a,this.modelReporte.fechasToString());
+					ArrayList<ReporteMarcaTipoDTO> a = this.modelReporte.getTodosReporte2_10();
+					ArrayList<ReporteMarcaTipoDTO> b = this.modelReporte.getTodosReporte2_20();
+					ReporteMarcaTipo reporte = new ReporteMarcaTipo(a,this.modelReporte.fechasToString(),b);
 					reporte.mostrar();
 					
 				} else if(this.tipoReporte == 3){

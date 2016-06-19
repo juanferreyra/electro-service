@@ -34,29 +34,54 @@ public class SelectorFechaReporte {
 		return financieroDAO.findActivos(this.inicio, this.fin);
 	}
 	
-	public ArrayList<ReporteMarcaTipoDTO> getTodosReporte2() {
+	public ArrayList<ReporteMarcaTipoDTO> getTodosReporte2_10() {
 		if(tipoDeFiltro.equals("PorTipoProducto")) {
-			return this.getPorTipoProducto();
+			return this.getPorTipoProducto10();
 		} else if(tipoDeFiltro.equals("PorMarca")) {
-			return this.getPorMarca();
+			return this.getPorMarca10();
 		} else {
-			return this.getPorMarcaTipoProducto();
+			return this.getPorMarcaTipoProducto10();
 		}
 	}
 	
-	public ArrayList<ReporteMarcaTipoDTO> getPorTipoProducto() {
-		marcaTipoDAO = new ReporteMarcaTipoDAO();
-		return marcaTipoDAO.porTipo(this.inicio, this.fin);
+	public ArrayList<ReporteMarcaTipoDTO> getTodosReporte2_20() {
+		if(tipoDeFiltro.equals("PorTipoProducto")) {
+			return this.getPorTipoProducto20();
+		} else if(tipoDeFiltro.equals("PorMarca")) {
+			return this.getPorMarca20();
+		} else {
+			return this.getPorMarcaTipoProducto20();
+		}
 	}
 	
-	public ArrayList<ReporteMarcaTipoDTO> getPorMarca() {
+	public ArrayList<ReporteMarcaTipoDTO> getPorTipoProducto10() {
 		marcaTipoDAO = new ReporteMarcaTipoDAO();
-		return marcaTipoDAO.porMarca(this.inicio, this.fin);
+		return marcaTipoDAO.porTipo10(this.inicio, this.fin);
 	}
 	
-	public ArrayList<ReporteMarcaTipoDTO> getPorMarcaTipoProducto() {
+	public ArrayList<ReporteMarcaTipoDTO> getPorMarca10() {
 		marcaTipoDAO = new ReporteMarcaTipoDAO();
-		return marcaTipoDAO.porMarcaTipo(this.inicio, this.fin);
+		return marcaTipoDAO.porMarca10(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteMarcaTipoDTO> getPorMarcaTipoProducto10() {
+		marcaTipoDAO = new ReporteMarcaTipoDAO();
+		return marcaTipoDAO.porMarcaTipo10(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteMarcaTipoDTO> getPorTipoProducto20() {
+		marcaTipoDAO = new ReporteMarcaTipoDAO();
+		return marcaTipoDAO.porTipo20(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteMarcaTipoDTO> getPorMarca20() {
+		marcaTipoDAO = new ReporteMarcaTipoDAO();
+		return marcaTipoDAO.porMarca20(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteMarcaTipoDTO> getPorMarcaTipoProducto20() {
+		marcaTipoDAO = new ReporteMarcaTipoDAO();
+		return marcaTipoDAO.porMarcaTipo20(this.inicio, this.fin);
 	}
 	
 	public void setearFechasAnio(GregorianCalendar fecha) {

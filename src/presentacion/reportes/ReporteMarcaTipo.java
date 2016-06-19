@@ -23,7 +23,7 @@ public class ReporteMarcaTipo {
 	
 	
 	//Recibe la lista de personas para armar el reporte
-    public ReporteMarcaTipo(List<ReporteMarcaTipoDTO> datos, String periodo)
+    public ReporteMarcaTipo(List<ReporteMarcaTipoDTO> datos, String periodo, List<ReporteMarcaTipoDTO> datosGrafico)
     {
     	
     	JRDataSource javaBeansKapitelDS = new JRBeanCollectionDataSource(datos);
@@ -31,7 +31,7 @@ public class ReporteMarcaTipo {
     	Map<String, Object> parametersMap = new HashMap<String, Object>();
     	parametersMap.put("FECHA", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
     	parametersMap.put("PERIODO", periodo);
-    	parametersMap.put("SUB_DATASOURCE", datos);//despues reemplazo los datos por otra cosa
+    	parametersMap.put("SUB_DATASOURCE", datosGrafico);
         
         try {
         	this.reporte = (JasperReport) JRLoader.loadObjectFromFile("ReporteMarcaTipo.jasper");
