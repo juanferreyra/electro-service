@@ -174,8 +174,6 @@ public class VentanaPrincipal extends JFrame {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean selected,
 					boolean focused, int row, int column) {
 
-				
-
 				return (Component) value;
 			}
 		});
@@ -248,7 +246,7 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panelDeBotones, BorderLayout.SOUTH);
 
 		ingresarProducto_btn = new JButton("<html><center>Crear</center></html>");
-		ingresarProducto_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/pencil.png")));
+		ingresarProducto_btn.setIcon(new ImageIcon("ingreso.png"));
 		ingresarProducto_btn.setBounds(10, 461, 158, 36);
 		panelDeBotones.add(ingresarProducto_btn);
 
@@ -267,7 +265,7 @@ public class VentanaPrincipal extends JFrame {
 		panelDeBotones.add(btnElaborarHojaDe);
 
 		btnOrdenDeCompra = new JButton("Elaborar Orden de Compra");
-		btnOrdenDeCompra.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/upload.png")));
+		btnOrdenDeCompra.setIcon(new ImageIcon("ordenCompra.png"));
 		panelDeBotones.add(btnOrdenDeCompra);
 
 	}
