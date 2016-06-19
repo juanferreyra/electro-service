@@ -127,8 +127,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			String nombreCliente = clienteDTO.getNombre() + " " + clienteDTO.getApellido();
 			this.cargarFila(i, new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
 					ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(), ingresos.get(i).getDescripcion(),
-					nombreCliente, (ingresos.get(i).getEnvio()) ? "SI" : "NO",
-					new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
+					nombreCliente, (ingresos.get(i).getEnvio()) ? "SI" : "NO", new JLabel(new ImageIcon("money.png")),
 					nombreCompletoTecnicoAsignado, estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
 		}
 	}
