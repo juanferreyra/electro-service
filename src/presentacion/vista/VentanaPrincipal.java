@@ -394,7 +394,7 @@ public class VentanaPrincipal extends JFrame {
 
 		cambioDeClave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-
+				
 			}
 		});
 
