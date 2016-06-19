@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import dto.ClienteDTO;
@@ -19,10 +17,11 @@ import persistencia.dao.ClienteDAO;
 import presentacion.reportes.ReporteIngreso;
 import presentacion.vista.VentanaABMCliente;
 import presentacion.vista.VentanaIngreso;
+import presentacion.vista.VentanaVisualizacionClientes;
 
 public class ControladorVentanaIngreso implements ActionListener {
 
-	private VentanaIngreso ventana_ingreso;
+	VentanaIngreso ventana_ingreso;
 	Ingreso ingreso;
 	private List<MarcaDTO> lista_marcas;
 	private List<TipoProductoDTO> lista_tiposproductos;
@@ -121,7 +120,11 @@ public class ControladorVentanaIngreso implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.ventana_ingreso.getBtnBuscarCliente()) {
-			this.buscarCliente();
+
+			VentanaVisualizacionClientes visualizador = new VentanaVisualizacionClientes();
+			ControladorVisualizacionClientes controladorVisualizador = new ControladorVisualizacionClientes(
+					visualizador, this);
+			controladorVisualizador.inicializar();
 
 		} else if (e.getSource() == this.ventana_ingreso.getEnvioDomicilio()) {
 			this.ventana_ingreso.getDireccion_nueva().setEnabled(true);
@@ -229,42 +232,6 @@ public class ControladorVentanaIngreso implements ActionListener {
 			ControladorABMCliente contrClient = new ControladorABMCliente(ventClient);
 			contrClient.inicializar();
 
-			ventClient.addWindowListener(new WindowListener() {
-
-				@Override
-				public void windowOpened(WindowEvent e) {
-				}
-
-				@Override
-				public void windowIconified(WindowEvent e) {
-				}
-
-				@Override
-				public void windowDeiconified(WindowEvent e) {
-				}
-
-				@Override
-				public void windowDeactivated(WindowEvent e) {
-				}
-
-				@Override
-				public void windowClosing(WindowEvent e) {
-				}
-
-				@Override
-				public void windowClosed(WindowEvent e) {
-
-					if (ventClient.getTablaClientes().getSelectedRow() != -1) {
-						ventana_ingreso.getTxtNroCliente().setText(ventClient.getDocumento_txt().getText());
-						buscarCliente();
-					}
-				}
-
-				@Override
-				public void windowActivated(WindowEvent e) {
-				}
-			});
-
 		}
 	}
 
@@ -276,7 +243,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.determinarVisibilidadCuadro_DireccionNueva();
 	}
 
-	private void buscarCliente() {
+	void buscarCliente() {
 		String textoingresado = this.ventana_ingreso.getTxtNroCliente().getText();
 		if (textoingresado == null || textoingresado.equals("")) {
 			JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor, ingrese un n\u00famero de cliente.");
