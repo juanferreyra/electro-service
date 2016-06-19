@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import dto.ClienteDTO;
@@ -19,10 +17,11 @@ import persistencia.dao.ClienteDAO;
 import presentacion.reportes.ReporteIngreso;
 import presentacion.vista.VentanaABMCliente;
 import presentacion.vista.VentanaIngreso;
+import presentacion.vista.VentanaVisualizacionClientes;
 
 public class ControladorVentanaIngreso implements ActionListener {
 
-	private VentanaIngreso ventana_ingreso;
+	VentanaIngreso ventana_ingreso;
 	Ingreso ingreso;
 	private List<MarcaDTO> lista_marcas;
 	private List<TipoProductoDTO> lista_tiposproductos;
@@ -121,7 +120,11 @@ public class ControladorVentanaIngreso implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.ventana_ingreso.getBtnBuscarCliente()) {
-			this.buscarCliente();
+
+			VentanaVisualizacionClientes visualizador = new VentanaVisualizacionClientes();
+			ControladorVisualizacionClientes controladorVisualizador = new ControladorVisualizacionClientes(
+					visualizador, this);
+			controladorVisualizador.inicializar();
 
 		} else if (e.getSource() == this.ventana_ingreso.getEnvioDomicilio()) {
 			this.ventana_ingreso.getDireccion_nueva().setEnabled(true);
@@ -144,8 +147,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (this.ingreso.getCliente() == null) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"Debes ingresar un cliente para continuar. Por favor, vuelva a intentarlo.", null,
-						JOptionPane.INFORMATION_MESSAGE);
+						"Debes ingresar un cliente para continuar. Por favor, vuelva a intentarlo.");
 
 			}
 
@@ -154,8 +156,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (nombre_produ.equals("") && !error) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"Debes completar el nombre de producto. Por favor, vuelva a intentarlo.", null,
-						JOptionPane.INFORMATION_MESSAGE);
+						"Debes completar el nombre de producto. Por favor, vuelva a intentarlo.");
 			}
 
 			// DESCRIPCION DE FALLA
@@ -163,8 +164,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (descripcion_falla.equals("") && !error) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"La descripcion de la falla estï¿½ vacia. Por favor, vuelva a intentarlo.", null,
-						JOptionPane.INFORMATION_MESSAGE);
+						"La descripcion de la falla est\u00e1 vacia. Por favor, vuelva a intentarlo.");
 			}
 
 			if (this.ventana_ingreso.getEnvioDomicilio().isSelected() && !error) {
@@ -177,8 +177,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 					if (direccionAlternativa.equals("")) {
 						error = true;
 						JOptionPane.showMessageDialog(this.ventana_ingreso,
-								"Si el cliente solicita envio debe completar una direccion. De lo contrario, utilice la direccion del cliente.",
-								null, JOptionPane.INFORMATION_MESSAGE);
+								"Si el cliente solicita envio debe completar una direcci\u00f3n. De lo contrario, utilice la direcci\u00f3n del cliente.");
 					}
 				}
 				// VALIDO EL MONTO DE ENVIO
@@ -186,35 +185,40 @@ public class ControladorVentanaIngreso implements ActionListener {
 				if (monto.equals("") && !error) {
 					error = true;
 					JOptionPane.showMessageDialog(this.ventana_ingreso,
-							"Por favor, ingrese el costo en pesos del envio.", null, JOptionPane.INFORMATION_MESSAGE);
+							"Por favor, ingrese el costo en pesos del env\u00edo.");
 				} else if (!error) {
 					try {
 						montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
 					} catch (NumberFormatException nfe) {
 						error = true;
 						JOptionPane.showMessageDialog(this.ventana_ingreso,
-								"El monto no es vï¿½lido. Por favor, vuelva a intentarlo.", null,
-								JOptionPane.INFORMATION_MESSAGE);
+								"El monto no es v\u00e1lido. Por favor, vuelva a intentarlo.");
 					}
 				}
 			}
 
 			if (!error) {
-				IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
-						this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
-						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
-						this.ventana_ingreso.getEnvioDomicilio().isSelected(),
-						this.ventana_ingreso.getDireccion_nueva().isSelected(),
-						this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1,
-						usuarioLogueado.getId(), this.ingreso.getId());
-				this.ingreso.ingr = ingresoDTO;
+				if ((this.ventana_ingreso.getComboMarcas().getSelectedItem() != null
+						&& this.ventana_ingreso.getComboTiposProductos().getSelectedItem() != null)) {
+					IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
+							this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
+							this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
+							this.ventana_ingreso.getEnvioDomicilio().isSelected(),
+							this.ventana_ingreso.getDireccion_nueva().isSelected(),
+							this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1,
+							usuarioLogueado.getId(), this.ingreso.getId());
+					this.ingreso.ingr = ingresoDTO;
 
-				Boolean ingreso = this.ingreso.guardarIngreso(usuarioLogueado.getId());
+					Boolean ingreso = this.ingreso.guardarIngreso(usuarioLogueado.getId());
 
-				if (ingreso) {
-					this.ventana_ingreso.vaciarTodo();
-					this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
-					this.ventana_ingreso.setVisible(false);
+					if (ingreso) {
+						this.ventana_ingreso.vaciarTodo();
+						this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+						this.ventana_ingreso.setVisible(false);
+					}
+				} else {
+					JOptionPane.showMessageDialog(this.ventana_ingreso,
+							"Disculpe, debe ingresar la marca y el tipo del producto para continuar.");
 				}
 			}
 		} else if (e.getSource() == this.ventana_ingreso.getDireccion_nueva()) {
@@ -225,42 +229,6 @@ public class ControladorVentanaIngreso implements ActionListener {
 			VentanaABMCliente ventClient = new VentanaABMCliente();
 			ControladorABMCliente contrClient = new ControladorABMCliente(ventClient);
 			contrClient.inicializar();
-
-			ventClient.addWindowListener(new WindowListener() {
-
-				@Override
-				public void windowOpened(WindowEvent e) {
-				}
-
-				@Override
-				public void windowIconified(WindowEvent e) {
-				}
-
-				@Override
-				public void windowDeiconified(WindowEvent e) {
-				}
-
-				@Override
-				public void windowDeactivated(WindowEvent e) {
-				}
-
-				@Override
-				public void windowClosing(WindowEvent e) {
-				}
-
-				@Override
-				public void windowClosed(WindowEvent e) {
-
-					if (ventClient.getTablaClientes().getSelectedRow() != -1) {
-						ventana_ingreso.getTxtNroCliente().setText(ventClient.getDocumento_txt().getText());
-						buscarCliente();
-					}
-				}
-
-				@Override
-				public void windowActivated(WindowEvent e) {
-				}
-			});
 
 		}
 	}
@@ -273,11 +241,10 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.determinarVisibilidadCuadro_DireccionNueva();
 	}
 
-	private void buscarCliente() {
+	void buscarCliente() {
 		String textoingresado = this.ventana_ingreso.getTxtNroCliente().getText();
 		if (textoingresado == null || textoingresado.equals("")) {
-			JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor, ingrese un nï¿½mero de cliente.", null,
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor, ingrese un n\u00famero de cliente.");
 		} else {
 			try {
 				int nrodoc = Integer.parseInt(textoingresado);
@@ -285,8 +252,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				ClienteDTO cdto = cdao.findPorNrodoc(nrodoc);
 				if (cdto == null) {
 					JOptionPane.showMessageDialog(this.ventana_ingreso,
-							"El cliente buscado no existe, por favor, ingrese un valor válido.", null,
-							JOptionPane.INFORMATION_MESSAGE);
+							"El cliente buscado no existe. Por favor, ingrese un valor v\u00e1lido.");
 					this.ventana_ingreso.vaciarTodo();
 				} else {
 					this.ingreso.setCliente(cdto);
@@ -294,8 +260,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				}
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"El nï¿½mero de cliente es incorrecto, vuelva a intentarlo. ", null,
-						JOptionPane.INFORMATION_MESSAGE);
+						"El n\u00famero de cliente es incorrecto, vuelva a intentarlo. ");
 			}
 		}
 

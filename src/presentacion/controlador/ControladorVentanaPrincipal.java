@@ -70,7 +70,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		this.adecuarVentanaPrincipal();
 		this.cargar_tablaOrdenesTrabajo();
 		this.actualizar_AvisoFaltante();
-		this.principal.setLblUsuario(this.usuarioLogueado.getNick());
+		this.principal.setLblUsuario(this.usuarioLogueado.getNick().toUpperCase());
 	}
 
 	private void adecuarVentanaPrincipal() {
@@ -112,6 +112,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		// Consigo todos los ingresos y genero las filas
 		ArrayList<IngresoDTO> ingresos = ingresoDAO.readAll();
 		ObtenerFilas(ingresos);
+
 	}
 
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
@@ -124,10 +125,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			}
 			ClienteDTO clienteDTO = clienteDAO.find(ingresos.get(i).getIdcliente());
 			String nombreCliente = clienteDTO.getNombre() + " " + clienteDTO.getApellido();
-			this.cargarFila(i, new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
-					ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(), ingresos.get(i).getDescripcion(),
-					nombreCliente, (ingresos.get(i).getEnvio()) ? "SI" : "NO",
-					new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/document-text.png"))),
+			this.cargarFila(i, new JLabel(new ImageIcon("ingreso.png")), ingresos.get(i).getId(),
+					ingresos.get(i).getFecha_creacion(), ingresos.get(i).getDescripcion(), nombreCliente,
+					(ingresos.get(i).getEnvio()) ? "SI" : "NO", new JLabel(new ImageIcon("money.png")),
 					nombreCompletoTecnicoAsignado, estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
 		}
 	}

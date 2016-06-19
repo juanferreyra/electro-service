@@ -42,12 +42,13 @@ public class VentanaABMTipoProducto extends JFrame {
 		getContentPane().add(ingresar_btn);
 
 		JLabel title_lbl = new JLabel("Nuevo tipo de producto");
-		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		title_lbl.setBounds(10, 11, 622, 15);
 		contentPane.add(title_lbl);
 
 		JLabel detalle_lbl = new JLabel("Detalle");
+		detalle_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		detalle_lbl.setBounds(114, 59, 146, 14);
 		contentPane.add(detalle_lbl);
 
@@ -57,7 +58,7 @@ public class VentanaABMTipoProducto extends JFrame {
 		detalle_txt.setColumns(10);
 
 		JScrollPane tipoProducto_scrollPane = new JScrollPane();
-		tipoProducto_scrollPane.setBounds(114, 100, 394, 137);
+		tipoProducto_scrollPane.setBounds(10, 129, 622, 108);
 		getContentPane().add(tipoProducto_scrollPane);
 
 		modelTipoProducto = new DefaultTableModel(null, nombreColumnas);

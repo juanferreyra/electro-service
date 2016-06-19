@@ -79,7 +79,7 @@ public class VentanaPrincipal extends JFrame {
 		setMinimumSize(new Dimension(1046, 546));
 
 		contentPane = new JPanel();
-		contentPane.setBorder(new LineBorder(new Color(70, 130, 180), 2, true));
+		contentPane.setBorder(new EmptyBorder(0, 20, 10, 20));
 		contentPane.setLayout(new BorderLayout());
 
 		setContentPane(contentPane);
@@ -111,6 +111,7 @@ public class VentanaPrincipal extends JFrame {
 		// FIN MENU
 
 		JLabel ordenesDeTrabajo_lbl = new JLabel("<html>\u00D3rdenes de Trabajo</html>");
+		ordenesDeTrabajo_lbl.setBorder(new EmptyBorder(15, 3, 20, 3));
 		ordenesDeTrabajo_lbl.setBackground(Color.WHITE);
 		ordenesDeTrabajo_lbl.setMinimumSize(new Dimension(1000, 50));
 		ordenesDeTrabajo_lbl.setForeground(new Color(70, 130, 180));
@@ -128,8 +129,10 @@ public class VentanaPrincipal extends JFrame {
 		contenedorPanelArriba.add(subpanelArriba, BorderLayout.SOUTH);
 
 		lblUsuario = new JLabel("");
+		lblUsuario.setIcon(
+				new ImageIcon(VentanaPrincipal.class.getResource("/com/jtattoo/plaf/icons/pearl_blue_24x24.png")));
 		lblUsuario.setBorder(new EmptyBorder(4, 4, 4, 4));
-		lblUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
+		lblUsuario.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 17));
 		lblUsuario.setForeground(Color.GRAY);
 		subpanelArriba.add(lblUsuario, BorderLayout.EAST);
 		contenedorPanelArriba.add(menuBar, BorderLayout.NORTH);
@@ -138,6 +141,7 @@ public class VentanaPrincipal extends JFrame {
 		// TABLA PRINCIPAL DEL SISTEMA
 
 		ordenesDeTrabajo_table = new JTable();
+		ordenesDeTrabajo_table.setBackground(Color.WHITE);
 		ordenesDeTrabajo_table.setForeground(Color.DARK_GRAY);
 		ordenesDeTrabajo_table.setFont(new Font("Arial", Font.PLAIN, 17));
 		ordenesDeTrabajo_table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -170,17 +174,13 @@ public class VentanaPrincipal extends JFrame {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean selected,
 					boolean focused, int row, int column) {
 
-				if (value.getClass() == JLabel.class) {
-					((JLabel) value).setBackground(Color.red);
-				}
-
 				return (Component) value;
 			}
 		});
 
 		JScrollPane ordenesDeTrabajo_scrollPane = new JScrollPane();
 		ordenesDeTrabajo_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		ordenesDeTrabajo_scrollPane.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
+		ordenesDeTrabajo_scrollPane.setBorder(new LineBorder(Color.WHITE, 1, true));
 		ordenesDeTrabajo_scrollPane.setMinimumSize(new Dimension(50, 50));
 		ordenesDeTrabajo_scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		ordenesDeTrabajo_scrollPane.setBounds(10, 134, 1005, 301);
@@ -246,12 +246,12 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panelDeBotones, BorderLayout.SOUTH);
 
 		ingresarProducto_btn = new JButton("<html><center>Crear</center></html>");
-		ingresarProducto_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/pencil.png")));
+		ingresarProducto_btn.setIcon(new ImageIcon("ingreso.png"));
 		ingresarProducto_btn.setBounds(10, 461, 158, 36);
 		panelDeBotones.add(ingresarProducto_btn);
 
 		presupuestar_btn = new JButton("<html>Presupuestar</html>");
-		presupuestar_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/th-list-outline.png")));
+		presupuestar_btn.setIcon(new ImageIcon("money.png"));
 		presupuestar_btn.setBounds(587, 474, 158, 36);
 		panelDeBotones.add(presupuestar_btn);
 
@@ -265,7 +265,7 @@ public class VentanaPrincipal extends JFrame {
 		panelDeBotones.add(btnElaborarHojaDe);
 
 		btnOrdenDeCompra = new JButton("Elaborar Orden de Compra");
-		btnOrdenDeCompra.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/upload.png")));
+		btnOrdenDeCompra.setIcon(new ImageIcon("ordenCompra.png"));
 		panelDeBotones.add(btnOrdenDeCompra);
 
 	}

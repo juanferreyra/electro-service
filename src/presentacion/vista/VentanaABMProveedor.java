@@ -8,13 +8,12 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class VentanaABMProveedor extends JFrame {
 
-	
 	private static final long serialVersionUID = 1L;
 	private JTextField razonSocial_txt;
 	private JTextField cuit_txt;
@@ -27,8 +26,8 @@ public class VentanaABMProveedor extends JFrame {
 	private JTable tablaProveedores;
 	private DefaultTableModel modelProveedores;
 	private DefaultTableModel modelMarcas;
-	private String[] nombreColumnas = { "Proveedor", "Razon Social", "CUIT", "Direcci\u00f3n", "Email",
-			"Nombre", "Tel\u00e9fono", "Email Contacto", "Email Pedidos" };
+	private String[] nombreColumnas = { "Proveedor", "Razon Social", "CUIT", "Direcci\u00f3n", "Email", "Nombre",
+			"Tel\u00e9fono", "Email Contacto", "Email Pedidos" };
 	private JTable tablaMarcas;
 	private String[] nombreColumnasMarcas = { "id", "Detalle" };
 	private JButton eliminarItem_btn;
@@ -41,91 +40,100 @@ public class VentanaABMProveedor extends JFrame {
 
 	public VentanaABMProveedor() {
 
-		setBounds(100, 100, 887, 705);
+		setBounds(100, 100, 887, 608);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
-		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
+
 		JLabel proveedor_lbl = new JLabel("Proveedores");
 		proveedor_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		proveedor_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		proveedor_lbl.setBounds(10, 24, 425, 15);
+		proveedor_lbl.setBounds(10, 27, 851, 15);
 		getContentPane().add(proveedor_lbl);
 
 		JLabel RazonSocial_lbl = new JLabel("Razon Social");
-		RazonSocial_lbl.setBounds(25, 61, 108, 15);
+		RazonSocial_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		RazonSocial_lbl.setBounds(10, 94, 177, 15);
 		getContentPane().add(RazonSocial_lbl);
 
 		razonSocial_txt = new JTextField();
-		razonSocial_txt.setBounds(151, 59, 271, 19);
+		razonSocial_txt.setBounds(128, 94, 334, 19);
 		getContentPane().add(razonSocial_txt);
 		razonSocial_txt.setColumns(10);
 
 		JLabel lblNroCuit = new JLabel("CUIT");
-		lblNroCuit.setBounds(25, 87, 108, 15);
+		lblNroCuit.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNroCuit.setBounds(10, 123, 160, 15);
 		getContentPane().add(lblNroCuit);
 
 		cuit_txt = new JTextField();
 		cuit_txt.setColumns(10);
-		cuit_txt.setBounds(151, 85, 271, 19);
+		cuit_txt.setBounds(128, 123, 334, 19);
 		getContentPane().add(cuit_txt);
 
 		JLabel lblDireccion = new JLabel("Direcci\u00F3n");
-		lblDireccion.setBounds(25, 116, 108, 15);
+		lblDireccion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDireccion.setBounds(10, 149, 108, 15);
 		getContentPane().add(lblDireccion);
 
 		direccion_txt = new JTextField();
 		direccion_txt.setColumns(10);
-		direccion_txt.setBounds(151, 114, 271, 19);
+		direccion_txt.setBounds(128, 149, 334, 19);
 		getContentPane().add(direccion_txt);
 
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(25, 145, 108, 15);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmail.setBounds(10, 179, 108, 15);
 		getContentPane().add(lblEmail);
 
 		email_txt = new JTextField();
 		email_txt.setColumns(10);
-		email_txt.setBounds(151, 143, 271, 19);
+		email_txt.setBounds(128, 179, 334, 19);
 		getContentPane().add(email_txt);
 
 		JLabel lblNombreContacto = new JLabel("Nombre");
-		lblNombreContacto.setBounds(25, 172, 108, 15);
+		lblNombreContacto.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNombreContacto.setBounds(10, 205, 160, 15);
 		getContentPane().add(lblNombreContacto);
 
 		nombreContacto_txt = new JTextField();
 		nombreContacto_txt.setColumns(10);
-		nombreContacto_txt.setBounds(151, 170, 271, 19);
+		nombreContacto_txt.setBounds(128, 205, 334, 19);
 		getContentPane().add(nombreContacto_txt);
 
-		JLabel lblTelefonoContacto = new JLabel("Telefono");
-		lblTelefonoContacto.setBounds(25, 203, 108, 15);
+		JLabel lblTelefonoContacto = new JLabel("Tel\u00E9fono");
+		lblTelefonoContacto.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTelefonoContacto.setBounds(10, 235, 108, 15);
 		getContentPane().add(lblTelefonoContacto);
 
 		telefonoContacto_txt = new JTextField();
 		telefonoContacto_txt.setColumns(10);
-		telefonoContacto_txt.setBounds(151, 201, 271, 19);
+		telefonoContacto_txt.setBounds(128, 235, 334, 19);
 		getContentPane().add(telefonoContacto_txt);
 
 		JLabel lblEmailContacto = new JLabel("Email Contacto");
-		lblEmailContacto.setBounds(25, 228, 108, 15);
+		lblEmailContacto.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmailContacto.setBounds(10, 261, 160, 15);
 		getContentPane().add(lblEmailContacto);
 
 		emailContacto_txt = new JTextField();
 		emailContacto_txt.setColumns(10);
-		emailContacto_txt.setBounds(151, 226, 271, 19);
+		emailContacto_txt.setBounds(128, 261, 334, 19);
 		getContentPane().add(emailContacto_txt);
 
 		JLabel lblEmailPedidos = new JLabel("Email Pedidos");
-		lblEmailPedidos.setBounds(25, 257, 108, 15);
+		lblEmailPedidos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmailPedidos.setBounds(10, 290, 200, 15);
 		getContentPane().add(lblEmailPedidos);
 
 		emailPedidos_txt = new JTextField();
 		emailPedidos_txt.setColumns(10);
-		emailPedidos_txt.setBounds(151, 255, 271, 19);
+		emailPedidos_txt.setBounds(128, 290, 334, 19);
 		getContentPane().add(emailPedidos_txt);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(25, 340, 800, 215);
+		scrollPane.setBounds(10, 337, 851, 173);
 		getContentPane().add(scrollPane);
 
 		modelProveedores = new DefaultTableModel(null, nombreColumnas) {
@@ -141,7 +149,7 @@ public class VentanaABMProveedor extends JFrame {
 		scrollPane.setViewportView(tablaProveedores);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(469, 50, 185, 222);
+		scrollPane_1.setBounds(472, 154, 389, 151);
 		getContentPane().add(scrollPane_1);
 
 		modelMarcas = new DefaultTableModel(null, nombreColumnasMarcas) {
@@ -157,41 +165,38 @@ public class VentanaABMProveedor extends JFrame {
 		scrollPane_1.setViewportView(tablaMarcas);
 
 		eliminarItem_btn = new JButton("Eliminar");
-		eliminarItem_btn.setBounds(230, 620, 117, 25);
+		eliminarItem_btn.setBounds(244, 535, 117, 25);
 		getContentPane().add(eliminarItem_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(367, 620, 117, 25);
+		guardar_btn.setBounds(371, 535, 117, 25);
 		getContentPane().add(guardar_btn);
 
 		limpiar_btn = new JButton("Limpiar");
-		limpiar_btn.setBounds(494, 620, 117, 25);
+		limpiar_btn.setBounds(495, 535, 117, 25);
 		getContentPane().add(limpiar_btn);
 
 		agregarMarca_jcmbox = new JComboBox<String>();
-		agregarMarca_jcmbox.setBounds(689, 61, 162, 24);
+		agregarMarca_jcmbox.setBounds(521, 123, 160, 22);
 		getContentPane().add(agregarMarca_jcmbox);
 
-		eliminarMarca = new JButton("Eliminar Marca");
-		eliminarMarca.setBounds(689, 223, 162, 25);
+		eliminarMarca = new JButton("Quitar");
+		eliminarMarca.setBounds(775, 120, 86, 25);
 		getContentPane().add(eliminarMarca);
 
-		JLabel lblMarcas = new JLabel("Marcas");
-		lblMarcas.setBounds(532, 24, 122, 15);
+		JLabel lblMarcas = new JLabel("Marcas asociadas");
+		lblMarcas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMarcas.setFont(new Font("Tahoma", Font.ITALIC, 14));
+		lblMarcas.setBounds(472, 94, 389, 15);
 		getContentPane().add(lblMarcas);
 
-		agregarMarca = new JButton("Agregar Marca");
-		agregarMarca.setBounds(689, 167, 162, 25);
+		agregarMarca = new JButton("Agregar");
+		agregarMarca.setBounds(691, 120, 74, 25);
 		getContentPane().add(agregarMarca);
 
-		btnMarcaNueva = new JButton("Marca Nueva");
-		btnMarcaNueva.setBounds(689, 111, 162, 25);
+		btnMarcaNueva = new JButton("*");
+		btnMarcaNueva.setBounds(472, 123, 39, 22);
 		getContentPane().add(btnMarcaNueva);
-		
-		JSeparator separator = new JSeparator();
-		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(445, 11, 14, 302);
-		getContentPane().add(separator);
 	}
 
 	public JTextField getRazonSocial_txt() {
