@@ -24,22 +24,20 @@ import modelo.ProveedorMarca;
 import presentacion.vista.VentanaABMMarcaProducto;
 import presentacion.vista.VentanaABMProveedor;
 
+public class ControladorABMProveedor implements ActionListener {
 
-public class ControladorABMProveedor implements ActionListener{
-	
 	private VentanaABMProveedor ventanaABMProveedor;
 	private Proveedor proveedor;
 	private Marca marca;
 	private List<ProveedorDTO> proveedores_en_tabla;
 	private List<JTextField> txts;
-	private List<MarcaDTO>marcas_en_tabla;
+	private List<MarcaDTO> marcas_en_tabla;
 	private ProveedorMarca proveedorMarca;
 	private List<MarcaDTO> marcasCombo;
 	private List<MarcaDTO> marcasCombo1;
 
-	
 	public ControladorABMProveedor(VentanaABMProveedor ventanaABMProveedor) {
-		
+
 		this.ventanaABMProveedor = ventanaABMProveedor;
 		this.ventanaABMProveedor.getEliminarItem_btn().addActionListener(this);
 		this.ventanaABMProveedor.getLimpiar_btn().addActionListener(this);
@@ -49,24 +47,21 @@ public class ControladorABMProveedor implements ActionListener{
 		this.ventanaABMProveedor.getBtnMarcaNueva().addActionListener(this);
 
 	}
-	
+
 	public void inicializar() {
 
-			
-		
 		this.proveedor = new Proveedor();
-		
+
 		this.proveedorMarca = new ProveedorMarca();
-		
+
 		this.marca = new Marca();
 
 		this.ventanaABMProveedor.setVisible(true);
 
 		this.txts = new ArrayList<JTextField>();
 
-		
 		cargarTablaProveedores();
-		
+
 		txts.add(this.ventanaABMProveedor.getRazonSocial_txt());// 0
 		txts.add(this.ventanaABMProveedor.getCuit_txt());// 1
 		txts.add(this.ventanaABMProveedor.getDireccion_txt());// 2
@@ -75,24 +70,22 @@ public class ControladorABMProveedor implements ActionListener{
 		txts.add(this.ventanaABMProveedor.getTelefonoContacto_txt());// 5
 		txts.add(this.ventanaABMProveedor.getEmailContacto_txt());// 6
 		txts.add(this.ventanaABMProveedor.getEmailPedidos_txt());// 7
-		
+
 		cargarComboMarcas();
-//		cargarTablaProveedores();	
 		mouseClickedOnTable();
 		ocultarIdMarcas();
 
 	}
-	
 
 	private void cargarComboMarcas() {
-		
+
 		this.marcasCombo = marca.obtenerMarcas();
-		
-		for(int i = 0; i < this.marcasCombo.size(); i++){
-			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem( this.marcasCombo.get(i).getDetalle() );	
+
+		for (int i = 0; i < this.marcasCombo.size(); i++) {
+			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(this.marcasCombo.get(i).getDetalle());
 		}
 		this.ventanaABMProveedor.getAgregarMarca_jcmbox().setSelectedIndex(0);
-		
+
 	}
 
 	private void mouseClickedOnTable() {
@@ -129,36 +122,35 @@ public class ControladorABMProveedor implements ActionListener{
 				}
 			}
 		});
-		
+
 	}
-	
+
 	private void vaciarComboMarcas() {
-		
+
 		this.ventanaABMProveedor.getAgregarMarca_jcmbox().removeAllItems();
 	}
-	
-	
+
 	private void cargarComboMarcasProveedorSeleccionado() {
-		
+
 		this.marcasCombo1 = marca.obtenerMarcas();
-		
-		for(int i = 0; i < this.marcasCombo1.size(); i++){
-			
-			if(!isMarcaAgregadaEnTabla(this.marcasCombo1.get(i).getDetalle())){
-				
-			this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(this.marcasCombo1.get(i).getDetalle());
+
+		for (int i = 0; i < this.marcasCombo1.size(); i++) {
+
+			if (!isMarcaAgregadaEnTabla(this.marcasCombo1.get(i).getDetalle())) {
+
+				this.ventanaABMProveedor.getAgregarMarca_jcmbox().addItem(this.marcasCombo1.get(i).getDetalle());
 			}
 		}
-		
+
 	}
 
 	private boolean isMarcaAgregadaEnTabla(String marca) {
-		
-		for (int i = 0; i < this.ventanaABMProveedor.getTablaMarcas().getRowCount(); i++){
-			
-			if(this.ventanaABMProveedor.getModelMarcas().getValueAt(i, 1).equals(marca)){
-				
-				 return true;
+
+		for (int i = 0; i < this.ventanaABMProveedor.getTablaMarcas().getRowCount(); i++) {
+
+			if (this.ventanaABMProveedor.getModelMarcas().getValueAt(i, 1).equals(marca)) {
+
+				return true;
 			}
 		}
 		return false;
@@ -168,35 +160,45 @@ public class ControladorABMProveedor implements ActionListener{
 
 		int filaSeleccionada = this.ventanaABMProveedor.getTablaProveedores().getSelectedRow();
 
-		this.txts.get(0).setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 1));
-		this.txts.get(1).setText(String.valueOf(this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 2)));
-		this.txts.get(2).setText((String)this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 3));
-		this.txts.get(3).setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 4));
-		this.txts.get(4).setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 5));
-		this.txts.get(5).setText((String.valueOf(this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 6))));
-		this.txts.get(6).setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 7));
-		this.txts.get(7).setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 8));
+		this.txts.get(0)
+				.setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 1));
+		this.txts.get(1).setText(
+				String.valueOf(this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 2)));
+		this.txts.get(2)
+				.setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 3));
+		this.txts.get(3)
+				.setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 4));
+		this.txts.get(4)
+				.setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 5));
+		this.txts.get(5).setText(
+				(String.valueOf(this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 6))));
+		this.txts.get(6)
+				.setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 7));
+		this.txts.get(7)
+				.setText((String) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 8));
 	}
-	
 
 	private void cargarTablaProveedores() {
 
 		this.ventanaABMProveedor.getModelProveedores().setRowCount(0);
 		this.ventanaABMProveedor.getModelProveedores().setColumnCount(0);
-		this.ventanaABMProveedor.getModelProveedores().setColumnIdentifiers(this.ventanaABMProveedor.getNombreColumnas());
+		this.ventanaABMProveedor.getModelProveedores()
+				.setColumnIdentifiers(this.ventanaABMProveedor.getNombreColumnas());
 
 		this.proveedores_en_tabla = proveedor.obtenerProveedores();
 
 		for (int i = 0; i < this.proveedores_en_tabla.size(); i++) {
 
-			Object[] fila = { this.proveedores_en_tabla.get(i).getId(), this.proveedores_en_tabla.get(i).getRazonSocial(),
-					this.proveedores_en_tabla.get(i).getCuit(), this.proveedores_en_tabla.get(i).getDireccion(),
-					this.proveedores_en_tabla.get(i).getEmail(), this.proveedores_en_tabla.get(i).getNombreContacto(),
-					this.proveedores_en_tabla.get(i).getTelefonoContacto(), this.proveedores_en_tabla.get(i).getEmailContacto(),
-					this.proveedores_en_tabla.get(i).getEmailPedidos()};
+			Object[] fila = { this.proveedores_en_tabla.get(i).getId(),
+					this.proveedores_en_tabla.get(i).getRazonSocial(), this.proveedores_en_tabla.get(i).getCuit(),
+					this.proveedores_en_tabla.get(i).getDireccion(), this.proveedores_en_tabla.get(i).getEmail(),
+					this.proveedores_en_tabla.get(i).getNombreContacto(),
+					this.proveedores_en_tabla.get(i).getTelefonoContacto(),
+					this.proveedores_en_tabla.get(i).getEmailContacto(),
+					this.proveedores_en_tabla.get(i).getEmailPedidos() };
 
 			this.ventanaABMProveedor.getModelProveedores().addRow(fila);
-			
+
 			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 0);
 			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 1);
 			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 2);
@@ -206,64 +208,66 @@ public class ControladorABMProveedor implements ActionListener{
 			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 6);
 			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 7);
 			((DefaultTableModel) this.ventanaABMProveedor.getTablaProveedores().getModel()).isCellEditable(i, 8);
-			
+
 		}
-		
+
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void ocultarColumnaId() {
-		
+
 		this.ventanaABMProveedor.getTablaProveedores().getColumnModel().getColumn(0).setMaxWidth(0);
 		this.ventanaABMProveedor.getTablaProveedores().getColumnModel().getColumn(0).setMinWidth(0);
 		this.ventanaABMProveedor.getTablaProveedores().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
 		this.ventanaABMProveedor.getTablaProveedores().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
-		
+
 	}
-	
+
 	private void cargarTablaMarcas() {
-		
+
 		int filaSeleccionada = this.ventanaABMProveedor.getTablaProveedores().getSelectedRow();
-		
+
 		this.ventanaABMProveedor.getModelMarcas().setRowCount(0);
 		this.ventanaABMProveedor.getModelMarcas().setColumnCount(0);
-		this.ventanaABMProveedor.getModelMarcas().setColumnIdentifiers(this.ventanaABMProveedor.getNombreColumnasMarcas());
+		this.ventanaABMProveedor.getModelMarcas()
+				.setColumnIdentifiers(this.ventanaABMProveedor.getNombreColumnasMarcas());
 
 		this.marcas_en_tabla = proveedor.obtenerMarcasDelProveedor(
-				(int)this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
+				(int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
 
 		for (int i = 0; i < this.marcas_en_tabla.size(); i++) {
 
-			Object[] fila = { this.marcas_en_tabla.get(i).getId(), this.marcas_en_tabla.get(i).getDetalle(),};
+			Object[] fila = { this.marcas_en_tabla.get(i).getId(), this.marcas_en_tabla.get(i).getDetalle(), };
 
 			this.ventanaABMProveedor.getModelMarcas().addRow(fila);
 
 		}
 		ocultarIdMarcas();
 	}
-	
+
 	private void ocultarIdMarcas() {
-		
+
 		// oculta columna id marca
-				this.ventanaABMProveedor.getTablaMarcas().getColumnModel().getColumn(0).setMaxWidth(0);
-				this.ventanaABMProveedor.getTablaMarcas().getColumnModel().getColumn(0).setMinWidth(0);
-				this.ventanaABMProveedor.getTablaMarcas().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
-				this.ventanaABMProveedor.getTablaMarcas().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
+		this.ventanaABMProveedor.getTablaMarcas().getColumnModel().getColumn(0).setMaxWidth(0);
+		this.ventanaABMProveedor.getTablaMarcas().getColumnModel().getColumn(0).setMinWidth(0);
+		this.ventanaABMProveedor.getTablaMarcas().getTableHeader().getColumnModel().getColumn(0).setMaxWidth(0);
+		this.ventanaABMProveedor.getTablaMarcas().getTableHeader().getColumnModel().getColumn(0).setMinWidth(0);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() == this.ventanaABMProveedor.getLimpiar_btn()){// boton limpiar
+
+		if (e.getSource() == this.ventanaABMProveedor.getLimpiar_btn()) {// boton
+																			// limpiar
 
 			this.limpiartxts();
 			this.ventanaABMProveedor.getTablaProveedores().clearSelection();
 			vaciarTablaMarcas();
 			vaciarComboMarcas();
 			cargarComboMarcas();
-			
 
-		}else if (e.getSource() == this.ventanaABMProveedor.getEliminarItem_btn()) {// boton eliminar
+		} else if (e.getSource() == this.ventanaABMProveedor.getEliminarItem_btn()) {// boton
+																						// eliminar
 
 			// si la tabla no esta vacia
 			if (this.ventanaABMProveedor.getTablaProveedores().getRowCount() != 0) {
@@ -272,14 +276,16 @@ public class ControladorABMProveedor implements ActionListener{
 				if (this.ventanaABMProveedor.getTablaProveedores().getSelectedRow() != -1) {
 
 					int filaSeleccionada = this.ventanaABMProveedor.getTablaProveedores().getSelectedRow();
-					int id_proveedor_a_eliminar = (int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0);
-					
-					//elimino las marcas asociadas al proveedor a eliminar
+					int id_proveedor_a_eliminar = (int) this.ventanaABMProveedor.getModelProveedores()
+							.getValueAt(filaSeleccionada, 0);
+
+					// elimino las marcas asociadas al proveedor a eliminar
 					this.proveedorMarca.borrarTodos(id_proveedor_a_eliminar);
-					
+
 					// elimino el proveedor
 					this.proveedor.borrarProveedor(id_proveedor_a_eliminar);
-					cargarTablaProveedores();;
+					cargarTablaProveedores();
+					;
 					limpiartxts();
 					vaciarTablaMarcas();
 
@@ -293,7 +299,8 @@ public class ControladorABMProveedor implements ActionListener{
 				JOptionPane.showMessageDialog(this.ventanaABMProveedor, "No hay proveedores a eliminar", "Atencion!",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
-		} else if (e.getSource() == this.ventanaABMProveedor.getGuardar_btn()) {// boton guardar
+		} else if (e.getSource() == this.ventanaABMProveedor.getGuardar_btn()) {// boton
+																				// guardar
 
 			// si esta seleccionado de la tabla
 			// modificar proveedor
@@ -309,23 +316,25 @@ public class ControladorABMProveedor implements ActionListener{
 								(int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0)));
 						limpiartxts();
 						cargarTablaProveedores();
-						
-						
+
 						// borro todas las marcas del proveedor de la base
-						proveedorMarca.borrarTodos((int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
-						
-						// guarda las marcas del proveedor y le paso el id del proveedor seleccionado
-						insertarMarcasDelProveedor((int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
-						
+						proveedorMarca.borrarTodos(
+								(int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
+
+						// guarda las marcas del proveedor y le paso el id del
+						// proveedor seleccionado
+						insertarMarcasDelProveedor(
+								(int) this.ventanaABMProveedor.getModelProveedores().getValueAt(filaSeleccionada, 0));
+
 						vaciarTablaMarcas();
 						cargarComboMarcas();
-						
+
 					}
 
 				} else {
 
 					JOptionPane.showMessageDialog(this.ventanaABMProveedor,
-							"No se permiten campos vacios. Por favor, vuelva a intentarlo.","Atencion!",
+							"No se permiten campos vacios. Por favor, vuelva a intentarlo.", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 
@@ -340,10 +349,11 @@ public class ControladorABMProveedor implements ActionListener{
 
 						limpiartxts();
 						cargarTablaProveedores();
-						
-						// guarda las marcas del proveedor y le paso el id del proveedor nuevo
+
+						// guarda las marcas del proveedor y le paso el id del
+						// proveedor nuevo
 						insertarMarcasDelProveedor(proveedor.ultimaIdProveedor());
-						
+
 						vaciarTablaMarcas();
 						cargarComboMarcas();
 					}
@@ -355,124 +365,134 @@ public class ControladorABMProveedor implements ActionListener{
 				}
 
 			}
-			
-		}else if(e.getSource() == this.ventanaABMProveedor.getEliminarMarca()){ // boton eliminar marca
+
+		} else if (e.getSource() == this.ventanaABMProveedor.getEliminarMarca()) { // boton
+																					// eliminar
+																					// marca
 
 			// si la tabla marcas no esta vacia
-			if(this.ventanaABMProveedor.getTablaMarcas().getRowCount() != 0){
+			if (this.ventanaABMProveedor.getTablaMarcas().getRowCount() != 0) {
 
 				// si no selecciono una marca
-				if (this.ventanaABMProveedor.getTablaMarcas().getSelectedRow() == -1){
+				if (this.ventanaABMProveedor.getTablaMarcas().getSelectedRow() == -1) {
 
-					JOptionPane.showMessageDialog(this.ventanaABMProveedor,
-							"Debe seleccionar una marca para eliminar");
-				}else{
+					JOptionPane.showMessageDialog(this.ventanaABMProveedor, "Debe seleccionar una marca para eliminar");
+				} else {
 
 					int fila = this.ventanaABMProveedor.getTablaMarcas().getSelectedRow();
 					this.ventanaABMProveedor.getModelMarcas().removeRow(fila);
-					
+
 					vaciarComboMarcas();
 					cargarComboMarcasProveedorSeleccionado();
-					
-					
+
 				}
 
-			}else{
+			} else {
 
-				JOptionPane.showMessageDialog(this.ventanaABMProveedor,
-						"no hay marcas para eliminar.");
+				JOptionPane.showMessageDialog(this.ventanaABMProveedor, "no hay marcas para eliminar.");
 			}
 
+		} else if (e.getSource() == this.ventanaABMProveedor.getAgregarMarca()) {// agrega
+																					// marca
+																					// a
+																					// la
+																					// tabla
+																					// marcas
 
-		}else if(e.getSource() == this.ventanaABMProveedor.getAgregarMarca()){// agrega marca a la tabla marcas
-			
-			// si el combo no esta vacio	
-			if(this.ventanaABMProveedor.getAgregarMarca_jcmbox().getItemCount() != 0){
+			if (proveedorCargado()) {
+				// si el combo no esta vacio
+				if (this.ventanaABMProveedor.getAgregarMarca_jcmbox().getItemCount() != 0) {
 
-				// obtengo id y detalle 
-				String detalle = (String)ventanaABMProveedor.getAgregarMarca_jcmbox().getSelectedItem();
-				
-				int idMarca = obtenerIdMarca(detalle);
+					// obtengo id y detalle
+					String detalle = (String) ventanaABMProveedor.getAgregarMarca_jcmbox().getSelectedItem();
 
+					int idMarca = obtenerIdMarca(detalle);
 
-				Object[] fila = {idMarca,detalle};
+					Object[] fila = { idMarca, detalle };
 
-				ventanaABMProveedor.getModelMarcas().addRow(fila);
+					ventanaABMProveedor.getModelMarcas().addRow(fila);
 
-				vaciarComboMarcas();
-				cargarComboMarcasProveedorSeleccionado();
+					vaciarComboMarcas();
+					cargarComboMarcasProveedorSeleccionado();
+				}
+			} else {
+				JOptionPane.showMessageDialog(ventanaABMProveedor,
+						"No es posible agregar una marca sin haber seleccionado un proveedor. Por favor, vuelva a intentarlo.");
 			}
-		}else if(e.getSource() == this.ventanaABMProveedor.getBtnMarcaNueva()){ // marca nueva
-			
+		} else if (e.getSource() == this.ventanaABMProveedor.getBtnMarcaNueva()) { // marca
+																					// nueva
+
 			VentanaABMMarcaProducto ventana = new VentanaABMMarcaProducto();
 			ControladorABMMarcaProducto marca = new ControladorABMMarcaProducto(ventana);
 			marca.inicializar();
 			ventana.addWindowListener(new WindowListener() {
-				
+
 				@Override
-				public void windowOpened(WindowEvent e) { }
-				
+				public void windowOpened(WindowEvent e) {
+				}
+
 				@Override
-				public void windowIconified(WindowEvent e) { }
-				
+				public void windowIconified(WindowEvent e) {
+				}
+
 				@Override
-				public void windowDeiconified(WindowEvent e) { }
-				
+				public void windowDeiconified(WindowEvent e) {
+				}
+
 				@Override
-				public void windowDeactivated(WindowEvent e) { }
-				
+				public void windowDeactivated(WindowEvent e) {
+				}
+
 				@Override
-				public void windowClosing(WindowEvent e) { }
-				
+				public void windowClosing(WindowEvent e) {
+				}
+
 				@Override
 				public void windowClosed(WindowEvent e) {
-					System.out.println("cerró ventana");
-					
-					if(ventanaABMProveedor.getTablaMarcas().getSelectedRow() != -1){
-						
+
+					if (ventanaABMProveedor.getTablaMarcas().getSelectedRow() != -1) {
+
 						vaciarComboMarcas();
 						cargarComboMarcas();
-						
-					}else{
-						
+
+					} else {
+
 						vaciarComboMarcas();
 						cargarComboMarcasProveedorSeleccionado();
 
 					}
 				}
-				
+
 				@Override
-				public void windowActivated(WindowEvent e) { }
+				public void windowActivated(WindowEvent e) {
+				}
 			});
 		}
-				
+
 	}
-	
+
 	private int obtenerIdMarca(String detalle) {
-		
+
 		return marca.obtenerIdMarca(detalle);
 	}
 
 	private void insertarMarcasDelProveedor(int idProveedor) {
-		
-		for(int i = 0; i < this.ventanaABMProveedor.getTablaMarcas().getRowCount(); i++){
-			
-			ProveedorMarcaDTO proveedorMarca = new ProveedorMarcaDTO(0,idProveedor,
-					(int)this.ventanaABMProveedor.getTablaMarcas().getModel().getValueAt(i, 0));
-			
+
+		for (int i = 0; i < this.ventanaABMProveedor.getTablaMarcas().getRowCount(); i++) {
+
+			ProveedorMarcaDTO proveedorMarca = new ProveedorMarcaDTO(0, idProveedor,
+					(int) this.ventanaABMProveedor.getTablaMarcas().getModel().getValueAt(i, 0));
+
 			this.proveedorMarca.agregar(proveedorMarca);
-		
+
 		}
-		
-		
-		
+
 	}
 
 	private ProveedorDTO obtenerProveedor(int id) {
-		
-		ProveedorDTO proveedorDTO = new ProveedorDTO(
-				id,
-				this.txts.get(0).getText(), // razon social
+
+		ProveedorDTO proveedorDTO = new ProveedorDTO(id, this.txts.get(0).getText(), // razon
+																						// social
 				Integer.parseInt(this.txts.get(1).getText()), // cuit
 				this.txts.get(2).getText(), // direccion
 				this.txts.get(3).getText(), // email
@@ -480,13 +500,19 @@ public class ControladorABMProveedor implements ActionListener{
 				this.txts.get(5).getText(), // telefono contacto
 				this.txts.get(6).getText(), // email contacto
 				this.txts.get(7).getText(), // email pedido
-				 1);
+				1);
 
 		return proveedorDTO;
 	}
 
+	private boolean proveedorCargado() {
+		if (!this.txts.get(0).getText().equals(""))
+			return true;
+		return false;
+	}
+
 	private boolean isTxtsValidos() {
-		
+
 		boolean ret = true;
 
 		if (!soloNumeros(this.txts.get(1).getText())) { // valida cuit
@@ -510,10 +536,12 @@ public class ControladorABMProveedor implements ActionListener{
 			ret = validarEmail(this.txts.get(3).getText());
 
 		}
-		
-		if (!validarEmail(this.txts.get(6).getText())) { // valida email Contacto
 
-			JOptionPane.showMessageDialog(this.ventanaABMProveedor, "Disculpe, has ingresado EMAIL CONTACTO incorrecto.");
+		if (!validarEmail(this.txts.get(6).getText())) { // valida email
+															// Contacto
+
+			JOptionPane.showMessageDialog(this.ventanaABMProveedor,
+					"Disculpe, has ingresado EMAIL CONTACTO incorrecto.");
 			return false;
 
 		} else {
@@ -521,7 +549,7 @@ public class ControladorABMProveedor implements ActionListener{
 			ret = validarEmail(this.txts.get(6).getText());
 
 		}
-		
+
 		if (!validarEmail(this.txts.get(7).getText())) { // valida email pedido
 
 			JOptionPane.showMessageDialog(this.ventanaABMProveedor, "Disculpe, has ingresado EMAIL PEDIDO incorrecto.");
@@ -532,7 +560,6 @@ public class ControladorABMProveedor implements ActionListener{
 			ret = validarEmail(this.txts.get(7).getText());
 
 		}
-		
 
 		return ret;
 
@@ -553,22 +580,22 @@ public class ControladorABMProveedor implements ActionListener{
 	}
 
 	private void vaciarTablaMarcas() {
-		
-		for(int i = this.ventanaABMProveedor.getModelMarcas().getRowCount() - 1; i >= 0; i --){
+
+		for (int i = this.ventanaABMProveedor.getModelMarcas().getRowCount() - 1; i >= 0; i--) {
 			this.ventanaABMProveedor.getModelMarcas().removeRow(i);
-			
+
 		}
-		
+
 	}
 
 	private void limpiartxts() {
-		
+
 		for (JTextField jt : txts) {
 			jt.setText("");
 		}
-		
+
 	}
-	
+
 	private boolean soloNumeros(String texto) {
 		try {
 			Integer.parseInt(texto);
@@ -593,9 +620,9 @@ public class ControladorABMProveedor implements ActionListener{
 	}
 
 	public static void main(String[] args) {
-	VentanaABMProveedor abm = new VentanaABMProveedor();
-	ControladorABMProveedor c =new ControladorABMProveedor(abm);
-	 c.inicializar();
+		VentanaABMProveedor abm = new VentanaABMProveedor();
+		ControladorABMProveedor c = new ControladorABMProveedor(abm);
+		c.inicializar();
 	}
 
 }

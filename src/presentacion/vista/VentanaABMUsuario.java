@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class VentanaABMUsuario extends JFrame {
 
@@ -38,6 +39,8 @@ public class VentanaABMUsuario extends JFrame {
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 		contentPane.setLayout(null);
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
 
 		JLabel nick_lbl = new JLabel("Nick");
 		nick_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
