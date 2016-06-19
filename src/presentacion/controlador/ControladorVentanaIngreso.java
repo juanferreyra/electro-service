@@ -144,8 +144,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (this.ingreso.getCliente() == null) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"Debes ingresar un cliente para continuar. Por favor, vuelva a intentarlo.", null,
-						JOptionPane.INFORMATION_MESSAGE);
+						"Debes ingresar un cliente para continuar. Por favor, vuelva a intentarlo.");
 
 			}
 
@@ -154,8 +153,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (nombre_produ.equals("") && !error) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"Debes completar el nombre de producto. Por favor, vuelva a intentarlo.", null,
-						JOptionPane.INFORMATION_MESSAGE);
+						"Debes completar el nombre de producto. Por favor, vuelva a intentarlo.");
 			}
 
 			// DESCRIPCION DE FALLA
@@ -163,8 +161,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (descripcion_falla.equals("") && !error) {
 				error = true;
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"La descripcion de la falla estï¿½ vacia. Por favor, vuelva a intentarlo.", null,
-						JOptionPane.INFORMATION_MESSAGE);
+						"La descripcion de la falla est\u00e1 vacia. Por favor, vuelva a intentarlo.");
 			}
 
 			if (this.ventana_ingreso.getEnvioDomicilio().isSelected() && !error) {
@@ -177,8 +174,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 					if (direccionAlternativa.equals("")) {
 						error = true;
 						JOptionPane.showMessageDialog(this.ventana_ingreso,
-								"Si el cliente solicita envio debe completar una direccion. De lo contrario, utilice la direccion del cliente.",
-								null, JOptionPane.INFORMATION_MESSAGE);
+								"Si el cliente solicita envio debe completar una direcci\u00f3n. De lo contrario, utilice la direcci\u00f3n del cliente.");
 					}
 				}
 				// VALIDO EL MONTO DE ENVIO
@@ -186,35 +182,42 @@ public class ControladorVentanaIngreso implements ActionListener {
 				if (monto.equals("") && !error) {
 					error = true;
 					JOptionPane.showMessageDialog(this.ventana_ingreso,
-							"Por favor, ingrese el costo en pesos del envio.", null, JOptionPane.INFORMATION_MESSAGE);
+							"Por favor, ingrese el costo en pesos del env\u00edo.");
 				} else if (!error) {
 					try {
 						montoFloat = Float.parseFloat(this.ventana_ingreso.getMontoEnvio().getText());
 					} catch (NumberFormatException nfe) {
 						error = true;
 						JOptionPane.showMessageDialog(this.ventana_ingreso,
-								"El monto no es vï¿½lido. Por favor, vuelva a intentarlo.", null,
-								JOptionPane.INFORMATION_MESSAGE);
+								"El monto no es v\u00e1lido. Por favor, vuelva a intentarlo.");
 					}
 				}
 			}
 
 			if (!error) {
-				IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
-						this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
-						this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
-						this.ventana_ingreso.getEnvioDomicilio().isSelected(),
-						this.ventana_ingreso.getDireccion_nueva().isSelected(),
-						this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1,
-						usuarioLogueado.getId(), this.ingreso.getId());
-				this.ingreso.ingr = ingresoDTO;
+				if ((this.ventana_ingreso.getComboMarcas().getSelectedItem() == null
+						&& this.ventana_ingreso.getComboTiposProductos().getSelectedItem() == null)
+						&& (this.ventana_ingreso.getComboMarcas().getSelectedItem() == null
+								|| this.ventana_ingreso.getComboTiposProductos().getSelectedItem() == null)) {
+					IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
+							this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
+							this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
+							this.ventana_ingreso.getEnvioDomicilio().isSelected(),
+							this.ventana_ingreso.getDireccion_nueva().isSelected(),
+							this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1,
+							usuarioLogueado.getId(), this.ingreso.getId());
+					this.ingreso.ingr = ingresoDTO;
 
-				Boolean ingreso = this.ingreso.guardarIngreso(usuarioLogueado.getId());
+					Boolean ingreso = this.ingreso.guardarIngreso(usuarioLogueado.getId());
 
-				if (ingreso) {
-					this.ventana_ingreso.vaciarTodo();
-					this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
-					this.ventana_ingreso.setVisible(false);
+					if (ingreso) {
+						this.ventana_ingreso.vaciarTodo();
+						this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+						this.ventana_ingreso.setVisible(false);
+					}
+				} else {
+					JOptionPane.showMessageDialog(this.ventana_ingreso,
+							"Disculpe, debe ingresar la marca y el tipo del producto para continuar.");
 				}
 			}
 		} else if (e.getSource() == this.ventana_ingreso.getDireccion_nueva()) {
@@ -276,8 +279,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 	private void buscarCliente() {
 		String textoingresado = this.ventana_ingreso.getTxtNroCliente().getText();
 		if (textoingresado == null || textoingresado.equals("")) {
-			JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor, ingrese un nï¿½mero de cliente.", null,
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this.ventana_ingreso, "Por favor, ingrese un n\u00famero de cliente.");
 		} else {
 			try {
 				int nrodoc = Integer.parseInt(textoingresado);
@@ -285,8 +287,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				ClienteDTO cdto = cdao.findPorNrodoc(nrodoc);
 				if (cdto == null) {
 					JOptionPane.showMessageDialog(this.ventana_ingreso,
-							"El cliente buscado no existe, por favor, ingrese un valor válido.", null,
-							JOptionPane.INFORMATION_MESSAGE);
+							"El cliente buscado no existe. Por favor, ingrese un valor v\u00e1lido.");
 					this.ventana_ingreso.vaciarTodo();
 				} else {
 					this.ingreso.setCliente(cdto);
@@ -294,8 +295,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 				}
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(this.ventana_ingreso,
-						"El nï¿½mero de cliente es incorrecto, vuelva a intentarlo. ", null,
-						JOptionPane.INFORMATION_MESSAGE);
+						"El n\u00famero de cliente es incorrecto, vuelva a intentarlo. ");
 			}
 		}
 

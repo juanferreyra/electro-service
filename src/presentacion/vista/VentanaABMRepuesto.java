@@ -31,50 +31,53 @@ public class VentanaABMRepuesto extends JFrame {
 	}
 
 	private void initialize() {
-		setBounds(100, 100, 779, 464);
+		setBounds(100, 100, 779, 426);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
 		
 		JLabel title_lbl = new JLabel("Nuevo repuesto");
 		title_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		title_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		title_lbl.setBounds(10, 25, 743, 14);
 		getContentPane().add(title_lbl);
 
 		JLabel detalle_lbl = new JLabel("Detalle");
+		detalle_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		detalle_lbl.setBounds(123, 64, 82, 14);
 		getContentPane().add(detalle_lbl);
 
 		detalle_txt = new JTextField();
-		detalle_txt.setBounds(199, 61, 383, 20);
+		detalle_txt.setBounds(210, 61, 372, 20);
 		getContentPane().add(detalle_txt);
 		detalle_txt.setColumns(10);
 
 		JLabel precio_lbl = new JLabel("Precio");
+		precio_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		precio_lbl.setBounds(123, 109, 82, 14);
 		getContentPane().add(precio_lbl);
 
 		precio_txt = new JTextField();
 		precio_txt.setColumns(10);
-		precio_txt.setBounds(199, 106, 383, 20);
+		precio_txt.setBounds(210, 106, 372, 20);
 		getContentPane().add(precio_txt);
 
 		JLabel stockMinimo_lbl = new JLabel("Stock M\u00EDnimo");
+		stockMinimo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		stockMinimo_lbl.setBounds(123, 157, 82, 14);
 		getContentPane().add(stockMinimo_lbl);
 
 		stockMinimo_txt = new JTextField();
 		stockMinimo_txt.setColumns(10);
-		stockMinimo_txt.setBounds(199, 154, 383, 20);
+		stockMinimo_txt.setBounds(210, 154, 372, 20);
 		getContentPane().add(stockMinimo_txt);
 
 		guardar_btn = new JButton("Ingresar");
-		guardar_btn.setBounds(317, 348, 121, 23);
+		guardar_btn.setBounds(317, 354, 121, 23);
 		getContentPane().add(guardar_btn);
 
 		JScrollPane repuesto_scrollPane = new JScrollPane();
-		repuesto_scrollPane.setBounds(123, 246, 459, 91);
+		repuesto_scrollPane.setBounds(10, 246, 743, 91);
 		getContentPane().add(repuesto_scrollPane);
 
 		modelRepuesto = new DefaultTableModel(null, nombreColumnas);
@@ -82,19 +85,20 @@ public class VentanaABMRepuesto extends JFrame {
 		repuesto_scrollPane.setViewportView(tablaRepuesto);
 
 		eliminarItem_btn = new JButton("Eliminar");
-		eliminarItem_btn.setBounds(186, 348, 121, 23);
+		eliminarItem_btn.setBounds(185, 354, 121, 23);
 		getContentPane().add(eliminarItem_btn);
 
 		limpiar_btn = new JButton("Limpiar");
-		limpiar_btn.setBounds(448, 348, 121, 23);
+		limpiar_btn.setBounds(448, 354, 121, 23);
 		getContentPane().add(limpiar_btn);
 		
 		cmb_marca = new JComboBox<String>();
-		cmb_marca.setBounds(199, 186, 383, 24);
+		cmb_marca.setBounds(210, 186, 372, 24);
 		getContentPane().add(cmb_marca);
 		
 		JLabel lblMarca = new JLabel("Marca");
-		lblMarca.setBounds(123, 199, 82, 14);
+		lblMarca.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblMarca.setBounds(123, 191, 82, 14);
 		getContentPane().add(lblMarca);
 	}
 

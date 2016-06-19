@@ -252,7 +252,7 @@ public class VentanaPrincipal extends JFrame {
 		panelDeBotones.add(ingresarProducto_btn);
 
 		presupuestar_btn = new JButton("<html>Presupuestar</html>");
-		presupuestar_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/th-list-outline.png")));
+		presupuestar_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/calculator.png")));
 		presupuestar_btn.setBounds(587, 474, 158, 36);
 		panelDeBotones.add(presupuestar_btn);
 
