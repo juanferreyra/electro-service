@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class FormatoTablaOrdenesTrabajo extends DefaultTableCellRenderer {
@@ -12,6 +13,8 @@ public class FormatoTablaOrdenesTrabajo extends DefaultTableCellRenderer {
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused,
 			int row, int column) {
+
+		setHorizontalAlignment(SwingConstants.CENTER);
 
 		// Formato de colores de filas segun estado.
 		aplicarColorFilas(table, value, selected, focused, row, column);

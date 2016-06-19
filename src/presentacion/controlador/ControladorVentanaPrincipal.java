@@ -12,8 +12,6 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import dto.ClienteDTO;
@@ -114,9 +112,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		// Consigo todos los ingresos y genero las filas
 		ArrayList<IngresoDTO> ingresos = ingresoDAO.readAll();
 		ObtenerFilas(ingresos);
-		for (int i = 0; i < 9; i++) {
-			centrar_datos(i);
-		}
+
 	}
 
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
@@ -381,17 +377,6 @@ public class ControladorVentanaPrincipal implements ActionListener {
 		String[] dato = { insumo };
 		((DefaultTableModel) this.principal.getTable_avisoFaltante().getModel()).addRow(dato);
 
-	}
-
-	public void centrar_datos(int col) {
-		DefaultTableCellRenderer modelocentrar = new DefaultTableCellRenderer();
-		modelocentrar.setHorizontalAlignment(SwingConstants.CENTER);
-		this.principal.getOrdenesDeTrabajo_table().getColumnModel().getColumn(col).setCellRenderer(modelocentrar);
-
-		// DefaultTableCellRenderer modelocentrar = new
-		// DefaultTableCellRenderer();
-		// modelocentrar.setHorizontalAlignment(SwingConstants.RIGHT);
-		// this.principal.getOrdenesDeTrabajo_table().getColumnModel().getColumn(col).setCellRenderer(modelocentrar);
 	}
 
 }
