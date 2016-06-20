@@ -28,6 +28,8 @@ import presentacion.controlador.ControladorABMProveedor;
 import presentacion.controlador.ControladorABMRepuesto;
 import presentacion.controlador.ControladorABMTipoProducto;
 import presentacion.controlador.ControladorVentanaABMUsuario;
+import presentacion.controlador.ControladorVentanaCambioClave;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -394,7 +396,9 @@ public class VentanaPrincipal extends JFrame {
 
 		cambioDeClave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				
+				VentanaCambioClave abm = new VentanaCambioClave();
+				ControladorVentanaCambioClave c = new ControladorVentanaCambioClave(abm);
+				c.inicializar();
 			}
 		});
 

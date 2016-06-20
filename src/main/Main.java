@@ -56,6 +56,7 @@ public class Main {
 				ControladorConfiguracion controladorConfig = new ControladorConfiguracion(configuracion);
 
 				controladorConfig.iniciar();
+
 			} else {
 				ControladorVentanaLogin controlLogin = new ControladorVentanaLogin();
 				controlLogin.getPantalla();
