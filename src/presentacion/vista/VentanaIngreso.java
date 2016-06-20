@@ -61,15 +61,12 @@ public class VentanaIngreso extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 
-		JLabel fechaIngreso_lbl = new JLabel("Fecha");
-		fechaIngreso_lbl.setBounds(515, 11, 66, 14);
-		contentPane.add(fechaIngreso_lbl);
-
 		fechaIngresoText_lbl = new JLabel("");
 		fechaIngresoText_lbl.setBounds(555, 11, 119, 14);
 		contentPane.add(fechaIngresoText_lbl);
 
 		JLabel titulo_lbl = new JLabel("<html><b><i>INGRESO DE PRODUCTO</i></b></html>");
+		titulo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		titulo_lbl.setBounds(10, 11, 495, 14);
 		contentPane.add(titulo_lbl);
 

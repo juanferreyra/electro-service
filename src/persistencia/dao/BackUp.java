@@ -2,16 +2,21 @@ package persistencia.dao;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.ibatis.common.jdbc.ScriptRunner;
 
+import persistencia.conexion.Conexion;
+
 public class BackUp {
+	private static final String findpath = "select @@basedir";
+	private Conexion conexion = Conexion.getConexion();
 
 	public BackUp() {
 
@@ -22,13 +27,8 @@ public class BackUp {
 		Process p = null;
 		try {
 			Runtime runtime = Runtime.getRuntime();
-
-			p = runtime.exec("mysqldump -u" + usuario + " -p" + contrasenia
+			p = runtime.exec(pathMysql() + "/bin/mysqldump -u" + usuario + " -p" + contrasenia
 					+ " --add-drop-database -B 20161_service_g2 -r " + path);
-			// change the dbpass and dbname with your dbpass and dbname
-			String executeCmd = "mysqldump -u" + usuario + " -p" + contrasenia
-					+ " --add-drop-database -B 20161_service_g2 -r " + path;
-			Process runtime2 = Runtime.getRuntime().exec(executeCmd);
 			int processComplete = p.waitFor();
 
 			if (processComplete == 0) {
@@ -44,6 +44,29 @@ public class BackUp {
 
 			e.printStackTrace();
 		}
+	}
+
+	private String pathMysql() {
+
+		conexion = Conexion.getConexion();
+		PreparedStatement statement;
+		ResultSet resultSet;
+		String ret = "";
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(findpath);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				ret = resultSet.getString("@@basedir");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Conexion.cerrarConexion();
+		}
+		System.out.println(ret);
+		return ret;
 	}
 
 	public void restore(String usuario, String contrasenia, String path) {

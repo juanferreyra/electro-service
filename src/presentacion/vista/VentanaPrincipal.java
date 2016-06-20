@@ -27,6 +27,7 @@ import presentacion.controlador.ControladorABMMarcaProducto;
 import presentacion.controlador.ControladorABMProveedor;
 import presentacion.controlador.ControladorABMRepuesto;
 import presentacion.controlador.ControladorABMTipoProducto;
+import presentacion.controlador.ControladorBackUp;
 import presentacion.controlador.ControladorVentanaABMUsuario;
 import presentacion.controlador.ControladorVentanaCambioClave;
 
@@ -303,9 +304,27 @@ public class VentanaPrincipal extends JFrame {
 		JMenu backup = new JMenu("Generar Backup de Datos");
 		_gestion.add(backup);
 
+		VentanaPrincipal ventanaPrincipal = this;
+
 		JMenuItem _export = new JMenuItem("Exportar Datos");
+		_export.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ControladorBackUp c = new ControladorBackUp(ventanaPrincipal);
+				c.Inicializar();
+				c.crearBackUp();
+
+			}
+		});
 		backup.add(_export);
 		JMenuItem _import = new JMenuItem("Importar Datos");
+		_import.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ControladorBackUp c = new ControladorBackUp(ventanaPrincipal);
+				c.Inicializar();
+				c.Restaurar();
+
+			}
+		});
 		backup.add(_import);
 
 		// PERSONAS
