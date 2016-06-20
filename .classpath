@@ -11,7 +11,6 @@
 	<classpathentry kind="lib" path="lib/jasperreports-6.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/javax.mail.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/jicons.jar"/>
 	<classpathentry kind="lib" path="lib/com.springsource.org.joda.time-1.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/JTattoo-1.6.10.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar"/>
