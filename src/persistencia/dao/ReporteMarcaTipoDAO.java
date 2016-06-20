@@ -13,7 +13,7 @@ public class ReporteMarcaTipoDAO {
 	private static final String marcaTmp ="CREATE TEMPORARY TABLE porcentajes AS (SELECT datos.fecha_creacion, m.detalle AS detalle, count(datos.id) AS cantidad, (SELECT count(datos.idmarca) * 100 / count(datos2.id)"
 			+ " FROM (SELECT DATE(i.fecha_creacion) AS fecha_creacion, i.id AS id, i.idtipo_producto, i.idmarca FROM ingreso i LEFT JOIN (SELECT il.idingreso,"
 			+ " (SELECT fl.idestado FROM ingreso_log fl WHERE fl.idingreso = il.idingreso ORDER BY fl.id DESC LIMIT 1) AS estado FROM ingreso_log il GROUP BY il.idingreso) "
-			+ " log ON (i.id = log.idingreso) WHERE i.habilitado = TRUE AND log.estado = 11) AS datos2 ) AS porcentaje FROM (SELECT DATE(i.fecha_creacion) as fecha_creacion,"
+			+ " log ON (i.id = log.idingreso) WHERE i.habilitado = TRUE AND log.estado = 11 AND DATE(i.fecha_creacion) BETWEEN ? AND ? ) AS datos2 ) AS porcentaje FROM (SELECT DATE(i.fecha_creacion) as fecha_creacion,"
 			+ " i.id AS id, i.idtipo_producto, i.idmarca FROM ingreso i LEFT JOIN (SELECT il.idingreso, (SELECT fl.idestado FROM ingreso_log fl WHERE "
 			+ " fl.idingreso = il.idingreso ORDER BY fl.id DESC LIMIT 1) AS estado FROM ingreso_log il GROUP BY il.idingreso) log ON (i.id = log.idingreso)"
 			+ " WHERE i.habilitado = TRUE AND log.estado = 11) datos LEFT JOIN marca_producto m ON(datos.idmarca = m.id) WHERE datos.fecha_creacion "
@@ -22,7 +22,7 @@ public class ReporteMarcaTipoDAO {
 	private static final String tipoTmp ="CREATE TEMPORARY TABLE porcentajes AS (SELECT datos.fecha_creacion, t.detalle AS detalle, count(datos.id) AS cantidad, (SELECT count(datos.idtipo_producto) * 100 / count(datos2.id)"
 			+ " FROM (SELECT DATE(i.fecha_creacion) AS fecha_creacion, i.id AS id, i.idtipo_producto, i.idmarca FROM ingreso i LEFT JOIN (SELECT il.idingreso,"
 			+ " (SELECT fl.idestado FROM ingreso_log fl WHERE fl.idingreso = il.idingreso ORDER BY fl.id DESC LIMIT 1) AS estado FROM ingreso_log il GROUP BY il.idingreso) "
-			+ " log ON (i.id = log.idingreso) WHERE i.habilitado = TRUE AND log.estado = 11) AS datos2 ) AS porcentaje FROM (SELECT DATE(i.fecha_creacion) as fecha_creacion,"
+			+ " log ON (i.id = log.idingreso) WHERE i.habilitado = TRUE AND log.estado = 11 AND DATE(i.fecha_creacion) BETWEEN ? AND ? ) AS datos2 ) AS porcentaje FROM (SELECT DATE(i.fecha_creacion) as fecha_creacion,"
 			+ " i.id AS id, i.idtipo_producto, i.idmarca FROM ingreso i LEFT JOIN (SELECT il.idingreso, (SELECT fl.idestado FROM ingreso_log fl WHERE "
 			+ " fl.idingreso = il.idingreso ORDER BY fl.id DESC LIMIT 1) AS estado FROM ingreso_log il GROUP BY il.idingreso) log ON (i.id = log.idingreso)"
 			+ " WHERE i.habilitado = TRUE AND log.estado = 11) datos LEFT JOIN tipo_producto t ON(datos.idtipo_producto = t.id) WHERE datos.fecha_creacion "
@@ -32,7 +32,7 @@ public class ReporteMarcaTipoDAO {
 			+ "(SELECT count(datos.marcaTipo) * 100 / count(datos2.id) FROM (SELECT DATE(i.fecha_creacion) as fecha_creacion, i.id AS id, "
 			+ " i.idmarca, i.idtipo_producto FROM ingreso i LEFT JOIN (SELECT il.idingreso, (SELECT fl.idestado FROM ingreso_log fl WHERE "
 			+ " fl.idingreso = il.idingreso ORDER BY fl.id DESC LIMIT 1) AS estado FROM ingreso_log il GROUP BY il.idingreso) log ON "
-			+ " (i.id = log.idingreso) WHERE i.habilitado = TRUE AND log.estado = 11) AS datos2 ) AS porcentaje FROM (SELECT "
+			+ " (i.id = log.idingreso) WHERE i.habilitado = TRUE AND log.estado = 11 AND DATE(i.fecha_creacion) BETWEEN ? AND ? ) AS datos2 ) AS porcentaje FROM (SELECT "
 			+ " DATE(i.fecha_creacion) as fecha_creacion, i.id AS id, i.idtipo_producto, i.idmarca, concat(i.idmarca,i.idtipo_producto) "
 			+ " as marcaTipo FROM ingreso i LEFT JOIN (SELECT il.idingreso, (SELECT fl.idestado FROM ingreso_log fl WHERE fl.idingreso = il.idingreso"
 			+ " ORDER BY fl.id DESC LIMIT 1) AS estado FROM ingreso_log il GROUP BY il.idingreso) log ON (i.id = log.idingreso) WHERE i.habilitado = TRUE "
@@ -54,6 +54,8 @@ public class ReporteMarcaTipoDAO {
 			statementTemp = conexion.getSQLConexion().prepareStatement(marcaTmp);
 			statementTemp.setDate(1, new java.sql.Date(desde.getTime()));
 			statementTemp.setDate(2, new java.sql.Date(hasta.getTime()));
+			statementTemp.setDate(3, new java.sql.Date(desde.getTime()));
+			statementTemp.setDate(4, new java.sql.Date(hasta.getTime()));
 
 			if (statementTemp.executeUpdate() > 0) // Si se ejecuto la tabla temporal asigno true
 				consultar = true;
@@ -102,6 +104,8 @@ public class ReporteMarcaTipoDAO {
 			statementTemp = conexion.getSQLConexion().prepareStatement(tipoTmp);
 			statementTemp.setDate(1, new java.sql.Date(desde.getTime()));
 			statementTemp.setDate(2, new java.sql.Date(hasta.getTime()));
+			statementTemp.setDate(3, new java.sql.Date(desde.getTime()));
+			statementTemp.setDate(4, new java.sql.Date(hasta.getTime()));
 
 			if (statementTemp.executeUpdate() > 0) // Si se ejecuto la tabla temporal asigno true
 				consultar = true;
@@ -150,6 +154,8 @@ public class ReporteMarcaTipoDAO {
 			statementTemp = conexion.getSQLConexion().prepareStatement(marcaTipoTmp);
 			statementTemp.setDate(1, new java.sql.Date(desde.getTime()));
 			statementTemp.setDate(2, new java.sql.Date(hasta.getTime()));
+			statementTemp.setDate(3, new java.sql.Date(desde.getTime()));
+			statementTemp.setDate(4, new java.sql.Date(hasta.getTime()));
 
 			if (statementTemp.executeUpdate() > 0) // Si se ejecuto la tabla temporal asigno true
 				consultar = true;
@@ -198,6 +204,8 @@ public class ReporteMarcaTipoDAO {
 			statementTemp = conexion.getSQLConexion().prepareStatement(marcaTmp);
 			statementTemp.setDate(1, new java.sql.Date(desde.getTime()));
 			statementTemp.setDate(2, new java.sql.Date(hasta.getTime()));
+			statementTemp.setDate(3, new java.sql.Date(desde.getTime()));
+			statementTemp.setDate(4, new java.sql.Date(hasta.getTime()));
 
 			if (statementTemp.executeUpdate() > 0) // Si se ejecuto la tabla temporal asigno true
 				consultar = true;
@@ -246,6 +254,8 @@ public class ReporteMarcaTipoDAO {
 			statementTemp = conexion.getSQLConexion().prepareStatement(tipoTmp);
 			statementTemp.setDate(1, new java.sql.Date(desde.getTime()));
 			statementTemp.setDate(2, new java.sql.Date(hasta.getTime()));
+			statementTemp.setDate(3, new java.sql.Date(desde.getTime()));
+			statementTemp.setDate(4, new java.sql.Date(hasta.getTime()));
 
 			if (statementTemp.executeUpdate() > 0) // Si se ejecuto la tabla temporal asigno true
 				consultar = true;
@@ -294,6 +304,8 @@ public class ReporteMarcaTipoDAO {
 			statementTemp = conexion.getSQLConexion().prepareStatement(marcaTipoTmp);
 			statementTemp.setDate(1, new java.sql.Date(desde.getTime()));
 			statementTemp.setDate(2, new java.sql.Date(hasta.getTime()));
+			statementTemp.setDate(3, new java.sql.Date(desde.getTime()));
+			statementTemp.setDate(4, new java.sql.Date(hasta.getTime()));
 
 			if (statementTemp.executeUpdate() > 0) // Si se ejecuto la tabla temporal asigno true
 				consultar = true;
