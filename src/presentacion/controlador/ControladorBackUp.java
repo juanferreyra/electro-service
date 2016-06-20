@@ -1,7 +1,5 @@
 package presentacion.controlador;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -10,114 +8,90 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import dto.ConfigDataBaseDTO;
 import persistencia.dao.BackUp;
 import persistencia.serializar.SerializadorBD;
-import presentacion.vista.BackUpVista;
+import presentacion.vista.VentanaPrincipal;
 
-public class ControladorBackUp implements ActionListener {
+public class ControladorBackUp {
 
-	private BackUpVista vista;
 	private String extension = ".sql";
 	private BackUp backUp;
 	private String usuario;
 	private String contrasenia;
+	private VentanaPrincipal ventanaPrincipal;
 
-	public ControladorBackUp(BackUpVista vista) {
-		
-		this.vista = vista;
-		
-		this.vista.getBtnCrearCopia().addActionListener(this);
-		this.vista.getBtnRestaurar().addActionListener(this);
+	public ControladorBackUp(VentanaPrincipal ventanaPrincipal) {
+		this.ventanaPrincipal = ventanaPrincipal;
 	}
 
 	public void Inicializar() {
-		
-		this.vista.setVisible(true);
+
 		this.backUp = new BackUp();
 		obtenerDatosConexion();
 	}
 
-		
-
 	private void obtenerDatosConexion() {
-		
+
 		ConfigDataBaseDTO datos = SerializadorBD.DesSerializar();
-		
+
 		this.usuario = datos.getUsuario();
 		this.contrasenia = datos.getContrasena();
-		
+
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() == this.vista.getBtnCrearCopia()) {
-			crearBackUp();
-			
-		} else if (e.getSource() == this.vista.getBtnRestaurar()) {
-			Restaurar();
-		}
-	}
-
-	private void Restaurar() {
+	public void Restaurar() {
 		try {
 			String path = obtenerPath();
 
 			if (path != null && path != "") {
-				int respuesta = JOptionPane
-						.showConfirmDialog(
-								null,
-								"Â¿Esta seguro de restaurar los datos ?",
-								"Restaurar base de datos",
-								JOptionPane.YES_NO_OPTION);
+				int respuesta = JOptionPane.showConfirmDialog(null, "¿ Esta seguro que desea restaurar los datos?", "",
+						JOptionPane.YES_NO_OPTION);
 
 				if (respuesta == JOptionPane.YES_OPTION) {
-					
-					this.backUp.restore(this.usuario,this.contrasenia, path);
-					
-					JOptionPane.showMessageDialog(null, "Back Up realizado correctamente, debe reiniciar la aplicacion",
-							"Atencion!", JOptionPane.INFORMATION_MESSAGE);
-					this.vista.dispose();
+
+					this.backUp.restore(this.usuario, this.contrasenia, path);
+
+					JOptionPane.showMessageDialog(null,
+							"La exportación de datos se ha realizado correctamente, es necesario que reinicie la aplicación.");
 				} else
 					return;
 
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error inesperado al restaurar el backup",
-					"Error !!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Error inesperado al importar los datos.", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	private void crearBackUp() {
+	public void crearBackUp() {
 		try {
 			String path = guardarPath();
-			
+
 			if (path != null) {
 				if (path != "") {
-					
-					System.out.println(path + usuario + contrasenia);
-					
+
+					// System.out.println(path + usuario + contrasenia);
+
 					backUp.CrearBackup(path, this.usuario, this.contrasenia);
-					
-					JOptionPane.showMessageDialog(null, "Copia de seguridad realizada correctamente",
-							"Atencion !", JOptionPane.INFORMATION_MESSAGE);
-					
+
+					JOptionPane.showMessageDialog(null, "La copia de seguridad se ha realizado correctamente.");
+
 				} else {
-					
-					JOptionPane.showMessageDialog(null, "Error de extension, El backUp debe guardarse en un archivo .sql",
-							"Error !!", JOptionPane.ERROR_MESSAGE);
+
+					JOptionPane.showMessageDialog(null, "La exportación de datos debe realizarse en un archivo .sql",
+							"ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		} catch (Exception e) {
-			
-			JOptionPane.showMessageDialog(null, "Error inesperado al generar el backup",
-					"Error !!", JOptionPane.ERROR_MESSAGE);
-	
+
+			JOptionPane.showMessageDialog(null, "Error inesperado al intentar exportar los datos.", "ERROR",
+					JOptionPane.ERROR_MESSAGE);
+
 		}
 	}
 
 	private String obtenerPath() {
 		String path = "";
 		JFileChooser file = getFileChooser();
-		int estado = file.showOpenDialog(this.vista);
+		int estado = file.showOpenDialog(this.ventanaPrincipal);
 		if (estado == JFileChooser.APPROVE_OPTION) {
 			path = getPath(file);
 			if (!path.contains(extension)) {
@@ -131,17 +105,16 @@ public class ControladorBackUp implements ActionListener {
 	}
 
 	private String guardarPath() {
-		
+
 		String path = "";
 		JFileChooser file = getFileChooser();
-		
-		int estado = file.showSaveDialog(this.vista);
-		
+
+		int estado = file.showSaveDialog(this.ventanaPrincipal);
+
 		if (estado == JFileChooser.APPROVE_OPTION) {
 			path = getPath(file);
-			
-			if ((path.contains(".") && !path.contains(extension))
-					|| masDeUnPunto(path)) {
+
+			if ((path.contains(".") && !path.contains(extension)) || masDeUnPunto(path)) {
 				file.cancelSelection();
 				return "";
 			}
@@ -150,7 +123,7 @@ public class ControladorBackUp implements ActionListener {
 		}
 		return null;
 	}
-	
+
 	// seteo del file chooser
 	private JFileChooser getFileChooser() {
 		JFileChooser file = new JFileChooser();
@@ -166,7 +139,6 @@ public class ControladorBackUp implements ActionListener {
 		return path;
 	}
 
-	
 	// foramto del path
 	private boolean masDeUnPunto(String path) {
 		return contadorPuntos(path) > 1;
@@ -179,15 +151,5 @@ public class ControladorBackUp implements ActionListener {
 				ret++;
 		return ret;
 	}
-	
-	public static void main(String[] args) {
-		
-		BackUpVista v = new BackUpVista();
-		ControladorBackUp c = new ControladorBackUp(v);
-		c.Inicializar();
-		
-		
-		
-		
-	}
+
 }

@@ -10,13 +10,14 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
-import dto.IngresoDTO;
+import dto.EstadoDTO;
 import dto.IngresoLogDTO;
 import dto.ItemRepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.EmailPresupuesto;
 import modelo.Ingreso;
 import modelo.Presupuesto;
+import persistencia.dao.EstadoDAO;
 import persistencia.dao.IngresoDAO;
 import persistencia.dao.IngresoLogDAO;
 import persistencia.dao.UsuarioDAO;
@@ -44,8 +45,6 @@ public class ControladorPresupuesto implements ActionListener {
 		this.presupuesto = new Presupuesto(ingreso.getIngreso());
 		this.ventanaPresupuesto = ventanaPresupuesto;
 		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
-		this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
-		this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
 		this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
 		this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
 		this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
@@ -56,6 +55,7 @@ public class ControladorPresupuesto implements ActionListener {
 		this.ventanaPresupuesto.getBtnAceptado().addActionListener(this);
 		this.ventanaPresupuesto.getBtnAsignar().addActionListener(this);
 		this.ventanaPresupuesto.getBtnRechazado().addActionListener(this);
+		this.ventanaPresupuesto.getEntregado_btn().addActionListener(this);
 		this.usuarioDAO = new UsuarioDAO();
 	}
 
@@ -92,15 +92,36 @@ public class ControladorPresupuesto implements ActionListener {
 					/* TECNICO */ || this.usuarioLogueado.getIdperfil() == 1/* JEFE */)) {
 				mostrarBotonAsignar();
 			}
+			if ((this.ingreso.getIngreso().getEstado() == 7 || this.ingreso.getIngreso().getEstado() == 8)
+					&& (this.usuarioLogueado.getIdperfil() == 2
+							/* ADMINISTRATIVO */ || this.usuarioLogueado.getIdperfil() == 1/* JEFE */)
+					&& this.ingreso.getIngreso()
+							.getEnvio() == false) /*
+													 * Si esta en estado
+													 * reparado o irreparado, si
+													 * posee perfil
+													 * administrativo o jefe, y
+													 * no posee envio.
+													 */
+			{
+				mostrarBotonEntregado();
+			}
 		}
+
 	}
 
 	private void cargarIngreso() {
 		ventanaPresupuesto.getNombreProductoTexto_lbl().setText(ingreso.ingr.getDescripcion());
 		ventanaPresupuesto.getMarcaTexto_lbl().setText(ingreso.getMarca().getDetalle());
-		;
+
 		ventanaPresupuesto.getDescripcionFalla_txtArea().setText(ingreso.getIngreso().getDescripcion_falla());
 		ventanaPresupuesto.getTipoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
+
+		EstadoDAO estadoDAO = new EstadoDAO();
+
+		EstadoDTO estado = estadoDAO.find(ingreso.getIngreso().getEstado());
+
+		ventanaPresupuesto.getEstado_lb().setText(estado.getDetalle());
 	}
 
 	private void cargarComboComponentes() {
@@ -147,20 +168,8 @@ public class ControladorPresupuesto implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		// suma y resta componentes
-		if (e.getSource() == this.ventanaPresupuesto.getIncrementoCantComponente_btn()) {
-
-			cantidad += 1;
-			this.ventanaPresupuesto.getCantidad_lbl().setText(cantidad.toString());
-
-		} else if (e.getSource() == this.ventanaPresupuesto.getDecrementoCantComponente_btn()) {
-
-			if (cantidad != 1) {
-				cantidad -= 1;
-				this.ventanaPresupuesto.getCantidad_lbl().setText(cantidad.toString());
-			}
-			// agrega a la tabla
-		} else if (e.getSource() == this.ventanaPresupuesto.getAgregarComponente_btn()) {
+		// agrega a la tabla
+		if (e.getSource() == this.ventanaPresupuesto.getAgregarComponente_btn()) {
 
 			agregarRepuestoATabla();
 			ocultarColumnaId();
@@ -259,9 +268,27 @@ public class ControladorPresupuesto implements ActionListener {
 			} else if (response == JOptionPane.CLOSED_OPTION) {
 
 			}
+		} else if (e.getSource() == this.ventanaPresupuesto.getEntregado_btn()) {
+
+			int response = JOptionPane.showConfirmDialog(null,
+					"Ud. va a dar el presupuesto como entregado al cliente. ¿Esta seguro?", "Confirmar",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (response == JOptionPane.YES_OPTION) {
+				IngresoLogDTO ingrLog = new IngresoLogDTO(0, this.ingreso.getId(), 11, null, usuarioLogueado.getId());
+				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+				// ingreso el estado
+				ingresoLogDAO.insert(ingrLog);
+
+				ocultarBotonesEstados();
+				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+			} else if (response == JOptionPane.CLOSED_OPTION) {
+
+			}
+
 		} else if (e.getSource() == this.ventanaPresupuesto.getBtnAsignar()) {
 			int response = JOptionPane.showConfirmDialog(null,
-					"Esta seguro que desea asignarse esta tarea para realizarla?", "Confirmar",
+					"¿Esta seguro que desea asignarse esta tarea para realizarla?", "Confirmar",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (response == JOptionPane.NO_OPTION) {
 
@@ -295,44 +322,38 @@ public class ControladorPresupuesto implements ActionListener {
 
 		if (this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo FECHA DE VENCIMIENTO no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto,
+					"Por favor, para continuar ingrese una fecha de vencimiento.");
 
 		} else if (this.ventanaPresupuesto.getComponentes_table().getRowCount() == 0) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto,
-					"Campo NO INGRESADO COMPONENTES AL PRESUPUESTO  no puede estar vacio ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Por favor, ingrese los repuestos requeridos.");
 
 		} else if (this.ventanaPresupuesto.getDescripcionBreve_jTextArea().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo CAMPO DESCRIPCION BREVE no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Se requiere una descripci\u00f3n breve para continuar.");
 
 		} else if (this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo CAMPO DESCRIPCION TECNICA no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto,
+					"Se requiere una descripci\u00f3n t\u00e9cnica para continuar.");
 
 		} else if (this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto,
+					"Se requieren las horas de trabajo estimadas para continuar.");
 
 		} else if (!soloFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText().toString())) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo PRECIO MANO DE OBRA  admite solo NUMEROS",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "La mano de obra debe ser num\u00e9rico.");
 
 		} else if (this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRBAJO 	no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Se requiere la hora de trabajo para continuar.");
 
 		} else if (!soloNumeros(this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().toString())) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO  admite solo NUMEROS",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "La hora de trabajo debe ser num\u00e9rica.");
 
 		} else {
 			this.presupuesto.getPresupuesto()
@@ -352,8 +373,7 @@ public class ControladorPresupuesto implements ActionListener {
 			Boolean ingreso = this.presupuesto.guardarPresupuesto(this.usuarioLogueado.getId());
 
 			if (ingreso) {
-				JOptionPane.showMessageDialog(ventanaPresupuesto, "Presupuesto guardado correctamente", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(ventanaPresupuesto, "El presupuesto se ha guardado correctamente.");
 
 				// envia email
 				email = new EmailPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
@@ -362,8 +382,8 @@ public class ControladorPresupuesto implements ActionListener {
 				this.ventanaPresupuesto.dispose();
 				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 			} else {
-				JOptionPane.showMessageDialog(ventanaPresupuesto, "Ocurrio un error al guardar el presupuesto",
-						"Atencion!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(ventanaPresupuesto,
+						"Ha ocurrido un error al intentar guardar el presupuesto.");
 			}
 		}
 	}
@@ -398,8 +418,7 @@ public class ControladorPresupuesto implements ActionListener {
 
 		if (this.ventanaPresupuesto.getManoDeObra_txf().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo MANO DE OBRA no puede estar vacio ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Se requiere la mano de obra para continuar.");
 
 		} else {
 
@@ -447,8 +466,7 @@ public class ControladorPresupuesto implements ActionListener {
 			sumarTotalComponentes();
 		} else {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "debe seleccionar fila para eliminar ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Por favor, seleccione una fila para eliminar.");
 		}
 	}
 
@@ -457,7 +475,7 @@ public class ControladorPresupuesto implements ActionListener {
 		modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
 		Boolean existe = false;
 		// agrego el repuesto al objeto Presupuesto con su lista
-		int cantidad = Integer.parseInt(ventanaPresupuesto.getCantidad_lbl().getText());
+		int cantidad = (int) ventanaPresupuesto.getSpinner().getValue();
 		RepuestoDTO resp = presupuesto
 				.buscarRepuesto((String) this.ventanaPresupuesto.getComponente_ComboBox().getSelectedItem());
 		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1, resp.getId(), resp.getDetalle(), cantidad,
@@ -516,6 +534,15 @@ public class ControladorPresupuesto implements ActionListener {
 		ventanaPresupuesto.getBtnAceptado().setVisible(false);
 		ventanaPresupuesto.getBtnAsignar().setVisible(false);
 		ventanaPresupuesto.getBtnRechazado().setVisible(false);
+		ventanaPresupuesto.getEntregado_btn().setVisible(false);
+	}
+
+	private void mostrarBotonEntregado() {
+		ventanaPresupuesto.getBtnInformado().setVisible(false);
+		ventanaPresupuesto.getBtnAceptado().setVisible(false);
+		ventanaPresupuesto.getBtnAsignar().setVisible(false);
+		ventanaPresupuesto.getBtnRechazado().setVisible(false);
+		ventanaPresupuesto.getEntregado_btn().setVisible(true);
 	}
 
 	private void bloquearCampos() {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-06-20T14:08:36 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteMarcaTipo_Grafico" pageWidth="500" pageHeight="500" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8a465670-cc4a-4270-965f-8efb86e33b71">
+	<property name="template.engine" value="tabular_template"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ReporteRespInsumidosGrafico"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<import value="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="SUB_DATASOURCE" class="java.util.List"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[marca]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[cantidad]]></fieldDescription>
+	</field>
+	<field name="porcentaje" class="java.lang.Float">
+		<fieldDescription><![CDATA[porcentaje]]></fieldDescription>
+	</field>
+	<field name="repuesto" class="java.lang.String">
+		<fieldDescription><![CDATA[repuesto]]></fieldDescription>
+	</field>
+	<pageHeader>
+		<band height="225">
+			<pie3DChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="0" width="500" height="225" uuid="73394707-2a24-4499-9ad4-ffa24fc28b08"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{repuesto}]]></keyExpression>
+					<valueExpression><![CDATA[$F{porcentaje}]]></valueExpression>
+					<labelExpression><![CDATA[$F{repuesto}+":"+$F{porcentaje}+"%"]]></labelExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</pageHeader>
+</jasperReport>

@@ -9,9 +9,11 @@ import javax.swing.JOptionPane;
 import dto.ReporteFinancieroActivosDTO;
 import dto.ReporteFinancieroPasivosDTO;
 import dto.ReporteMarcaTipoDTO;
+import dto.ReporteRepuestosInsumidosDTO;
 import modelo.SelectorFechaReporte;
 import presentacion.reportes.ReporteFinanciero;
 import presentacion.reportes.ReporteMarcaTipo;
+import presentacion.reportes.ReporteRepuestosInsumidos;
 import presentacion.vista.VentanaSelectorFechasReporte;
 
 public class ControladorSelectorFechasReporte  implements ActionListener {
@@ -160,11 +162,18 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 				
 				if(this.tipoReporte == 1) {
 					
-					ArrayList<ReporteFinancieroPasivosDTO> a = this.modelReporte.getFinancieroPasivos();
+					ArrayList<ReporteFinancieroPasivosDTO> pasivos = this.modelReporte.getFinancieroPasivos();
+					float totalPasivos = 0;
+					for (int i = 0; i < pasivos.size(); i++) {
+						totalPasivos+=pasivos.get(i).getValor_orden();
+					}
 					
-					ArrayList<ReporteFinancieroActivosDTO> b = this.modelReporte.getFinancieroActivos();
-					
-					ReporteFinanciero reporte = new ReporteFinanciero(a,b);
+					ArrayList<ReporteFinancieroActivosDTO> activos = this.modelReporte.getFinancieroActivos();
+					float totalActivos = 0;
+					for (int a = 0; a < activos.size(); a++) {
+						totalActivos+=activos.get(a).getValor_total();
+					}
+					ReporteFinanciero reporte = new ReporteFinanciero(pasivos, activos, totalPasivos, totalActivos, this.modelReporte.fechasToString());
 					
 					reporte.mostrar();
 					
@@ -194,7 +203,11 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 				} else if(this.tipoReporte == 3){
 					
 					//TODO: repuestos mas utilizados
+					ArrayList<ReporteRepuestosInsumidosDTO> utilizadosAl10 = this.modelReporte.getMasInsumidos10();
+					ArrayList<ReporteRepuestosInsumidosDTO> utilizadosAl20 = this.modelReporte.getMasInsumidos20();
 					
+					ReporteRepuestosInsumidos reporte = new ReporteRepuestosInsumidos(utilizadosAl10, this.modelReporte.fechasToString(),utilizadosAl20);
+					reporte.mostrar();
 				}
 				
 				this.ventanaSelectorReportes.dispose();
