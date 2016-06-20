@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import dto.ClienteDTO;
 import dto.IngresoDTO;
@@ -18,6 +17,8 @@ import dto.TipoProductoDTO;
 import dto.UsuarioDTO;
 import modelo.Ingreso;
 import persistencia.dao.ClienteDAO;
+import persistencia.dao.MarcaDAO;
+import persistencia.dao.TipoProductoDAO;
 import presentacion.reportes.ReporteIngreso;
 import presentacion.vista.VentanaABMCliente;
 import presentacion.vista.VentanaIngreso;
@@ -146,7 +147,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 		} else if (e.getSource() == this.ventana_ingreso.getEnvioDomicilio()) {
 			this.ventana_ingreso.getDireccion_nueva().setEnabled(true);
 			if (this.ventana_ingreso.getEnvioDomicilio().isSelected()) {
-//				determinarVisibilidadCheck_DireccionNueva();
+				// determinarVisibilidadCheck_DireccionNueva();
 			} else {
 				this.ocultarOpcionDireccionAlternativa();
 			}
@@ -185,7 +186,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 
 			if (this.ventana_ingreso.getEnvioDomicilio().isSelected() && !error) {
 				// habilitarOpcionDireccionNueva();
-//				determinarVisibilidadCheck_DireccionNueva();
+				// determinarVisibilidadCheck_DireccionNueva();
 				// VALIDO DIRECICION DE ENVIO DE CLIENTE
 				if (this.ventana_ingreso.getDireccion_nueva().isSelected()) {
 					// Me fijo que complete la direccion alternativa y el monto
@@ -216,9 +217,20 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (!error) {
 				if ((this.ventana_ingreso.getComboMarcas().getSelectedItem() != null
 						&& this.ventana_ingreso.getComboTiposProductos().getSelectedItem() != null)) {
+
+					TipoProductoDAO tipoProdDAO = new TipoProductoDAO();
+					MarcaDAO marcaDAO = new MarcaDAO();
+
+					int idTipoProducto = tipoProdDAO
+							.findByDetalle(this.ventana_ingreso.getComboTiposProductos()
+									.getItemAt(this.ventana_ingreso.getComboTiposProductos().getSelectedIndex()))
+							.getId();
+
+					int idTipoMarca = marcaDAO.findByDetalle(this.ventana_ingreso.getComboMarcas()
+							.getItemAt(this.ventana_ingreso.getComboMarcas().getSelectedIndex())).getId();
+
 					IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
-							this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
-							this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
+							idTipoMarca, idTipoProducto, descripcion_falla,
 							this.ventana_ingreso.getEnvioDomicilio().isSelected(),
 							this.ventana_ingreso.getDireccion_nueva().isSelected(),
 							this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1,
