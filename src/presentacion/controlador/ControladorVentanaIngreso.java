@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 import dto.ClienteDTO;
 import dto.IngresoDTO;
@@ -14,6 +17,8 @@ import dto.TipoProductoDTO;
 import dto.UsuarioDTO;
 import modelo.Ingreso;
 import persistencia.dao.ClienteDAO;
+import persistencia.dao.MarcaDAO;
+import persistencia.dao.TipoProductoDAO;
 import presentacion.reportes.ReporteIngreso;
 import presentacion.vista.VentanaABMCliente;
 import presentacion.vista.VentanaIngreso;
@@ -58,12 +63,10 @@ public class ControladorVentanaIngreso implements ActionListener {
 		if (this.ventana_ingreso.getEnvioDomicilio().isSelected() == false) {
 			this.ventana_ingreso.getDireccion_nueva().setSelected(false);
 			this.ventana_ingreso.getDireccion_nueva().setEnabled(false);
-			this.ventana_ingreso.getOtraDireccionLabel().setForeground(Color.gray);
 		} else {
 			this.ventana_ingreso.getDireccion_nueva().setEnabled(true);
 			if (this.ventana_ingreso.getDireccion_nueva().isSelected()) {
 				this.ventana_ingreso.getDireccion_nueva().setSelected(true);
-				this.ventana_ingreso.getOtraDireccionLabel().setForeground(Color.darkGray);
 			}
 		}
 	}
@@ -78,6 +81,9 @@ public class ControladorVentanaIngreso implements ActionListener {
 	}
 
 	public void inicializar() {
+
+		this.ventana_ingreso.getFechaIngresoText_lbl().setText(getFechaActual());
+
 		if (ingreso.getId() != -1) {
 			ingreso.cargarModeloCompleto();
 			this.cargarVentana();
@@ -106,6 +112,18 @@ public class ControladorVentanaIngreso implements ActionListener {
 		this.ventana_ingreso.setVisible(true);
 	}
 
+	private String getFechaActual() {
+		Calendar fecha = new GregorianCalendar();
+
+		int año = fecha.get(Calendar.YEAR);
+		int mes = fecha.get(Calendar.MONTH);
+		int dia = fecha.get(Calendar.DAY_OF_MONTH);
+
+		String resultado = dia + "/" + (mes + 1) + "/" + año;
+
+		return resultado;
+	}
+
 	private void cargarVentana() {
 		this.ventana_ingreso.getTextNombreProducto().setText(ingreso.getIngreso().getDescripcion());
 		this.ventana_ingreso.getTextDescripcionFalla().setText(ingreso.getIngreso().getDescripcion_falla());
@@ -129,8 +147,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 		} else if (e.getSource() == this.ventana_ingreso.getEnvioDomicilio()) {
 			this.ventana_ingreso.getDireccion_nueva().setEnabled(true);
 			if (this.ventana_ingreso.getEnvioDomicilio().isSelected()) {
-				determinarVisibilidadCheck_DireccionNueva();
-				this.ventana_ingreso.getOtraDireccionLabel().setForeground(Color.darkGray);
+				// determinarVisibilidadCheck_DireccionNueva();
 			} else {
 				this.ocultarOpcionDireccionAlternativa();
 			}
@@ -169,7 +186,7 @@ public class ControladorVentanaIngreso implements ActionListener {
 
 			if (this.ventana_ingreso.getEnvioDomicilio().isSelected() && !error) {
 				// habilitarOpcionDireccionNueva();
-				determinarVisibilidadCheck_DireccionNueva();
+				// determinarVisibilidadCheck_DireccionNueva();
 				// VALIDO DIRECICION DE ENVIO DE CLIENTE
 				if (this.ventana_ingreso.getDireccion_nueva().isSelected()) {
 					// Me fijo que complete la direccion alternativa y el monto
@@ -200,9 +217,20 @@ public class ControladorVentanaIngreso implements ActionListener {
 			if (!error) {
 				if ((this.ventana_ingreso.getComboMarcas().getSelectedItem() != null
 						&& this.ventana_ingreso.getComboTiposProductos().getSelectedItem() != null)) {
+
+					TipoProductoDAO tipoProdDAO = new TipoProductoDAO();
+					MarcaDAO marcaDAO = new MarcaDAO();
+
+					int idTipoProducto = tipoProdDAO
+							.findByDetalle(this.ventana_ingreso.getComboTiposProductos()
+									.getItemAt(this.ventana_ingreso.getComboTiposProductos().getSelectedIndex()))
+							.getId();
+
+					int idTipoMarca = marcaDAO.findByDetalle(this.ventana_ingreso.getComboMarcas()
+							.getItemAt(this.ventana_ingreso.getComboMarcas().getSelectedIndex())).getId();
+
 					IngresoDTO ingresoDTO = new IngresoDTO(0, this.ingreso.getCliente().getId(), nombre_produ,
-							this.ventana_ingreso.getComboMarcas().getSelectedIndex(),
-							this.ventana_ingreso.getComboTiposProductos().getSelectedIndex(), descripcion_falla,
+							idTipoMarca, idTipoProducto, descripcion_falla,
 							this.ventana_ingreso.getEnvioDomicilio().isSelected(),
 							this.ventana_ingreso.getDireccion_nueva().isSelected(),
 							this.ventana_ingreso.getTxtDireccionNueva().getText(), montoFloat, null, 1,
@@ -283,8 +311,8 @@ public class ControladorVentanaIngreso implements ActionListener {
 	private void llenarTablaCliente(ClienteDTO client) {
 		this.ventana_ingreso.getLbl_nombre_apellido_cliente().setText(client.getNombre() + ", " + client.getApellido());
 		this.ventana_ingreso.getLbl_direccion_cliente().setText(client.getDireccion());
-		this.ventana_ingreso.getLbl_telefono_cliente().setText("Telefono: " + client.getTelefono());
-		this.ventana_ingreso.getLbl_email_cliente().setText("Email: " + client.getMail());
+		this.ventana_ingreso.getLbl_telefono_cliente().setText(client.getTelefono());
+		this.ventana_ingreso.getLbl_email_cliente().setText(client.getMail());
 	}
 
 }

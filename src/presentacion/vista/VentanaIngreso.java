@@ -19,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 import java.awt.Toolkit;
 import javax.swing.border.MatteBorder;
+import java.awt.Font;
 
 public class VentanaIngreso extends JFrame {
 
@@ -44,6 +45,7 @@ public class VentanaIngreso extends JFrame {
 	private JPanel direccionNueva_JPanel;
 	private JLabel otraDireccion_lbl;
 	private JButton crearCliente_btn;
+	private JLabel fechaIngresoText_lbl;
 
 	public VentanaIngreso() {
 
@@ -63,8 +65,8 @@ public class VentanaIngreso extends JFrame {
 		fechaIngreso_lbl.setBounds(515, 11, 66, 14);
 		contentPane.add(fechaIngreso_lbl);
 
-		JLabel fechaIngresoText_lbl = new JLabel("");
-		fechaIngresoText_lbl.setBounds(599, 11, 75, 14);
+		fechaIngresoText_lbl = new JLabel("");
+		fechaIngresoText_lbl.setBounds(555, 11, 119, 14);
 		contentPane.add(fechaIngresoText_lbl);
 
 		JLabel titulo_lbl = new JLabel("<html><b><i>INGRESO DE PRODUCTO</i></b></html>");
@@ -77,6 +79,7 @@ public class VentanaIngreso extends JFrame {
 		contentPane.add(separator);
 
 		JLabel numeroCliente_lbl = new JLabel("N\u00FAmero Cliente:");
+		numeroCliente_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		numeroCliente_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		numeroCliente_lbl.setBounds(10, 52, 205, 20);
 		contentPane.add(numeroCliente_lbl);
@@ -89,16 +92,17 @@ public class VentanaIngreso extends JFrame {
 		numeroCliente_txf.setDocument(new JTextFieldLimit(30));
 
 		buscarCliente_btn = new JButton("");
-		buscarCliente_btn.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/search.png")));
+		buscarCliente_btn.setIcon(new ImageIcon("buscar.png"));
 		buscarCliente_btn.setBounds(367, 52, 33, 20);
 		contentPane.add(buscarCliente_btn);
 
 		crearCliente_btn = new JButton("");
-		crearCliente_btn.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/user-add.png")));
+		crearCliente_btn.setIcon(new ImageIcon("persona.png"));
 		crearCliente_btn.setBounds(410, 52, 33, 20);
 		contentPane.add(crearCliente_btn);
 
 		JLabel nombreProducto_lbl = new JLabel("Nombre Producto:");
+		nombreProducto_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		nombreProducto_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		nombreProducto_lbl.setBounds(10, 139, 260, 20);
 		contentPane.add(nombreProducto_lbl);
@@ -110,24 +114,27 @@ public class VentanaIngreso extends JFrame {
 		contentPane.add(nombreProducto_txf);
 
 		JLabel marca_lbl = new JLabel("Marca:");
+		marca_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		marca_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		marca_lbl.setBounds(10, 170, 127, 20);
 		contentPane.add(marca_lbl);
 
 		marca_ComboBox = new JComboBox<String>();
-		marca_ComboBox.setBounds(141, 173, 191, 20);
+		marca_ComboBox.setBounds(141, 170, 191, 20);
 		contentPane.add(marca_ComboBox);
 
 		JLabel tipo_lbl = new JLabel("Tipo:");
+		tipo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tipo_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		tipo_lbl.setBounds(396, 170, 150, 20);
 		contentPane.add(tipo_lbl);
 
 		tipo_ComboBox = new JComboBox<String>();
-		tipo_ComboBox.setBounds(483, 173, 191, 20);
+		tipo_ComboBox.setBounds(483, 170, 191, 20);
 		contentPane.add(tipo_ComboBox);
 
 		JLabel descripcionFalla_lbl = new JLabel("Descripcion falla:");
+		descripcionFalla_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		descripcionFalla_lbl.setBounds(10, 204, 146, 20);
 		contentPane.add(descripcionFalla_lbl);
 
@@ -157,12 +164,12 @@ public class VentanaIngreso extends JFrame {
 		contentPane.add(aceptar_btn);
 
 		JLabel envioAdomicilio_lbl = new JLabel("Solicita Envio");
-		envioAdomicilio_lbl.setBounds(36, 342, 101, 14);
+		envioAdomicilio_lbl.setBounds(37, 342, 101, 23);
 		contentPane.add(envioAdomicilio_lbl);
 
 		envioDomicilio_checkBox = new JCheckBox("");
 		envioDomicilio_checkBox.setBackground(Color.WHITE);
-		envioDomicilio_checkBox.setBounds(10, 342, 20, 14);
+		envioDomicilio_checkBox.setBounds(10, 342, 21, 23);
 		contentPane.add(envioDomicilio_checkBox);
 
 		direccionNueva_JPanel = new JPanel();
@@ -173,7 +180,7 @@ public class VentanaIngreso extends JFrame {
 		direccionNueva_JPanel.setLayout(null);
 
 		JLabel direccinNueva_lbl = new JLabel("Direcci\u00F3n nueva:");
-		direccinNueva_lbl.setForeground(Color.DARK_GRAY);
+		direccinNueva_lbl.setForeground(Color.BLACK);
 		direccinNueva_lbl.setEnabled(false);
 		direccinNueva_lbl.setBounds(10, 11, 250, 20);
 		direccionNueva_JPanel.add(direccinNueva_lbl);
@@ -185,55 +192,55 @@ public class VentanaIngreso extends JFrame {
 		direccionNueva_txf.setColumns(10);
 
 		btnVerIngreso = new JButton("Imprimir");
-		btnVerIngreso.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/printer.png")));
+		btnVerIngreso.setIcon(new ImageIcon("imprimir.png"));
 		btnVerIngreso.setBounds(348, 428, 99, 23);
 		contentPane.add(btnVerIngreso);
 
-		otraDireccion_lbl = new JLabel("Usar direccion alternativa");
-		otraDireccion_lbl.setBounds(147, 342, 250, 14);
+		otraDireccion_lbl = new JLabel("Usar direcci\u00f3n alternativa");
+		otraDireccion_lbl.setBounds(174, 342, 250, 23);
 		contentPane.add(otraDireccion_lbl);
 
 		direccionNueva_checkBox = new JCheckBox("");
-		direccionNueva_checkBox.setBounds(124, 342, 20, 14);
+		direccionNueva_checkBox.setBounds(147, 342, 21, 23);
 		contentPane.add(direccionNueva_checkBox);
 		direccionNueva_checkBox.setBackground(Color.WHITE);
-		
-		JLabel lblCliente = new JLabel("Datos Cliente :");
-		lblCliente.setBounds(10, 83, 89, 20);
-		contentPane.add(lblCliente);
-		
+
 		lbl_nombre_apellido_cliente = new JLabel("");
-		lbl_nombre_apellido_cliente.setBounds(103, 83, 272, 20);
+		lbl_nombre_apellido_cliente.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
+		lbl_nombre_apellido_cliente.setBounds(66, 83, 272, 20);
 		contentPane.add(lbl_nombre_apellido_cliente);
-		
+
 		lbl_telefono_cliente = new JLabel("");
-		lbl_telefono_cliente.setBounds(396, 108, 278, 20);
+		lbl_telefono_cliente.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
+		lbl_telefono_cliente.setBounds(348, 108, 272, 20);
 		contentPane.add(lbl_telefono_cliente);
-		
+
 		lbl_email_cliente = new JLabel("");
-		lbl_email_cliente.setBounds(397, 83, 272, 20);
+		lbl_email_cliente.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
+		lbl_email_cliente.setBounds(348, 83, 272, 20);
 		contentPane.add(lbl_email_cliente);
-		
+
 		lbl_direccion_cliente = new JLabel("");
-		lbl_direccion_cliente.setBounds(103, 108, 272, 20);
+		lbl_direccion_cliente.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 12));
+		lbl_direccion_cliente.setBounds(66, 108, 272, 20);
 		contentPane.add(lbl_direccion_cliente);
-		
-				JLabel lblMontoEnvio = new JLabel("Monto de envio:");
-				lblMontoEnvio.setBounds(10, 367, 89, 20);
-				contentPane.add(lblMontoEnvio);
-				lblMontoEnvio.setForeground(Color.DARK_GRAY);
-				lblMontoEnvio.setEnabled(false);
-				
-						txtMontoEnvio = new JTextField();
-						txtMontoEnvio.setBounds(101, 367, 189, 20);
-						contentPane.add(txtMontoEnvio);
-						txtMontoEnvio.setDocument(new JTextFieldLimit(15));
-						txtMontoEnvio.setColumns(10);
-						
-								JLabel label = new JLabel("$");
-								label.setBounds(300, 367, 20, 20);
-								contentPane.add(label);
-								label.setEnabled(false);
+
+		JLabel lblMontoEnvio = new JLabel("Monto de env\u00edo:");
+		lblMontoEnvio.setBounds(10, 367, 89, 20);
+		contentPane.add(lblMontoEnvio);
+		lblMontoEnvio.setForeground(Color.BLACK);
+		lblMontoEnvio.setEnabled(false);
+
+		txtMontoEnvio = new JTextField();
+		txtMontoEnvio.setBounds(101, 367, 189, 20);
+		contentPane.add(txtMontoEnvio);
+		txtMontoEnvio.setDocument(new JTextFieldLimit(15));
+		txtMontoEnvio.setColumns(10);
+
+		JLabel label = new JLabel("$");
+		label.setBounds(300, 367, 20, 20);
+		contentPane.add(label);
+		label.setEnabled(false);
 	}
 
 	public JButton getCrearCliente_btn() {
@@ -325,7 +332,7 @@ public class VentanaIngreso extends JFrame {
 	public JLabel getOtraDireccionLabel() {
 		return this.otraDireccion_lbl;
 	}
-	
+
 	public JLabel getLbl_nombre_apellido_cliente() {
 		return lbl_nombre_apellido_cliente;
 	}
@@ -357,6 +364,13 @@ public class VentanaIngreso extends JFrame {
 	public void setLbl_direccion_cliente(JLabel lbl_direccion_cliente) {
 		this.lbl_direccion_cliente = lbl_direccion_cliente;
 	}
-	
+
+	public JLabel getFechaIngresoText_lbl() {
+		return fechaIngresoText_lbl;
+	}
+
+	public void setFechaIngresoText_lbl(JLabel fechaIngresoText_lbl) {
+		this.fechaIngresoText_lbl = fechaIngresoText_lbl;
+	}
 
 }
