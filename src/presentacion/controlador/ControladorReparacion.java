@@ -1,5 +1,6 @@
 package presentacion.controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -23,25 +24,25 @@ public class ControladorReparacion implements ActionListener {
 
 	private VentanaReparacion ventanaReparacion;
 	private Ingreso ingreso;
-	private Integer cantidad = 0;
 	private Presupuesto presupuesto;
 	private Reparacion reparacion;
 	private Reparaciones_repuestos reparaciones_repuestos;
 	private UsuarioDTO usuarioLogueado;
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private ControladorVentanaPrincipal controladorVentanaPrincipal;
+	private int tipoEstado = 0;
 
 	public ControladorReparacion(VentanaReparacion ventanaReparacion,
 			ControladorVentanaPrincipal controladorVentanaPrincipal, Ingreso ingreso, UsuarioDTO usuarioLogueado) {
 		this.ventanaReparacion = ventanaReparacion;
 		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
 		this.ingreso = ingreso;
-		this.ventanaReparacion.getIncrementoCantComponente_btn().addActionListener(this);
-		this.ventanaReparacion.getDecrementoCantComponente_btn().addActionListener(this);
 		this.ventanaReparacion.getAgregarComponente_btn().addActionListener(this);
 		this.ventanaReparacion.getEliminarComponente_btn().addActionListener(this);
 		this.ventanaReparacion.getFinalizar_btn().addActionListener(this);
 		this.ventanaReparacion.getCancelar_btn().addActionListener(this);
+		this.ventanaReparacion.getBtnIrreparado().addActionListener(this);
+		this.ventanaReparacion.getBtnReparado().addActionListener(this);
 		this.usuarioLogueado = usuarioLogueado;
 		this.presupuesto = new Presupuesto(ingreso.getIngreso());
 		this.reparacion = new Reparacion();
@@ -61,20 +62,26 @@ public class ControladorReparacion implements ActionListener {
 		cargarModelo();
 		ventanaReparacion.getFinalizar_btn().setVisible(true);
 		ventanaReparacion.getCancelar_btn().setText("Cerrar");
+		ventanaReparacion.getBtnIrreparado().setVisible(true);
+		ventanaReparacion.getBtnReparado().setVisible(true);
+		this.ventanaReparacion.getMensajeEstadoReparacion().setText("Aún no se ha indicado el estado del producto.");
+		this.ventanaReparacion.getMensajeEstadoReparacion().setForeground(Color.black);
 
 	}
 
 	private void cargarMontosPresupuestos() {
-		
-		if (this.ingreso.getIngreso().getEnvio()){
-			
-			this.ventanaReparacion.getLblMontoEnvio().setText(String.valueOf(this.ingreso.getIngreso().getMonto_envio()));
-		}else{
+
+		if (this.ingreso.getIngreso().getEnvio()) {
+
+			this.ventanaReparacion.getLblMontoEnvio()
+					.setText(String.valueOf(this.ingreso.getIngreso().getMonto_envio()));
+		} else {
 			this.ventanaReparacion.getLblMontoEnvio().setText("0");
 		}
-		
-		this.ventanaReparacion.getLblMontoPresupuestado().setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
-		
+
+		this.ventanaReparacion.getLblMontoPresupuestado()
+				.setText(String.valueOf(this.presupuesto.getPresupuesto().getImporteTotal()));
+
 	}
 
 	private void cargarModelo() {
@@ -98,20 +105,7 @@ public class ControladorReparacion implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// suma y resta componentes
-		if (e.getSource() == this.ventanaReparacion.getIncrementoCantComponente_btn()) {
-
-			cantidad += 1;
-			this.ventanaReparacion.getCantidad_lbl().setText(cantidad.toString());
-
-		} else if (e.getSource() == this.ventanaReparacion.getDecrementoCantComponente_btn()) {
-
-			if (cantidad != 1) {
-				cantidad -= 1;
-				this.ventanaReparacion.getCantidad_lbl().setText(cantidad.toString());
-			}
-			// agrega a la tabla
-		} else if (e.getSource() == this.ventanaReparacion.getAgregarComponente_btn()) {
+		if (e.getSource() == this.ventanaReparacion.getAgregarComponente_btn()) {
 
 			agregarRepuestoATabla();
 			ocultarColumnaId();
@@ -135,7 +129,6 @@ public class ControladorReparacion implements ActionListener {
 
 			guardarReparacionesRepuestosEnBD(this.reparacion.getIdReparacion());
 
-			int tipoEstado = determinarEstado();
 			if (tipoEstado != 0) {
 				// Actualizo el estado del ingreso
 				IngresoLogDTO ingrLog = new IngresoLogDTO(0, this.ingreso.getId(), tipoEstado, null,
@@ -160,18 +153,19 @@ public class ControladorReparacion implements ActionListener {
 			EmailReparacion email = new EmailReparacion(ingreso, usuarioLogueado, ventanaReparacion, reparacion);
 			email.start();
 
-		}
-
-	}
-
-	private int determinarEstado() {
-		int tipoEstado = this.ingreso.getIngreso().getEstado();
-		if (this.ventanaReparacion.getReparable_CheckBox().isSelected()) {
-			tipoEstado = 7;
-		} else {
+		} else if (e.getSource() == this.ventanaReparacion.getBtnIrreparado()) {
 			tipoEstado = 8;
+			ventanaReparacion.getBtnIrreparado().setVisible(false);
+			ventanaReparacion.getBtnReparado().setVisible(true);
+			this.ventanaReparacion.getMensajeEstadoReparacion().setText("El producto se encuentra irreparado.");
+			this.ventanaReparacion.getMensajeEstadoReparacion().setForeground(Color.red);
+		} else if (e.getSource() == this.ventanaReparacion.getBtnReparado()) {
+			tipoEstado = 7;
+			ventanaReparacion.getBtnIrreparado().setVisible(true);
+			ventanaReparacion.getBtnReparado().setVisible(false);
+			this.ventanaReparacion.getMensajeEstadoReparacion().setText("El producto se encuentra reparado.");
+			this.ventanaReparacion.getMensajeEstadoReparacion().setForeground(Color.green);
 		}
-		return tipoEstado;
 
 	}
 
@@ -179,18 +173,17 @@ public class ControladorReparacion implements ActionListener {
 		int idrepuesto;
 		Date fecha_creacion = null;
 		boolean habilitado = true;
-		
+
 		Stock st = new Stock();
-		
+
 		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
 			idrepuesto = presupuesto.getListaDeRepuestos().get(i).getIdrepuesto();
-			
-			int cantResp = (int) (this.ventanaReparacion.getComponentes_table().getValueAt(i, 2));
-	
 
-			this.reparaciones_repuestos.guardarReparacion_repuesto(idReparacion, idrepuesto,
-					cantResp, fecha_creacion, habilitado);
-			
+			int cantResp = (int) (this.ventanaReparacion.getComponentes_table().getValueAt(i, 2));
+
+			this.reparaciones_repuestos.guardarReparacion_repuesto(idReparacion, idrepuesto, cantResp, fecha_creacion,
+					habilitado);
+
 			try {
 				st.modificarStock(idrepuesto, -cantResp);
 			} catch (Exception e) {
@@ -205,11 +198,11 @@ public class ControladorReparacion implements ActionListener {
 		modelTable.setColumnIdentifiers(ventanaReparacion.getComponentes_nombreColumnas());
 		Boolean existe = false;
 		// agrego el repuesto al objeto Presupuesto con su lista
-		int cantidad = Integer.parseInt(ventanaReparacion.getCantidad_lbl().getText());
+		int cantidad = (int) this.ventanaReparacion.getSpinner().getValue();
 		RepuestoDTO resp = presupuesto
 				.buscarRepuesto((String) this.ventanaReparacion.getComponente_ComboBox().getSelectedItem());
-		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1, resp.getId(), resp.getDetalle(),
-				cantidad, resp.getPrecioUnitario(), resp.getPrecioUnitario() * cantidad);
+		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1, resp.getId(), resp.getDetalle(), cantidad,
+				resp.getPrecioUnitario(), resp.getPrecioUnitario() * cantidad);
 		// me fijo si existe en la tabla
 		for (int i = 0; i < presupuesto.getListaDeRepuestos().size(); i++) {
 			if (presupuesto.getListaDeRepuestos().get(i).getDetalle().equals(resp.getDetalle())) {
@@ -269,8 +262,7 @@ public class ControladorReparacion implements ActionListener {
 			actualizarTablaRepuestos();
 		} else {
 
-			JOptionPane.showMessageDialog(ventanaReparacion, "debe seleccionar fila para eliminar ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaReparacion, "Por favor, seleccione una fila para eliminar.");
 		}
 	}
 

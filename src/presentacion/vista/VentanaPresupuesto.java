@@ -19,12 +19,12 @@ import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.SystemColor;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SpinnerModel;
 
 import java.awt.Toolkit;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class VentanaPresupuesto extends JFrame {
 
@@ -60,6 +60,7 @@ public class VentanaPresupuesto extends JFrame {
 	private JSeparator separator_1;
 	private JSpinner spinner;
 
+	@SuppressWarnings("serial")
 	public VentanaPresupuesto() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresupuesto.class.getResource("/logo.png")));
 
@@ -206,8 +207,21 @@ public class VentanaPresupuesto extends JFrame {
 		componentes_scrollPane.setBackground(Color.WHITE);
 		contentPane.add(componentes_scrollPane);
 
-		componentes_table = new JTable(componentes_informacionTabla, componentes_nombreColumnas);
-		// componentes_table.setEnabled(false);
+		componentes_table = new JTable(new DefaultTableModel(componentes_informacionTabla, componentes_nombreColumnas) {
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] { String.class, String.class, String.class, String.class, String.class };
+
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+
+			@Override
+			public boolean isCellEditable(int fila, int columna) {
+				return false;
+			}
+		});
+
 		componentes_scrollPane.setViewportView(componentes_table);
 		JScrollPane descripcionBreve_jScrollPane = new JScrollPane();
 		descripcionBreve_jScrollPane.setBorder(
@@ -267,11 +281,6 @@ public class VentanaPresupuesto extends JFrame {
 		lblTotalRepuestos.setBounds(30, 375, 127, 20);
 		contentPane.add(lblTotalRepuestos);
 
-		JLabel lblEstado = new JLabel("Estado:");
-		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblEstado.setBounds(539, 8, 124, 15);
-		contentPane.add(lblEstado);
-
 		estado_lb = new JLabel("");
 		estado_lb.setHorizontalAlignment(SwingConstants.TRAILING);
 		estado_lb.setForeground(new Color(105, 105, 105));
@@ -292,6 +301,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(btnAsignar);
 
 		btnAceptado = new JButton("Aceptado");
+		btnAceptado.setForeground(new Color(46, 139, 87));
 		btnAceptado.setBounds(30, 0, 116, 23);
 		contentPane.add(btnAceptado);
 
@@ -300,6 +310,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(btnInformado);
 
 		btnRechazado = new JButton("Rechazado");
+		btnRechazado.setForeground(new Color(255, 0, 0));
 		btnRechazado.setBounds(157, 0, 115, 23);
 		contentPane.add(btnRechazado);
 
@@ -313,6 +324,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(separator_1);
 
 		spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spinner.setBounds(356, 215, 29, 26);
 		contentPane.add(spinner);
 	}

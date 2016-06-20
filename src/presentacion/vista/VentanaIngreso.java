@@ -178,7 +178,6 @@ public class VentanaIngreso extends JFrame {
 
 		JLabel direccinNueva_lbl = new JLabel("Direcci\u00F3n nueva:");
 		direccinNueva_lbl.setForeground(Color.BLACK);
-		direccinNueva_lbl.setEnabled(false);
 		direccinNueva_lbl.setBounds(10, 11, 250, 20);
 		direccionNueva_JPanel.add(direccinNueva_lbl);
 
@@ -226,18 +225,16 @@ public class VentanaIngreso extends JFrame {
 		lblMontoEnvio.setBounds(10, 367, 89, 20);
 		contentPane.add(lblMontoEnvio);
 		lblMontoEnvio.setForeground(Color.BLACK);
-		lblMontoEnvio.setEnabled(false);
 
 		txtMontoEnvio = new JTextField();
-		txtMontoEnvio.setBounds(101, 367, 189, 20);
+		txtMontoEnvio.setBounds(119, 367, 189, 20);
 		contentPane.add(txtMontoEnvio);
 		txtMontoEnvio.setDocument(new JTextFieldLimit(15));
 		txtMontoEnvio.setColumns(10);
 
 		JLabel label = new JLabel("$");
-		label.setBounds(300, 367, 20, 20);
+		label.setBounds(108, 367, 20, 20);
 		contentPane.add(label);
-		label.setEnabled(false);
 	}
 
 	public JButton getCrearCliente_btn() {

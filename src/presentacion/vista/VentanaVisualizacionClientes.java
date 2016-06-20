@@ -25,7 +25,7 @@ public class VentanaVisualizacionClientes extends JFrame {
 
 	private void initialize() {
 
-		setBounds(100, 100, 742, 364);
+		setBounds(100, 100, 700, 500);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setLocationRelativeTo(null);
@@ -33,7 +33,7 @@ public class VentanaVisualizacionClientes extends JFrame {
 
 
 		JScrollPane clientes_scrollPane = new JScrollPane();
-		clientes_scrollPane.setBounds(10, 43, 706, 261);
+		clientes_scrollPane.setBounds(10, 43, 674, 418);
 		getContentPane().add(clientes_scrollPane);
 
 		modelClientes = new DefaultTableModel(null, nombreColumnas) {

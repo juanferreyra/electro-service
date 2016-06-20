@@ -9,29 +9,27 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
-import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JCheckBox;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import java.awt.Font;
 
 public class VentanaReparacion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JComboBox<String> componente_ComboBox;
-	private JButton incrementoCantComponente_btn;
-	private JButton decrementoCantComponente_btn;
 	private JButton agregarComponente_btn;
 	private JButton eliminarComponente_btn;
 	private JTextArea descripcionFinal_jTextArea;
 	private JButton enviarAvisoReparacion_btn;
 	private JButton cancelar_btn;
 	private JButton finalizar_btn;
-	private JLabel cantidad_lbl;
 	private JTable componentes_table;
 	private JLabel fechaIngreso_lbl;
 	private JLabel nombreProductoTexto_lbl;
@@ -39,9 +37,12 @@ public class VentanaReparacion extends JFrame {
 	private JLabel marcaTexto_lbl;
 	private JTextArea descripcionFalla_txtArea;
 	private String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario", "Precio Total" };
-	private JCheckBox reparable_CheckBox;
 	private JLabel lblMontoPresupuestado;
 	private JLabel lblMontoEnvio;
+	private JSpinner spinner;
+	private JButton btnReparado;
+	private JButton btnIrreparado;
+	private JLabel mensajeEstadoReparacion;
 
 	public VentanaReparacion() {
 
@@ -53,7 +54,7 @@ public class VentanaReparacion extends JFrame {
 		contentPane.setLayout(null);
 
 		fechaIngreso_lbl = new JLabel("");
-		fechaIngreso_lbl.setBounds(505, 11, 166, 14);
+		fechaIngreso_lbl.setBounds(522, 11, 166, 14);
 		contentPane.add(fechaIngreso_lbl);
 
 		JLabel fechaIngresoText_lbl = new JLabel("");
@@ -61,28 +62,36 @@ public class VentanaReparacion extends JFrame {
 		contentPane.add(fechaIngresoText_lbl);
 
 		JLabel titulo_lbl = new JLabel("<html><i>DETALLE DE REPARACION</i></html>");
+		titulo_lbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		titulo_lbl.setBounds(30, 11, 495, 14);
 		contentPane.add(titulo_lbl);
 
 		JSeparator separator = new JSeparator();
-		separator.setBounds(30, 36, 658, 21);
+		separator.setBounds(30, 36, 658, 14);
 		separator.setForeground(Color.BLUE);
 		contentPane.add(separator);
 
 		nombreProductoTexto_lbl = new JLabel("");
+		nombreProductoTexto_lbl.setForeground(new Color(105, 105, 105));
+		nombreProductoTexto_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		nombreProductoTexto_lbl.setHorizontalTextPosition(SwingConstants.LEFT);
 		nombreProductoTexto_lbl.setBounds(30, 42, 445, 21);
 		contentPane.add(nombreProductoTexto_lbl);
 
 		marcaTexto_lbl = new JLabel("");
+		marcaTexto_lbl.setForeground(new Color(105, 105, 105));
+		marcaTexto_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		marcaTexto_lbl.setBounds(30, 68, 184, 14);
 		contentPane.add(marcaTexto_lbl);
 
 		tipoTexto_lbl = new JLabel("");
+		tipoTexto_lbl.setForeground(new Color(105, 105, 105));
+		tipoTexto_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		tipoTexto_lbl.setBounds(280, 68, 219, 14);
 		contentPane.add(tipoTexto_lbl);
 
 		JLabel descripcionFalla_lbl = new JLabel("<html><i>Descripci\u00F3n falla:</i></html>");
+		descripcionFalla_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		descripcionFalla_lbl.setBounds(30, 101, 146, 14);
 		contentPane.add(descripcionFalla_lbl);
 
@@ -107,37 +116,21 @@ public class VentanaReparacion extends JFrame {
 		contentPane.add(separator_2);
 
 		JLabel componentesUtilizados_lbl = new JLabel("Componentes utilizados:");
-		componentesUtilizados_lbl.setBounds(30, 218, 193, 14);
+		componentesUtilizados_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		componentesUtilizados_lbl.setBounds(30, 210, 193, 22);
 		contentPane.add(componentesUtilizados_lbl);
 
 		componente_ComboBox = new JComboBox<String>();
-		componente_ComboBox.setBounds(191, 215, 146, 20);
+		componente_ComboBox.setBounds(191, 206, 146, 26);
 		contentPane.add(componente_ComboBox);
 
-		incrementoCantComponente_btn = new JButton("");
-		incrementoCantComponente_btn.setBounds(407, 212, 33, 23);
-		incrementoCantComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/plus-outline.png")));
-		contentPane.add(incrementoCantComponente_btn);
-
-		decrementoCantComponente_btn = new JButton("");
-		decrementoCantComponente_btn.setBounds(490, 212, 33, 23);
-		decrementoCantComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/minus-outline.png")));
-		contentPane.add(decrementoCantComponente_btn);
-
-		cantidad_lbl = new JLabel("1");
-		cantidad_lbl.setBounds(449, 213, 33, 20);
-		cantidad_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		cantidad_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		cantidad_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255)));
-		contentPane.add(cantidad_lbl);
-
 		agregarComponente_btn = new JButton("");
-		agregarComponente_btn.setBounds(533, 212, 33, 23);
+		agregarComponente_btn.setBounds(386, 206, 33, 26);
 		agregarComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/tick-outline.png")));
 		contentPane.add(agregarComponente_btn);
 
 		eliminarComponente_btn = new JButton("");
-		eliminarComponente_btn.setBounds(574, 212, 33, 23);
+		eliminarComponente_btn.setBounds(429, 206, 33, 26);
 		eliminarComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/times-outline.png")));
 		contentPane.add(eliminarComponente_btn);
 
@@ -157,9 +150,10 @@ public class VentanaReparacion extends JFrame {
 		componentes_scrollPane.setViewportView(componentes_table);
 
 		JLabel descripcionFinal_lbl = new JLabel("Descripcion final:");
+		descripcionFinal_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		descripcionFinal_lbl.setBounds(30, 473, 156, 14);
 		contentPane.add(descripcionFinal_lbl);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(30, 502, 651, 49);
 		contentPane.add(scrollPane);
@@ -183,25 +177,43 @@ public class VentanaReparacion extends JFrame {
 		lblFecha.setBounds(435, 10, 70, 15);
 		contentPane.add(lblFecha);
 
-		reparable_CheckBox = new JCheckBox("Reparable");
-		reparable_CheckBox.setBounds(591, 40, 97, 23);
-		contentPane.add(reparable_CheckBox);
-		
 		lblMontoPresupuestado = new JLabel("");
 		lblMontoPresupuestado.setBounds(208, 440, 146, 15);
 		contentPane.add(lblMontoPresupuestado);
-		
+
 		lblMontoEnvio = new JLabel("");
-		lblMontoEnvio.setBounds(422, 440, 146, 15);
+		lblMontoEnvio.setBounds(455, 440, 146, 15);
 		contentPane.add(lblMontoEnvio);
-		
+
 		JLabel lblMontoEnvio_1 = new JLabel("Monto Envio: $ ");
-		lblMontoEnvio_1.setBounds(311, 440, 117, 15);
+		lblMontoEnvio_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblMontoEnvio_1.setBounds(345, 440, 117, 15);
 		contentPane.add(lblMontoEnvio_1);
-		
+
 		JLabel lblMontoPresupuesto = new JLabel("Monto Presupuesto : $");
+		lblMontoPresupuesto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblMontoPresupuesto.setBounds(30, 440, 166, 15);
 		contentPane.add(lblMontoPresupuesto);
+
+		spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spinner.setBounds(347, 206, 29, 26);
+		contentPane.add(spinner);
+
+		btnReparado = new JButton("Reparado");
+		btnReparado.setForeground(new Color(46, 139, 87));
+		btnReparado.setBounds(470, 40, 102, 23);
+		contentPane.add(btnReparado);
+
+		btnIrreparado = new JButton("Irreparado");
+		btnIrreparado.setForeground(Color.RED);
+		btnIrreparado.setBounds(582, 40, 106, 23);
+		contentPane.add(btnIrreparado);
+
+		mensajeEstadoReparacion = new JLabel("");
+		mensajeEstadoReparacion.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		mensajeEstadoReparacion.setBounds(208, 11, 317, 14);
+		contentPane.add(mensajeEstadoReparacion);
 	}
 
 	public JButton getEnviarAvisoReparacion_btn() {
@@ -256,18 +268,6 @@ public class VentanaReparacion extends JFrame {
 		this.descripcionFalla_txtArea = descripcionFalla_txtArea;
 	}
 
-	public JButton getIncrementoCantComponente_btn() {
-		return incrementoCantComponente_btn;
-	}
-
-	public JLabel getCantidad_lbl() {
-		return cantidad_lbl;
-	}
-
-	public JButton getDecrementoCantComponente_btn() {
-		return decrementoCantComponente_btn;
-	}
-
 	public JButton getAgregarComponente_btn() {
 		return agregarComponente_btn;
 	}
@@ -296,14 +296,6 @@ public class VentanaReparacion extends JFrame {
 		this.descripcionFinal_jTextArea.setText(descripcionFinal);
 	}
 
-	public JCheckBox getReparable_CheckBox() {
-		return reparable_CheckBox;
-	}
-
-	public void setReparable_CheckBox(JCheckBox reparable_CheckBox) {
-		this.reparable_CheckBox = reparable_CheckBox;
-	}
-
 	public JLabel getLblMontoPresupuestado() {
 		return lblMontoPresupuestado;
 	}
@@ -311,4 +303,37 @@ public class VentanaReparacion extends JFrame {
 	public JLabel getLblMontoEnvio() {
 		return lblMontoEnvio;
 	}
+
+	public JSpinner getSpinner() {
+		return spinner;
+	}
+
+	public void setSpinner(JSpinner spinner) {
+		this.spinner = spinner;
+	}
+
+	public JButton getBtnReparado() {
+		return btnReparado;
+	}
+
+	public void setBtnReparado(JButton btnReparado) {
+		this.btnReparado = btnReparado;
+	}
+
+	public JButton getBtnIrreparado() {
+		return btnIrreparado;
+	}
+
+	public void setBtnIrreparado(JButton btnIrreparado) {
+		this.btnIrreparado = btnIrreparado;
+	}
+
+	public JLabel getMensajeEstadoReparacion() {
+		return mensajeEstadoReparacion;
+	}
+
+	public void setMensajeEstadoReparacion(JLabel mensajeEstadoReparacion) {
+		this.mensajeEstadoReparacion = mensajeEstadoReparacion;
+	}
+
 }

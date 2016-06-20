@@ -62,7 +62,7 @@ public class ControladorPresupuesto implements ActionListener {
 	public void inicializar() {
 
 		Calendar hoy = new GregorianCalendar();
-		ventanaPresupuesto.getFechaIngreso_lbl().setText("Fecha: " + hoy.get(Calendar.DAY_OF_MONTH) + " / "
+		ventanaPresupuesto.getFechaIngreso_lbl().setText( hoy.get(Calendar.DAY_OF_MONTH) + " / "
 				+ hoy.get(Calendar.MONTH) + " / " + hoy.get(Calendar.YEAR));
 		ventanaPresupuesto.setVisible(true);
 		ventanaPresupuesto.getComponentes_table().setModel(modelTable);
@@ -429,8 +429,24 @@ public class ControladorPresupuesto implements ActionListener {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	private void actualizarTablaRepuestos() {
-		modelTable = new DefaultTableModel();
+
+		String[] componentes_nombreColumnas = { "id", "Detalle", "Cantidad", "Precio Unitario", "Precio Total" };
+		modelTable = new DefaultTableModel(new Object[][] {}, componentes_nombreColumnas) {
+			@SuppressWarnings("rawtypes")
+			Class[] columnTypes = new Class[] { String.class, String.class, String.class, String.class, String.class };
+
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+
+			@Override
+			public boolean isCellEditable(int fila, int columna) {
+				return false;
+			}
+		};
 		modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
 
 		List<ItemRepuestoDTO> repuestosAgregados = presupuesto.getListaDeRepuestos();
@@ -553,7 +569,7 @@ public class ControladorPresupuesto implements ActionListener {
 		this.ventanaPresupuesto.getDescripcionBreve_jTextArea().setEditable(false);
 		this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().setEditable(false);
 		this.ventanaPresupuesto.getDescripcionFalla_txtArea().setEditable(false);
-		this.ventanaPresupuesto.getSpinner().setEnabled(false);
+		this.ventanaPresupuesto.getSpinner().setVisible(false);
 		this.ventanaPresupuesto.getAgregarComponente_btn().setVisible(false);
 		this.ventanaPresupuesto.getHorasDeTrabajo_txf().setEditable(false);
 		this.ventanaPresupuesto.getManoDeObra_txf().setEditable(false);
