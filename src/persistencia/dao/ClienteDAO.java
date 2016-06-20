@@ -14,7 +14,7 @@ public class ClienteDAO {
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, now(), ?, true);";
 	
 	private static final String delete = "UPDATE cliente SET habilitado=false WHERE id= ?;";
-	private static final String readall = "SELECT * FROM cliente WHERE habilitado=true";
+	private static final String readall = "SELECT * FROM cliente WHERE habilitado=true ORDER BY id DESC";
 	private static final String find = "SELECT * FROM cliente WHERE habilitado=true AND id=?";
 	private static final String find2 = "SELECT * FROM cliente WHERE habilitado=true AND nrodoc=?";
 	private static final String update =" UPDATE cliente SET nrodoc = ?, nombre = ?, apellido = ?, localidad = ?,"
