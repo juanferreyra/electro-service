@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-forms-1.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="lib/jicons.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
