@@ -9,9 +9,11 @@ import javax.swing.JOptionPane;
 import dto.ReporteFinancieroActivosDTO;
 import dto.ReporteFinancieroPasivosDTO;
 import dto.ReporteMarcaTipoDTO;
+import dto.ReporteRepuestosInsumidosDTO;
 import modelo.SelectorFechaReporte;
 import presentacion.reportes.ReporteFinanciero;
 import presentacion.reportes.ReporteMarcaTipo;
+import presentacion.reportes.ReporteRepuestosInsumidos;
 import presentacion.vista.VentanaSelectorFechasReporte;
 
 public class ControladorSelectorFechasReporte  implements ActionListener {
@@ -201,7 +203,11 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 				} else if(this.tipoReporte == 3){
 					
 					//TODO: repuestos mas utilizados
+					ArrayList<ReporteRepuestosInsumidosDTO> utilizadosAl10 = this.modelReporte.getMasInsumidos10();
+					ArrayList<ReporteRepuestosInsumidosDTO> utilizadosAl20 = this.modelReporte.getMasInsumidos20();
 					
+					ReporteRepuestosInsumidos reporte = new ReporteRepuestosInsumidos(utilizadosAl10, this.modelReporte.fechasToString(),utilizadosAl20);
+					reporte.mostrar();
 				}
 				
 				this.ventanaSelectorReportes.dispose();
