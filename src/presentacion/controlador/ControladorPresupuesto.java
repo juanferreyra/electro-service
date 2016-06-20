@@ -553,9 +553,7 @@ public class ControladorPresupuesto implements ActionListener {
 		this.ventanaPresupuesto.getDescripcionBreve_jTextArea().setEditable(false);
 		this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().setEditable(false);
 		this.ventanaPresupuesto.getDescripcionFalla_txtArea().setEditable(false);
-		this.ventanaPresupuesto.getIncrementoCantComponente_btn().setVisible(false);
-		this.ventanaPresupuesto.getCantidad_lbl().setVisible(false);
-		this.ventanaPresupuesto.getDecrementoCantComponente_btn().setVisible(false);
+		this.ventanaPresupuesto.getSpinner().setEnabled(false);
 		this.ventanaPresupuesto.getAgregarComponente_btn().setVisible(false);
 		this.ventanaPresupuesto.getHorasDeTrabajo_txf().setEditable(false);
 		this.ventanaPresupuesto.getManoDeObra_txf().setEditable(false);
