@@ -54,6 +54,7 @@ public class VentanaPresupuesto extends JFrame {
 	private JButton btnAceptado;
 	private JButton btnInformado;
 	private JButton btnRechazado;
+	private JButton entregado_btn;
 
 	public VentanaPresupuesto() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresupuesto.class.getResource("/calculator.png")));
@@ -72,7 +73,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(fechaIngreso_lbl);
 
 		JLabel fechaIngresoText_lbl = new JLabel("");
-		fechaIngresoText_lbl.setBounds(586, 11, 102, 14);
+		fechaIngresoText_lbl.setBounds(574, 34, 102, 14);
 		contentPane.add(fechaIngresoText_lbl);
 
 		JLabel titulo_lbl = new JLabel("<html><i>PRESUPUESTO</i></html>");
@@ -285,22 +286,26 @@ public class VentanaPresupuesto extends JFrame {
 		lbltecnico = new JLabel("");
 		lbltecnico.setBounds(162, 191, 214, 15);
 		contentPane.add(lbltecnico);
-		
+
 		btnAsignar = new JButton("Asignar");
 		btnAsignar.setBounds(299, 2, 115, 23);
 		contentPane.add(btnAsignar);
-		
+
 		btnAceptado = new JButton("Aceptado");
 		btnAceptado.setBounds(179, 2, 116, 23);
 		contentPane.add(btnAceptado);
-		
+
 		btnInformado = new JButton("Informado");
 		btnInformado.setBounds(60, 2, 116, 23);
 		contentPane.add(btnInformado);
-		
+
 		btnRechazado = new JButton("Rechazado");
 		btnRechazado.setBounds(418, 2, 115, 23);
 		contentPane.add(btnRechazado);
+
+		entregado_btn = new JButton("Entregado");
+		entregado_btn.setBounds(536, 2, 115, 23);
+		contentPane.add(entregado_btn);
 	}
 
 	public JLabel getCantidad_lbl() {
@@ -406,7 +411,7 @@ public class VentanaPresupuesto extends JFrame {
 	public void setLbltecnico(JLabel lbltecnico) {
 		this.lbltecnico = lbltecnico;
 	}
-	
+
 	public JButton getBtnAsignar() {
 		return btnAsignar;
 	}
@@ -418,9 +423,17 @@ public class VentanaPresupuesto extends JFrame {
 	public JButton getBtnInformado() {
 		return btnInformado;
 	}
-	
+
 	public JButton getBtnRechazado() {
 		return btnRechazado;
+	}
+
+	public JButton getEntregado_btn() {
+		return entregado_btn;
+	}
+
+	public void setEntregado_btn(JButton entregado_btn) {
+		this.entregado_btn = entregado_btn;
 	}
 
 }

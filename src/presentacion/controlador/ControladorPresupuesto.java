@@ -10,7 +10,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
-import dto.IngresoDTO;
 import dto.IngresoLogDTO;
 import dto.ItemRepuestoDTO;
 import dto.UsuarioDTO;
@@ -56,6 +55,7 @@ public class ControladorPresupuesto implements ActionListener {
 		this.ventanaPresupuesto.getBtnAceptado().addActionListener(this);
 		this.ventanaPresupuesto.getBtnAsignar().addActionListener(this);
 		this.ventanaPresupuesto.getBtnRechazado().addActionListener(this);
+		this.ventanaPresupuesto.getEntregado_btn().addActionListener(this);
 		this.usuarioDAO = new UsuarioDAO();
 	}
 
@@ -92,13 +92,28 @@ public class ControladorPresupuesto implements ActionListener {
 					/* TECNICO */ || this.usuarioLogueado.getIdperfil() == 1/* JEFE */)) {
 				mostrarBotonAsignar();
 			}
+			if ((this.ingreso.getIngreso().getEstado() == 7 || this.ingreso.getIngreso().getEstado() == 8)
+					&& (this.usuarioLogueado.getIdperfil() == 2
+							/* ADMINISTRATIVO */ || this.usuarioLogueado.getIdperfil() == 1/* JEFE */)
+					&& this.ingreso.getIngreso()
+							.getEnvio() == false) /*
+													 * Si esta en estado
+													 * reparado o irreparado, si
+													 * posee perfil
+													 * administrativo o jefe, y
+													 * no posee envio.
+													 */
+			{
+				mostrarBotonEntregado();
+			}
 		}
+
 	}
 
 	private void cargarIngreso() {
 		ventanaPresupuesto.getNombreProductoTexto_lbl().setText(ingreso.ingr.getDescripcion());
 		ventanaPresupuesto.getMarcaTexto_lbl().setText(ingreso.getMarca().getDetalle());
-		;
+
 		ventanaPresupuesto.getDescripcionFalla_txtArea().setText(ingreso.getIngreso().getDescripcion_falla());
 		ventanaPresupuesto.getTipoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
 	}
@@ -259,9 +274,27 @@ public class ControladorPresupuesto implements ActionListener {
 			} else if (response == JOptionPane.CLOSED_OPTION) {
 
 			}
+		} else if (e.getSource() == this.ventanaPresupuesto.getEntregado_btn()) {
+
+			int response = JOptionPane.showConfirmDialog(null,
+					"Ud. va a dar el presupuesto como entregado al cliente. ¿Esta seguro?", "Confirmar",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (response == JOptionPane.YES_OPTION) {
+				IngresoLogDTO ingrLog = new IngresoLogDTO(0, this.ingreso.getId(), 11, null, usuarioLogueado.getId());
+				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
+				// ingreso el estado
+				ingresoLogDAO.insert(ingrLog);
+
+				ocultarBotonesEstados();
+				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
+			} else if (response == JOptionPane.CLOSED_OPTION) {
+
+			}
+
 		} else if (e.getSource() == this.ventanaPresupuesto.getBtnAsignar()) {
 			int response = JOptionPane.showConfirmDialog(null,
-					"Esta seguro que desea asignarse esta tarea para realizarla?", "Confirmar",
+					"¿Esta seguro que desea asignarse esta tarea para realizarla?", "Confirmar",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (response == JOptionPane.NO_OPTION) {
 
@@ -516,6 +549,15 @@ public class ControladorPresupuesto implements ActionListener {
 		ventanaPresupuesto.getBtnAceptado().setVisible(false);
 		ventanaPresupuesto.getBtnAsignar().setVisible(false);
 		ventanaPresupuesto.getBtnRechazado().setVisible(false);
+		ventanaPresupuesto.getEntregado_btn().setVisible(false);
+	}
+
+	private void mostrarBotonEntregado() {
+		ventanaPresupuesto.getBtnInformado().setVisible(false);
+		ventanaPresupuesto.getBtnAceptado().setVisible(false);
+		ventanaPresupuesto.getBtnAsignar().setVisible(false);
+		ventanaPresupuesto.getBtnRechazado().setVisible(false);
+		ventanaPresupuesto.getEntregado_btn().setVisible(true);
 	}
 
 	private void bloquearCampos() {
