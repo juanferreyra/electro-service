@@ -8,13 +8,16 @@ import java.util.GregorianCalendar;
 import dto.ReporteFinancieroActivosDTO;
 import dto.ReporteFinancieroPasivosDTO;
 import dto.ReporteMarcaTipoDTO;
+import dto.ReporteRepuestosInsumidosDTO;
 import persistencia.dao.ReporteFinancieroDAO;
 import persistencia.dao.ReporteMarcaTipoDAO;
+import persistencia.dao.ReporteRepuestosInsumidosDAO;
 
 public class SelectorFechaReporte {
 	
 	private static ReporteFinancieroDAO financieroDAO;
 	private static ReporteMarcaTipoDAO marcaTipoDAO;
+	private static ReporteRepuestosInsumidosDAO repuestosInsumidosDAO;
 	private Date inicio;
 	private Date fin;
 	private String tipoDeFiltro;
@@ -52,6 +55,16 @@ public class SelectorFechaReporte {
 		} else {
 			return this.getPorMarcaTipoProducto20();
 		}
+	}
+	
+	public ArrayList<ReporteRepuestosInsumidosDTO> getMasInsumidos10() {
+		repuestosInsumidosDAO = new ReporteRepuestosInsumidosDAO();
+		return repuestosInsumidosDAO.insumosAl10(this.inicio, this.fin);
+	}
+	
+	public ArrayList<ReporteRepuestosInsumidosDTO> getMasInsumidos20() {
+		repuestosInsumidosDAO = new ReporteRepuestosInsumidosDAO();
+		return repuestosInsumidosDAO.insumosAl20(this.inicio, this.fin);
 	}
 	
 	public ArrayList<ReporteMarcaTipoDTO> getPorTipoProducto10() {
