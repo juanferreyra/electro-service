@@ -19,7 +19,12 @@ import javax.swing.SwingConstants;
 import java.awt.Rectangle;
 import java.awt.SystemColor;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerModel;
+
 import java.awt.Toolkit;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeListener;
+import javax.swing.JSpinner;
 
 public class VentanaPresupuesto extends JFrame {
 
@@ -55,12 +60,14 @@ public class VentanaPresupuesto extends JFrame {
 	private JButton btnInformado;
 	private JButton btnRechazado;
 	private JButton entregado_btn;
+	private JSeparator separator_1;
+	private JSpinner spinner;
 
 	public VentanaPresupuesto() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresupuesto.class.getResource("/calculator.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresupuesto.class.getResource("/logo.png")));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 745, 700);
+		setBounds(100, 100, 745, 724);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
@@ -77,6 +84,7 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(fechaIngresoText_lbl);
 
 		JLabel titulo_lbl = new JLabel("<html><i>PRESUPUESTO</i></html>");
+		titulo_lbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 		titulo_lbl.setBounds(30, 34, 332, 14);
 		contentPane.add(titulo_lbl);
 
@@ -90,7 +98,8 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(nombreProducto_lbl);
 
 		nombreProductoTexto_lbl = new JLabel("");
-		nombreProductoTexto_lbl.setBounds(179, 54, 389, 26);
+		nombreProductoTexto_lbl.setForeground(new Color(105, 105, 105));
+		nombreProductoTexto_lbl.setBounds(146, 54, 389, 26);
 		contentPane.add(nombreProductoTexto_lbl);
 
 		JLabel marca_lbl = new JLabel("<html><i>Marca:</i></html>");
@@ -98,15 +107,17 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(marca_lbl);
 
 		marcaTexto_lbl = new JLabel("");
-		marcaTexto_lbl.setBounds(123, 82, 184, 26);
+		marcaTexto_lbl.setForeground(new Color(105, 105, 105));
+		marcaTexto_lbl.setBounds(80, 82, 184, 26);
 		contentPane.add(marcaTexto_lbl);
 
 		JLabel tipo_lbl = new JLabel("<html><i>Tipo:</i></html>");
-		tipo_lbl.setBounds(317, 82, 116, 26);
+		tipo_lbl.setBounds(287, 82, 116, 26);
 		contentPane.add(tipo_lbl);
 
 		tipoTexto_lbl = new JLabel("");
-		tipoTexto_lbl.setBounds(402, 82, 184, 26);
+		tipoTexto_lbl.setForeground(new Color(105, 105, 105));
+		tipoTexto_lbl.setBounds(329, 82, 184, 26);
 		contentPane.add(tipoTexto_lbl);
 
 		JLabel descripcionFalla_lbl = new JLabel("<html><i>Descripci\u00F3n falla:</i></html>");
@@ -120,6 +131,7 @@ public class VentanaPresupuesto extends JFrame {
 				.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		descripcionFalla_txtArea = new JTextArea();
+		descripcionFalla_txtArea.setForeground(new Color(105, 105, 105));
 		descripcionFalla_txtArea.setEditable(false);
 		descripcionFalla_txtArea.setRows(5);
 		descripcionFalla_txtArea.setColumns(20);
@@ -132,39 +144,44 @@ public class VentanaPresupuesto extends JFrame {
 		separator_2.setForeground(Color.BLUE);
 		contentPane.add(separator_2);
 
-		JLabel lblTecnico = new JLabel("Tecnico Asignado:");
-		lblTecnico.setBounds(40, 192, 116, 14);
+		JLabel lblTecnico = new JLabel("T\u00E9cnico Asignado:");
+		lblTecnico.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTecnico.setBounds(30, 190, 116, 26);
 		contentPane.add(lblTecnico);
 
 		JLabel horasDeTrabajo_lbl = new JLabel("Horas de trabajo:");
-		horasDeTrabajo_lbl.setBounds(30, 551, 112, 14);
+		horasDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		horasDeTrabajo_lbl.setBounds(30, 551, 112, 17);
 		contentPane.add(horasDeTrabajo_lbl);
 
 		horasDeTrabajo_txf = new JTextField();
-		horasDeTrabajo_txf.setBounds(146, 548, 86, 20);
+		horasDeTrabajo_txf.setBounds(146, 549, 86, 20);
 		contentPane.add(horasDeTrabajo_txf);
 		horasDeTrabajo_txf.setColumns(10);
 
 		JLabel manoDeObra_lbl = new JLabel("Mano de Obra:");
-		manoDeObra_lbl.setBounds(250, 550, 118, 14);
+		manoDeObra_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		manoDeObra_lbl.setBounds(250, 550, 118, 18);
 		contentPane.add(manoDeObra_lbl);
 
 		manoDeObra_txf = new JTextField();
 
-		manoDeObra_txf.setBounds(370, 548, 86, 20);
+		manoDeObra_txf.setBounds(347, 549, 86, 20);
 		manoDeObra_txf.setColumns(10);
 		contentPane.add(manoDeObra_txf);
 
 		JLabel vencimiento_lbl = new JLabel("Vencimiento:");
-		vencimiento_lbl.setBounds(479, 550, 102, 14);
+		vencimiento_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		vencimiento_lbl.setBounds(450, 549, 102, 20);
 		contentPane.add(vencimiento_lbl);
 
 		vencimiento_Calendario = new JDateChooser();
-		vencimiento_Calendario.setBounds(574, 548, 129, 20);
+		vencimiento_Calendario.setBounds(539, 549, 129, 20);
 		contentPane.add(vencimiento_Calendario);
 
 		JLabel componentesAUtilizar_lbl = new JLabel("Componentes a utilizar:");
-		componentesAUtilizar_lbl.setBounds(30, 221, 193, 14);
+		componentesAUtilizar_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		componentesAUtilizar_lbl.setBounds(30, 221, 193, 17);
 		contentPane.add(componentesAUtilizar_lbl);
 
 		componente_ComboBox = new JComboBox<String>();
@@ -172,29 +189,29 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(componente_ComboBox);
 
 		incrementoCantComponente_btn = new JButton("");
-		incrementoCantComponente_btn.setBounds(360, 217, 33, 23);
+		incrementoCantComponente_btn.setBounds(310, 375, 33, 23);
 		incrementoCantComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/plus-outline.png")));
 		contentPane.add(incrementoCantComponente_btn);
 
 		decrementoCantComponente_btn = new JButton("");
-		decrementoCantComponente_btn.setBounds(443, 217, 33, 23);
+		decrementoCantComponente_btn.setBounds(393, 375, 33, 23);
 		decrementoCantComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/minus-outline.png")));
 		contentPane.add(decrementoCantComponente_btn);
 
 		cantidad_lbl = new JLabel("1");
-		cantidad_lbl.setBounds(402, 218, 33, 20);
+		cantidad_lbl.setBounds(352, 376, 33, 20);
 		cantidad_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		cantidad_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		cantidad_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255)));
 		contentPane.add(cantidad_lbl);
 
 		agregarComponente_btn = new JButton("");
-		agregarComponente_btn.setBounds(486, 217, 33, 23);
+		agregarComponente_btn.setBounds(393, 215, 29, 26);
 		agregarComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/tick-outline.png")));
 		contentPane.add(agregarComponente_btn);
 
 		eliminarComponente_btn = new JButton("");
-		eliminarComponente_btn.setBounds(527, 217, 33, 23);
+		eliminarComponente_btn.setBounds(432, 215, 29, 26);
 		eliminarComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/times-outline.png")));
 		contentPane.add(eliminarComponente_btn);
 
@@ -212,71 +229,72 @@ public class VentanaPresupuesto extends JFrame {
 		componentes_table = new JTable(componentes_informacionTabla, componentes_nombreColumnas);
 		// componentes_table.setEnabled(false);
 		componentes_scrollPane.setViewportView(componentes_table);
-
-		JLabel descripcionBreve_lbl = new JLabel("Descripcion breve:");
-		descripcionBreve_lbl.setBounds(47, 397, 156, 14);
-		contentPane.add(descripcionBreve_lbl);
 		JScrollPane descripcionBreve_jScrollPane = new JScrollPane();
+		descripcionBreve_jScrollPane.setBorder(
+				new TitledBorder(null, "Descripci\u00F3n Breve", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		descripcionBreve_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		descripcionBreve_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionBreve_jScrollPane.setBounds(new Rectangle(10, 10, 30, 30));
-		descripcionBreve_jScrollPane.setBounds(30, 422, 291, 111);
+		descripcionBreve_jScrollPane.setBounds(30, 422, 332, 111);
 		contentPane.add(descripcionBreve_jScrollPane);
 		descripcionBreve_jTextArea = new JTextArea();
 		descripcionBreve_jTextArea.setLineWrap(true);
 		descripcionBreve_jScrollPane.setViewportView(descripcionBreve_jTextArea);
-
-		JLabel descripcionTecnica_lbl = new JLabel();
-		descripcionTecnica_lbl.setText("Descripci\u00F3n t\u00E9cnica:");
-		descripcionTecnica_lbl.setBounds(412, 397, 291, 14);
-		contentPane.add(descripcionTecnica_lbl);
 		JScrollPane descripcionTecnica_jScrollPane = new JScrollPane();
+		descripcionTecnica_jScrollPane.setBorder(new TitledBorder(null, "Descripci\u00F3n T\u00E9cnica",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		descripcionTecnica_jScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		descripcionTecnica_jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		descripcionTecnica_jScrollPane.setBounds(394, 422, 300, 111);
+		descripcionTecnica_jScrollPane.setBounds(372, 422, 322, 111);
 		contentPane.add(descripcionTecnica_jScrollPane);
 		descripcionTecnica_jTextArea = new JTextArea();
 		descripcionTecnica_jTextArea.setLineWrap(true);
 		descripcionTecnica_jScrollPane.setViewportView(descripcionTecnica_jTextArea);
 
 		JLabel valorPresupuestado_lbl = new JLabel();
-		valorPresupuestado_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		valorPresupuestado_lbl.setText("Valor Presupuestado:");
-		valorPresupuestado_lbl.setBounds(30, 578, 196, 20);
+		valorPresupuestado_lbl.setForeground(new Color(70, 130, 180));
+		valorPresupuestado_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		valorPresupuestado_lbl.setText("$");
+		valorPresupuestado_lbl.setBounds(287, 594, 86, 24);
 		contentPane.add(valorPresupuestado_lbl);
 		valorPresupuestado_txf = new JTextField();
+		valorPresupuestado_txf.setHorizontalAlignment(SwingConstants.CENTER);
+		valorPresupuestado_txf.setForeground(new Color(70, 130, 180));
 		valorPresupuestado_txf.setBackground(SystemColor.text);
-		valorPresupuestado_txf.setBounds(222, 579, 146, 23);
+		valorPresupuestado_txf.setBounds(310, 597, 116, 23);
 		contentPane.add(valorPresupuestado_txf);
 
 		enviarPresupuesto_btn = new JButton("Enviar presupuesto");
 		enviarPresupuesto_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/mail.png")));
-		enviarPresupuesto_btn.setBounds(30, 615, 212, 23);
+		enviarPresupuesto_btn.setBounds(10, 652, 178, 23);
 		contentPane.add(enviarPresupuesto_btn);
 
 		cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(582, 615, 117, 23);
+		cancelar_btn.setBounds(602, 652, 117, 23);
 		contentPane.add(cancelar_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(438, 615, 118, 23);
+		guardar_btn.setBounds(468, 652, 118, 23);
 		contentPane.add(guardar_btn);
 
 		Total_lbl = new JLabel("");
 		Total_lbl.setBorder(new LineBorder(new Color(0, 0, 0)));
-		Total_lbl.setBounds(576, 371, 112, 20);
+		Total_lbl.setBounds(133, 375, 112, 20);
 		contentPane.add(Total_lbl);
 
 		JLabel lblTotalRepuestos = new JLabel("Total repuestos:");
-		lblTotalRepuestos.setBounds(443, 371, 127, 15);
+		lblTotalRepuestos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTotalRepuestos.setBounds(30, 375, 127, 20);
 		contentPane.add(lblTotalRepuestos);
 
 		JLabel lblEstado = new JLabel("Estado:");
-		lblEstado.setBounds(402, 192, 145, 15);
+		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEstado.setBounds(468, 196, 145, 15);
 		contentPane.add(lblEstado);
 
 		estado_lb = new JLabel("");
-		estado_lb.setBounds(465, 192, 116, 15);
+		estado_lb.setForeground(new Color(105, 105, 105));
+		estado_lb.setBounds(522, 196, 116, 15);
 		contentPane.add(estado_lb);
 
 		JLabel lblFecha = new JLabel("");
@@ -284,28 +302,38 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(lblFecha);
 
 		lbltecnico = new JLabel("");
-		lbltecnico.setBounds(162, 191, 214, 15);
+		lbltecnico.setForeground(new Color(105, 105, 105));
+		lbltecnico.setBounds(146, 196, 214, 15);
 		contentPane.add(lbltecnico);
 
 		btnAsignar = new JButton("Asignar");
-		btnAsignar.setBounds(299, 2, 115, 23);
+		btnAsignar.setBounds(30, 0, 115, 23);
 		contentPane.add(btnAsignar);
 
 		btnAceptado = new JButton("Aceptado");
-		btnAceptado.setBounds(179, 2, 116, 23);
+		btnAceptado.setBounds(30, 0, 116, 23);
 		contentPane.add(btnAceptado);
 
 		btnInformado = new JButton("Informado");
-		btnInformado.setBounds(60, 2, 116, 23);
+		btnInformado.setBounds(30, 0, 116, 23);
 		contentPane.add(btnInformado);
 
 		btnRechazado = new JButton("Rechazado");
-		btnRechazado.setBounds(418, 2, 115, 23);
+		btnRechazado.setBounds(157, 0, 115, 23);
 		contentPane.add(btnRechazado);
 
 		entregado_btn = new JButton("Entregado");
-		entregado_btn.setBounds(536, 2, 115, 23);
+		entregado_btn.setBounds(30, 0, 115, 23);
 		contentPane.add(entregado_btn);
+
+		separator_1 = new JSeparator();
+		separator_1.setForeground(Color.BLUE);
+		separator_1.setBounds(30, 576, 664, 7);
+		contentPane.add(separator_1);
+
+		spinner = new JSpinner();
+		spinner.setBounds(356, 215, 29, 26);
+		contentPane.add(spinner);
 	}
 
 	public JLabel getCantidad_lbl() {
@@ -434,6 +462,14 @@ public class VentanaPresupuesto extends JFrame {
 
 	public void setEntregado_btn(JButton entregado_btn) {
 		this.entregado_btn = entregado_btn;
+	}
+
+	public JSpinner getSpinner() {
+		return spinner;
+	}
+
+	public void setSpinner(JSpinner spinner) {
+		this.spinner = spinner;
 	}
 
 }

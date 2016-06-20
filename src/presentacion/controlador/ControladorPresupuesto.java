@@ -10,12 +10,14 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import dto.RepuestoDTO;
+import dto.EstadoDTO;
 import dto.IngresoLogDTO;
 import dto.ItemRepuestoDTO;
 import dto.UsuarioDTO;
 import modelo.EmailPresupuesto;
 import modelo.Ingreso;
 import modelo.Presupuesto;
+import persistencia.dao.EstadoDAO;
 import persistencia.dao.IngresoDAO;
 import persistencia.dao.IngresoLogDAO;
 import persistencia.dao.UsuarioDAO;
@@ -116,6 +118,12 @@ public class ControladorPresupuesto implements ActionListener {
 
 		ventanaPresupuesto.getDescripcionFalla_txtArea().setText(ingreso.getIngreso().getDescripcion_falla());
 		ventanaPresupuesto.getTipoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
+
+		EstadoDAO estadoDAO = new EstadoDAO();
+
+		EstadoDTO estado = estadoDAO.find(ingreso.getIngreso().getEstado());
+
+		ventanaPresupuesto.getEstado_lb().setText(estado.getDetalle());
 	}
 
 	private void cargarComboComponentes() {
@@ -328,44 +336,38 @@ public class ControladorPresupuesto implements ActionListener {
 
 		if (this.ventanaPresupuesto.getVencimiento_Calendario().getDate() == null) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo FECHA DE VENCIMIENTO no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto,
+					"Por favor, para continuar ingrese una fecha de vencimiento.");
 
 		} else if (this.ventanaPresupuesto.getComponentes_table().getRowCount() == 0) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto,
-					"Campo NO INGRESADO COMPONENTES AL PRESUPUESTO  no puede estar vacio ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Por favor, ingrese los repuestos requeridos.");
 
 		} else if (this.ventanaPresupuesto.getDescripcionBreve_jTextArea().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo CAMPO DESCRIPCION BREVE no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Se requiere una descripci\u00f3n breve para continuar.");
 
 		} else if (this.ventanaPresupuesto.getDescripcionTecnica_jTextArea().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo CAMPO DESCRIPCION TECNICA no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto,
+					"Se requiere una descripci\u00f3n t\u00e9cnica para continuar.");
 
 		} else if (this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto,
+					"Se requieren las horas de trabajo estimadas para continuar.");
 
 		} else if (!soloFloat(this.ventanaPresupuesto.getManoDeObra_txf().getText().toString())) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo PRECIO MANO DE OBRA  admite solo NUMEROS",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "La mano de obra debe ser num\u00e9rico.");
 
 		} else if (this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRBAJO 	no puede estar vacio ",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Se requiere la hora de trabajo para continuar.");
 
 		} else if (!soloNumeros(this.ventanaPresupuesto.getHorasDeTrabajo_txf().getText().toString())) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo HORAS DE TRABAJO  admite solo NUMEROS",
-					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "La hora de trabajo debe ser num\u00e9rica.");
 
 		} else {
 			this.presupuesto.getPresupuesto()
@@ -385,8 +387,7 @@ public class ControladorPresupuesto implements ActionListener {
 			Boolean ingreso = this.presupuesto.guardarPresupuesto(this.usuarioLogueado.getId());
 
 			if (ingreso) {
-				JOptionPane.showMessageDialog(ventanaPresupuesto, "Presupuesto guardado correctamente", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(ventanaPresupuesto, "El presupuesto se ha guardado correctamente.");
 
 				// envia email
 				email = new EmailPresupuesto(this.ingreso, this.usuarioLogueado, this.ventanaPresupuesto);
@@ -395,8 +396,8 @@ public class ControladorPresupuesto implements ActionListener {
 				this.ventanaPresupuesto.dispose();
 				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 			} else {
-				JOptionPane.showMessageDialog(ventanaPresupuesto, "Ocurrio un error al guardar el presupuesto",
-						"Atencion!", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(ventanaPresupuesto,
+						"Ha ocurrido un error al intentar guardar el presupuesto.");
 			}
 		}
 	}
@@ -431,8 +432,7 @@ public class ControladorPresupuesto implements ActionListener {
 
 		if (this.ventanaPresupuesto.getManoDeObra_txf().getText().isEmpty()) {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "Campo MANO DE OBRA no puede estar vacio ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Se requiere la mano de obra para continuar.");
 
 		} else {
 
@@ -480,8 +480,7 @@ public class ControladorPresupuesto implements ActionListener {
 			sumarTotalComponentes();
 		} else {
 
-			JOptionPane.showMessageDialog(ventanaPresupuesto, "debe seleccionar fila para eliminar ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(ventanaPresupuesto, "Por favor, seleccione una fila para eliminar.");
 		}
 	}
 
