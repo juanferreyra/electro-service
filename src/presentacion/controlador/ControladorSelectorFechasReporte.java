@@ -160,11 +160,18 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 				
 				if(this.tipoReporte == 1) {
 					
-					ArrayList<ReporteFinancieroPasivosDTO> a = this.modelReporte.getFinancieroPasivos();
+					ArrayList<ReporteFinancieroPasivosDTO> pasivos = this.modelReporte.getFinancieroPasivos();
+					float totalPasivos = 0;
+					for (int i = 0; i < pasivos.size(); i++) {
+						totalPasivos+=pasivos.get(i).getValor_orden();
+					}
 					
-					ArrayList<ReporteFinancieroActivosDTO> b = this.modelReporte.getFinancieroActivos();
-					
-					ReporteFinanciero reporte = new ReporteFinanciero(a,b);
+					ArrayList<ReporteFinancieroActivosDTO> activos = this.modelReporte.getFinancieroActivos();
+					float totalActivos = 0;
+					for (int a = 0; a < activos.size(); a++) {
+						totalActivos+=activos.get(a).getValor_total();
+					}
+					ReporteFinanciero reporte = new ReporteFinanciero(pasivos, activos, totalPasivos, totalActivos, this.modelReporte.fechasToString());
 					
 					reporte.mostrar();
 					
