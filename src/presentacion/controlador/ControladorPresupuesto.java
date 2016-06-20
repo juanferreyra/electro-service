@@ -45,8 +45,6 @@ public class ControladorPresupuesto implements ActionListener {
 		this.presupuesto = new Presupuesto(ingreso.getIngreso());
 		this.ventanaPresupuesto = ventanaPresupuesto;
 		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
-		this.ventanaPresupuesto.getIncrementoCantComponente_btn().addActionListener(this);
-		this.ventanaPresupuesto.getDecrementoCantComponente_btn().addActionListener(this);
 		this.ventanaPresupuesto.getAgregarComponente_btn().addActionListener(this);
 		this.ventanaPresupuesto.getEliminarComponente_btn().addActionListener(this);
 		this.ventanaPresupuesto.getGuardar_btn().addActionListener(this);
@@ -170,20 +168,8 @@ public class ControladorPresupuesto implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		// suma y resta componentes
-		if (e.getSource() == this.ventanaPresupuesto.getIncrementoCantComponente_btn()) {
-
-			cantidad += 1;
-			this.ventanaPresupuesto.getCantidad_lbl().setText(cantidad.toString());
-
-		} else if (e.getSource() == this.ventanaPresupuesto.getDecrementoCantComponente_btn()) {
-
-			if (cantidad != 1) {
-				cantidad -= 1;
-				this.ventanaPresupuesto.getCantidad_lbl().setText(cantidad.toString());
-			}
-			// agrega a la tabla
-		} else if (e.getSource() == this.ventanaPresupuesto.getAgregarComponente_btn()) {
+		// agrega a la tabla
+		if (e.getSource() == this.ventanaPresupuesto.getAgregarComponente_btn()) {
 
 			agregarRepuestoATabla();
 			ocultarColumnaId();
@@ -489,7 +475,7 @@ public class ControladorPresupuesto implements ActionListener {
 		modelTable.setColumnIdentifiers(ventanaPresupuesto.getComponentes_nombreColumnas());
 		Boolean existe = false;
 		// agrego el repuesto al objeto Presupuesto con su lista
-		int cantidad = Integer.parseInt(ventanaPresupuesto.getCantidad_lbl().getText());
+		int cantidad = (int) ventanaPresupuesto.getSpinner().getValue();
 		RepuestoDTO resp = presupuesto
 				.buscarRepuesto((String) this.ventanaPresupuesto.getComponente_ComboBox().getSelectedItem());
 		ItemRepuestoDTO itemRepuesto = new ItemRepuestoDTO(-1, resp.getId(), resp.getDetalle(), cantidad,
