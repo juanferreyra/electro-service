@@ -25,21 +25,21 @@ public class FormatoTablaOrdenesTrabajo extends DefaultTableCellRenderer {
 
 	private void aplicarColorFilas(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
 		if (String.valueOf(table.getValueAt(row, 8)).equals("NUEVO")) {
-			setBackground(Color.decode("#D8F6CE"));
+			setBackground(Color.decode("#CEF6CE"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("PRESUPUESTADO")) {
-			setBackground(Color.decode("#F6E3CE"));
+			setBackground(Color.decode("#F5F6CE"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("RETIRADO")) {
-			setBackground(Color.decode("#F5A9A9"));
+			setBackground(Color.decode("#F6E3CE"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("REPARADO")) {
 			setBackground(Color.decode("#CEF6F5"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("IRREPARABLE")) {
 			setBackground(Color.decode("#CED8F6"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("INFORMADO")) {
-			setBackground(Color.decode("#F5F6CE"));
+			setBackground(Color.decode("#E3CEF6"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("ACEPTADO")) {
-			setBackground(Color.decode("#CEF6E3"));
+			setBackground(Color.decode("#81F7BE"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("RECHAZADO")) {
-			setBackground(Color.decode("#F6D8CE"));
+			setBackground(Color.decode("#F5BCA9"));
 		}
 
 	}

@@ -34,8 +34,6 @@ public class VentanaPresupuesto extends JFrame {
 	private JTextField manoDeObra_txf;
 	private JDateChooser vencimiento_Calendario;
 	private JComboBox<String> componente_ComboBox;
-	private JButton incrementoCantComponente_btn;
-	private JButton decrementoCantComponente_btn;
 	private JButton agregarComponente_btn;
 	private JButton eliminarComponente_btn;
 	private JTextArea descripcionBreve_jTextArea;
@@ -44,7 +42,6 @@ public class VentanaPresupuesto extends JFrame {
 	private JButton enviarPresupuesto_btn;
 	private JButton cancelar_btn;
 	private JButton guardar_btn;
-	private JLabel cantidad_lbl;
 	private JTable componentes_table;
 	private JLabel fechaIngreso_lbl;
 	private JLabel nombreProductoTexto_lbl;
@@ -75,7 +72,7 @@ public class VentanaPresupuesto extends JFrame {
 		setLocationRelativeTo(null);
 
 		fechaIngreso_lbl = new JLabel("");
-		fechaIngreso_lbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		fechaIngreso_lbl.setHorizontalAlignment(SwingConstants.TRAILING);
 		fechaIngreso_lbl.setBounds(522, 34, 166, 14);
 		contentPane.add(fechaIngreso_lbl);
 
@@ -188,23 +185,6 @@ public class VentanaPresupuesto extends JFrame {
 		componente_ComboBox.setBounds(193, 218, 146, 20);
 		contentPane.add(componente_ComboBox);
 
-		incrementoCantComponente_btn = new JButton("");
-		incrementoCantComponente_btn.setBounds(310, 375, 33, 23);
-		incrementoCantComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/plus-outline.png")));
-		contentPane.add(incrementoCantComponente_btn);
-
-		decrementoCantComponente_btn = new JButton("");
-		decrementoCantComponente_btn.setBounds(393, 375, 33, 23);
-		decrementoCantComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/minus-outline.png")));
-		contentPane.add(decrementoCantComponente_btn);
-
-		cantidad_lbl = new JLabel("1");
-		cantidad_lbl.setBounds(352, 376, 33, 20);
-		cantidad_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		cantidad_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		cantidad_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255)));
-		contentPane.add(cantidad_lbl);
-
 		agregarComponente_btn = new JButton("");
 		agregarComponente_btn.setBounds(393, 215, 29, 26);
 		agregarComponente_btn.setIcon(new ImageIcon(VentanaPresupuesto.class.getResource("/tick-outline.png")));
@@ -289,12 +269,13 @@ public class VentanaPresupuesto extends JFrame {
 
 		JLabel lblEstado = new JLabel("Estado:");
 		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblEstado.setBounds(468, 196, 145, 15);
+		lblEstado.setBounds(539, 8, 124, 15);
 		contentPane.add(lblEstado);
 
 		estado_lb = new JLabel("");
+		estado_lb.setHorizontalAlignment(SwingConstants.TRAILING);
 		estado_lb.setForeground(new Color(105, 105, 105));
-		estado_lb.setBounds(522, 196, 116, 15);
+		estado_lb.setBounds(572, 8, 116, 15);
 		contentPane.add(estado_lb);
 
 		JLabel lblFecha = new JLabel("");
@@ -336,10 +317,6 @@ public class VentanaPresupuesto extends JFrame {
 		contentPane.add(spinner);
 	}
 
-	public JLabel getCantidad_lbl() {
-		return cantidad_lbl;
-	}
-
 	public JTextField getHorasDeTrabajo_txf() {
 		return horasDeTrabajo_txf;
 	}
@@ -354,14 +331,6 @@ public class VentanaPresupuesto extends JFrame {
 
 	public JComboBox<String> getComponente_ComboBox() {
 		return componente_ComboBox;
-	}
-
-	public JButton getIncrementoCantComponente_btn() {
-		return incrementoCantComponente_btn;
-	}
-
-	public JButton getDecrementoCantComponente_btn() {
-		return decrementoCantComponente_btn;
 	}
 
 	public JButton getAgregarComponente_btn() {
