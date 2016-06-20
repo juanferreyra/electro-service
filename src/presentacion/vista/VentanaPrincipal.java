@@ -249,12 +249,12 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.add(panelDeBotones, BorderLayout.SOUTH);
 
 		ingresarProducto_btn = new JButton("<html><center>Crear</center></html>");
-		ingresarProducto_btn.setIcon(new ImageIcon("ingreso.png"));
+		ingresarProducto_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/ingreso.png")));
 		ingresarProducto_btn.setBounds(10, 461, 158, 36);
 		panelDeBotones.add(ingresarProducto_btn);
 
 		presupuestar_btn = new JButton("<html>Presupuestar</html>");
-		presupuestar_btn.setIcon(new ImageIcon("money.png"));
+		presupuestar_btn.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/money.png")));
 		presupuestar_btn.setBounds(587, 474, 158, 36);
 		panelDeBotones.add(presupuestar_btn);
 
@@ -268,7 +268,7 @@ public class VentanaPrincipal extends JFrame {
 		panelDeBotones.add(btnElaborarHojaDe);
 
 		btnOrdenDeCompra = new JButton("Elaborar Orden de Compra");
-		btnOrdenDeCompra.setIcon(new ImageIcon("ordenCompra.png"));
+		btnOrdenDeCompra.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/ordenCompra.png")));
 		panelDeBotones.add(btnOrdenDeCompra);
 
 	}

@@ -89,12 +89,12 @@ public class VentanaIngreso extends JFrame {
 		numeroCliente_txf.setDocument(new JTextFieldLimit(30));
 
 		buscarCliente_btn = new JButton("");
-		buscarCliente_btn.setIcon(new ImageIcon("buscar.png"));
+		buscarCliente_btn.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/buscar.png")));
 		buscarCliente_btn.setBounds(367, 52, 33, 20);
 		contentPane.add(buscarCliente_btn);
 
 		crearCliente_btn = new JButton("");
-		crearCliente_btn.setIcon(new ImageIcon("persona.png"));
+		crearCliente_btn.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/persona.png")));
 		crearCliente_btn.setBounds(410, 52, 33, 20);
 		contentPane.add(crearCliente_btn);
 
@@ -189,7 +189,7 @@ public class VentanaIngreso extends JFrame {
 		direccionNueva_txf.setColumns(10);
 
 		btnVerIngreso = new JButton("Imprimir");
-		btnVerIngreso.setIcon(new ImageIcon("imprimir.png"));
+		btnVerIngreso.setIcon(new ImageIcon(VentanaIngreso.class.getResource("/imprimir.png")));
 		btnVerIngreso.setBounds(348, 428, 99, 23);
 		contentPane.add(btnVerIngreso);
 
