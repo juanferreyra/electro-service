@@ -24,14 +24,18 @@ public class ReporteFinanciero
 	
 	
 	//Recibe la lista de personas para armar el reporte
-    public ReporteFinanciero(List<ReporteFinancieroPasivosDTO> pasivos, List<ReporteFinancieroActivosDTO> activos)
+    public ReporteFinanciero(List<ReporteFinancieroPasivosDTO> pasivos, List<ReporteFinancieroActivosDTO> activos, float totalPasivos, float totalActivos, String periodo)
     {
     	
     	JRDataSource javaBeansKapitelDS = new JRBeanCollectionDataSource(pasivos);
     	
     	Map<String, Object> parametersMap = new HashMap<String, Object>();
     	parametersMap.put("FECHA", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+    	parametersMap.put("PERIODO", periodo);
     	parametersMap.put("SUB_DATASOURCE", activos);
+    	parametersMap.put("SUB_DATASOURCE2", pasivos);
+    	parametersMap.put("VALOR_PASIVOS", totalPasivos);
+    	parametersMap.put("VALOR_ACTIVOS", totalActivos);
         
         try {
         	this.reporte = (JasperReport) JRLoader.loadObjectFromFile("ReporteFinanciero.jasper");

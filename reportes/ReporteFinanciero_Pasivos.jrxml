@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-06-20T10:39:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteFinanciero_Activos" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="80bed90f-d626-4a37-8568-a54d8767bdbd">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ReporteFinanciero_Pasivos"/>
+	<import value="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="SUB_DATASOURCE2" class="java.util.List"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="fecha_recepcion" class="java.lang.String">
+		<fieldDescription><![CDATA[fecha_recepcion]]></fieldDescription>
+	</field>
+	<field name="nro_orden" class="java.lang.Integer">
+		<fieldDescription><![CDATA[nro_orden]]></fieldDescription>
+	</field>
+	<field name="proveedor" class="java.lang.String">
+		<fieldDescription><![CDATA[proveedor]]></fieldDescription>
+	</field>
+	<field name="fecha_orden" class="java.lang.String">
+		<fieldDescription><![CDATA[fecha_orden]]></fieldDescription>
+	</field>
+	<field name="valor_orden" class="java.lang.Float">
+		<fieldDescription><![CDATA[valor_orden]]></fieldDescription>
+	</field>
+	<title>
+		<band height="31">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="10" y="10" width="100" height="20" uuid="9a860f1f-b87c-494f-b8e4-37eb1ec54eaa"/>
+				<text><![CDATA[Pasivos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="30" width="318" height="1" uuid="097e52b2-63f6-484d-b7a2-c795bf8db6e0"/>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="30" y="0" width="100" height="30" uuid="ea25cb50-c62b-411a-9b4d-649c2f4b685a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="100" height="30" uuid="d4003255-b738-4649-8889-f2af1aabf293"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="100" height="30" uuid="66d41446-66da-49d2-a160-47d59815da8a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proveedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="0" width="100" height="30" uuid="90218643-407d-4bf0-a957-1f3ee5528e77"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="0" width="100" height="30" uuid="8ca50cfc-ab9f-4d52-96dc-76404e56f660"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Recibido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="130" y="2" width="100" height="30" uuid="699ee588-0bf5-4e34-931e-0a1e8e6de5b7"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nro_orden}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="2" width="100" height="30" uuid="206954c0-01d7-48bb-be92-93686a0b4d34"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="2" width="100" height="30" uuid="423f625e-f48b-4633-b436-5019f7c77de5"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_orden}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="2" width="100" height="30" uuid="093d5b98-2a04-413d-a942-6719467f8c4f"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["$"+$F{valor_orden}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="2" width="100" height="30" uuid="618cac23-902b-4975-bffb-50043435fe6f"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_recepcion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

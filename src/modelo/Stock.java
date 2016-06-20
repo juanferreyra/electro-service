@@ -59,11 +59,11 @@ public class Stock {
 		for (InsumoStockDTO i : insumosStock) {
 			if ((i.getRestante() < 1) && (i.getRestante() + i.getSolicitada()) < i.getMinimo()) {
 				i.setAlarma(1);// ROJO FUERTE
-			} else if ((i.getRestante() < 1) && (i.getRestante() + i.getSolicitada()) > i.getMinimo()) {
+			} else if ((i.getRestante() < 1) && (i.getRestante() + i.getSolicitada()) >= i.getMinimo()) {
 				i.setAlarma(2);// ROJO TENUE
 			} else if ((i.getRestante() < i.getMinimo()) && (i.getRestante() + i.getSolicitada()) < i.getMinimo()) {
 				i.setAlarma(3);// AMARILLO FUERTE
-			} else if ((i.getRestante() < i.getMinimo()) && (i.getRestante() + i.getSolicitada()) > i.getMinimo()) {
+			} else if ((i.getRestante() < i.getMinimo()) && (i.getRestante() + i.getSolicitada()) >= i.getMinimo()) {
 				i.setAlarma(4);// AMARILLO TENUE
 			} else {
 				i.setAlarma(0);// NORMAL
