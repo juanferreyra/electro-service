@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-06-21T19:11:31 -->
+<!-- 2016-06-21T19:37:37 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteFinanciero_Activos" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="80bed90f-d626-4a37-8568-a54d8767bdbd">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ReporteFinanciero_Pasivos"/>
 	<import value="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
@@ -90,37 +90,38 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="33" splitType="Stretch">
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement x="130" y="2" width="100" height="30" uuid="699ee588-0bf5-4e34-931e-0a1e8e6de5b7"/>
+				<reportElement x="130" y="0" width="100" height="30" uuid="699ee588-0bf5-4e34-931e-0a1e8e6de5b7"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nro_orden}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="230" y="2" width="100" height="30" uuid="206954c0-01d7-48bb-be92-93686a0b4d34"/>
+				<reportElement x="230" y="0" width="100" height="30" uuid="206954c0-01d7-48bb-be92-93686a0b4d34"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="30" y="2" width="100" height="30" uuid="423f625e-f48b-4633-b436-5019f7c77de5"/>
+				<reportElement x="30" y="0" width="100" height="30" uuid="423f625e-f48b-4633-b436-5019f7c77de5"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_orden}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="330" y="2" width="100" height="30" uuid="093d5b98-2a04-413d-a942-6719467f8c4f"/>
+				<reportElement x="330" y="0" width="100" height="30" uuid="093d5b98-2a04-413d-a942-6719467f8c4f"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA["$"+$F{valor_orden}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="430" y="2" width="100" height="30" uuid="618cac23-902b-4975-bffb-50043435fe6f"/>
+				<reportElement x="430" y="0" width="100" height="30" uuid="618cac23-902b-4975-bffb-50043435fe6f"/>
 				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
@@ -128,17 +129,17 @@
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="47">
+	<summary>
+		<band height="38">
 			<staticText>
-				<reportElement positionType="Float" x="80" y="10" width="100" height="25" uuid="a77889f9-2bbd-4f28-90a5-3368ceac64be"/>
+				<reportElement positionType="Float" x="80" y="3" width="100" height="25" uuid="a77889f9-2bbd-4f28-90a5-3368ceac64be"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SALDO: $]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="180" y="10" width="344" height="25" uuid="d78a7993-b647-4c9f-9ecc-820f6c201533">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="180" y="3" width="344" height="25" uuid="d78a7993-b647-4c9f-9ecc-820f6c201533">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -147,5 +148,5 @@
 				<textFieldExpression><![CDATA[$P{TOTAL_ACTIVOS}-$P{TOTAL_PASIVOS}]]></textFieldExpression>
 			</textField>
 		</band>
-	</columnFooter>
+	</summary>
 </jasperReport>
