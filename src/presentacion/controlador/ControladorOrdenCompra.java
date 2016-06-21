@@ -443,13 +443,12 @@ public class ControladorOrdenCompra implements ActionListener {
 					cantidadReal = repuestoEnOrden.getCantidad_real();
 				}
 			}
+			if (marca != null) {
+				Object[] fila = { repuestosAgregados.get(i).getIdrepuesto(), marca.getDetalle(),
+						repuestosAgregados.get(i).getDetalle(), repuestosAgregados.get(i).getCantidad(), cantidadReal };
 
-			Object[] fila = { repuestosAgregados.get(i).getIdrepuesto(), marca.getDetalle(),
-					repuestosAgregados.get(i).getDetalle(), repuestosAgregados.get(i).getCantidad(), cantidadReal };
-
-			modelTable.addRow(fila);
-			;
-
+				modelTable.addRow(fila);
+			}
 			modelTable.isCellEditable(i, 0);
 			modelTable.isCellEditable(i, 1);
 			modelTable.isCellEditable(i, 2);

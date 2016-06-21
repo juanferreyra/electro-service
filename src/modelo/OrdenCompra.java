@@ -22,22 +22,22 @@ public class OrdenCompra {
 	private ArrayList<ItemRepuestoDTO> listaRepuestos;
 	private ProveedorDTO proveedorDTO;
 	private ArrayList<MarcaDTO> listaMarcasProveedor;
-	
+
 	private static ImpresionOrdenCompraDAO impresionOrdenCompraStatic;
-	
+
 	private ProveedorDAO proveedorDAO;
 	private OrdenCompraDAO ordenCompraDAO;
 	private OrdenCompraRepuestoDAO ordenCompraRepuestoDAO;
 	private RepuestoDAO repuestoDAO;
 	private MarcaDAO marcaDAO;
-	
+
 	public OrdenCompra() {
 		proveedorDAO = new ProveedorDAO();
 		ordenCompraDAO = new OrdenCompraDAO();
 		ordenCompraRepuestoDAO = new OrdenCompraRepuestoDAO();
 		repuestoDAO = new RepuestoDAO();
 		marcaDAO = new MarcaDAO();
-		
+
 		ordenCompraDTO = new OrdenCompraDTO();
 		ordenCompraDTO.setId(-1);
 		proveedorDTO = null;
@@ -52,7 +52,7 @@ public class OrdenCompra {
 	public ArrayList<ItemRepuestoDTO> getListaDeRepuestos() {
 		return listaRepuestos;
 	}
-	
+
 	public RepuestoDTO buscarRepuesto(String aBuscar) {
 		return repuestoDAO.find(aBuscar);
 	}
@@ -68,10 +68,10 @@ public class OrdenCompra {
 	public void setProveedorDTO(ProveedorDTO proveedor) {
 		proveedorDTO = proveedor;
 	}
-	
+
 	public void actualizarListaMarcas() {
-		if(proveedorDTO!=null) {
-			listaMarcasProveedor = this.marcaDAO.buscarMarcasPorIdProvedor(this.proveedorDTO.getId()); 
+		if (proveedorDTO != null) {
+			listaMarcasProveedor = this.marcaDAO.buscarMarcasPorIdProvedor(this.proveedorDTO.getId());
 		}
 	}
 
@@ -104,88 +104,94 @@ public class OrdenCompra {
 			int idOrden = ordenCompraDAO.getNextId();
 			ordenCompraDTO.setId(idOrden);
 			for (int i = 0; i < listaRepuestos.size(); i++) {
-				OrdenCompraRepuestoDTO orden = new OrdenCompraRepuestoDTO(0, idOrden,  listaRepuestos.get(i).getIdrepuesto(), listaRepuestos.get(i).getCantidad(),listaRepuestos.get(i).getCantidad(), null, true);
+				OrdenCompraRepuestoDTO orden = new OrdenCompraRepuestoDTO(0, idOrden,
+						listaRepuestos.get(i).getIdrepuesto(), listaRepuestos.get(i).getCantidad(),
+						listaRepuestos.get(i).getCantidad(), null, true);
 				ordenCompraRepuestoDAO.insert(orden);
 			}
-			
+
 			ordenCompraDTO.setIdproveedor(proveedorDTO.getId());
 			ordenCompraDAO.insert(this.ordenCompraDTO);
 		} catch (Exception e) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public boolean existeOrdenCompra(int id) {
-		if(ordenCompraDAO.find(id) == null) {
-			return false;	
+		if (ordenCompraDAO.find(id) == null) {
+			return false;
 		}
 		return true;
 	}
-	
-	
+
 	public void cargarVariables() {
-		if(ordenCompraDTO.getId()!=-1) {
+		if (ordenCompraDTO.getId() != -1) {
 			int id = ordenCompraDTO.getId();
 			ordenCompraDTO = ordenCompraDAO.find(id);
 			proveedorDTO = proveedorDAO.find(ordenCompraDTO.getIdproveedor());
 			listaRepuestos = ordenCompraRepuestoDAO.readAll(id);
 		}
 	}
-	
+
 	public void actualizarEstado(String estado) {
-		ordenCompraDAO.updateEstado(estado,ordenCompraDTO.getId());
+		ordenCompraDAO.updateEstado(estado, ordenCompraDTO.getId());
 	}
-	
-	public ArrayList<ImpresionOrdenCompraDTO> getDatosImpresion(){
+
+	public ArrayList<ImpresionOrdenCompraDTO> getDatosImpresion() {
 		impresionOrdenCompraStatic = new ImpresionOrdenCompraDAO();
 		return impresionOrdenCompraStatic.find(ordenCompraDTO.getId());
 	}
-	
+
 	public MarcaDTO buscarMarca(int idrepuesto) {
 		RepuestoDTO resp = repuestoDAO.findXid(idrepuesto);
-		return marcaDAO.find(resp.getIdmarca());
+		MarcaDTO marcaDTO = null;
+		if (resp != null) {
+			marcaDTO = marcaDAO.find(resp.getIdmarca());
+		}
+
+		return marcaDTO;
 	}
-	
+
 	public Boolean actualizarCantidadesReales(ArrayList<ItemRepuestoDTO> items) {
-		
+
 		for (int i = 0; i < items.size(); i++) {
-			
+
 			int idOrden = ordenCompraDTO.getId();
 			int idRepuesto = items.get(i).getIdrepuesto();
 			int cantidadReal = items.get(i).getCantidad();
-			
+
 			try {
-				ordenCompraRepuestoDAO.updateCantReal(idOrden,idRepuesto,cantidadReal);
+				ordenCompraRepuestoDAO.updateCantReal(idOrden, idRepuesto, cantidadReal);
 			} catch (Exception e) {
 				return false;
 			}
 		}
-		
+
 		return true;
-		
+
 	}
-	
+
 	public Boolean actualizarMontoFinal(Float monto) {
-		
+
 		return ordenCompraDAO.updateImporteTotal(monto, this.ordenCompraDTO.getId());
-		
+
 	}
-	
+
 	public OrdenCompraRepuestoDTO getRepuestoEnOrden(int idrepuesto) {
 		return ordenCompraRepuestoDAO.findRepuestoEnOrden(idrepuesto, this.ordenCompraDTO.getId());
 	}
-	
+
 	public Boolean actualizarStockRepuestos(ArrayList<ItemRepuestoDTO> items) {
-		
+
 		Stock st = new Stock();
-		
+
 		for (int i = 0; i < items.size(); i++) {
-			
+
 			int idRepuesto = items.get(i).getIdrepuesto();
 			int cantidadReal = items.get(i).getCantidad();
-			
+
 			try {
 				st.modificarStock(idRepuesto, cantidadReal);
 			} catch (Exception e) {
@@ -194,9 +200,9 @@ public class OrdenCompra {
 		}
 		return true;
 	}
-	
-	public ArrayList<OrdenCompraDTO> readAll(){
+
+	public ArrayList<OrdenCompraDTO> readAll() {
 		return ordenCompraDAO.readAll();
 	}
-	
+
 }
