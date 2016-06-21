@@ -30,7 +30,6 @@ public class ControladorPresupuesto implements ActionListener {
 	private Ingreso ingreso;
 	private Presupuesto presupuesto;
 	private UsuarioDTO usuarioLogueado;
-	private Integer cantidad = 0;
 	private DefaultTableModel modelTable = new DefaultTableModel();
 	private float suma = 0;
 	@SuppressWarnings("unused")
@@ -62,8 +61,8 @@ public class ControladorPresupuesto implements ActionListener {
 	public void inicializar() {
 
 		Calendar hoy = new GregorianCalendar();
-		ventanaPresupuesto.getFechaIngreso_lbl().setText( hoy.get(Calendar.DAY_OF_MONTH) + " / "
-				+ hoy.get(Calendar.MONTH) + " / " + hoy.get(Calendar.YEAR));
+		ventanaPresupuesto.getFechaIngreso_lbl().setText(
+				hoy.get(Calendar.DAY_OF_MONTH) + " / " + hoy.get(Calendar.MONTH) + " / " + hoy.get(Calendar.YEAR));
 		ventanaPresupuesto.setVisible(true);
 		ventanaPresupuesto.getComponentes_table().setModel(modelTable);
 		cargarComboComponentes();
@@ -118,9 +117,7 @@ public class ControladorPresupuesto implements ActionListener {
 		ventanaPresupuesto.getTipoTexto_lbl().setText(ingreso.getTipoproducto().getDetalle());
 
 		EstadoDAO estadoDAO = new EstadoDAO();
-
 		EstadoDTO estado = estadoDAO.find(ingreso.getIngreso().getEstado());
-
 		ventanaPresupuesto.getEstado_lb().setText(estado.getDetalle());
 	}
 
@@ -224,6 +221,9 @@ public class ControladorPresupuesto implements ActionListener {
 				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 				// ingreso el estado
 				ingresoLogDAO.insert(ingrLog);
+
+				ventanaPresupuesto.getEstado_lb().setText("INFORMADO");
+
 				mostrarBotonAceptado();
 				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 			} else if (response == JOptionPane.CLOSED_OPTION) {
@@ -240,6 +240,9 @@ public class ControladorPresupuesto implements ActionListener {
 				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 				// ingreso el estado
 				ingresoLogDAO.insert(ingrLog);
+
+				ventanaPresupuesto.getEstado_lb().setText("ACEPTADO");
+
 				if (this.usuarioLogueado.getIdperfil() == 2
 						/* TECNICO */ || this.usuarioLogueado.getIdperfil() == 3/* JEFE */) {
 					mostrarBotonAsignar();
@@ -262,6 +265,7 @@ public class ControladorPresupuesto implements ActionListener {
 				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 				// ingreso el estado
 				ingresoLogDAO.insert(ingrLog);
+				ventanaPresupuesto.getEstado_lb().setText("RECHAZADO");
 				ocultarBotonesEstados();
 
 				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
@@ -279,7 +283,7 @@ public class ControladorPresupuesto implements ActionListener {
 				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 				// ingreso el estado
 				ingresoLogDAO.insert(ingrLog);
-
+				ventanaPresupuesto.getEstado_lb().setText("ENTREGADO");
 				ocultarBotonesEstados();
 				this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 			} else if (response == JOptionPane.CLOSED_OPTION) {
@@ -297,6 +301,7 @@ public class ControladorPresupuesto implements ActionListener {
 				IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 				// ingreso el estado
 				ingresoLogDAO.insert(ingrLog);
+				ventanaPresupuesto.getEstado_lb().setText("ASIGNADO");
 				// Asigno el tecnico
 				IngresoDAO ingresoDAO = new IngresoDAO();
 				ingresoDAO.updateTecnicoAsignado(ingreso.id, usuarioLogueado.getId());

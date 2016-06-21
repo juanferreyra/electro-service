@@ -252,6 +252,7 @@ public class VentanaPresupuesto extends JFrame {
 		valorPresupuestado_lbl.setBounds(287, 594, 86, 24);
 		contentPane.add(valorPresupuestado_lbl);
 		valorPresupuestado_txf = new JTextField();
+		valorPresupuestado_txf.setEditable(false);
 		valorPresupuestado_txf.setHorizontalAlignment(SwingConstants.CENTER);
 		valorPresupuestado_txf.setForeground(new Color(70, 130, 180));
 		valorPresupuestado_txf.setBackground(SystemColor.text);
