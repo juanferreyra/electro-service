@@ -3,6 +3,7 @@ package presentacion.vista;
 import java.awt.Color;
 import java.awt.Component;
 
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -24,7 +25,7 @@ public class FormatoTablaOrdenesTrabajo extends DefaultTableCellRenderer {
 	}
 
 	private void aplicarColorFilas(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
-//		System.out.println(String.valueOf(table.getValueAt(row, 8)).equals("NUEVO") + "la filaaaa es " + row);
+
 		if (String.valueOf(table.getValueAt(row, 8)).equals("NUEVO")) {
 			setBackground(Color.decode("#CEF6CE"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("PRESUPUESTADO")) {
@@ -41,9 +42,9 @@ public class FormatoTablaOrdenesTrabajo extends DefaultTableCellRenderer {
 			setBackground(Color.decode("#81F7BE"));
 		} else if (String.valueOf(table.getValueAt(row, 8)).equals("RECHAZADO")) {
 			setBackground(Color.decode("#F5BCA9"));
-		} else if(String.valueOf(table.getValueAt(row, 8)).equals("ENTREGADO")){
+		} else if (String.valueOf(table.getValueAt(row, 8)).equals("ENTREGADO")) {
 			setBackground(Color.decode("#BDBDBD"));
-		}else {
+		} else {
 			setBackground(Color.white);
 		}
 

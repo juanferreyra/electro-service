@@ -117,8 +117,8 @@ public class VentanaPrincipal extends JFrame {
 		ordenesDeTrabajo_lbl.setBorder(new EmptyBorder(15, 3, 20, 3));
 		ordenesDeTrabajo_lbl.setBackground(Color.WHITE);
 		ordenesDeTrabajo_lbl.setMinimumSize(new Dimension(1000, 50));
-		ordenesDeTrabajo_lbl.setForeground(new Color(70, 130, 180));
-		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		ordenesDeTrabajo_lbl.setForeground(new Color(105, 105, 105));
+		ordenesDeTrabajo_lbl.setFont(new Font("Tahoma", Font.PLAIN, 33));
 		ordenesDeTrabajo_lbl.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel contenedorPanelArriba = new JPanel(new BorderLayout());
@@ -218,6 +218,8 @@ public class VentanaPrincipal extends JFrame {
 		table_avisoFaltante.getColumnModel().getColumn(0).setMinWidth(250);
 		table_avisoFaltante.getColumnModel().getColumn(0).setPreferredWidth(250);
 
+	
+
 		scrollPaneAviso = new JScrollPane();
 		scrollPaneAviso.setBackground(Color.WHITE);
 		scrollPaneAviso.setForeground(Color.BLACK);
@@ -244,6 +246,7 @@ public class VentanaPrincipal extends JFrame {
 		// FIN CONTENEDOR CENTRAL
 
 		JPanel panelDeBotones = new JPanel(new FlowLayout());
+		panelDeBotones.setBorder(new EmptyBorder(6, 3, 6, 3));
 		panelDeBotones.setOpaque(false);
 		panelDeBotones.setBackground(Color.WHITE);
 		contentPane.add(panelDeBotones, BorderLayout.SOUTH);

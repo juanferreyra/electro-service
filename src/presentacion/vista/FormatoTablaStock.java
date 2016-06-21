@@ -45,7 +45,8 @@ public class FormatoTablaStock extends DefaultTableCellRenderer {
 			setBackground(Color.decode("#F3F781"));// Amarillo fuerte
 		} else if ((resultado < minimo) && (resultado + pedido) > minimo) {
 			setBackground(Color.decode("#F5F6CE"));// amarillo claro
-		} else {
+		} 
+		else {
 			setBackground(Color.white);// Blanco
 		}
 
