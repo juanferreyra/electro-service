@@ -59,6 +59,7 @@ public class VentanaPresupuesto extends JFrame {
 	private JButton entregado_btn;
 	private JSeparator separator_1;
 	private JSpinner spinner;
+	private JButton btnAvisado;
 
 	@SuppressWarnings("serial")
 	public VentanaPresupuesto() {
@@ -328,6 +329,11 @@ public class VentanaPresupuesto extends JFrame {
 		spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spinner.setBounds(356, 215, 29, 26);
 		contentPane.add(spinner);
+
+		btnAvisado = new JButton("Avisado");
+		btnAvisado.setForeground(Color.BLACK);
+		btnAvisado.setBounds(30, 0, 115, 23);
+		contentPane.add(btnAvisado);
 	}
 
 	public JTextField getHorasDeTrabajo_txf() {
@@ -452,6 +458,14 @@ public class VentanaPresupuesto extends JFrame {
 
 	public void setSpinner(JSpinner spinner) {
 		this.spinner = spinner;
+	}
+
+	public JButton getBtnAvisado() {
+		return btnAvisado;
+	}
+
+	public void setBtnAvisado(JButton btnAvisado) {
+		this.btnAvisado = btnAvisado;
 	}
 
 }
