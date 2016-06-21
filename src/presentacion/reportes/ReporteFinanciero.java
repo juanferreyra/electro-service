@@ -27,7 +27,7 @@ public class ReporteFinanciero
     public ReporteFinanciero(List<ReporteFinancieroPasivosDTO> pasivos, List<ReporteFinancieroActivosDTO> activos, float totalPasivos, float totalActivos, String periodo)
     {
     	
-    	JRDataSource javaBeansKapitelDS = new JRBeanCollectionDataSource(pasivos);
+    	JRDataSource javaBeansKapitelDS = new JRBeanCollectionDataSource(activos);
     	
     	Map<String, Object> parametersMap = new HashMap<String, Object>();
     	parametersMap.put("FECHA", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));

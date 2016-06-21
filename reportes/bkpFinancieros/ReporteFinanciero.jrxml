@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-06-20T11:51:16 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reportefinanciero" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="12a0abd7-5c3f-4ef0-bf9e-b71189e32dec">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ReporteFinanciero_Activos"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="SUB_DATASOURCE" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}.get( "SUB_DATASOURCE" )]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHA" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}.get( "FECHA" )]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIODO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}.get( "PERIODO" )]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUB_DATASOURCE2" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}.get( "SUB_DATASOURCE2" )]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TOTAL_ACTIVOS" class="java.lang.Float">
+		<defaultValueExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}.get( "VALOR_ACTIVOS" )]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TOTAL_PASIVOS" class="java.lang.Float">
+		<defaultValueExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}.get( "VALOR_PASIVOS" )]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<pageHeader>
+		<band height="189">
+			<rectangle>
+				<reportElement mode="Opaque" x="10" y="8" width="575" height="112" forecolor="#FFFFFF" backcolor="#77767E" uuid="04e182c5-4cdf-4c94-aff7-5c3920e574cc"/>
+			</rectangle>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement mode="Opaque" x="17" y="14" width="178" height="100" forecolor="rgba(255, 255, 255, 0.0)" backcolor="rgba(255, 255, 255, 0.99215686)" uuid="f8b24f87-2c66-4fba-a6b4-7f1c1feec07a"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="228" y="41" width="343" height="60" forecolor="#FFFFFF" uuid="8d62a5b7-6b49-4ea2-b861-d4d5a5b84261"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI Semibold" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Activos y Pasivos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="420" y="120" width="164" height="20" uuid="a937b4f5-d781-4a85-be64-8a305158345f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Fecha: "+$P{FECHA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="155" width="85" height="20" uuid="39c0b85c-b686-44ae-8e60-078dc8541326"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Periodo:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="177" width="318" height="1" uuid="bf155ba6-76c6-4447-bf14-e6c4c6abc881"/>
+			</line>
+			<textField>
+				<reportElement x="100" y="155" width="238" height="20" uuid="c2de1c66-350a-40e2-89b8-9078d82ccb73"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{PERIODO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="44">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="394" y="10" width="190" height="23" uuid="5f6b98a4-060f-4e2d-bd7b-9db93d4869e9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="774" splitType="Immediate">
+			<subreport isUsingCache="true" overflowType="Stretch">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="15" y="350" width="565" height="290" isRemoveLineWhenBlank="true" uuid="cb2980fb-9e69-414d-bbff-92f9eea83327">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{SUB_DATASOURCE2})]]></dataSourceExpression>
+				<subreportExpression><![CDATA["ReporteFinanciero_Pasivos.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true" overflowType="Stretch">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="13" y="10" width="565" height="290" isRemoveLineWhenBlank="true" uuid="604c5a92-1aed-4c91-a352-31eb7637f06b"/>
+				<subreportParameter name="SUB_DATASOURCE">
+					<subreportParameterExpression><![CDATA[$P{SUB_DATASOURCE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{SUB_DATASOURCE})]]></dataSourceExpression>
+				<subreportExpression><![CDATA["ReporteFinanciero_Activos.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement positionType="Float" x="174" y="720" width="100" height="30" uuid="b422fed1-cb34-4926-9a59-2d2ea2b99664"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL: $]]></text>
+			</staticText>
+			<textField>
+				<reportElement key="" positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="194" y="655" width="385" height="30" isRemoveLineWhenBlank="true" uuid="56cd76fd-0d2d-4d01-bfac-4727143b9562"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["TOTAL PASIVOS: $"+$P{TOTAL_PASIVOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="192" y="310" width="385" height="30" isRemoveLineWhenBlank="true" uuid="4b5360d2-7c0c-43a3-b33e-00ebc6813ea8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["TOTAL ACTIVOS: $"+$P{TOTAL_ACTIVOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="274" y="720" width="240" height="30" uuid="513205e1-2594-45bf-aafc-2903350852ef"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL_ACTIVOS}-$P{TOTAL_PASIVOS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
