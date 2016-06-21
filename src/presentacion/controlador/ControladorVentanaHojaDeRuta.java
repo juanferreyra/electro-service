@@ -2,13 +2,10 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
@@ -34,7 +31,7 @@ import presentacion.vista.VentanaABMFlete;
 import presentacion.vista.VentanaHojaDeRuta;
 
 public class ControladorVentanaHojaDeRuta implements ActionListener {
-	
+
 	protected static final String JCheckBox = null;
 	private VentanaHojaDeRuta ventanaHojaRuta;
 	private ControladorVentanaPrincipal controladorVentanaPrincipal;
@@ -50,7 +47,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		this.ventanaHojaRuta = ventanaHojaRuta;
 		this.controladorVentanaPrincipal = controladorVentanaPrincipal;
 		this.hojaDeRuta = new HojaDeRuta();
-		
+
 		this.ventanaHojaRuta.getBtnBuscarConductor().addActionListener(this);
 		this.ventanaHojaRuta.getBtnCargarHoja().addActionListener(this);
 		this.ventanaHojaRuta.getBtnGuardar().addActionListener(this);
@@ -62,7 +59,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(false);
 		this.ventanaHojaRuta.getBtnImprimir().setVisible(false);
 		this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(false);
-		
+
 		agregarMouseListenerTabla();
 	}
 
@@ -72,51 +69,51 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		cargaComboListaHojasRutas();
 		clikEnCombo();
 	}
-	
+
 	private void clikEnCombo() {
 		this.ventanaHojaRuta.getListaHojasRuta_cmb().addItemListener(new ItemListener() {
-			
+
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				
-				if (e.getStateChange() == ItemEvent.SELECTED){
-					ventanaHojaRuta.getTxtfldCargarHoja().setText(obtenerId((String)ventanaHojaRuta.getListaHojasRuta_cmb().getSelectedItem()));
+
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					ventanaHojaRuta.getTxtfldCargarHoja()
+							.setText(obtenerId((String) ventanaHojaRuta.getListaHojasRuta_cmb().getSelectedItem()));
 					validacion();
 				}
-			}	
+			}
 		});
-		
-		
+
 	}
 
 	private void cargaComboListaHojasRutas() {
-		
+
 		this.ventanaHojaRuta.getListaHojasRuta_cmb().removeAllItems();
-		
-		 this.todaslasHojasDeRutas = hojaDeRuta.readAll();
-		 
-		 for(HojaDeRutaDTO hojas : todaslasHojasDeRutas){
-			 
-			 this.ventanaHojaRuta.getListaHojasRuta_cmb().addItem(hojas.getId()+" _ "+ hojas.getCreacion());
-		 }
-		 this.ventanaHojaRuta.getListaHojasRuta_cmb().setSelectedIndex(-1);
+
+		this.todaslasHojasDeRutas = hojaDeRuta.readAll();
+
+		for (HojaDeRutaDTO hojas : todaslasHojasDeRutas) {
+
+			this.ventanaHojaRuta.getListaHojasRuta_cmb().addItem(hojas.getId() + " _ " + hojas.getCreacion());
+		}
+		this.ventanaHojaRuta.getListaHojasRuta_cmb().setSelectedIndex(-1);
 
 	}
-	
+
 	private String obtenerId(String selectedItem) {
 		String id = "";
-		
+
 		String cadena = selectedItem;
-		String delimitadores= " _";
+		String delimitadores = " _";
 		String[] palabrasSeparadas = cadena.split(delimitadores);
 		id = palabrasSeparadas[0];
-		
+
 		return id;
 	}
 
 	private void cargarModelo() {
-		
-		if(hojaDeRuta.getHojaRuta().getId()!=-1) {
+
+		if (hojaDeRuta.getHojaRuta().getId() != -1) {
 			this.ventanaHojaRuta.getTxtfldNombreConductor().setText(this.hojaDeRuta.getFlete().getNombre());
 			this.ventanaHojaRuta.getTxtfldMovil().setText(this.hojaDeRuta.getFlete().getModelo());
 			this.ventanaHojaRuta.getTxtfldTelefono().setText(this.hojaDeRuta.getFlete().getTelefono());
@@ -125,8 +122,7 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 
 			ObtenerFilas(ingresos);
 		} else {
-			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "La hoja que intenta buscar no existe!", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "La hoja que intenta buscar no existe.");
 		}
 	}
 
@@ -137,51 +133,51 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).removeRow(i);
 		}
 	}
-	
+
 	public void cargar_tablaOrdenesTrabajoReparadas() {
 		// Consigo todos los ingresos y genero las filas
 		ArrayList<IngresoDTO> ingresos = hojaDeRuta.getIngresosReparados();
 		ObtenerFilas(ingresos);
 	}
-	
+
 	private void ObtenerFilas(ArrayList<IngresoDTO> ingresos) {
 		limpiar_tablaOrdenesTrabajo();
-		
+
 		Boolean hayEntregados = false;
-		
-		for (int i = 0; i <= ingresos.size()-1; i++) {
-			//preparo el nombre del cliente
+
+		for (int i = 0; i <= ingresos.size() - 1; i++) {
+			// preparo el nombre del cliente
 			ClienteDTO cliente = hojaDeRuta.getClienteDAO().find(ingresos.get(i).getIdcliente());
-			String nombreCliente = cliente.getNombre()+" "+cliente.getApellido();
+			String nombreCliente = cliente.getNombre() + " " + cliente.getApellido();
 			String direccion = cliente.getDireccion();
-			//preparo la direccion del cliente
-			if(ingresos.get(i).getEnvio_default()) {
+			// preparo la direccion del cliente
+			if (ingresos.get(i).getEnvio_default()) {
 				direccion = ingresos.get(i).getDireccion_alternativa();
 			}
 			javax.swing.JCheckBox check = new JCheckBox();
 			check.setText(" ");
-			if(ingresos.get(i).getEstado()==11) {
-				//si el estado es 11 (entregado) entonces bloqueo el check
+			if (ingresos.get(i).getEstado() == 11) {
+				// si el estado es 11 (entregado) entonces bloqueo el check
 				check.setEnabled(false);
 				check.setText("Entregado");
 				hayEntregados = true;
 			}
-			
-			this.cargarFila(ingresos.get(i).getId(),ingresos.get(i).getFecha_creacion(),
-							ingresos.get(i).getDescripcion(), nombreCliente, cliente.getLocalidad(), direccion, check,ingresos.get(i).getEstado()==11 );
+
+			this.cargarFila(ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(),
+					ingresos.get(i).getDescripcion(), nombreCliente, cliente.getLocalidad(), direccion, check,
+					ingresos.get(i).getEstado() == 11);
 		}
-		
-		if(hayEntregados) {
+
+		if (hayEntregados) {
 			this.ventanaHojaRuta.getOrdenesDeTrabajo_table().setEnabled(false);
 			this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(false);
-		}
-		else {
+		} else {
 			this.ventanaHojaRuta.getOrdenesDeTrabajo_table().setEnabled(true);
 		}
 	}
-	
-	private void cargarFila( int nro, Date fecha,
-			String producto, String cliente, String localidad, String direccion, JCheckBox estado, Boolean entregado) {
+
+	private void cargarFila(int nro, Date fecha, String producto, String cliente, String localidad, String direccion,
+			JCheckBox estado, Boolean entregado) {
 		Object[] ingreso = new Object[7];
 		ingreso[0] = nro;
 		ingreso[1] = fecha.getTime();
@@ -190,18 +186,18 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 		ingreso[4] = localidad;
 		ingreso[5] = direccion;
 		ingreso[6] = (JCheckBox) estado;
-		
+
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
-		
+
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 0);
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 1);
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 2);
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 3);
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 4);
 		((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 5);
-		if(entregado)
+		if (entregado)
 			((DefaultTableModel) this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel()).isCellEditable(nro, 6);
-		
+
 	}
 
 	private void agregarMouseListenerTabla() {
@@ -214,36 +210,42 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 
 				// Preguntamos si hicimos clic sobre la celda que contiene el
 				// check
-				if (ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna).equals(JCheckBox.class)
-						&& columna == 6) {
+				if (ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().getColumnClass(columna)
+						.equals(JCheckBox.class) && columna == 6) {
 					if (ventanaHojaRuta.getOrdenesDeTrabajo_table().getSelectedRow() >= 0) {
-						
+
 						int seleccionado = ventanaHojaRuta.getOrdenesDeTrabajo_table().getSelectedRow();
-						
+
 						int nroIngreso = (int) ventanaHojaRuta.getOrdenesDeTrabajo_table().getValueAt(seleccionado, 0);
-						//cambio el check
-						Object check = ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().getValueAt(seleccionado, 6);
+						// cambio el check
+						Object check = ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().getValueAt(seleccionado,
+								6);
 						JCheckBox hc = (javax.swing.JCheckBox) check;
-						if(!hc.getText().equals("Entregado") || !hc.getText().equals("No Entregado")) {
+						if (!hc.getText().equals("Entregado") || !hc.getText().equals("No Entregado")) {
 							JCheckBox nuevoCheck = new JCheckBox();
-							
-							if(hc.isSelected()) {
-								//seteo el check habilitado
+
+							if (hc.isSelected()) {
+								// seteo el check habilitado
 								nuevoCheck.setSelected(false);
-								ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().setValueAt( nuevoCheck, seleccionado, 6);
-								//saco de la lista de los seleccionados el ingreso
+								ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().setValueAt(nuevoCheck,
+										seleccionado, 6);
+								// saco de la lista de los seleccionados el
+								// ingreso
 								for (int i = 0; i < hojaDeRuta.getIngresosEnHoja().size(); i++) {
-									if(hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso()==nroIngreso) {
+									if (hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso() == nroIngreso) {
 										hojaDeRuta.getIngresosEnHoja().remove(i);
 									}
 								}
-								
+
 							} else {
-								//seteo el check habilitado
+								// seteo el check habilitado
 								nuevoCheck.setSelected(true);
-								ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().setValueAt( nuevoCheck, seleccionado, 6);
-								//ingreso de la lista de seleccionados el ingreso
-								HojaDeRutaIngresosDTO nuevo = new HojaDeRutaIngresosDTO(0, hojaDeRuta.getId(), nroIngreso, true, null);
+								ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel().setValueAt(nuevoCheck,
+										seleccionado, 6);
+								// ingreso de la lista de seleccionados el
+								// ingreso
+								HojaDeRutaIngresosDTO nuevo = new HojaDeRutaIngresosDTO(0, hojaDeRuta.getId(),
+										nroIngreso, true, null);
 								hojaDeRuta.getIngresosEnHoja().add(nuevo);
 							}
 						}
@@ -252,42 +254,41 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			}
 		});
 	}
-	
+
 	private boolean validarCampos() {
 		boolean error = false;
-		if(this.ventanaHojaRuta.getTxtfldNombreConductor().getText().equals("")) { 
-			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Debes seleccionr un Fletero", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+		if (this.ventanaHojaRuta.getTxtfldNombreConductor().getText().equals("")) {
+			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Debe seleccionar un fletero para continuar.");
 			error = true;
 		}
-		
-		if(this.hojaDeRuta.getIngresosSeleccionadosEnHoja().size()==0 && error==false) { 
-			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Debes seleccionr al menos una orden de trabajo para su envio", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+
+		if (this.hojaDeRuta.getIngresosSeleccionadosEnHoja().size() == 0 && error == false) {
+			JOptionPane.showMessageDialog(this.ventanaHojaRuta,
+					"Debe seleccionar al menos una orden de trabajo para enviar.");
 			error = true;
 		}
-		
+
 		return !error;
 	}
-	
-	private boolean soloNumeros(String texto){
-		try { 
-			Integer.parseInt(texto); 
-			return true; 
-		} catch (Exception e) { 
-			return false; 
+
+	private boolean soloNumeros(String texto) {
+		try {
+			Integer.parseInt(texto);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
-	
+
 	private void cargarFlete(int nro) {
-		
+
 		this.hojaDeRuta.cargarFlete(nro);
-		
+
 		FleteDTO flete = this.hojaDeRuta.getFlete();
-		
-		if(flete==null) {
-			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se encontro ningun conductor con ese numero", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+
+		if (flete == null) {
+			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se ha encontrado un conductor con ese numero.",
+					"Atencion!", JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			this.ventanaHojaRuta.getTxtfldNombreConductor().setText(flete.getNombre());
 			this.ventanaHojaRuta.getTxtfldMovil().setText(flete.getModelo());
@@ -298,20 +299,17 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if(e.getSource() == this.ventanaHojaRuta.getBtnCargarHoja()) {
-			
-			
-			
+
+		if (e.getSource() == this.ventanaHojaRuta.getBtnCargarHoja()) {
+
 			validacion();
-			
-			
-		} else if(e.getSource() == this.ventanaHojaRuta.getBtnBorrarCarga()) {
+
+		} else if (e.getSource() == this.ventanaHojaRuta.getBtnBorrarCarga()) {
 			this.ventanaHojaRuta.getTxtfldCargarHoja().setText("");
 			this.hojaDeRuta.setId(-1);
 			this.hojaDeRuta.cargarVariables();
 			cargar_tablaOrdenesTrabajoReparadas();
-			
+
 			this.ventanaHojaRuta.getBtnBuscarConductor().setEnabled(true);
 			this.ventanaHojaRuta.getTxtflBuscarConductor().setEnabled(true);
 			this.ventanaHojaRuta.getBtnGuardar().setVisible(true);
@@ -323,155 +321,159 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 			this.ventanaHojaRuta.getTxtfldTelefono().setText("");
 			this.ventanaHojaRuta.getBtnImprimir().setVisible(false);
 			this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(false);
-			
-		} else if(e.getSource() == this.ventanaHojaRuta.getBtnCancelar()) {
+
+		} else if (e.getSource() == this.ventanaHojaRuta.getBtnCancelar()) {
 			this.ventanaHojaRuta.dispose();
 			this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
-		} else if(e.getSource() == this.ventanaHojaRuta.getBtnBuscarConductor()) {
+		} else if (e.getSource() == this.ventanaHojaRuta.getBtnBuscarConductor()) {
 			String nroConductor = this.ventanaHojaRuta.getTxtflBuscarConductor().getText();
-			if(soloNumeros(nroConductor)) {
+			if (soloNumeros(nroConductor)) {
 				int nroConductorInt = Integer.parseInt(nroConductor);
 				cargarFlete(nroConductorInt);
 			} else {
-				JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Campo para buscar el fletero debe ser numerico", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.ventanaHojaRuta,
+						"El campo para buscar el fletero debe ser numerico.");
 			}
-		} else if(e.getSource() == this.ventanaHojaRuta.getBtnGuardar()) {
-			if(validarCampos()) {
+		} else if (e.getSource() == this.ventanaHojaRuta.getBtnGuardar()) {
+			if (validarCampos()) {
 				boolean entro = this.hojaDeRuta.guardarModelo(usuarioLogueado);
-				if(!entro) {
-					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Ocurrio un error al guardar la hoja de ruta!", "Atencion!",
-							JOptionPane.INFORMATION_MESSAGE);
+				if (!entro) {
+					JOptionPane.showMessageDialog(this.ventanaHojaRuta,
+							"Ha ocurrido un error al guardar la hoja de ruta.");
 				} else {
-					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Hoja de ruta guadada Correctamente!", "Atencion!",
-							JOptionPane.INFORMATION_MESSAGE); 
-					//vacio todos los datos o muestro la impresion
+					JOptionPane.showMessageDialog(this.ventanaHojaRuta,
+							"La hoja de ruta se ha guardado correctamente.");
+					// vacio todos los datos o muestro la impresion
 					this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
 					this.ventanaHojaRuta.getBtnGuardar().setVisible(false);
 					cargaComboListaHojasRutas();
 				}
 			}
-		} else if(e.getSource() == this.ventanaHojaRuta.getBtnImprimir()) {
+		} else if (e.getSource() == this.ventanaHojaRuta.getBtnImprimir()) {
 			ReporteHojaDeRuta reporte = new ReporteHojaDeRuta(hojaDeRuta.getDatosImpresion());
 			reporte.mostrar();
-		} else if(e.getSource() == this.ventanaHojaRuta.getBtnMarcarEntregados()) {
-			int response = JOptionPane.showConfirmDialog(null, "Esta seguro que desea cambiar las ordenes seleccionadas como Entregadas?", "Confirmar",
-			        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		    if (response == JOptionPane.NO_OPTION) {
-		      
-		    } else if (response == JOptionPane.YES_OPTION) {
+		} else if (e.getSource() == this.ventanaHojaRuta.getBtnMarcarEntregados()) {
+			int response = JOptionPane.showConfirmDialog(null,
+					"¿ Esta seguro que desea cambiar las ordenes seleccionadas como 'ENTREGADAS'?", "Confirmar",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (response == JOptionPane.NO_OPTION) {
+
+			} else if (response == JOptionPane.YES_OPTION) {
 				try {
-					
+
 					TableModel tabla = this.ventanaHojaRuta.getOrdenesDeTrabajo_table().getModel();
-					//recorro la lista de ingresados y los seteo como estado de entregados
+					// recorro la lista de ingresados y los seteo como estado de
+					// entregados
 					for (int i = 0; i < tabla.getRowCount(); i++) {
 						Object check = tabla.getValueAt(i, 6);
 						JCheckBox hc = (javax.swing.JCheckBox) check;
-						if(hc.isSelected()){
-							//cambio como que no esta en entrega
+						if (hc.isSelected()) {
+							// cambio como que no esta en entrega
 							this.hojaDeRuta.getHojaRutaIngresosDAO().setEnEntrega(
-									this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(),
-									this.hojaDeRuta.getId());
-							
-							//marco el ingreso en estado de entregado
-							IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), 11, null, usuarioLogueado.getId());
-							//ingreso el estado
+									this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), this.hojaDeRuta.getId());
+
+							// marco el ingreso en estado de entregado
+							IngresoLogDTO ingrLog = new IngresoLogDTO(0,
+									this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), 11, null,
+									usuarioLogueado.getId());
+							// ingreso el estado
 							IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 							ingresoLogDAO.insert(ingrLog);
 						} else {
-							//cambio como que no esta en entrega
+							// cambio como que no esta en entrega
 							this.hojaDeRuta.getHojaRutaIngresosDAO().setEnEntrega(
-									this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(),
-									this.hojaDeRuta.getId());
-							
-							//marco el ingreso en estado de no entregado
-							IngresoLogDTO ingrLog = new IngresoLogDTO(0,this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), 12, null, usuarioLogueado.getId());
-							//ingreso el estado
+									this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), this.hojaDeRuta.getId());
+
+							// marco el ingreso en estado de no entregado
+							IngresoLogDTO ingrLog = new IngresoLogDTO(0,
+									this.hojaDeRuta.getIngresosEnHoja().get(i).getIdIngreso(), 12, null,
+									usuarioLogueado.getId());
+							// ingreso el estado
 							IngresoLogDAO ingresoLogDAO = new IngresoLogDAO();
 							ingresoLogDAO.insert(ingrLog);
 						}
 					}
 					this.controladorVentanaPrincipal.cargar_tablaOrdenesTrabajo();
 					this.ventanaHojaRuta.dispose();
-					
+
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Ocurrio un error al actualizar el estado de algunas ordenes.!", "Atencion!",
-							JOptionPane.INFORMATION_MESSAGE); 
+					JOptionPane.showMessageDialog(this.ventanaHojaRuta,
+							"Ha ocurrido un error al actualizar el estado de algunas ordenes.");
 				}
-		    } else if (response == JOptionPane.CLOSED_OPTION) {
-		      
-		    }
-			//recorro la lista de ingresados y los seteo como estado de entregados
-		    
-		}else if (e.getSource() == this.ventanaHojaRuta.getCrearFletero_btn()){
-			
+			} else if (response == JOptionPane.CLOSED_OPTION) {
+
+			}
+			// recorro la lista de ingresados y los seteo como estado de
+			// entregados
+
+		} else if (e.getSource() == this.ventanaHojaRuta.getCrearFletero_btn()) {
+
 			VentanaABMFlete ventanaABMFlete = new VentanaABMFlete();
 			ControladorABMFlete cont = new ControladorABMFlete(ventanaABMFlete);
 			cont.inicializar();
-			
+
 			ventanaABMFlete.addWindowListener(new WindowListener() {
-				
+
 				@Override
 				public void windowOpened(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowIconified(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowDeiconified(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowDeactivated(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowClosing(WindowEvent e) {
-					
-					if (ventanaABMFlete.getTablaFlete().getSelectedRow() != -1){
 
-					cargarFlete(Integer.parseInt(ventanaABMFlete.getDocumento_txf().getText()));
-					
-					ventanaHojaRuta.getTxtflBuscarConductor().setText(ventanaABMFlete.getDocumento_txf().getText());
-					
+					if (ventanaABMFlete.getTablaFlete().getSelectedRow() != -1) {
+
+						cargarFlete(Integer.parseInt(ventanaABMFlete.getDocumento_txf().getText()));
+
+						ventanaHojaRuta.getTxtflBuscarConductor().setText(ventanaABMFlete.getDocumento_txf().getText());
+
 					}
 				}
-				
+
 				@Override
 				public void windowClosed(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
-				
+
 				@Override
 				public void windowActivated(WindowEvent e) {
 					// TODO Auto-generated method stub
-					
+
 				}
 			});
-			
+
 		}
 	}
 
 	private void validacion() {
-		
+
 		String nroCarga = this.ventanaHojaRuta.getTxtfldCargarHoja().getText();
-		
-		if(soloNumeros(nroCarga)) {
-			
-			
+
+		if (soloNumeros(nroCarga)) {
+
 			int id = Integer.parseInt(nroCarga);
-			if(this.hojaDeRuta.existeHojaDeRuta(id)){
+			if (this.hojaDeRuta.existeHojaDeRuta(id)) {
 				this.hojaDeRuta.setId(id);
 				this.hojaDeRuta.cargarVariables();
 				this.ventanaHojaRuta.getBtnBuscarConductor().setEnabled(false);
@@ -481,18 +483,17 @@ public class ControladorVentanaHojaDeRuta implements ActionListener {
 				this.ventanaHojaRuta.getBtnBorrarCarga().setVisible(true);
 				this.ventanaHojaRuta.getBtnImprimir().setVisible(true);
 				this.ventanaHojaRuta.getBtnMarcarEntregados().setVisible(true);
-				
+
 				cargarModelo();
 			} else {
-				JOptionPane.showMessageDialog(this.ventanaHojaRuta, "No se encontro ninguna hoja de ruta con ese nro", "Atencion!",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this.ventanaHojaRuta,
+						"No se ha encontrado ninguna hoja de ruta con ese nro.");
 			}
-			
+
 		} else {
-			JOptionPane.showMessageDialog(this.ventanaHojaRuta, "Campo para cargar la hoja debe ser numerico ", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this.ventanaHojaRuta,
+					"El campo para cargar la hoja de ruta debe ser numerico. ");
 		}
-		
-		
+
 	}
 }

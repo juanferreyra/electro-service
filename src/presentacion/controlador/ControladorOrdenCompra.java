@@ -622,9 +622,11 @@ public class ControladorOrdenCompra implements ActionListener {
 	}
 
 	private void cargarProveedor(ProveedorDTO cdto) {
-		this.ventanaOrdenCompra.getNombreRazonSocialTexto_lbl().setText(cdto.getRazonSocial());
-		this.ventanaOrdenCompra.getDireccionTexto_lbl().setText(cdto.getDireccion());
-		this.ventanaOrdenCompra.getMailTexto_lbl().setText(cdto.getEmailPedidos());
+		if (cdto != null) {
+			this.ventanaOrdenCompra.getNombreRazonSocialTexto_lbl().setText(cdto.getRazonSocial());
+			this.ventanaOrdenCompra.getDireccionTexto_lbl().setText(cdto.getDireccion());
+			this.ventanaOrdenCompra.getMailTexto_lbl().setText(cdto.getEmailPedidos());
+		}
 	}
 
 	private void vaciarCampos() {
