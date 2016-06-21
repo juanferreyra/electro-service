@@ -16,20 +16,19 @@ import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class VentanaOrdenCompra extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JComboBox<String> repuesto_ComboBox;
-	private JButton incrementoCantRepuesto_btn;
-	private JButton decrementoCantRepuesto_btn;
 	private JButton agregarRepuesto_btn;
 	private JButton eliminarRepuesto_btn;
 	private JTextField valorPresupuestado_txf;
 	private JButton cancelar_btn;
 	private JButton guardar_btn;
-	private JLabel cantidad_lbl;
 	private JTable repuestos_table;
 	private JLabel razonsocialTexto_lbl;
 	private JLabel mailTexto_lbl;
@@ -46,9 +45,10 @@ public class VentanaOrdenCompra extends JFrame {
 	private JButton btnImprimir;
 	private JButton btnEnviarEmial;
 	private JComboBox<String> listaOrdenesCompras_cmb;
+	private JSpinner spinner;
 
 	public VentanaOrdenCompra() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaOrdenCompra.class.getResource("/calculator.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaHojaDeRuta.class.getResource("/logo.png")));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 736, 777);
@@ -58,16 +58,17 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
-		btnCancelada = new JButton("Cancelada");
-		btnCancelada.setBounds(314, 10, 116, 23);
+		btnCancelada = new JButton("Cancelado");
+		btnCancelada.setBounds(314, 13, 116, 23);
 		contentPane.add(btnCancelada);
 		
 		btnRecibido = new JButton("Recibido");
-		btnRecibido.setBounds(195, 10, 116, 23);
+		btnRecibido.setBounds(195, 13, 116, 23);
 		contentPane.add(btnRecibido);
 
 		JLabel titulo_lbl = new JLabel("<html><i>ORDEN DE COMPRA</i></html>");
-		titulo_lbl.setBounds(34, 15, 332, 14);
+		titulo_lbl.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		titulo_lbl.setBounds(34, 22, 332, 14);
 		contentPane.add(titulo_lbl);
 
 		JSeparator separator = new JSeparator();
@@ -75,7 +76,8 @@ public class VentanaOrdenCompra extends JFrame {
 		separator.setForeground(Color.BLUE);
 		contentPane.add(separator);
 
-		JLabel razonsocial_lbl = new JLabel("<html><i>Raz�n Social:</i></html>");
+		JLabel razonsocial_lbl = new JLabel("<html><i>Razon Social:</i></html>");
+		razonsocial_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		razonsocial_lbl.setBounds(30, 71, 116, 26);
 		contentPane.add(razonsocial_lbl);
 
@@ -83,7 +85,8 @@ public class VentanaOrdenCompra extends JFrame {
 		razonsocialTexto_lbl.setBounds(123, 71, 565, 26);
 		contentPane.add(razonsocialTexto_lbl);
 
-		JLabel direccion_lbl = new JLabel("<html><i>Direcci�n:</i></html>");
+		JLabel direccion_lbl = new JLabel("<html><i>Direccion:</i></html>");
+		direccion_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		direccion_lbl.setBounds(30, 99, 116, 26);
 		contentPane.add(direccion_lbl);
 
@@ -92,6 +95,7 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(direccionTexto_lbl);
 
 		JLabel mail_lbl = new JLabel("<html><i> Mail:</i></html>");
+		mail_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		mail_lbl.setBounds(317, 99, 116, 26);
 		contentPane.add(mail_lbl);
 
@@ -105,38 +109,22 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(separator_2);
 
 		JLabel repuestosASolicitar_lbl = new JLabel("Repuestos a solicitar:");
+		repuestosASolicitar_lbl.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		repuestosASolicitar_lbl.setHorizontalAlignment(SwingConstants.LEFT);
-		repuestosASolicitar_lbl.setBounds(30, 149, 139, 23);
+		repuestosASolicitar_lbl.setBounds(30, 152, 139, 23);
 		contentPane.add(repuestosASolicitar_lbl);
 
 		repuesto_ComboBox = new JComboBox<String>();
-		repuesto_ComboBox.setBounds(179, 149, 305, 23);
+		repuesto_ComboBox.setBounds(179, 152, 305, 23);
 		contentPane.add(repuesto_ComboBox);
 
-		incrementoCantRepuesto_btn = new JButton("");
-		incrementoCantRepuesto_btn.setBounds(494, 149, 33, 23);
-		incrementoCantRepuesto_btn.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/plus-outline.png")));
-		contentPane.add(incrementoCantRepuesto_btn);
-
-		decrementoCantRepuesto_btn = new JButton("");
-		decrementoCantRepuesto_btn.setBounds(577, 149, 33, 23);
-		decrementoCantRepuesto_btn.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/minus-outline.png")));
-		contentPane.add(decrementoCantRepuesto_btn);
-
-		cantidad_lbl = new JLabel("1");
-		cantidad_lbl.setBounds(536, 150, 33, 20);
-		cantidad_lbl.setHorizontalAlignment(SwingConstants.CENTER);
-		cantidad_lbl.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		cantidad_lbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 102, 255)));
-		contentPane.add(cantidad_lbl);
-
 		agregarRepuesto_btn = new JButton("");
-		agregarRepuesto_btn.setBounds(620, 149, 33, 23);
+		agregarRepuesto_btn.setBounds(544, 149, 29, 26);
 		agregarRepuesto_btn.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/tick-outline.png")));
 		contentPane.add(agregarRepuesto_btn);
 
 		eliminarRepuesto_btn = new JButton("");
-		eliminarRepuesto_btn.setBounds(661, 149, 33, 23);
+		eliminarRepuesto_btn.setBounds(583, 149, 29, 26);
 		eliminarRepuesto_btn.setIcon(new ImageIcon(VentanaOrdenCompra.class.getResource("/times-outline.png")));
 		contentPane.add(eliminarRepuesto_btn);
 
@@ -159,18 +147,18 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(valorPresupuestado_txf);
 		
 		JLabel monto_pedido_lbl = new JLabel();
-		monto_pedido_lbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		monto_pedido_lbl.setHorizontalAlignment(SwingConstants.LEFT);
 		monto_pedido_lbl.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		monto_pedido_lbl.setText("Monto de orden:");
 		monto_pedido_lbl.setBounds(30, 618, 146, 20);
 		contentPane.add(monto_pedido_lbl);
 
 		cancelar_btn = new JButton("Cancelar");
-		cancelar_btn.setBounds(620, 688, 90, 23);
+		cancelar_btn.setBounds(598, 688, 90, 23);
 		contentPane.add(cancelar_btn);
 
 		guardar_btn = new JButton("Guardar");
-		guardar_btn.setBounds(520, 688, 90, 23);
+		guardar_btn.setBounds(494, 688, 90, 23);
 		contentPane.add(guardar_btn);
 		
 		btnBuscarProveedor = new JButton("");
@@ -180,7 +168,7 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(btnBuscarProveedor);
 		
 		txtfldNroProveedor = new JTextField();
-		txtfldNroProveedor.setBounds(60, 50, 155, 20);
+		txtfldNroProveedor.setBounds(60, 52, 155, 20);
 		contentPane.add(txtfldNroProveedor);
 		txtfldNroProveedor.setColumns(10);
 		
@@ -193,13 +181,13 @@ public class VentanaOrdenCompra extends JFrame {
 		JLabel label = new JLabel("Cargar:");
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 11));
-		label.setBounds(427, 10, 63, 23);
+		label.setBounds(427, 13, 63, 23);
 		contentPane.add(label);
 		
 		txtfldCargarOrden = new JTextField();
 		txtfldCargarOrden.setToolTipText("Ingresar el Nro de hoja de ruta");
 		txtfldCargarOrden.setColumns(10);
-		txtfldCargarOrden.setBounds(619, 12, 39, 23);
+		txtfldCargarOrden.setBounds(619, 13, 39, 23);
 		contentPane.add(txtfldCargarOrden);
 		
 		btnCargarOrden = new JButton("");
@@ -223,8 +211,13 @@ public class VentanaOrdenCompra extends JFrame {
 		contentPane.add(btnEnviarEmial);
 		
 		listaOrdenesCompras_cmb = new JComboBox<String>();
-		listaOrdenesCompras_cmb.setBounds(494, 9, 123, 24);
+		listaOrdenesCompras_cmb.setBounds(494, 12, 123, 24);
 		contentPane.add(listaOrdenesCompras_cmb);
+		
+		spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		spinner.setBounds(505, 149, 29, 26);
+		contentPane.add(spinner);
 	}
 
 	public JComboBox<String> getListaOrdenesCompras_cmb() {
@@ -255,20 +248,10 @@ public class VentanaOrdenCompra extends JFrame {
 		return btnVerProveedores;
 	}
 
-	public JLabel getCantidad_lbl() {
-		return cantidad_lbl;
-	}
+	
 
 	public JComboBox<String> getComponente_ComboBox() {
 		return repuesto_ComboBox;
-	}
-
-	public JButton getIncrementoCantComponente_btn() {
-		return incrementoCantRepuesto_btn;
-	}
-
-	public JButton getDecrementoCantComponente_btn() {
-		return decrementoCantRepuesto_btn;
 	}
 
 	public JButton getAgregarComponente_btn() {
@@ -333,5 +316,13 @@ public class VentanaOrdenCompra extends JFrame {
 
 	public JButton getBtnEnviarEmial() {
 		return btnEnviarEmial;
+	}
+
+	public JSpinner getSpinner() {
+		return spinner;
+	}
+
+	public void setSpinner(JSpinner spinner) {
+		this.spinner = spinner;
 	}
 }

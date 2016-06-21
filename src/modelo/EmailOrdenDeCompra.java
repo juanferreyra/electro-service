@@ -74,8 +74,7 @@ public class EmailOrdenDeCompra extends Thread {
 			this.enviar(destinatario, mensaje, asunto);
 		}else{
 
-			JOptionPane.showMessageDialog(null, "CORREO NO ENVIADO, No tiene acceso a internet", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "No se ha detectado una red y el mail no ha podido enviarse.");
 		}
 
 
@@ -160,15 +159,12 @@ public class EmailOrdenDeCompra extends Thread {
 
 			//Con esta imprimimos en consola que el mensaje fue enviado
 			
-			System.out.println("Mensaje Enviado");
-			JOptionPane.showMessageDialog(null, "Email orden de compra enviado correctamente", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "El mail se ha enviado correctamente.");
 		}
 		catch (Exception e)
 		{
 			
-			JOptionPane.showMessageDialog(null, "Email orden de compra , NO SE HA PODIDO ENVIAR, por favor intente mas tarde", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);	
+			JOptionPane.showMessageDialog(null, "El mail no se ha podido enviar. Por favor, intente mas tarde.");	
 		}
 	}
 

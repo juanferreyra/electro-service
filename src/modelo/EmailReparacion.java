@@ -66,20 +66,20 @@ public class EmailReparacion extends Thread {
 
 			if (!ingreso.getIngreso().getEnvio_default()) {
 
-				envio = " coordinar el env&#237;o del equipo al domicilio: " + ingreso.getCliente().getDireccion()
+				envio = " coordinar el envio del equipo al domicilio: " + ingreso.getCliente().getDireccion()
 						+ ". Muchas Gracias ";
 			} else {
-				envio = " coordinar el env&#237;o del equipo al domicilio: "
+				envio = " coordinar el envio del equipo al domicilio: "
 						+ ingreso.getIngreso().getDireccion_alternativa() + ". Muchas Gracias ";
 			}
 
 		} else {
-			envio = " coordinar fecha y horario en el que puede pasar a retirar el equipo por la siguiente direcci&#243;n: "
+			envio = " coordinar fecha y horario en el que puede pasar a retirar el equipo por la siguiente direccion: "
 					+ "  Darregueyra 3896,Los Polvorines, Malvinas Argentinas, Buenos Aires. Muchas Gracias";
 		}
 
 		// asunto
-		String asunto = "Aviso de reparación  de " + ingreso.ingr.getDescripcion() + " de Electro Service.";
+		String asunto = "Aviso de reparacion  de " + ingreso.ingr.getDescripcion() + " de Electro Service.";
 
 		/// Cuerpo de mensaje
 		String mensaje =
@@ -97,8 +97,7 @@ public class EmailReparacion extends Thread {
 			this.enviar(destinatario, mensaje, asunto);
 		} else {
 
-			JOptionPane.showMessageDialog(null, "CORREO NO ENVIADO; No tiene acceso a internet", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "No se ha detectado una red y el mail no ha podido enviarse.");
 		}
 
 	}
@@ -181,12 +180,10 @@ public class EmailReparacion extends Thread {
 			// Con esta imprimimos en consola que el mensaje fue enviado
 
 			System.out.println("Mensaje Enviado");
-			JOptionPane.showMessageDialog(null, "Email de Aviso de Reparación enviado correctamente", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "El mail de avisose ha enviado correctamente.");
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,
-					"Email de Aviso de Reparación, NO SE HA PODIDO ENVIAR, por favor intente mas tarde", "Atencion!",
-					JOptionPane.INFORMATION_MESSAGE);
+					"El mail de aviso no se ha podido enviar. Por favor, intente mas tarde.");
 		}
 	}
 
