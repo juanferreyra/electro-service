@@ -203,11 +203,12 @@ public class ControladorVentanaPrincipal implements ActionListener {
 							ing, this, usuarioLogueado);
 					controladorPresupuesto.inicializar();
 				} else {
-					JOptionPane.showMessageDialog(null,
+					JOptionPane.showMessageDialog(this.principal,
 							"No es posible presupuestar el registro seleccionado. Por favor, seleccione una orden en estado 'NUEVO'.");
 				}
-			}else{
-				JOptionPane.showMessageDialog(principal, "Debe seleccionar una orden de trabajo en estado 'NUEVO' para continuar.");
+			} else {
+				JOptionPane.showMessageDialog(principal,
+						"Debe seleccionar una orden de trabajo en estado 'NUEVO' para continuar.");
 			}
 		} else if (e.getSource() == this.principal.getReparacion_btn()) {
 
@@ -229,8 +230,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 					JOptionPane.showMessageDialog(null,
 							"No es posible visualizar el detalle de reparación. Por favor, seleccione una orden en estado 'ASIGNADO'.");
 				}
-			}else{
-				JOptionPane.showMessageDialog(principal, "Debe seleccionar una orden de trabajo en estado 'ASIGNADO' para continuar.");
+			} else {
+				JOptionPane.showMessageDialog(principal,
+						"Debe seleccionar una orden de trabajo en estado 'ASIGNADO' para continuar.");
 			}
 
 		} else if (e.getSource() == this.principal.getBtnElaborarHojaDe()) {
