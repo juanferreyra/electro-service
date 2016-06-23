@@ -18,6 +18,7 @@ import dto.ClienteDTO;
 import dto.IngresoDTO;
 import dto.InsumoStockDTO;
 import dto.UsuarioDTO;
+import javafx.scene.control.Tooltip;
 import modelo.Ingreso;
 import modelo.Stock;
 import persistencia.dao.ClienteDAO;
@@ -125,11 +126,18 @@ public class ControladorVentanaPrincipal implements ActionListener {
 			}
 			ClienteDTO clienteDTO = clienteDAO.find(ingresos.get(i).getIdcliente());
 			String nombreCliente = clienteDTO.getNombre() + " " + clienteDTO.getApellido();
-			this.cargarFila(i, new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/ingreso.png"))),
-					ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(), ingresos.get(i).getDescripcion(),
-					nombreCliente, (ingresos.get(i).getEnvio()) ? "SI" : "NO",
-					new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/money.png"))),
-					nombreCompletoTecnicoAsignado, estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
+
+			JLabel ingresoLabel = new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/ingreso.png")));
+			ingresoLabel.setToolTipText("Ver Orden");
+
+			JLabel presupuestoLabel = new JLabel(new ImageIcon(VentanaPrincipal.class.getResource("/money.png")));
+			presupuestoLabel.setToolTipText("Ver Presupuesto");
+
+			this.cargarFila(i, ingresoLabel, ingresos.get(i).getId(), ingresos.get(i).getFecha_creacion(),
+					ingresos.get(i).getDescripcion(), nombreCliente, (ingresos.get(i).getEnvio()) ? "SI" : "NO",
+					presupuestoLabel, nombreCompletoTecnicoAsignado,
+					estadoDAO.find(ingresos.get(i).getEstado()).getDetalle());
+
 		}
 	}
 
@@ -156,8 +164,9 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 
-		} else if (this.usuarioLogueado.getIdperfil() == 3 && (estado.equals("NUEVO") || estado.equals("ACEPTADO")
-				|| estado.equals("EN REPARACION") || estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO"))) {// TECNICO
+		} else if (this.usuarioLogueado.getIdperfil() == 3
+				&& (estado.equals("NUEVO") || estado.equals("ACEPTADO") || estado.equals("EN REPARACION")
+						|| estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO") || estado.equals("ASIGNADO"))) {// TECNICO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 		} else if (this.usuarioLogueado.getIdperfil() == 1) {// ADMINISTRADOR

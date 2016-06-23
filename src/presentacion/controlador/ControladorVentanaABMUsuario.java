@@ -225,52 +225,44 @@ public class ControladorVentanaABMUsuario implements ActionListener {
 
 		} else if (e.getSource() == this.ventanaABMUsuario.getGuardar_btn()) { // boton
 																				// guardar
-			String nick = this.txts.get(0).getText();
-			if (!exists(nick)) {
 
-				// si esta seleccionado de la tabla
-				// modificar cliente
-				if (this.ventanaABMUsuario.getTablaUsuario().getSelectedRow() != -1) {
+			// si esta seleccionado de la tabla
+			// modificar cliente
+			if (this.ventanaABMUsuario.getTablaUsuario().getSelectedRow() != -1) {
 
-					int filaSeleccionada = this.ventanaABMUsuario.getTablaUsuario().getSelectedRow();
+				int filaSeleccionada = this.ventanaABMUsuario.getTablaUsuario().getSelectedRow();
 
-					if (!isTxtsVacios()) {
+				if (!isTxtsVacios()) {
 
-						usuario.modificarUsuario(obteneUsuario(
-								(int) this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 0)));
+					usuario.modificarUsuario(obteneUsuario(
+							(int) this.ventanaABMUsuario.getModelUsuario().getValueAt(filaSeleccionada, 0)));
 
-						limpiartxts();
-						cargarTablaUsuarios();
-
-					} else {
-
-						JOptionPane.showMessageDialog(this.ventanaABMUsuario,
-								"No se permiten campos vacios. Vuelva a intentarlo.");
-					}
+					limpiartxts();
+					cargarTablaUsuarios();
 
 				} else {
-					// nuevo cliente
 
-					if (!isTxtsVacios()) {
-
-						usuario.agregarUsuario((obteneUsuario(0)));
-
-						limpiartxts();
-						cargarTablaUsuarios();
-
-					} else {
-
-						JOptionPane.showMessageDialog(this.ventanaABMUsuario,
-								"No se permiten campos vacios. Vuelva a intentarlo.");
-					}
+					JOptionPane.showMessageDialog(this.ventanaABMUsuario,
+							"No se permiten campos vacios. Vuelva a intentarlo.");
 				}
+
 			} else {
-				JOptionPane.showMessageDialog(this.ventanaABMUsuario,
-						"El nick ingresado ya existe. Por favor, vuelva a intentarlo.");
-				limpiartxts();
+				// nuevo cliente
+
+				if (!isTxtsVacios()) {
+
+					usuario.agregarUsuario((obteneUsuario(0)));
+
+					limpiartxts();
+					cargarTablaUsuarios();
+
+				} else {
+
+					JOptionPane.showMessageDialog(this.ventanaABMUsuario,
+							"No se permiten campos vacios. Vuelva a intentarlo.");
+				}
 			}
 		}
-
 	}
 
 	private UsuarioDTO obteneUsuario(int id) {
