@@ -1,5 +1,6 @@
 package presentacion.controlador;
 
+import java.awt.Color;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,6 +31,9 @@ public class ControladorLog {
 		this.ingresoLogDAO = new IngresoLogDAO();
 		this.estadoDAO = new EstadoDAO();
 
+		this.ventanaLog.getNumeroOrden_label().setText(this.ingreso.getId() + " ");
+
+		this.ventanaLog.getNumeroOrden_label().setForeground(Color.BLUE);
 		cargarTablaLog();
 
 	}

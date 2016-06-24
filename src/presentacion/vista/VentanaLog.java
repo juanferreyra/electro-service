@@ -20,6 +20,7 @@ public class VentanaLog {
 	private DefaultTableModel modelLog;
 	private JFrame frame;
 	private String[] nombreColumnas = { "Estado", "Fecha/Hora" };
+	private JLabel numeroOrden_label;
 
 	public VentanaLog() {
 		frame = new JFrame();
@@ -33,10 +34,10 @@ public class VentanaLog {
 		contentPane.setLayout(null);
 		frame.getContentPane().add(contentPane);
 
-		JLabel lblLogPresupuesto = new JLabel("LOG PRESUPUESTO");
+		JLabel lblLogPresupuesto = new JLabel("Historial Orden de Trabajo");
 		lblLogPresupuesto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogPresupuesto.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblLogPresupuesto.setBounds(10, 11, 709, 14);
+		lblLogPresupuesto.setBounds(10, 11, 709, 26);
 		contentPane.add(lblLogPresupuesto);
 		frame.setLocationRelativeTo(null);
 
@@ -59,6 +60,13 @@ public class VentanaLog {
 		tablaLog.getColumnModel().getColumn(0).setMinWidth(0);
 		tablaLog.getColumnModel().getColumn(0).setPreferredWidth(0);
 		log_scrollPane.setViewportView(tablaLog);
+
+		numeroOrden_label = new JLabel("");
+		numeroOrden_label.setHorizontalAlignment(SwingConstants.CENTER);
+		numeroOrden_label.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		numeroOrden_label.setBackground(new Color(70, 130, 180));
+		numeroOrden_label.setBounds(10, 44, 709, 27);
+		contentPane.add(numeroOrden_label);
 
 		frame.setVisible(true);
 	}
@@ -93,6 +101,14 @@ public class VentanaLog {
 
 	public void setNombreColumnas(String[] nombreColumnas) {
 		this.nombreColumnas = nombreColumnas;
+	}
+
+	public JLabel getNumeroOrden_label() {
+		return numeroOrden_label;
+	}
+
+	public void setNumeroOrden_label(JLabel numeroOrden_label) {
+		this.numeroOrden_label = numeroOrden_label;
 	}
 
 }
