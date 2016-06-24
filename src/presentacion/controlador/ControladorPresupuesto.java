@@ -69,12 +69,15 @@ public class ControladorPresupuesto implements ActionListener {
 		cargarComboComponentes();
 		cargarIngreso();
 		ocultarBotonesEstados();
+
 		if (presupuesto.getId() == -1) {
 			ventanaPresupuesto.getLbltecnico()
 					.setText(this.usuarioLogueado.getNombre() + " " + this.usuarioLogueado.getApellido());
 			ventanaPresupuesto.getManoDeObra_txf().setText("0");
 			ventanaPresupuesto.getTotal_lbl().setText("0");
+			ventanaPresupuesto.getEnviarPresupuesto_btn().setVisible(false);
 		} else {
+			ventanaPresupuesto.getEnviarPresupuesto_btn().setVisible(true);
 			cargarModelo();
 			ventanaPresupuesto.getGuardar_btn().setVisible(false);
 			ventanaPresupuesto.getCancelar_btn().setText("Cerrar");
@@ -219,7 +222,7 @@ public class ControladorPresupuesto implements ActionListener {
 
 		} else if (e.getSource() == this.ventanaPresupuesto.getBtnInformado()) {
 			int response = JOptionPane.showConfirmDialog(null,
-					"Ud. va a dar el presupuesto como Informado al cliente. ¿Esta seguro?", "Confirmar",
+					"Ud. va a dar el presupuesto como informado al cliente. ¿Esta seguro?", "Confirmar",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if (response == JOptionPane.NO_OPTION) {
 

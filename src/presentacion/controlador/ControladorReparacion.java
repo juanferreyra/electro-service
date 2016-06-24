@@ -67,6 +67,13 @@ public class ControladorReparacion implements ActionListener {
 		this.ventanaReparacion.getMensajeEstadoReparacion().setText("Aún no se ha indicado el estado del producto.");
 		this.ventanaReparacion.getMensajeEstadoReparacion().setForeground(Color.black);
 
+		if (!this.ventanaReparacion.getBtnReparado().isVisible()
+				|| !this.ventanaReparacion.getBtnIrreparado().isVisible()) {
+			this.ventanaReparacion.getEnviarAvisoReparacion_btn().setVisible(true);
+		} else {
+			this.ventanaReparacion.getEnviarAvisoReparacion_btn().setVisible(false);
+		}
+
 	}
 
 	private void cargarMontosPresupuestos() {
@@ -159,12 +166,27 @@ public class ControladorReparacion implements ActionListener {
 			ventanaReparacion.getBtnReparado().setVisible(true);
 			this.ventanaReparacion.getMensajeEstadoReparacion().setText("El producto se encuentra irreparado.");
 			this.ventanaReparacion.getMensajeEstadoReparacion().setForeground(Color.red);
+
+			if (!this.ventanaReparacion.getBtnReparado().isVisible()
+					|| !this.ventanaReparacion.getBtnIrreparado().isVisible()) {
+				this.ventanaReparacion.getEnviarAvisoReparacion_btn().setVisible(true);
+			} else {
+				this.ventanaReparacion.getEnviarAvisoReparacion_btn().setVisible(false);
+			}
+
 		} else if (e.getSource() == this.ventanaReparacion.getBtnReparado()) {
 			tipoEstado = 7;
 			ventanaReparacion.getBtnIrreparado().setVisible(true);
 			ventanaReparacion.getBtnReparado().setVisible(false);
 			this.ventanaReparacion.getMensajeEstadoReparacion().setText("El producto se encuentra reparado.");
 			this.ventanaReparacion.getMensajeEstadoReparacion().setForeground(Color.green);
+
+			if (!this.ventanaReparacion.getBtnReparado().isVisible()
+					|| !this.ventanaReparacion.getBtnIrreparado().isVisible()) {
+				this.ventanaReparacion.getEnviarAvisoReparacion_btn().setVisible(true);
+			} else {
+				this.ventanaReparacion.getEnviarAvisoReparacion_btn().setVisible(false);
+			}
 		}
 
 	}
