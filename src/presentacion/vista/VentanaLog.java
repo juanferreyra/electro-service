@@ -26,13 +26,12 @@ public class VentanaLog {
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresupuesto.class.getResource("/logo.png")));
 
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setBounds(100, 100, 745, 724);
+		frame.setBounds(100, 100, 745, 356);
 
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		frame.add(contentPane);
+		frame.getContentPane().add(contentPane);
 
 		JLabel lblLogPresupuesto = new JLabel("LOG PRESUPUESTO");
 		lblLogPresupuesto.setHorizontalAlignment(SwingConstants.CENTER);
@@ -42,7 +41,7 @@ public class VentanaLog {
 		frame.setLocationRelativeTo(null);
 
 		JScrollPane log_scrollPane = new JScrollPane();
-		log_scrollPane.setBounds(10, 82, 709, 593);
+		log_scrollPane.setBounds(10, 82, 709, 233);
 		getContentPane().add(log_scrollPane);
 
 		modelLog = new DefaultTableModel(null, nombreColumnas) {

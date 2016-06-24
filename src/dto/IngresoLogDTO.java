@@ -7,13 +7,22 @@ public class IngresoLogDTO {
 	private int idingreso;
 	private int idestado;
 	private Date fecha_creacion;
+	private String fechaLarga;
 	private int idusuario;
-	
+
 	public IngresoLogDTO(int id, int idingreso, int idestado, Date fecha_creacion, int idusuario) {
 		this.id = id;
 		this.idingreso = idingreso;
 		this.idestado = idestado;
 		this.fecha_creacion = fecha_creacion;
+		this.idusuario = idusuario;
+	}
+
+	public IngresoLogDTO(int id, int idingreso, int idestado, int idusuario, String fechaLarga) {
+		this.id = id;
+		this.idingreso = idingreso;
+		this.idestado = idestado;
+		this.fechaLarga = fechaLarga;
 		this.idusuario = idusuario;
 	}
 
@@ -56,4 +65,13 @@ public class IngresoLogDTO {
 	public void setIdusuario(int idusuario) {
 		this.idusuario = idusuario;
 	}
+
+	public String getFechaLarga() {
+		return fechaLarga;
+	}
+
+	public void setFechaLarga(String fechaLarga) {
+		this.fechaLarga = fechaLarga;
+	}
+
 }

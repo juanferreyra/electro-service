@@ -40,12 +40,12 @@ public class ControladorLog {
 		this.ventanaLog.getModelLog().setColumnCount(0);
 		this.ventanaLog.getModelLog().setColumnIdentifiers(this.ventanaLog.getNombreColumnas());
 
-		this.registrosLog_en_tabla = ingresoLogDAO.readAll(this.ingreso.getId());
+		this.registrosLog_en_tabla = ingresoLogDAO.readAllExtenso(this.ingreso.getId());
 
 		for (int i = 0; i < this.registrosLog_en_tabla.size(); i++) {
 			if (this.registrosLog_en_tabla.get(i).getIdingreso() == this.ingreso.getId()) {
 				EstadoDTO estado = estadoDAO.find(this.registrosLog_en_tabla.get(i).getIdestado());
-				Object[] fila = { estado.getDetalle(), this.registrosLog_en_tabla.get(i).getFecha_creacion() };
+				Object[] fila = { estado.getDetalle(), this.registrosLog_en_tabla.get(i).getFechaLarga() };
 
 				this.ventanaLog.getModelLog().addRow(fila);
 
