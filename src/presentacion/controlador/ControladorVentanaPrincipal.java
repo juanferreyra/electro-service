@@ -166,7 +166,7 @@ public class ControladorVentanaPrincipal implements ActionListener {
 
 		} else if (this.usuarioLogueado.getIdperfil() == 3
 				&& (estado.equals("NUEVO") || estado.equals("ACEPTADO") || estado.equals("EN REPARACION")
-						|| estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO") || estado.equals("ASIGNADO"))) {// TECNICO
+						|| estado.equals("PRESUPUESTANDO") || estado.equals("REPARADO") || estado.equals("ASIGNADO") )) {// TECNICO
 
 			((DefaultTableModel) this.principal.getOrdenesDeTrabajo_table().getModel()).addRow(ingreso);
 		} else if (this.usuarioLogueado.getIdperfil() == 1) {// ADMINISTRADOR
