@@ -21,6 +21,7 @@ import persistencia.dao.EstadoDAO;
 import persistencia.dao.IngresoDAO;
 import persistencia.dao.IngresoLogDAO;
 import persistencia.dao.UsuarioDAO;
+import presentacion.vista.VentanaLog;
 import presentacion.vista.VentanaPresupuesto;
 
 public class ControladorPresupuesto implements ActionListener {
@@ -53,6 +54,7 @@ public class ControladorPresupuesto implements ActionListener {
 		this.ventanaPresupuesto.getBtnInformado().addActionListener(this);
 		this.ventanaPresupuesto.getBtnAceptado().addActionListener(this);
 		this.ventanaPresupuesto.getBtnAsignar().addActionListener(this);
+		this.ventanaPresupuesto.getBtnHistorial().addActionListener(this);
 		this.ventanaPresupuesto.getBtnRechazado().addActionListener(this);
 		this.ventanaPresupuesto.getEntregado_btn().addActionListener(this);
 		this.ventanaPresupuesto.getBtnAvisado().addActionListener(this);
@@ -213,6 +215,12 @@ public class ControladorPresupuesto implements ActionListener {
 		} else if (e.getSource() == this.ventanaPresupuesto.getCancelar_btn()) {
 
 			this.ventanaPresupuesto.dispose();
+
+		} else if (e.getSource() == this.ventanaPresupuesto.getBtnHistorial()) {
+
+			VentanaLog abm = new VentanaLog();
+			ControladorLog c = new ControladorLog(abm, this.ingreso);
+			c.inicializar();
 
 		} else if (e.getSource() == this.ventanaPresupuesto.getEnviarPresupuesto_btn()) {
 

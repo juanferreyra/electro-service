@@ -60,6 +60,7 @@ public class VentanaPresupuesto extends JFrame {
 	private JSeparator separator_1;
 	private JSpinner spinner;
 	private JButton btnAvisado;
+	private JButton btnHistorial;
 
 	@SuppressWarnings("serial")
 	public VentanaPresupuesto() {
@@ -286,7 +287,7 @@ public class VentanaPresupuesto extends JFrame {
 		estado_lb = new JLabel("");
 		estado_lb.setHorizontalAlignment(SwingConstants.TRAILING);
 		estado_lb.setForeground(new Color(105, 105, 105));
-		estado_lb.setBounds(572, 8, 116, 15);
+		estado_lb.setBounds(133, 33, 116, 15);
 		contentPane.add(estado_lb);
 
 		JLabel lblFecha = new JLabel("");
@@ -334,6 +335,10 @@ public class VentanaPresupuesto extends JFrame {
 		btnAvisado.setForeground(Color.BLACK);
 		btnAvisado.setBounds(30, 0, 115, 23);
 		contentPane.add(btnAvisado);
+
+		btnHistorial = new JButton("Historial");
+		btnHistorial.setBounds(599, 0, 89, 23);
+		contentPane.add(btnHistorial);
 	}
 
 	public JTextField getHorasDeTrabajo_txf() {
@@ -466,6 +471,14 @@ public class VentanaPresupuesto extends JFrame {
 
 	public void setBtnAvisado(JButton btnAvisado) {
 		this.btnAvisado = btnAvisado;
+	}
+
+	public JButton getBtnHistorial() {
+		return btnHistorial;
+	}
+
+	public void setBtnHistorial(JButton btnHistorial) {
+		this.btnHistorial = btnHistorial;
 	}
 
 }
