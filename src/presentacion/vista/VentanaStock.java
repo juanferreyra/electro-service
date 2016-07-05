@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 
@@ -33,6 +34,7 @@ public class VentanaStock extends JFrame {
 		contentPane.setLayout(null);
 		setVisible(true);
 		setLocationRelativeTo(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
 
 		JLabel lblControlDeStock = new JLabel("Control de Stock");
 		lblControlDeStock.setFont(new Font("Tahoma", Font.PLAIN, 14));

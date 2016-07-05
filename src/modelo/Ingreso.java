@@ -16,7 +16,7 @@ import persistencia.dao.MarcaDAO;
 import persistencia.dao.TipoProductoDAO;
 import persistencia.dao.IngresoLogDAO;
 
-public class Ingreso {
+public class Ingreso { 
 	public int id;
 	public ClienteDTO clien;
 	public IngresoDTO ingr;

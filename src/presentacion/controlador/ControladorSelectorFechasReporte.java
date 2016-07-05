@@ -107,7 +107,7 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 				//valido
 				if(this.ventanaSelectorReportes.getAnio_Anual().getValue()<1900){
 					error = true;
-					JOptionPane.showMessageDialog(ventanaSelectorReportes, "El año espeficificado no es valido.", "Atencion!",
+					JOptionPane.showMessageDialog(ventanaSelectorReportes, "El año especificado no es correcto.", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
@@ -118,7 +118,7 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 			} else if(this.ventanaSelectorReportes.getRdbtnMensual().isSelected()) {
 				if(this.ventanaSelectorReportes.getAnio_mensual().getValue()<1900){
 					error = true;
-					JOptionPane.showMessageDialog(ventanaSelectorReportes, "El año espeficificado no es valido.", "Atencion!",
+					JOptionPane.showMessageDialog(ventanaSelectorReportes, "El año especificado no es correcto.", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
@@ -130,7 +130,7 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 			} else if(this.ventanaSelectorReportes.getRdbtnSemanal().isSelected()) {
 				if(this.ventanaSelectorReportes.getFecha_semana().getDate()==null){
 					error = true;
-					JOptionPane.showMessageDialog(ventanaSelectorReportes, "Debe seleccionar una fecha de la semana que desea!.", "Atencion!",
+					JOptionPane.showMessageDialog(ventanaSelectorReportes, "Debe seleccionar la semana que desea.", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {
@@ -142,7 +142,7 @@ public class ControladorSelectorFechasReporte  implements ActionListener {
 			} else if(this.ventanaSelectorReportes.getRdbtnEntreFechas().isSelected()) {
 				if(this.ventanaSelectorReportes.getDesde_entrefechas().getDate()==null || this.ventanaSelectorReportes.getHasta_entrefechas()==null){
 					error = true;
-					JOptionPane.showMessageDialog(ventanaSelectorReportes, "Debe seleccionar ambas fechas para continuar!.", "Atencion!",
+					JOptionPane.showMessageDialog(ventanaSelectorReportes, "Debe seleccionar ambas fechas para continuar.", "Atencion!",
 							JOptionPane.INFORMATION_MESSAGE);
 					
 				} else {

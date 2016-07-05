@@ -18,6 +18,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 public class VentanaReparacion extends JFrame {
 
@@ -52,6 +53,8 @@ public class VentanaReparacion extends JFrame {
 		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPresentacion.class.getResource("/logo.png")));
 
 		fechaIngreso_lbl = new JLabel("");
 		fechaIngreso_lbl.setBounds(522, 11, 166, 14);

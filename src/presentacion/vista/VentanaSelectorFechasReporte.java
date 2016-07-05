@@ -1,4 +1,5 @@
 package presentacion.vista;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,6 +13,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import java.awt.Font;
+import javax.swing.JSeparator;
+import java.awt.Color;
 
 public class VentanaSelectorFechasReporte extends JFrame {
 
@@ -33,138 +37,182 @@ public class VentanaSelectorFechasReporte extends JFrame {
 	private JRadioButton rdbtnPorMarca;
 	private JRadioButton rdbtnPorMarcaY;
 	private ButtonGroup tipoMarca;
-	
+	private JSeparator separator_1;
+	private JSeparator separator_2;
+	private JSeparator separator_3;
+
 	public VentanaSelectorFechasReporte() {
 		setAlwaysOnTop(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaSelectorFechasReporte.class.getResource("/chart-pie.png")));
+		setIconImage(
+				Toolkit.getDefaultToolkit().getImage(VentanaSelectorFechasReporte.class.getResource("/chart-pie.png")));
 		setType(Type.POPUP);
 		setTitle("Selector de Fechas");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 452);
+		setBounds(100, 100, 622, 470);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
+
+		setLocationRelativeTo(null);
+
 		/*
 		 * Anual
 		 */
-		
+		contentPane.setLayout(null);
+
 		rdbtnAnual = new JRadioButton("Anual");
-		rdbtnAnual.setBounds(5, 5, 100, 25);
+		rdbtnAnual.setForeground(new Color(70, 130, 180));
+		rdbtnAnual.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdbtnAnual.setBounds(22, 21, 163, 25);
 		contentPane.add(rdbtnAnual);
-		
-		JLabel lblAo_1 = new JLabel("A\u00F1o:");
-		lblAo_1.setBounds(111, 35, 27, 25);
+
+		JLabel lblAo_1 = new JLabel("A\u00F1o");
+		lblAo_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAo_1.setBounds(355, 21, 144, 25);
 		contentPane.add(lblAo_1);
-		
+
 		anio_Anual = new JYearChooser();
-		anio_Anual.setSize(100, 25);
-		anio_Anual.setLocation(150, 35);
+		anio_Anual.getSpinner().setFont(new Font("Tahoma", Font.PLAIN, 12));
+		anio_Anual.getSpinner().setSize(100, 25);
+		anio_Anual.getSpinner().setLocation(0, 35);
+		anio_Anual.setBounds(420, 20, 100, 25);
 		contentPane.add(anio_Anual);
-		
+
 		/*
 		 * Mensual
 		 */
-		
+
 		rdbtnMensual = new JRadioButton("Mensual");
-		rdbtnMensual.setBounds(5, 65, 100, 25);
+		rdbtnMensual.setForeground(new Color(70, 130, 180));
+		rdbtnMensual.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdbtnMensual.setBounds(22, 90, 80, 25);
 		contentPane.add(rdbtnMensual);
-		
-		JLabel lblMes = new JLabel("Mes:");
-		lblMes.setBounds(111, 100, 27, 25);
+
+		JLabel lblMes = new JLabel("Mes");
+		lblMes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblMes.setBounds(120, 92, 80, 25);
 		contentPane.add(lblMes);
-		
-		JLabel lblAo = new JLabel("A\u00F1o:");
-		lblAo.setBounds(284, 109, 34, 17);
+
+		JLabel lblAo = new JLabel("A\u00F1o");
+		lblAo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAo.setBounds(355, 94, 144, 17);
 		contentPane.add(lblAo);
-		
+
 		mes_mensual = new JMonthChooser();
-		mes_mensual.setSize(114,25);
-		mes_mensual.setLocation(150, 100);
+		mes_mensual.getSpinner().setBounds(0, 0, 153, 25);
+		mes_mensual.setBounds(155, 92, 153, 25);
 		contentPane.add(mes_mensual);
-		
+		mes_mensual.setLayout(null);
+
 		anio_mensual = new JYearChooser();
-		anio_mensual.setSize(100, 25);
-		anio_mensual.setLocation(324, 100);
+		anio_mensual.getSpinner().setFont(new Font("Tahoma", Font.PLAIN, 12));
+		anio_mensual.getSpinner().setLocation(0, 98);
+		anio_mensual.setBounds(420, 92, 100, 25);
 		contentPane.add(anio_mensual);
-		
+
 		/*
 		 * Semanal
 		 */
-		
+
 		rdbtnSemanal = new JRadioButton("Semanal");
-		rdbtnSemanal.setBounds(5, 130, 86, 25);
+		rdbtnSemanal.setForeground(new Color(70, 130, 180));
+		rdbtnSemanal.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdbtnSemanal.setBounds(22, 162, 86, 25);
 		contentPane.add(rdbtnSemanal);
-		
-		JLabel lblFechaDeSemana = new JLabel("Fecha de semana:");
-		lblFechaDeSemana.setBounds(111, 160, 100, 25);
+
+		JLabel lblFechaDeSemana = new JLabel("Semana");
+		lblFechaDeSemana.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFechaDeSemana.setBounds(355, 162, 133, 25);
 		contentPane.add(lblFechaDeSemana);
-		
+
 		fecha_semana = new JDateChooser();
-		fecha_semana.setBounds(210, 160, 100, 25);
-		contentPane.add(fecha_semana);		
-		
+		fecha_semana.setBounds(425, 160, 100, 25);
+		contentPane.add(fecha_semana);
+
 		/*
 		 * Entre Fechas
 		 */
-		
-		rdbtnEntreFechas = new JRadioButton("Entre Fechas");
-		rdbtnEntreFechas.setBounds(5, 195, 100, 25);
-		contentPane.add(rdbtnEntreFechas);
-		
-		JLabel lblDesde = new JLabel("Desde:");
-		lblDesde.setBounds(111, 230, 40, 25);
+
+		JLabel lblDesde = new JLabel("Desde");
+		lblDesde.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDesde.setBounds(145, 232, 40, 25);
 		contentPane.add(lblDesde);
-		
-		JLabel lblHasta = new JLabel("Hasta:");
-		lblHasta.setBounds(260, 230, 40, 25);
+
+		rdbtnEntreFechas = new JRadioButton("Entre Fechas");
+		rdbtnEntreFechas.setForeground(new Color(70, 130, 180));
+		rdbtnEntreFechas.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdbtnEntreFechas.setBounds(22, 232, 163, 25);
+		contentPane.add(rdbtnEntreFechas);
+
+		JLabel lblHasta = new JLabel("Hasta");
+		lblHasta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblHasta.setBounds(355, 232, 40, 25);
 		contentPane.add(lblHasta);
-		
+
 		desde_entrefechas = new JDateChooser();
-		desde_entrefechas.setBounds(155, 230, 100, 25);
+		desde_entrefechas.setBounds(200, 232, 100, 25);
 		contentPane.add(desde_entrefechas);
-		
+
 		hasta_entrefechas = new JDateChooser();
-		hasta_entrefechas.setBounds(302, 230, 100, 25);
+		hasta_entrefechas.setBounds(425, 232, 100, 25);
 		contentPane.add(hasta_entrefechas);
-		
+
 		/*
-		 * Grupo de Radio Button 
+		 * Grupo de Radio Button
 		 */
-		
+
 		tipoFecha = new ButtonGroup();
 		rdbtnAnual.setSelected(true);
 		tipoFecha.add(rdbtnAnual);
 		tipoFecha.add(rdbtnMensual);
 		tipoFecha.add(rdbtnSemanal);
 		tipoFecha.add(rdbtnEntreFechas);
-		
+
 		btnGenerarReporte = new JButton("Generar Reporte");
-		btnGenerarReporte.setIcon(new ImageIcon(VentanaSelectorFechasReporte.class.getResource("/chart-bar-outline.png")));
-		btnGenerarReporte.setBounds(22, 366, 380, 36);
+		btnGenerarReporte.setBounds(190, 385, 212, 36);
+		btnGenerarReporte
+				.setIcon(new ImageIcon(VentanaSelectorFechasReporte.class.getResource("/chart-bar-outline.png")));
 		contentPane.add(btnGenerarReporte);
 		
-		rdbtnTipoproducto = new JRadioButton("Por Tipo de Producto");
-		rdbtnTipoproducto.setBounds(22, 281, 228, 23);
+				separator_3 = new JSeparator();
+				separator_3.setBounds(10, 273, 586, 9);
+				contentPane.add(separator_3);
+
+		rdbtnTipoproducto = new JRadioButton("Por tipo de producto");
+		rdbtnTipoproducto.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdbtnTipoproducto.setBounds(190, 300, 286, 23);
 		contentPane.add(rdbtnTipoproducto);
-		
-		rdbtnPorMarca = new JRadioButton("Por Marca");
-		rdbtnPorMarca.setBounds(22, 307, 228, 23);
+
+		rdbtnPorMarca = new JRadioButton("Por marca");
+		rdbtnPorMarca.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdbtnPorMarca.setBounds(190, 326, 286, 23);
 		contentPane.add(rdbtnPorMarca);
-		
-		rdbtnPorMarcaY = new JRadioButton("Por Marca y Tipo de de Producto");
-		rdbtnPorMarcaY.setBounds(22, 334, 228, 25);
+
+		rdbtnPorMarcaY = new JRadioButton("Por marca y tipo de producto");
+		rdbtnPorMarcaY.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		rdbtnPorMarcaY.setBounds(190, 353, 286, 25);
 		contentPane.add(rdbtnPorMarcaY);
-		
+
 		tipoMarca = new ButtonGroup();
 		rdbtnTipoproducto.setSelected(true);
 		tipoMarca.add(rdbtnTipoproducto);
 		tipoMarca.add(rdbtnPorMarca);
 		tipoMarca.add(rdbtnPorMarcaY);
-		
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 67, 586, 9);
+		contentPane.add(separator);
+
+		separator_1 = new JSeparator();
+		separator_1.setBounds(10, 132, 586, 9);
+		contentPane.add(separator_1);
+
+		separator_2 = new JSeparator();
+		separator_2.setBounds(10, 202, 586, 9);
+		contentPane.add(separator_2);
+
 	}
-	
+
 	public JRadioButton getRdbtnTipoproducto() {
 		return rdbtnTipoproducto;
 	}
@@ -200,7 +248,7 @@ public class VentanaSelectorFechasReporte extends JFrame {
 	public JRadioButton getRdbtnEntreFechas() {
 		return rdbtnEntreFechas;
 	}
-	
+
 	public JYearChooser getAnio_Anual() {
 		return anio_Anual;
 	}

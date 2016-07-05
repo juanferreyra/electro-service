@@ -9,7 +9,6 @@ import dto.UsuarioDTO;
 import modelo.Usuario;
 import persistencia.dao.UsuarioDAO;
 import presentacion.vista.VentanaCambioClave;
-import presentacion.vista.VentanaPresentacion;
 
 public class ControladorVentanaCambioClave implements ActionListener {
 
@@ -19,12 +18,14 @@ public class ControladorVentanaCambioClave implements ActionListener {
 	public ControladorVentanaCambioClave(VentanaCambioClave ventanaCambioClave) {
 		this.ventanaCambioClave = ventanaCambioClave;
 		this.ventanaCambioClave.getBtnAceptar().addActionListener(this);
+		this.ventanaCambioClave.getBtnCancelar().addActionListener(this);
 	}
 
 	public void inicializar() {
 		this.usuario = new Usuario();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.ventanaCambioClave.getBtnAceptar()) {
